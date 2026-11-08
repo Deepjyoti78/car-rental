@@ -1,0 +1,11 @@
+{
+  "name": "car-rental-platform",
+  "version": "1.0.0",
+  "description": "DriveLoop — Enterprise Multi-Vendor Self-Drive Car Rental Marketplace",
+  "private": true,
+  "scripts": {
+    "build": "npm --prefix frontend run build",
+    "dev": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend run dev"
+  }
+}

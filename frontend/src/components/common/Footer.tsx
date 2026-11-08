@@ -1,0 +1,323 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Car, ShieldCheck, Headphones, HeartHandshake, MapPin } from 'lucide-react';
+import { useThemeStore } from '../../store/themeStore';
+
+export const Footer: React.FC = () => {
+  const { theme } = useThemeStore();
+  const isLight = theme === 'light';
+
+  return (
+    <footer
+      className={`pt-16 pb-12 transition-colors duration-200 border-t ${
+        isLight
+          ? 'bg-[#EAE4DC] text-slate-900 border-stone-300'
+          : 'bg-[#0B0F14] text-[#FAF8F3] border-[#36424D]'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Top Trust Pillars Banner */}
+        <div
+          className={`grid grid-cols-1 md:grid-cols-4 gap-8 pb-12 border-b ${
+            isLight ? 'border-stone-300' : 'border-[#36424D]'
+          }`}
+        >
+          <div className="flex items-start space-x-3.5">
+            <div
+              className={`w-9 h-9 rounded-full border flex items-center justify-center shrink-0 ${
+                isLight
+                  ? 'bg-white border-stone-300 text-slate-800 shadow-xs'
+                  : 'bg-[#1A222B] border-[#36424D] text-[#2D7DA6]'
+              }`}
+            >
+              <ShieldCheck className="w-4 h-4" />
+            </div>
+            <div>
+              <h4
+                className={`text-xs font-bold uppercase tracking-wider ${
+                  isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                }`}
+              >
+                Inspected Fleet
+              </h4>
+              <p className={`text-xs mt-1 leading-relaxed ${isLight ? 'text-slate-600' : 'text-[#D5DBE1]'}`}>
+                Multi-point fitness, valid commercial yellow plates, and pre-trip photo logs.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start space-x-3.5">
+            <div
+              className={`w-9 h-9 rounded-full border flex items-center justify-center shrink-0 ${
+                isLight
+                  ? 'bg-white border-stone-300 text-[#E07A3F] shadow-xs'
+                  : 'bg-[#1A222B] border-[#36424D] text-[#E07A3F]'
+              }`}
+            >
+              <HeartHandshake className="w-4 h-4" />
+            </div>
+            <div>
+              <h4
+                className={`text-xs font-bold uppercase tracking-wider ${
+                  isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                }`}
+              >
+                24h Deposit Escrow
+              </h4>
+              <p className={`text-xs mt-1 leading-relaxed ${isLight ? 'text-slate-600' : 'text-[#D5DBE1]'}`}>
+                100% refundable deposits returned within 24 hours of safe vehicle return.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start space-x-3.5">
+            <div
+              className={`w-9 h-9 rounded-full border flex items-center justify-center shrink-0 ${
+                isLight
+                  ? 'bg-white border-stone-300 text-slate-800 shadow-xs'
+                  : 'bg-[#1A222B] border-[#36424D] text-[#2D7DA6]'
+              }`}
+            >
+              <MapPin className="w-4 h-4" />
+            </div>
+            <div>
+              <h4
+                className={`text-xs font-bold uppercase tracking-wider ${
+                  isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                }`}
+              >
+                Verified Hub Delivery
+              </h4>
+              <p className={`text-xs mt-1 leading-relaxed ${isLight ? 'text-slate-600' : 'text-[#D5DBE1]'}`}>
+                Airport terminals and city center hubs across Delhi NCR, Jaipur & Chandigarh.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start space-x-3.5">
+            <div
+              className={`w-9 h-9 rounded-full border flex items-center justify-center shrink-0 ${
+                isLight
+                  ? 'bg-white border-stone-300 text-slate-800 shadow-xs'
+                  : 'bg-[#1A222B] border-[#36424D] text-[#F6E7D7]'
+              }`}
+            >
+              <Headphones className="w-4 h-4" />
+            </div>
+            <div>
+              <h4
+                className={`text-xs font-bold uppercase tracking-wider ${
+                  isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                }`}
+              >
+                24/7 Fleet Support
+              </h4>
+              <p className={`text-xs mt-1 leading-relaxed ${isLight ? 'text-slate-600' : 'text-[#D5DBE1]'}`}>
+                On-call highway emergency assistance and rapid replacement vehicles.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Links Navigation */}
+        <div
+          className={`grid grid-cols-2 md:grid-cols-5 gap-8 py-12 border-b ${
+            isLight ? 'border-stone-300' : 'border-[#36424D]'
+          }`}
+        >
+          <div className="col-span-2">
+            <Link to="/" className="flex items-center space-x-3">
+              <div
+                className={`w-9 h-9 rounded-full border flex items-center justify-center ${
+                  isLight
+                    ? 'bg-white border-stone-300 text-slate-900 shadow-xs'
+                    : 'bg-[#1A222B] border-[#36424D] text-[#FAF8F3]'
+                }`}
+              >
+                <Car className="w-4 h-4" strokeWidth={2.2} />
+              </div>
+              <div className="flex flex-col">
+                <span
+                  className={`font-display text-lg font-bold tracking-tight leading-none ${
+                    isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                  }`}
+                >
+                  DriveLoop
+                </span>
+                <span
+                  className={`text-[9px] font-mono tracking-widest uppercase mt-0.5 ${
+                    isLight ? 'text-slate-500' : 'text-[#6B7783]'
+                  }`}
+                >
+                  CAR RENTAL, REINVENTED
+                </span>
+              </div>
+            </Link>
+            <p className={`text-xs mt-4 leading-relaxed max-w-sm ${isLight ? 'text-slate-600' : 'text-[#D5DBE1]'}`}>
+              India's premier multi-vendor car rental marketplace connecting selective travelers
+              with verified independent fleet operators. Experience the joy of self-drive with transparent pricing.
+            </p>
+            <p className={`text-[10px] font-mono mt-3 ${isLight ? 'text-slate-500' : 'text-[#6B7783]'}`}>
+              Razorpay Secured • PCI-DSS Compliant • 256-bit TLS
+            </p>
+          </div>
+
+          <div>
+            <h5
+              className={`text-[10px] font-mono uppercase tracking-widest mb-4 ${
+                isLight ? 'text-slate-500' : 'text-[#6B7783]'
+              }`}
+            >
+              Explore Fleet
+            </h5>
+            <ul className={`space-y-2.5 text-xs ${isLight ? 'text-slate-600' : 'text-[#D5DBE1]'}`}>
+              <li>
+                <Link
+                  to="/explore"
+                  className={isLight ? 'hover:text-black transition-colors' : 'hover:text-[#F6E7D7] transition-colors'}
+                >
+                  All Vehicles
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/explore?category=SUV"
+                  className={isLight ? 'hover:text-black transition-colors' : 'hover:text-[#F6E7D7] transition-colors'}
+                >
+                  Performance SUVs
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/explore?category=LUXURY"
+                  className={isLight ? 'hover:text-black transition-colors' : 'hover:text-[#F6E7D7] transition-colors'}
+                >
+                  Luxury Saloons
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/explore?category=ELECTRIC"
+                  className={isLight ? 'hover:text-black transition-colors' : 'hover:text-[#F6E7D7] transition-colors'}
+                >
+                  Electric Vehicles
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/explore?category=SEDAN"
+                  className={isLight ? 'hover:text-black transition-colors' : 'hover:text-[#F6E7D7] transition-colors'}
+                >
+                  Touring Sedans
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h5
+              className={`text-[10px] font-mono uppercase tracking-widest mb-4 ${
+                isLight ? 'text-slate-500' : 'text-[#6B7783]'
+              }`}
+            >
+              Fleet Partners
+            </h5>
+            <ul className={`space-y-2.5 text-xs ${isLight ? 'text-slate-600' : 'text-[#D5DBE1]'}`}>
+              <li>
+                <Link
+                  to="/host"
+                  className={isLight ? 'hover:text-black transition-colors' : 'hover:text-[#F6E7D7] transition-colors'}
+                >
+                  Become a Host
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/register?role=VENDOR"
+                  className={isLight ? 'hover:text-black transition-colors' : 'hover:text-[#F6E7D7] transition-colors'}
+                >
+                  Host Registration
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/login"
+                  className={isLight ? 'hover:text-black transition-colors' : 'hover:text-[#F6E7D7] transition-colors'}
+                >
+                  Vendor Portal Login
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/how-it-works"
+                  className={isLight ? 'hover:text-black transition-colors' : 'hover:text-[#F6E7D7] transition-colors'}
+                >
+                  Escrow Guarantee
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h5
+              className={`text-[10px] font-mono uppercase tracking-widest mb-4 ${
+                isLight ? 'text-slate-500' : 'text-[#6B7783]'
+              }`}
+            >
+              Platform & Legal
+            </h5>
+            <ul className={`space-y-2.5 text-xs ${isLight ? 'text-slate-600' : 'text-[#D5DBE1]'}`}>
+              <li>
+                <Link
+                  to="/how-it-works"
+                  className={isLight ? 'hover:text-black transition-colors' : 'hover:text-[#F6E7D7] transition-colors'}
+                >
+                  Security Deposit Escrow
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/how-it-works"
+                  className={isLight ? 'hover:text-black transition-colors' : 'hover:text-[#F6E7D7] transition-colors'}
+                >
+                  Cancellation Schedule
+                </Link>
+              </li>
+              <li>
+                <span className={isLight ? 'text-slate-400 cursor-not-allowed' : 'text-[#6B7783] cursor-not-allowed'}>
+                  Terms of Service
+                </span>
+              </li>
+              <li>
+                <span className={isLight ? 'text-slate-400 cursor-not-allowed' : 'text-[#6B7783] cursor-not-allowed'}>
+                  Privacy & Telematics
+                </span>
+              </li>
+              <li>
+                <span className={isLight ? 'text-slate-400 cursor-not-allowed' : 'text-[#6B7783] cursor-not-allowed'}>
+                  Insurance Policy Terms
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Bottom Copyright & Status */}
+        <div
+          className={`pt-8 flex flex-col sm:flex-row items-center justify-between text-xs gap-4 ${
+            isLight ? 'text-slate-500' : 'text-[#6B7783]'
+          }`}
+        >
+          <div className="flex items-center space-x-2">
+            <span className="w-2 h-2 rounded-full bg-[#2D7DA6] animate-pulse" />
+            <span className="font-mono text-[11px]">System Status: All 5 Hubs Operational</span>
+          </div>
+
+          <p className="font-mono text-[11px] text-center sm:text-right">
+            © {new Date().getFullYear()} DriveLoop Technologies Ltd. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+};

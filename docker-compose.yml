@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  drivio-postgres:
+    image: postgres:16-alpine
+    container_name: drivio-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: drivio_user
+      POSTGRES_PASSWORD: drivio_password
+      POSTGRES_DB: drivio_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - drivio_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U drivio_user -d drivio_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  drivio-redis:
+    image: redis:7-alpine
+    container_name: drivio-redis
+    restart: unless-stopped
+    ports:
+      - "6381:6379"
+    volumes:
+      - drivio_redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  drivio_pg_data:
+  drivio_redis_data:
