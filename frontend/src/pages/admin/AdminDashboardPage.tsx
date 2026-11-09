@@ -634,7 +634,7 @@ export const AdminDashboardPage: React.FC = () => {
               <Car className="w-4 h-4" strokeWidth={2.2} />
             </div>
             <div>
-              <h1 className="font-display text-sm font-bold tracking-tight leading-none group-hover:text-blue-500 transition-colors">
+              <h1 className="font-display text-sm font-bold tracking-tight leading-none group-hover:text-white transition-colors">
                 DriveLux Rentals
               </h1>
               <p
@@ -839,7 +839,7 @@ export const AdminDashboardPage: React.FC = () => {
                         isLight ? 'hover:bg-slate-100 text-slate-700' : 'hover:bg-white/5 text-neutral-300'
                       }`}
                     >
-                      <Settings className="w-4 h-4 text-blue-500" />
+                      <Settings className="w-4 h-4 text-neutral-400" />
                       <span>Console Preferences</span>
                     </button>
 
@@ -1420,7 +1420,7 @@ export const AdminDashboardPage: React.FC = () => {
                                 ? 'bg-emerald-500/10 text-emerald-600'
                                 : b.status === 'PENDING'
                                 ? 'bg-amber-500/10 text-amber-600'
-                                : 'bg-blue-500/10 text-blue-600'
+                                : 'bg-white/10 text-white border border-white/20'
                             }`}
                           >
                             {b.status}
@@ -1567,7 +1567,7 @@ export const AdminDashboardPage: React.FC = () => {
               <div className="space-y-4">
                 <div className="flex justify-between items-center text-sm font-bold">
                   <span>Commission Percentage</span>
-                  <span className="text-blue-500 font-mono text-lg">{commissionRate}%</span>
+                  <span className="text-white font-mono text-lg">{commissionRate}%</span>
                 </div>
                 <input
                   type="range"
@@ -1576,12 +1576,12 @@ export const AdminDashboardPage: React.FC = () => {
                   step="0.5"
                   value={commissionRate}
                   onChange={(e) => setCommissionRate(parseFloat(e.target.value))}
-                  className="w-full accent-blue-600 cursor-pointer"
+                  className="w-full accent-white cursor-pointer"
                 />
                 <button
                   onClick={handleSaveCommission}
                   disabled={savingCommission}
-                  className="px-5 py-2 rounded-xl bg-blue-600 text-white font-bold text-xs"
+                  className="px-5 py-2 rounded-xl bg-white text-black hover:bg-neutral-200 font-bold text-xs transition-colors cursor-pointer"
                 >
                   {savingCommission ? 'Saving...' : 'Save Configuration'}
                 </button>
@@ -1628,7 +1628,7 @@ export const AdminDashboardPage: React.FC = () => {
                 >
                   <div className="flex items-center justify-between text-xs font-semibold mb-2">
                     <span className={isLight ? 'text-slate-500' : 'text-neutral-400'}>Refunded to Renters</span>
-                    <RefreshCw className="w-4 h-4 text-blue-500" />
+                    <RefreshCw className="w-4 h-4 text-neutral-400" />
                   </div>
                   <p className="text-2xl font-bold tracking-tight">{formatINR(18900)}</p>
                   <p className="text-[11px] text-neutral-400 font-medium mt-1">100% 24h deposit compliance</p>
@@ -1716,7 +1716,7 @@ export const AdminDashboardPage: React.FC = () => {
                                     ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20'
                                     : item.status === 'ESCROW_HELD'
                                     ? 'bg-amber-500/10 text-amber-500 border border-amber-500/20'
-                                    : 'bg-blue-500/10 text-blue-500 border border-blue-500/20'
+                                    : 'bg-white/10 text-white border border-white/20'
                                 }`}
                               >
                                 {item.status === 'SETTLED' ? 'Settled' : item.status === 'ESCROW_HELD' ? 'Escrow Deposit Held' : 'Deposit Refunded'}
@@ -1799,7 +1799,7 @@ export const AdminDashboardPage: React.FC = () => {
                             isLight ? 'bg-slate-100 text-slate-900' : 'bg-neutral-900 text-white'
                           }`}
                         >
-                          <Building2 className="w-4 h-4 text-amber-500" />
+                          <Building2 className={`w-4 h-4 ${isLight ? 'text-slate-800' : 'text-white'}`} />
                         </div>
                         <div>
                           <h4 className="font-bold text-sm tracking-tight">{hub.name}</h4>
@@ -1808,7 +1808,7 @@ export const AdminDashboardPage: React.FC = () => {
                           </span>
                         </div>
                       </div>
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 shrink-0">
+                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold shrink-0 ${isLight ? 'bg-slate-100 text-slate-800 border border-slate-300' : 'bg-white/10 text-white border border-white/20'}`}>
                         {hub.status}
                       </span>
                     </div>
@@ -1826,9 +1826,7 @@ export const AdminDashboardPage: React.FC = () => {
                       <div className="h-2 w-full rounded-full overflow-hidden bg-slate-100 dark:bg-neutral-800">
                         <div
                           style={{ width: `${hub.percent}%` }}
-                          className={`h-full rounded-full ${
-                            hub.percent > 85 ? 'bg-amber-500' : 'bg-blue-600'
-                          }`}
+                          className={`h-full rounded-full ${isLight ? 'bg-slate-900' : 'bg-white'}`}
                         />
                       </div>
                     </div>
@@ -1917,7 +1915,7 @@ export const AdminDashboardPage: React.FC = () => {
                                 item.priority === 'URGENT'
                                   ? 'bg-rose-500/10 text-rose-500 border border-rose-500/20'
                                   : item.priority === 'ROUTINE'
-                                  ? 'bg-blue-500/10 text-blue-500 border border-blue-500/20'
+                                  ? 'bg-white/10 text-white border border-white/20'
                                   : 'bg-neutral-500/10 text-neutral-400'
                               }`}
                             >
