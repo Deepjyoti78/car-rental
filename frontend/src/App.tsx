@@ -54,7 +54,7 @@ export const App: React.FC = () => {
       <BrowserRouter>
         <ScrollToTop />
         <div
-          className={`min-h-screen flex flex-col transition-colors duration-200 ${
+          className={`min-h-screen flex flex-col transition-colors duration-200 w-full overflow-x-hidden ${
             theme === 'light'
               ? 'bg-[#F4EFEA] text-[#111827] selection:bg-black selection:text-white'
               : 'bg-black text-white selection:bg-white selection:text-black'
