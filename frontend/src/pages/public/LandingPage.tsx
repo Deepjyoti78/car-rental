@@ -201,7 +201,7 @@ export const LandingPage: React.FC = () => {
         </div>
 
         {/* Center Hero Content */}
-        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 w-full flex-1 flex flex-col items-center justify-center pt-16 sm:pt-20 pb-4 text-center -mt-6 sm:-mt-10">
+        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 w-full flex-1 flex flex-col items-center justify-center pt-10 sm:pt-12 pb-4 text-center -mt-20 sm:-mt-32 lg:-mt-44">
           {/* Frosted Subtle Badge */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white text-[11px] sm:text-xs font-medium mb-3 shadow-sm">
             <Sparkles className="w-3.5 h-3.5 text-amber-400" />
