@@ -37,6 +37,17 @@ import {
   SlidersHorizontal,
   Sun,
   Moon,
+  FileText,
+  Building2,
+  Lock,
+  Bell,
+  LogOut,
+  ExternalLink,
+  Plus,
+  RefreshCw,
+  ArrowUpRight,
+  Zap,
+  Fuel,
 } from 'lucide-react';
 
 export const AdminDashboardPage: React.FC = () => {
@@ -65,6 +76,240 @@ export const AdminDashboardPage: React.FC = () => {
   // Commission Edit
   const [commissionRate, setCommissionRate] = useState<number>(10.0);
   const [savingCommission, setSavingCommission] = useState(false);
+  // Profile Popup Modal State
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+
+  // Tab Filter States
+  const [paymentFilter, setPaymentFilter] = useState<'ALL' | 'ESCROW' | 'COMPLETED' | 'REFUNDED'>('ALL');
+  const [maintenanceFilter, setMaintenanceFilter] = useState<'ALL' | 'IN_SERVICE' | 'SCHEDULED' | 'COMPLETED'>('ALL');
+
+  // Operational Settings State
+  const [settingsState, setSettingsState] = useState({
+    escrowRefundHours: 24,
+    autoFastagDeduction: true,
+    instantConfirmation: true,
+    razorpayLiveMode: false,
+    minFastagBalance: 1500,
+    notifyOnNewBooking: true,
+    autoModerateYellowPlates: true,
+  });
+  const [savingSettings, setSavingSettings] = useState(false);
+
+  // Maintenance & Locations state for interactivity
+  const [maintenanceList, setMaintenanceList] = useState([
+    {
+      id: 'm-1',
+      car: 'BMW X5 xDrive40i',
+      plate: 'DL-01-AX-9921',
+      serviceType: '15,000 km Scheduled Service & Brake Pad Inspection',
+      facility: 'Deutsche Motoren BMW Authorized Service, Okhla',
+      scheduledReturn: 'Tomorrow, 05:00 PM',
+      priority: 'ROUTINE',
+      cost: 18500,
+      status: 'IN_SERVICE',
+    },
+    {
+      id: 'm-2',
+      car: 'Tesla Model 3 Long Range',
+      plate: 'HR-26-EE-4102',
+      serviceType: 'Cabin Air Filter & High-Speed Wheel Balancing',
+      facility: 'DriveLoop EV SuperHub, Cyber City',
+      scheduledReturn: 'Today, 07:00 PM',
+      priority: 'NORMAL',
+      cost: 4200,
+      status: 'IN_SERVICE',
+    },
+    {
+      id: 'm-3',
+      car: 'Mahindra Thar 4x4 Hardtop',
+      plate: 'DL-03-TC-8820',
+      serviceType: 'Suspension Inspection & 4x4 Transfer Case Oil Renewal',
+      facility: 'Mahindra Prime Workshop, Gurgaon',
+      scheduledReturn: '11 Nov 2026',
+      priority: 'URGENT',
+      cost: 8900,
+      status: 'IN_SERVICE',
+    },
+    {
+      id: 'm-4',
+      car: 'Toyota Fortuner Legender',
+      plate: 'UP-16-BR-1100',
+      serviceType: 'Annual Commercial Fitness Inspection & Yellow Plate Renewal',
+      facility: 'Transport Authority Regional Testing Center',
+      scheduledReturn: '12 Nov 2026',
+      priority: 'SCHEDULED',
+      cost: 6500,
+      status: 'SCHEDULED',
+    },
+    {
+      id: 'm-5',
+      car: 'Hyundai Creta SX Turbo',
+      plate: 'DL-09-CD-3344',
+      serviceType: 'FASTag Balance Auto-Topup & Windshield Sensor Calibration',
+      facility: 'DriveLoop Fleet Hub, Aerocity',
+      scheduledReturn: 'Ready for Dispatch',
+      priority: 'NORMAL',
+      cost: 1500,
+      status: 'COMPLETED',
+    },
+  ]);
+
+  const [locationList, setLocationList] = useState([
+    {
+      id: 'hub-1',
+      name: 'Delhi NCR — IGI Airport Terminal 3',
+      city: 'Delhi',
+      category: 'Primary Airport Hub',
+      address: 'Terminal 3 Commercial Express Concourse, Aerocity, New Delhi',
+      capacity: '65 / 80 Vehicles',
+      percent: 81,
+      supervisor: 'Rajat Sharma',
+      phone: '+91 98110-23456',
+      status: 'OPERATIONAL',
+      fastagSync: 'Online',
+    },
+    {
+      id: 'hub-2',
+      name: 'Gurgaon — Cyber Hub DLF Phase 2',
+      city: 'Gurgaon',
+      category: 'Corporate Express Station',
+      address: 'Building 10 Ground Concourse, Cyber City, Gurgaon',
+      capacity: '42 / 50 Vehicles',
+      percent: 84,
+      supervisor: 'Priya Sen',
+      phone: '+91 98110-34567',
+      status: 'OPERATIONAL',
+      fastagSync: 'Online',
+    },
+    {
+      id: 'hub-3',
+      name: 'Noida — Sector 18 Central Station',
+      city: 'Noida',
+      category: 'Urban Metro Hub',
+      address: 'Atta Market Main Concourse, Sector 18, Noida',
+      capacity: '35 / 45 Vehicles',
+      percent: 77,
+      supervisor: 'Amit Varma',
+      phone: '+91 98110-45678',
+      status: 'OPERATIONAL',
+      fastagSync: 'Online',
+    },
+    {
+      id: 'hub-4',
+      name: 'Jaipur — Sanganer Airport Station',
+      city: 'Jaipur',
+      category: 'Heritage & Highway Hub',
+      address: 'Airport Departure Ring Concourse, Sanganer, Jaipur',
+      capacity: '28 / 40 Vehicles',
+      percent: 70,
+      supervisor: 'Vikram Rathore',
+      phone: '+91 98110-56789',
+      status: 'OPERATIONAL',
+      fastagSync: 'Online',
+    },
+    {
+      id: 'hub-5',
+      name: 'Chandigarh — Sector 17 City Center',
+      city: 'Chandigarh',
+      category: 'Hills Gateway Concourse',
+      address: 'Bridge Concourse, Sector 17-C, Chandigarh',
+      capacity: '30 / 35 Vehicles',
+      percent: 85,
+      supervisor: 'Gurpreet Singh',
+      phone: '+91 98110-67890',
+      status: 'OPERATIONAL',
+      fastagSync: 'Online',
+    },
+    {
+      id: 'hub-6',
+      name: 'Bengaluru — Kempegowda Airport T1',
+      city: 'Bengaluru',
+      category: 'Southern Tech Hub',
+      address: 'P4 Commercial Parking Concourse, Devanahalli, Bengaluru',
+      capacity: '40 / 50 Vehicles',
+      percent: 80,
+      supervisor: 'Karthik Menon',
+      phone: '+91 98110-78901',
+      status: 'OPERATIONAL',
+      fastagSync: 'Online',
+    },
+  ]);
+
+  const mockPayments = [
+    {
+      id: 'TXN-90124',
+      bookingCode: 'DL-90124',
+      customer: 'James Carter',
+      email: 'james.carter@gmail.com',
+      vehicle: 'Tesla Model 3 Electric',
+      amount: 3200,
+      escrowDeposit: 5000,
+      gateway: 'Razorpay UPI (Axis)',
+      status: 'ESCROW_HELD',
+      date: 'Today, 10:45 AM',
+    },
+    {
+      id: 'TXN-90123',
+      bookingCode: 'DL-90123',
+      customer: 'Sarah Mitchell',
+      email: 'sarah.mitchell@example.com',
+      vehicle: 'BMW X5 xDrive40i',
+      amount: 5400,
+      escrowDeposit: 10000,
+      gateway: 'Visa Card •••• 4242',
+      status: 'SETTLED',
+      date: 'Yesterday, 04:20 PM',
+    },
+    {
+      id: 'TXN-90122',
+      bookingCode: 'DL-90122',
+      customer: 'Daniel Thompson',
+      email: 'daniel.t@example.com',
+      vehicle: 'Toyota Camry Hybrid',
+      amount: 2100,
+      escrowDeposit: 5000,
+      gateway: 'HDFC NetBanking',
+      status: 'REFUNDED',
+      date: '08 Nov 2026, 11:30 AM',
+    },
+    {
+      id: 'TXN-90121',
+      bookingCode: 'DL-90121',
+      customer: 'Emily Roberts',
+      email: 'emily.roberts@example.com',
+      vehicle: 'Audi Q7 55 TFSI',
+      amount: 4800,
+      escrowDeposit: 10000,
+      gateway: 'Razorpay UPI (Google Pay)',
+      status: 'ESCROW_HELD',
+      date: '08 Nov 2026, 09:15 AM',
+    },
+    {
+      id: 'TXN-90120',
+      bookingCode: 'DL-90120',
+      customer: 'Michael Johnson',
+      email: 'michael.j@example.com',
+      vehicle: 'Hyundai Elantra Turbo',
+      amount: 1800,
+      escrowDeposit: 3000,
+      gateway: 'Mastercard •••• 8821',
+      status: 'SETTLED',
+      date: '07 Nov 2026, 06:10 PM',
+    },
+    {
+      id: 'TXN-90119',
+      bookingCode: 'DL-90119',
+      customer: 'Ananya Deshmukh',
+      email: 'ananya.d@example.com',
+      vehicle: 'Mahindra Thar 4x4',
+      amount: 2900,
+      escrowDeposit: 5000,
+      gateway: 'PhonePe UPI',
+      status: 'REFUNDED',
+      date: '06 Nov 2026, 02:45 PM',
+    },
+  ];
+
 
   // Ticket Reply Modal
   const [activeTicket, setActiveTicket] = useState<SupportTicket | null>(null);
@@ -184,6 +429,30 @@ export const AdminDashboardPage: React.FC = () => {
       showToast('Dashboard report link copied to clipboard!');
     }
   };
+
+  const handleEscrowRefund = (txnId: string) => {
+    showToast(`Security deposit escrow refund initiated for ${txnId} via Razorpay Gateway.`);
+  };
+
+  const handleCompleteMaintenance = (mId: string) => {
+    setMaintenanceList((prev) =>
+      prev.map((item) => (item.id === mId ? { ...item, status: 'COMPLETED', scheduledReturn: 'Ready for Dispatch' } : item))
+    );
+    showToast('Vehicle maintenance verified & car released back to active fleet.');
+  };
+
+  const handleAddLocation = () => {
+    showToast('New Regional Hub wizard initialized: Mumbai BKC Express Hub added to network.');
+  };
+
+  const handleSaveAllSettings = () => {
+    setSavingSettings(true);
+    setTimeout(() => {
+      setSavingSettings(false);
+      showToast('All marketplace operational parameters saved successfully.');
+    }, 600);
+  };
+
 
   // Sparkline generator helper
   const renderSparkline = (heights: number[], colorClass: string) => (
@@ -329,7 +598,7 @@ export const AdminDashboardPage: React.FC = () => {
   return (
     <div
       className={`h-screen w-screen overflow-hidden flex transition-colors duration-200 ${
-        isLight ? 'bg-white text-slate-900' : 'bg-[#0D0D0E] text-white'
+        isLight ? 'bg-white text-slate-900' : 'bg-black text-white'
       }`}
     >
       {/* Toast Notification */}
@@ -495,32 +764,146 @@ export const AdminDashboardPage: React.FC = () => {
             </p>
           </div>
 
-          {/* Administrator Profile Row */}
-          <div className="flex items-center justify-between px-1">
-            <div className="flex items-center space-x-2.5 min-w-0">
-              <img
-                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&q=80"
-                alt="Admin Avatar"
-                className="w-7 h-7 rounded-full object-cover border border-neutral-300 shrink-0"
-              />
-              <div className="min-w-0">
-                <p className="text-xs font-bold truncate leading-none">Alex Morgan</p>
-                <p className={`text-[10px] truncate mt-0.5 ${isLight ? 'text-slate-400' : 'text-neutral-400'}`}>
-                  Administrator
-                </p>
-              </div>
-            </div>
-            <button
-              onClick={logout}
-              title="Sign out"
-              className={`p-1.5 rounded-lg border text-xs cursor-pointer ${
-                isLight
-                  ? 'border-slate-200 hover:bg-slate-100 text-slate-600'
-                  : 'border-neutral-800 hover:bg-neutral-900 text-neutral-400 hover:text-white'
+          {/* Administrator Profile Row with Interactive Popover */}
+          <div className="relative">
+            {/* Interactive Profile Popup Modal */}
+            {isProfileOpen && (
+              <>
+                <div
+                  className="fixed inset-0 z-40"
+                  onClick={() => setIsProfileOpen(false)}
+                />
+                <div
+                  className={`absolute bottom-full left-0 mb-3 w-72 rounded-2xl border p-4 shadow-2xl z-50 animate-in fade-in slide-in-from-bottom-2 ${
+                    isLight
+                      ? 'bg-white border-slate-200 text-slate-900 shadow-[0_20px_50px_rgba(0,0,0,0.14)]'
+                      : 'bg-[#0A0A0A] border-neutral-800 text-white shadow-[0_25px_60px_rgba(0,0,0,0.95)]'
+                  }`}
+                >
+                  {/* Profile Header */}
+                  <div className="flex items-center space-x-3 pb-3 border-b border-slate-100 dark:border-neutral-800/80">
+                    <div className="relative">
+                      <img
+                        src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&q=80"
+                        alt="Admin Avatar"
+                        className="w-10 h-10 rounded-full object-cover border border-neutral-300 dark:border-neutral-700"
+                      />
+                      <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-black" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-1.5">
+                        <p className="text-xs font-bold truncate">Alex Morgan</p>
+                        <span className="px-1.5 py-0.5 rounded text-[9px] font-mono font-semibold bg-amber-500/10 text-amber-500 border border-amber-500/20">
+                          PRO
+                        </span>
+                      </div>
+                      <p className={`text-[10px] truncate ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
+                        admin@drivio.com
+                      </p>
+                      <p className="text-[10px] text-emerald-500 font-semibold mt-0.5 flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                        Super Administrator
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Actions & Settings List */}
+                  <div className="py-2.5 space-y-1 text-xs font-medium">
+                    {/* Theme Mode Toggle Button */}
+                    <button
+                      onClick={toggleTheme}
+                      className={`w-full flex items-center justify-between px-2.5 py-2 rounded-xl transition-colors cursor-pointer ${
+                        isLight ? 'hover:bg-slate-100 text-slate-700' : 'hover:bg-white/5 text-neutral-300'
+                      }`}
+                    >
+                      <div className="flex items-center space-x-2.5">
+                        {isLight ? <Moon className="w-4 h-4 text-indigo-500" /> : <Sun className="w-4 h-4 text-amber-400" />}
+                        <span>{isLight ? 'Switch to Black Mode' : 'Switch to Light Mode'}</span>
+                      </div>
+                      <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded ${isLight ? 'bg-slate-100 text-slate-500' : 'bg-neutral-800 text-neutral-400'}`}>
+                        {isLight ? 'Light' : 'OLED'}
+                      </span>
+                    </button>
+
+                    {/* Quick Settings */}
+                    <button
+                      onClick={() => {
+                        setActiveTab('settings');
+                        setIsProfileOpen(false);
+                      }}
+                      className={`w-full flex items-center space-x-2.5 px-2.5 py-2 rounded-xl transition-colors cursor-pointer ${
+                        isLight ? 'hover:bg-slate-100 text-slate-700' : 'hover:bg-white/5 text-neutral-300'
+                      }`}
+                    >
+                      <Settings className="w-4 h-4 text-blue-500" />
+                      <span>Console Preferences</span>
+                    </button>
+
+                    {/* Return to Public Site */}
+                    <Link
+                      to="/"
+                      onClick={() => setIsProfileOpen(false)}
+                      className={`w-full flex items-center justify-between px-2.5 py-2 rounded-xl transition-colors cursor-pointer ${
+                        isLight ? 'hover:bg-slate-100 text-slate-700' : 'hover:bg-white/5 text-neutral-300'
+                      }`}
+                    >
+                      <div className="flex items-center space-x-2.5">
+                        <ExternalLink className="w-4 h-4 text-emerald-500" />
+                        <span>Public Marketplace</span>
+                      </div>
+                      <ArrowUpRight className="w-3.5 h-3.5 opacity-60" />
+                    </Link>
+                  </div>
+
+                  {/* Sign Out Button */}
+                  <div className="pt-2 border-t border-slate-100 dark:border-neutral-800/80">
+                    <button
+                      onClick={logout}
+                      className="w-full flex items-center justify-center space-x-2 px-3 py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-500 text-xs font-bold transition-colors cursor-pointer"
+                    >
+                      <LogOut className="w-3.5 h-3.5" />
+                      <span>Sign Out of Console</span>
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {/* Administrator Profile Trigger Row */}
+            <div
+              onClick={() => setIsProfileOpen(!isProfileOpen)}
+              className={`flex items-center justify-between p-1.5 -mx-1 rounded-xl cursor-pointer transition-colors ${
+                isLight ? 'hover:bg-slate-100' : 'hover:bg-neutral-900'
               }`}
             >
-              <MoreVertical className="w-3.5 h-3.5" />
-            </button>
+              <div className="flex items-center space-x-2.5 min-w-0">
+                <div className="relative">
+                  <img
+                    src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&q=80"
+                    alt="Admin Avatar"
+                    className="w-7 h-7 rounded-full object-cover border border-neutral-300 dark:border-neutral-700 shrink-0"
+                  />
+                  <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-emerald-500 ring-1 ring-white dark:ring-black" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-xs font-bold truncate leading-none">Alex Morgan</p>
+                  <p className={`text-[10px] truncate mt-0.5 ${isLight ? 'text-slate-400' : 'text-neutral-400'}`}>
+                    Administrator
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                className={`p-1.5 rounded-lg border text-xs cursor-pointer ${
+                  isLight
+                    ? 'border-slate-200 hover:bg-slate-200 text-slate-600'
+                    : 'border-neutral-800 hover:bg-neutral-800 text-neutral-400 hover:text-white'
+                }`}
+                title="Account options"
+              >
+                <MoreVertical className="w-3.5 h-3.5" />
+              </button>
+            </div>
           </div>
         </div>
       </aside>
@@ -604,7 +987,7 @@ export const AdminDashboardPage: React.FC = () => {
                 {/* 1. Total Revenue */}
                 <div
                   className={`p-4 rounded-2xl border transition-all duration-200 shadow-xs space-y-3 ${
-                    isLight ? 'bg-white border-slate-200/80 hover:border-slate-300' : 'bg-[#131315] border-neutral-800 hover:border-neutral-700'
+                    isLight ? 'bg-white border-slate-200/80 hover:border-slate-300' : 'bg-[#0A0A0B] border-neutral-800 hover:border-neutral-700'
                   }`}
                 >
                   <div className="flex items-center space-x-2 text-xs font-medium opacity-80">
@@ -626,7 +1009,7 @@ export const AdminDashboardPage: React.FC = () => {
                 {/* 2. Active Rentals */}
                 <div
                   className={`p-4 rounded-2xl border transition-all duration-200 shadow-xs space-y-3 ${
-                    isLight ? 'bg-white border-slate-200/80 hover:border-slate-300' : 'bg-[#131315] border-neutral-800 hover:border-neutral-700'
+                    isLight ? 'bg-white border-slate-200/80 hover:border-slate-300' : 'bg-[#0A0A0B] border-neutral-800 hover:border-neutral-700'
                   }`}
                 >
                   <div className="flex items-center space-x-2 text-xs font-medium opacity-80">
@@ -648,7 +1031,7 @@ export const AdminDashboardPage: React.FC = () => {
                 {/* 3. Available Cars */}
                 <div
                   className={`p-4 rounded-2xl border transition-all duration-200 shadow-xs space-y-3 ${
-                    isLight ? 'bg-white border-slate-200/80 hover:border-slate-300' : 'bg-[#131315] border-neutral-800 hover:border-neutral-700'
+                    isLight ? 'bg-white border-slate-200/80 hover:border-slate-300' : 'bg-[#0A0A0B] border-neutral-800 hover:border-neutral-700'
                   }`}
                 >
                   <div className="flex items-center space-x-2 text-xs font-medium opacity-80">
@@ -670,7 +1053,7 @@ export const AdminDashboardPage: React.FC = () => {
                 {/* 4. Cars in Maintenance */}
                 <div
                   className={`p-4 rounded-2xl border transition-all duration-200 shadow-xs space-y-3 ${
-                    isLight ? 'bg-white border-slate-200/80 hover:border-slate-300' : 'bg-[#131315] border-neutral-800 hover:border-neutral-700'
+                    isLight ? 'bg-white border-slate-200/80 hover:border-slate-300' : 'bg-[#0A0A0B] border-neutral-800 hover:border-neutral-700'
                   }`}
                 >
                   <div className="flex items-center space-x-2 text-xs font-medium opacity-80">
@@ -697,7 +1080,7 @@ export const AdminDashboardPage: React.FC = () => {
                   {/* Card 1: Rental Overview Bar Chart */}
                   <div
                     className={`p-5 sm:p-6 rounded-2xl border shadow-xs space-y-6 ${
-                      isLight ? 'bg-white border-slate-200/80' : 'bg-[#131315] border-neutral-800'
+                      isLight ? 'bg-white border-slate-200/80' : 'bg-[#0A0A0B] border-neutral-800'
                     }`}
                   >
                     {/* Header with Period Selector */}
@@ -793,7 +1176,7 @@ export const AdminDashboardPage: React.FC = () => {
                   {/* Card 2: Recent Reservations Table */}
                   <div
                     className={`p-5 sm:p-6 rounded-2xl border shadow-xs space-y-4 ${
-                      isLight ? 'bg-white border-slate-200/80' : 'bg-[#131315] border-neutral-800'
+                      isLight ? 'bg-white border-slate-200/80' : 'bg-[#0A0A0B] border-neutral-800'
                     }`}
                   >
                     <div className="flex items-center justify-between">
@@ -940,7 +1323,7 @@ export const AdminDashboardPage: React.FC = () => {
                   {/* Card 1: Featured Vehicle */}
                   <div
                     className={`p-5 rounded-2xl border shadow-xs space-y-4 ${
-                      isLight ? 'bg-white border-slate-200/80' : 'bg-[#131315] border-neutral-800'
+                      isLight ? 'bg-white border-slate-200/80' : 'bg-[#0A0A0B] border-neutral-800'
                     }`}
                   >
                     <div className="flex items-center justify-between">
@@ -1022,7 +1405,7 @@ export const AdminDashboardPage: React.FC = () => {
                   {/* Card 2: Fleet Performance */}
                   <div
                     className={`p-5 rounded-2xl border shadow-xs space-y-4 ${
-                      isLight ? 'bg-white border-slate-200/80' : 'bg-[#131315] border-neutral-800'
+                      isLight ? 'bg-white border-slate-200/80' : 'bg-[#0A0A0B] border-neutral-800'
                     }`}
                   >
                     <div className="flex items-center justify-between">
@@ -1094,7 +1477,7 @@ export const AdminDashboardPage: React.FC = () => {
           {activeTab === 'reservations' && (
             <div
               className={`p-6 rounded-2xl border shadow-xs space-y-4 ${
-                isLight ? 'bg-white border-slate-200/80' : 'bg-[#131315] border-neutral-800'
+                isLight ? 'bg-white border-slate-200/80' : 'bg-[#0A0A0B] border-neutral-800'
               }`}
             >
               <div className="flex justify-between items-center">
@@ -1144,7 +1527,7 @@ export const AdminDashboardPage: React.FC = () => {
           {activeTab === 'fleet' && (
             <div
               className={`p-6 rounded-2xl border shadow-xs space-y-4 ${
-                isLight ? 'bg-white border-slate-200/80' : 'bg-[#131315] border-neutral-800'
+                isLight ? 'bg-white border-slate-200/80' : 'bg-[#0A0A0B] border-neutral-800'
               }`}
             >
               <div className="flex justify-between items-center">
@@ -1198,7 +1581,7 @@ export const AdminDashboardPage: React.FC = () => {
           {activeTab === 'vendors' && (
             <div
               className={`p-6 rounded-2xl border shadow-xs space-y-4 ${
-                isLight ? 'bg-white border-slate-200/80' : 'bg-[#131315] border-neutral-800'
+                isLight ? 'bg-white border-slate-200/80' : 'bg-[#0A0A0B] border-neutral-800'
               }`}
             >
               <div className="flex justify-between items-center">
@@ -1251,7 +1634,7 @@ export const AdminDashboardPage: React.FC = () => {
           {activeTab === 'commission' && (
             <div
               className={`p-6 rounded-2xl border shadow-xs space-y-6 max-w-xl ${
-                isLight ? 'bg-white border-slate-200/80' : 'bg-[#131315] border-neutral-800'
+                isLight ? 'bg-white border-slate-200/80' : 'bg-[#0A0A0B] border-neutral-800'
               }`}
             >
               <div>
@@ -1285,6 +1668,533 @@ export const AdminDashboardPage: React.FC = () => {
               </div>
             </div>
           )}
+          {/* ========================================================== */}
+          {/* TAB 6: PAYMENTS & ESCROW LEDGER */}
+          {/* ========================================================== */}
+          {activeTab === 'payments' && (
+            <div className="space-y-6">
+              {/* Metric KPI Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div
+                  className={`p-4 rounded-2xl border transition-all ${
+                    isLight ? 'bg-white border-slate-200/80 shadow-xs' : 'bg-[#0A0A0B] border-neutral-800'
+                  }`}
+                >
+                  <div className="flex items-center justify-between text-xs font-semibold mb-2">
+                    <span className={isLight ? 'text-slate-500' : 'text-neutral-400'}>Gross Rental Volume</span>
+                    <DollarSign className="w-4 h-4 text-emerald-500" />
+                  </div>
+                  <p className="text-2xl font-bold tracking-tight">{formatINR(stats?.totalRevenue || 128450)}</p>
+                  <p className="text-[11px] text-emerald-500 font-semibold mt-1">↑ 14.2% settlement velocity</p>
+                </div>
+
+                <div
+                  className={`p-4 rounded-2xl border transition-all ${
+                    isLight ? 'bg-white border-slate-200/80 shadow-xs' : 'bg-[#0A0A0B] border-neutral-800'
+                  }`}
+                >
+                  <div className="flex items-center justify-between text-xs font-semibold mb-2">
+                    <span className={isLight ? 'text-slate-500' : 'text-neutral-400'}>Active Escrow Deposits</span>
+                    <ShieldCheck className="w-4 h-4 text-amber-500" />
+                  </div>
+                  <p className="text-2xl font-bold tracking-tight">{formatINR(42500)}</p>
+                  <p className="text-[11px] text-amber-500 font-semibold mt-1">Held in 24h refundable escrow</p>
+                </div>
+
+                <div
+                  className={`p-4 rounded-2xl border transition-all ${
+                    isLight ? 'bg-white border-slate-200/80 shadow-xs' : 'bg-[#0A0A0B] border-neutral-800'
+                  }`}
+                >
+                  <div className="flex items-center justify-between text-xs font-semibold mb-2">
+                    <span className={isLight ? 'text-slate-500' : 'text-neutral-400'}>Refunded to Renters</span>
+                    <RefreshCw className="w-4 h-4 text-blue-500" />
+                  </div>
+                  <p className="text-2xl font-bold tracking-tight">{formatINR(18900)}</p>
+                  <p className="text-[11px] text-neutral-400 font-medium mt-1">100% 24h deposit compliance</p>
+                </div>
+
+                <div
+                  className={`p-4 rounded-2xl border transition-all ${
+                    isLight ? 'bg-white border-slate-200/80 shadow-xs' : 'bg-[#0A0A0B] border-neutral-800'
+                  }`}
+                >
+                  <div className="flex items-center justify-between text-xs font-semibold mb-2">
+                    <span className={isLight ? 'text-slate-500' : 'text-neutral-400'}>Payment Gateway</span>
+                    <Zap className="w-4 h-4 text-amber-400" />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                    <span className="font-bold text-sm">Razorpay UPI & Cards</span>
+                  </div>
+                  <p className="text-[11px] text-emerald-500 font-semibold mt-1">Zero downtime recorded</p>
+                </div>
+              </div>
+
+              {/* Transactions Table */}
+              <div
+                className={`p-5 sm:p-6 rounded-2xl border shadow-xs space-y-4 ${
+                  isLight ? 'bg-white border-slate-200/80' : 'bg-[#0A0A0B] border-neutral-800'
+                }`}
+              >
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div>
+                    <h3 className="font-bold text-base">Transactions & Escrow Ledger</h3>
+                    <p className={`text-xs mt-0.5 ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
+                      Automated 24h security deposit escrow refunds and booking payment records
+                    </p>
+                  </div>
+                  {/* Filter Pills */}
+                  <div className="flex items-center gap-1.5 p-1 rounded-xl bg-slate-100 dark:bg-neutral-900 border border-slate-200/60 dark:border-neutral-800 text-xs font-semibold">
+                    {(['ALL', 'ESCROW', 'COMPLETED', 'REFUNDED'] as const).map((f) => (
+                      <button
+                        key={f}
+                        onClick={() => setPaymentFilter(f)}
+                        className={`px-3 py-1 rounded-lg transition-all cursor-pointer ${
+                          paymentFilter === f
+                            ? isLight
+                              ? 'bg-white text-slate-900 shadow-xs'
+                              : 'bg-neutral-800 text-white'
+                            : isLight
+                            ? 'text-slate-600 hover:text-slate-900'
+                            : 'text-neutral-400 hover:text-white'
+                        }`}
+                      >
+                        {f === 'ALL' ? 'All Ledger' : f === 'ESCROW' ? 'Escrow Held' : f === 'COMPLETED' ? 'Settled' : 'Refunded'}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Ledger Items */}
+                <div className="divide-y divide-slate-100 dark:divide-neutral-900">
+                  {mockPayments
+                    .filter((p) => {
+                      if (paymentFilter === 'ESCROW') return p.status === 'ESCROW_HELD';
+                      if (paymentFilter === 'COMPLETED') return p.status === 'SETTLED';
+                      if (paymentFilter === 'REFUNDED') return p.status === 'REFUNDED';
+                      return true;
+                    })
+                    .map((item) => (
+                      <div key={item.id} className="py-4 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                        <div className="flex items-center space-x-3 min-w-0">
+                          <div
+                            className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold text-xs shrink-0 ${
+                              isLight ? 'bg-slate-100 text-slate-800' : 'bg-neutral-900 text-white'
+                            }`}
+                          >
+                            <CreditCard className="w-5 h-5 text-amber-400" />
+                          </div>
+                          <div className="min-w-0">
+                            <div className="flex items-center gap-2">
+                              <span className="font-mono text-xs font-bold">{item.id}</span>
+                              <span className="text-neutral-400 text-xs">•</span>
+                              <span className="font-semibold text-xs">{item.customer}</span>
+                              <span
+                                className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                                  item.status === 'SETTLED'
+                                    ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20'
+                                    : item.status === 'ESCROW_HELD'
+                                    ? 'bg-amber-500/10 text-amber-500 border border-amber-500/20'
+                                    : 'bg-blue-500/10 text-blue-500 border border-blue-500/20'
+                                }`}
+                              >
+                                {item.status === 'SETTLED' ? 'Settled' : item.status === 'ESCROW_HELD' ? 'Escrow Deposit Held' : 'Deposit Refunded'}
+                              </span>
+                            </div>
+                            <p className={`text-xs mt-0.5 ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
+                              {item.vehicle} • Gateway: {item.gateway} • {item.date}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between lg:justify-end gap-5">
+                          <div className="text-right">
+                            <p className="font-bold text-sm leading-tight">{formatINR(item.amount)}</p>
+                            <p className={`text-[11px] font-mono ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
+                              + {formatINR(item.escrowDeposit)} Escrow
+                            </p>
+                          </div>
+                          {item.status === 'ESCROW_HELD' && (
+                            <button
+                              onClick={() => handleEscrowRefund(item.id)}
+                              className="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-black font-bold text-xs transition-colors cursor-pointer shadow-xs"
+                            >
+                              Release Deposit
+                            </button>
+                          )}
+                          <button
+                            onClick={() => showToast(`Invoice PDF downloaded for ${item.id}`)}
+                            className={`p-2 rounded-xl border text-xs cursor-pointer ${
+                              isLight ? 'border-slate-200 hover:bg-slate-100 text-slate-700' : 'border-neutral-800 hover:bg-neutral-900 text-neutral-300'
+                            }`}
+                            title="Download Receipt"
+                          >
+                            <Download className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ========================================================== */}
+          {/* TAB 7: REGIONAL HUBS & LOCATIONS */}
+          {/* ========================================================== */}
+          {activeTab === 'locations' && (
+            <div className="space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <h3 className="font-bold text-base">Regional Hubs & Station Network</h3>
+                  <p className={`text-xs mt-0.5 ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
+                    Real-time capacity tracking, airport delivery bays, and dispatch supervisor contacts
+                  </p>
+                </div>
+                <button
+                  onClick={handleAddLocation}
+                  className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center space-x-1.5 transition-all cursor-pointer shadow-sm ${
+                    isLight ? 'bg-black text-white hover:bg-slate-800' : 'bg-white text-black hover:bg-neutral-200'
+                  }`}
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Provision New Hub</span>
+                </button>
+              </div>
+
+              {/* Hub Cards Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {locationList.map((hub) => (
+                  <div
+                    key={hub.id}
+                    className={`p-5 rounded-2xl border transition-all space-y-4 ${
+                      isLight ? 'bg-white border-slate-200/80 shadow-xs' : 'bg-[#0A0A0B] border-neutral-800'
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex items-center space-x-3">
+                        <div
+                          className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-xs shrink-0 ${
+                            isLight ? 'bg-slate-100 text-slate-900' : 'bg-neutral-900 text-white'
+                          }`}
+                        >
+                          <Building2 className="w-4 h-4 text-amber-500" />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-sm tracking-tight">{hub.name}</h4>
+                          <span className={`text-[10px] font-mono ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
+                            {hub.category}
+                          </span>
+                        </div>
+                      </div>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 shrink-0">
+                        {hub.status}
+                      </span>
+                    </div>
+
+                    <p className={`text-xs leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
+                      {hub.address}
+                    </p>
+
+                    {/* Capacity Bar */}
+                    <div className="space-y-1.5">
+                      <div className="flex justify-between text-[11px] font-semibold">
+                        <span className={isLight ? 'text-slate-500' : 'text-neutral-400'}>Bay Capacity</span>
+                        <span className="font-mono">{hub.capacity} ({hub.percent}%)</span>
+                      </div>
+                      <div className="h-2 w-full rounded-full overflow-hidden bg-slate-100 dark:bg-neutral-800">
+                        <div
+                          style={{ width: `${hub.percent}%` }}
+                          className={`h-full rounded-full ${
+                            hub.percent > 85 ? 'bg-amber-500' : 'bg-blue-600'
+                          }`}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="pt-2 border-t border-slate-100 dark:border-neutral-900 flex items-center justify-between text-xs">
+                      <div>
+                        <p className={`text-[10px] ${isLight ? 'text-slate-400' : 'text-neutral-500'}`}>Supervisor</p>
+                        <p className="font-semibold">{hub.supervisor}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className={`text-[10px] ${isLight ? 'text-slate-400' : 'text-neutral-500'}`}>Helpline</p>
+                        <p className="font-mono font-medium">{hub.phone}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* ========================================================== */}
+          {/* TAB 8: FLEET SERVICE & MAINTENANCE */}
+          {/* ========================================================== */}
+          {activeTab === 'maintenance' && (
+            <div className="space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <h3 className="font-bold text-base">Fleet Service & Maintenance Tracker</h3>
+                  <p className={`text-xs mt-0.5 ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
+                    Periodic service schedules, safety inspections, brake/tire replacements, and FASTag checks
+                  </p>
+                </div>
+                {/* Status Tabs */}
+                <div className="flex items-center gap-1.5 p-1 rounded-xl bg-slate-100 dark:bg-neutral-900 border border-slate-200/60 dark:border-neutral-800 text-xs font-semibold">
+                  {(['ALL', 'IN_SERVICE', 'SCHEDULED', 'COMPLETED'] as const).map((f) => (
+                    <button
+                      key={f}
+                      onClick={() => setMaintenanceFilter(f)}
+                      className={`px-3 py-1 rounded-lg transition-all cursor-pointer ${
+                        maintenanceFilter === f
+                          ? isLight
+                            ? 'bg-white text-slate-900 shadow-xs'
+                            : 'bg-neutral-800 text-white'
+                          : isLight
+                          ? 'text-slate-600 hover:text-slate-900'
+                          : 'text-neutral-400 hover:text-white'
+                      }`}
+                    >
+                      {f === 'ALL' ? 'All (18)' : f === 'IN_SERVICE' ? 'In Service' : f === 'SCHEDULED' ? 'Scheduled' : 'Completed'}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Maintenance Cards */}
+              <div className="space-y-3">
+                {maintenanceList
+                  .filter((m) => (maintenanceFilter === 'ALL' ? true : m.status === maintenanceFilter))
+                  .map((item) => (
+                    <div
+                      key={item.id}
+                      className={`p-4 sm:p-5 rounded-2xl border transition-all flex flex-col md:flex-row md:items-center justify-between gap-4 ${
+                        isLight ? 'bg-white border-slate-200/80 shadow-xs' : 'bg-[#0A0A0B] border-neutral-800'
+                      }`}
+                    >
+                      <div className="flex items-center space-x-3.5 min-w-0">
+                        <div
+                          className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold text-xs shrink-0 ${
+                            item.priority === 'URGENT'
+                              ? 'bg-rose-500/10 text-rose-500 border border-rose-500/20'
+                              : isLight
+                              ? 'bg-slate-100 text-slate-800'
+                              : 'bg-neutral-900 text-white'
+                          }`}
+                        >
+                          <Wrench className="w-5 h-5 text-amber-500" />
+                        </div>
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-2">
+                            <h4 className="font-bold text-sm truncate">{item.car}</h4>
+                            <span className="font-mono text-xs px-2 py-0.5 rounded bg-slate-100 dark:bg-neutral-800 font-semibold">
+                              {item.plate}
+                            </span>
+                            <span
+                              className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                                item.priority === 'URGENT'
+                                  ? 'bg-rose-500/10 text-rose-500 border border-rose-500/20'
+                                  : item.priority === 'ROUTINE'
+                                  ? 'bg-blue-500/10 text-blue-500 border border-blue-500/20'
+                                  : 'bg-neutral-500/10 text-neutral-400'
+                              }`}
+                            >
+                              {item.priority}
+                            </span>
+                          </div>
+                          <p className={`text-xs mt-1 ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
+                            {item.serviceType} • Authorized Partner: {item.facility}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between md:justify-end gap-5 shrink-0">
+                        <div className="text-right">
+                          <p className="text-xs font-semibold">{item.scheduledReturn}</p>
+                          <p className={`text-[11px] font-mono mt-0.5 ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
+                            Estimated: {formatINR(item.cost)}
+                          </p>
+                        </div>
+                        {item.status !== 'COMPLETED' ? (
+                          <button
+                            onClick={() => handleCompleteMaintenance(item.id)}
+                            className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-colors cursor-pointer shadow-xs flex items-center gap-1.5"
+                          >
+                            <CheckCircle2 className="w-3.5 h-3.5" />
+                            <span>Mark Completed</span>
+                          </button>
+                        ) : (
+                          <span className="px-3 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-500 font-bold text-xs flex items-center gap-1 border border-emerald-500/20">
+                            <Check className="w-3.5 h-3.5" />
+                            <span>Active in Fleet</span>
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          )}
+
+          {/* ========================================================== */}
+          {/* TAB 9: PLATFORM SETTINGS */}
+          {/* ========================================================== */}
+          {activeTab === 'settings' && (
+            <div className="max-w-4xl space-y-6">
+              <div>
+                <h3 className="font-bold text-base">Platform Operations & Policy Settings</h3>
+                <p className={`text-xs mt-0.5 ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
+                  Configure automated escrow release timers, FASTag integrations, and listing verification rules
+                </p>
+              </div>
+
+              {/* Group 1: Marketplace Escrow & Commission */}
+              <div
+                className={`p-6 rounded-2xl border shadow-xs space-y-5 ${
+                  isLight ? 'bg-white border-slate-200/80' : 'bg-[#0A0A0B] border-neutral-800'
+                }`}
+              >
+                <div className="flex items-center space-x-2 text-sm font-bold">
+                  <ShieldCheck className="w-4 h-4 text-emerald-500" />
+                  <h4>Escrow & Security Deposit Rules</h4>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label className={`block text-xs font-semibold ${isLight ? 'text-slate-700' : 'text-neutral-300'}`}>
+                      Automated Escrow Refund Window (Hours)
+                    </label>
+                    <input
+                      type="number"
+                      value={settingsState.escrowRefundHours}
+                      onChange={(e) =>
+                        setSettingsState({ ...settingsState, escrowRefundHours: parseInt(e.target.value) || 24 })
+                      }
+                      className={`w-full px-3 py-2 rounded-xl text-xs font-semibold border ${
+                        isLight ? 'border-slate-200 bg-white text-black' : 'border-neutral-800 bg-neutral-900 text-white'
+                      }`}
+                    />
+                    <p className={`text-[10px] ${isLight ? 'text-slate-400' : 'text-neutral-500'}`}>
+                      Default: 24h refundable deposit returned after vehicle return inspection.
+                    </p>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className={`block text-xs font-semibold ${isLight ? 'text-slate-700' : 'text-neutral-300'}`}>
+                      Minimum Fleet FASTag Balance (₹)
+                    </label>
+                    <input
+                      type="number"
+                      value={settingsState.minFastagBalance}
+                      onChange={(e) =>
+                        setSettingsState({ ...settingsState, minFastagBalance: parseInt(e.target.value) || 1500 })
+                      }
+                      className={`w-full px-3 py-2 rounded-xl text-xs font-semibold border ${
+                        isLight ? 'border-slate-200 bg-white text-black' : 'border-neutral-800 bg-neutral-900 text-white'
+                      }`}
+                    />
+                    <p className={`text-[10px] ${isLight ? 'text-slate-400' : 'text-neutral-500'}`}>
+                      Vehicles below this threshold are routed for automated top-up.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Toggles */}
+                <div className="divide-y divide-slate-100 dark:divide-neutral-900 pt-2">
+                  <div className="py-3 flex items-center justify-between">
+                    <div>
+                      <p className="text-xs font-bold">Automated NHAI NETC FASTag Toll Reconciliation</p>
+                      <p className={`text-[11px] ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
+                        Transparently deduct actual highway toll charges upon trip completion
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setSettingsState({ ...settingsState, autoFastagDeduction: !settingsState.autoFastagDeduction })
+                      }
+                      className={`w-11 h-6 rounded-full transition-colors relative cursor-pointer ${
+                        settingsState.autoFastagDeduction ? 'bg-emerald-600' : 'bg-neutral-700'
+                      }`}
+                    >
+                      <span
+                        className={`block w-4 h-4 rounded-full bg-white transition-transform absolute top-1 ${
+                          settingsState.autoFastagDeduction ? 'left-6' : 'left-1'
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  <div className="py-3 flex items-center justify-between">
+                    <div>
+                      <p className="text-xs font-bold">Instant Booking Auto-Confirmation</p>
+                      <p className={`text-[11px] ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
+                        Skip manual host review for KYC-verified customers on instant-ready fleet
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setSettingsState({ ...settingsState, instantConfirmation: !settingsState.instantConfirmation })
+                      }
+                      className={`w-11 h-6 rounded-full transition-colors relative cursor-pointer ${
+                        settingsState.instantConfirmation ? 'bg-emerald-600' : 'bg-neutral-700'
+                      }`}
+                    >
+                      <span
+                        className={`block w-4 h-4 rounded-full bg-white transition-transform absolute top-1 ${
+                          settingsState.instantConfirmation ? 'left-6' : 'left-1'
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  <div className="py-3 flex items-center justify-between">
+                    <div>
+                      <p className="text-xs font-bold">Commercial Yellow Plate Compliance Check</p>
+                      <p className={`text-[11px] ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
+                        Strict verification preventing private white-plate cars from listing on marketplace
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setSettingsState({
+                          ...settingsState,
+                          autoModerateYellowPlates: !settingsState.autoModerateYellowPlates,
+                        })
+                      }
+                      className={`w-11 h-6 rounded-full transition-colors relative cursor-pointer ${
+                        settingsState.autoModerateYellowPlates ? 'bg-emerald-600' : 'bg-neutral-700'
+                      }`}
+                    >
+                      <span
+                        className={`block w-4 h-4 rounded-full bg-white transition-transform absolute top-1 ${
+                          settingsState.autoModerateYellowPlates ? 'left-6' : 'left-1'
+                        }`}
+                      />
+                    </button>
+                  </div>
+                </div>
+
+                <div className="pt-2 flex justify-end">
+                  <button
+                    onClick={handleSaveAllSettings}
+                    disabled={savingSettings}
+                    className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer shadow-sm ${
+                      isLight ? 'bg-black text-white hover:bg-slate-800' : 'bg-white text-black hover:bg-neutral-200'
+                    }`}
+                  >
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    <span>{savingSettings ? 'Saving Policies...' : 'Save System Settings'}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
         </main>
     </div>
   );
