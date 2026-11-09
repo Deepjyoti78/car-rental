@@ -212,9 +212,9 @@ const columns = columnHelper.columns([
     cell: ({ row }) => (
       <Badge variant="outline" className="px-1.5 text-xs text-muted-foreground gap-1">
         {row.original.status === "Done" ? (
-          <IconCircleCheckFilled className="size-3.5 fill-green-500 dark:fill-green-400" />
+          <IconCircleCheckFilled className="size-3.5 fill-foreground text-foreground" />
         ) : (
-          <IconLoader className="size-3.5 animate-spin text-amber-500" />
+          <IconLoader className="size-3.5 animate-spin text-muted-foreground" />
         )}
         {row.original.status}
       </Badge>
@@ -747,7 +747,7 @@ function TableCellViewer({ item }: { item: z.infer<typeof schema> }) {
               </ChartContainer>
               <Separator />
               <div className="grid gap-1.5">
-                <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-500">
+                <div className="flex items-center gap-1.5 text-xs font-semibold text-foreground">
                   <IconTrendingUp className="size-4" />
                   <span>Fleet dispatch completion trending up 8.4% this quarter</span>
                 </div>

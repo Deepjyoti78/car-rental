@@ -5,6 +5,7 @@ import { useThemeStore } from '../../store/themeStore';
 import { adminService } from '../../services/adminService';
 import { Booking, Refund, SupportTicket, Vehicle, Vendor } from '../../types';
 import { formatINR, formatDate, formatDateTime, getStatusBadgeClass } from '../../utils/format';
+import { ChartAreaInteractive } from '../../components/chart-area-interactive';
 import {
   LayoutDashboard,
   CalendarCheck,
@@ -745,18 +746,18 @@ export const AdminDashboardPage: React.FC = () => {
           <div
             className={`p-3 rounded-xl border relative overflow-hidden ${
               isLight
-                ? 'bg-gradient-to-br from-amber-50/80 via-white to-orange-50/60 border-amber-200/60 text-slate-800'
-                : 'bg-gradient-to-br from-amber-950/20 via-black to-neutral-900/60 border-amber-500/20 text-white'
+                ? 'bg-slate-100 border-slate-200 text-slate-900'
+                : 'bg-neutral-900/70 border-neutral-800 text-white'
             }`}
           >
             <div className="flex items-center justify-between mb-1">
-              <div className="flex items-center space-x-1.5 text-amber-500">
-                <Sparkles className="w-3.5 h-3.5" />
-                <span className="text-[11px] font-bold tracking-tight">Upgrade to Pro</span>
+              <div className="flex items-center space-x-1.5 text-neutral-300">
+                <Sparkles className="w-3.5 h-3.5 text-neutral-300" />
+                <span className="text-[11px] font-bold tracking-tight text-white dark:text-neutral-200">Upgrade to Pro</span>
               </div>
               <button
                 onClick={() => showToast('Enterprise Pro tier features active on this instance.')}
-                className="inline-flex items-center space-x-0.5 text-[10px] font-bold text-amber-500 hover:text-amber-600 cursor-pointer"
+                className="inline-flex items-center space-x-0.5 text-[10px] font-bold text-neutral-300 hover:text-white cursor-pointer"
               >
                 <span>Upgrade</span>
                 <ArrowRight className="w-3 h-3" />
@@ -796,15 +797,15 @@ export const AdminDashboardPage: React.FC = () => {
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-1.5">
                         <p className="text-xs font-bold truncate">Alex Morgan</p>
-                        <span className="px-1.5 py-0.5 rounded text-[9px] font-mono font-semibold bg-amber-500/10 text-amber-500 border border-amber-500/20">
+                        <span className="px-1.5 py-0.5 rounded text-[9px] font-mono font-semibold bg-white/10 text-white border border-white/20">
                           PRO
                         </span>
                       </div>
                       <p className={`text-[10px] truncate ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
                         admin@drivio.com
                       </p>
-                      <p className="text-[10px] text-emerald-500 font-semibold mt-0.5 flex items-center gap-1">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      <p className="text-[10px] text-neutral-400 font-semibold mt-0.5 flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                         Super Administrator
                       </p>
                     </div>
@@ -929,7 +930,7 @@ export const AdminDashboardPage: React.FC = () => {
               {/* Fleet Ops (shadcn) Navigation */}
               <Link
                 to="/fleet-ops"
-                className="px-3.5 py-1.5 rounded-xl border text-xs font-semibold flex items-center space-x-1.5 transition-all cursor-pointer shadow-xs bg-blue-600 hover:bg-blue-500 text-white border-blue-500"
+                className="px-3.5 py-1.5 rounded-xl border text-xs font-semibold flex items-center space-x-1.5 transition-all cursor-pointer shadow-xs bg-neutral-900 text-white hover:bg-neutral-800 border-neutral-700"
               >
                 <Layers className="w-3.5 h-3.5" />
                 <span>Fleet Ops Console</span>
@@ -1003,19 +1004,19 @@ export const AdminDashboardPage: React.FC = () => {
                   }`}
                 >
                   <div className="flex items-center space-x-2 text-xs font-medium opacity-80">
-                    <DollarSign className="w-4 h-4 text-emerald-500" />
+                    <DollarSign className="w-4 h-4 text-white" />
                     <span>Total Revenue</span>
                   </div>
                   <div className="space-y-1">
                     <p className="text-2xl font-bold tracking-tight">
                       ${((stats?.grossBookingValue || 12845000) / 100).toLocaleString('en-US', { maximumFractionDigits: 0 })}
                     </p>
-                    <div className="flex items-center space-x-1.5 text-[11px] font-semibold text-emerald-500">
+                    <div className="flex items-center space-x-1.5 text-[11px] font-semibold text-neutral-300">
                       <span>↑ 12.4%</span>
                       <span className={isLight ? 'text-slate-400' : 'text-neutral-500'}>vs last month</span>
                     </div>
                   </div>
-                  {renderSparkline([20, 35, 45, 30, 50, 65, 40, 60, 75, 55, 70, 85, 60, 80, 95, 70, 88, 100], isLight ? 'bg-blue-600' : 'bg-blue-500')}
+                  {renderSparkline([20, 35, 45, 30, 50, 65, 40, 60, 75, 55, 70, 85, 60, 80, 95, 70, 88, 100], isLight ? 'bg-slate-700' : 'bg-white/80')}
                 </div>
 
                 {/* 2. Active Rentals */}
@@ -1025,19 +1026,19 @@ export const AdminDashboardPage: React.FC = () => {
                   }`}
                 >
                   <div className="flex items-center space-x-2 text-xs font-medium opacity-80">
-                    <CalendarCheck className="w-4 h-4 text-blue-500" />
+                    <CalendarCheck className="w-4 h-4 text-white" />
                     <span>Active Rentals</span>
                   </div>
                   <div className="space-y-1">
                     <p className="text-2xl font-bold tracking-tight">
                       {stats?.totalBookings ? Math.min(stats.totalBookings, 364) : 364}
                     </p>
-                    <div className="flex items-center space-x-1.5 text-[11px] font-semibold text-emerald-500">
+                    <div className="flex items-center space-x-1.5 text-[11px] font-semibold text-neutral-300">
                       <span>↑ 8.7%</span>
                       <span className={isLight ? 'text-slate-400' : 'text-neutral-500'}>vs last month</span>
                     </div>
                   </div>
-                  {renderSparkline([30, 45, 40, 60, 55, 70, 65, 80, 75, 90, 85, 70, 80, 95, 85, 90, 100, 95], isLight ? 'bg-sky-500' : 'bg-sky-400')}
+                  {renderSparkline([30, 45, 40, 60, 55, 70, 65, 80, 75, 90, 85, 70, 80, 95, 85, 90, 100, 95], isLight ? 'bg-slate-700' : 'bg-neutral-300')}
                 </div>
 
                 {/* 3. Available Cars */}
@@ -1047,19 +1048,19 @@ export const AdminDashboardPage: React.FC = () => {
                   }`}
                 >
                   <div className="flex items-center space-x-2 text-xs font-medium opacity-80">
-                    <Car className="w-4 h-4 text-amber-500" />
+                    <Car className="w-4 h-4 text-white" />
                     <span>Available Cars</span>
                   </div>
                   <div className="space-y-1">
                     <p className="text-2xl font-bold tracking-tight">
                       {stats?.activeVehicles || 112}
                     </p>
-                    <div className="flex items-center space-x-1.5 text-[11px] font-semibold text-emerald-500">
+                    <div className="flex items-center space-x-1.5 text-[11px] font-semibold text-neutral-300">
                       <span>↑ 5.3%</span>
                       <span className={isLight ? 'text-slate-400' : 'text-neutral-500'}>vs last month</span>
                     </div>
                   </div>
-                  {renderSparkline([40, 50, 60, 55, 65, 75, 70, 80, 85, 75, 85, 90, 80, 85, 95, 90, 95, 100], isLight ? 'bg-blue-600' : 'bg-blue-500')}
+                  {renderSparkline([40, 50, 60, 55, 65, 75, 70, 80, 85, 75, 85, 90, 80, 85, 95, 90, 95, 100], isLight ? 'bg-slate-700' : 'bg-neutral-400')}
                 </div>
 
                 {/* 4. Cars in Maintenance */}
@@ -1069,17 +1070,17 @@ export const AdminDashboardPage: React.FC = () => {
                   }`}
                 >
                   <div className="flex items-center space-x-2 text-xs font-medium opacity-80">
-                    <Wrench className="w-4 h-4 text-rose-500" />
+                    <Wrench className="w-4 h-4 text-white" />
                     <span>Cars in Maintenance</span>
                   </div>
                   <div className="space-y-1">
                     <p className="text-2xl font-bold tracking-tight">18</p>
-                    <div className="flex items-center space-x-1.5 text-[11px] font-semibold text-rose-500">
+                    <div className="flex items-center space-x-1.5 text-[11px] font-semibold text-neutral-300">
                       <span>↑ 2.1%</span>
                       <span className={isLight ? 'text-slate-400' : 'text-neutral-500'}>vs last month</span>
                     </div>
                   </div>
-                  {renderSparkline([60, 45, 55, 40, 50, 35, 45, 30, 40, 25, 35, 20, 30, 25, 20, 15, 25, 18], isLight ? 'bg-blue-400' : 'bg-blue-500')}
+                  {renderSparkline([60, 45, 55, 40, 50, 35, 45, 30, 40, 25, 35, 20, 30, 25, 20, 15, 25, 18], isLight ? 'bg-slate-700' : 'bg-neutral-500')}
                 </div>
               </div>
 
@@ -1089,101 +1090,8 @@ export const AdminDashboardPage: React.FC = () => {
                 {/* LEFT COLUMN: RENTAL OVERVIEW + RECENT RESERVATIONS (8 cols) */}
                 {/* -------------------------------------------------------- */}
                 <div className="lg:col-span-8 space-y-6">
-                  {/* Card 1: Rental Overview Bar Chart */}
-                  <div
-                    className={`p-5 sm:p-6 rounded-2xl border shadow-xs space-y-6 ${
-                      isLight ? 'bg-white border-slate-200/80' : 'bg-[#0A0A0B] border-neutral-800'
-                    }`}
-                  >
-                    {/* Header with Period Selector */}
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2 text-xs font-bold">
-                        <TrendingUp className="w-4 h-4 opacity-70 text-blue-500" />
-                        <span>Rental Overview</span>
-                      </div>
-
-                      <div className="flex items-center space-x-2">
-                        <select
-                          value={periodFilter}
-                          onChange={(e) => setPeriodFilter(e.target.value)}
-                          className={`text-xs font-semibold px-2.5 py-1 rounded-lg border focus:outline-none cursor-pointer ${
-                            isLight
-                              ? 'border-slate-200 bg-slate-50 text-slate-700'
-                              : 'border-neutral-800 bg-black text-neutral-300'
-                          }`}
-                        >
-                          <option value="Monthly">Monthly</option>
-                          <option value="Quarterly">Quarterly</option>
-                          <option value="Yearly">Yearly</option>
-                        </select>
-                        <button
-                          onClick={() => showToast('Monthly aggregation refreshed.')}
-                          className="opacity-60 hover:opacity-100 p-1 cursor-pointer"
-                        >
-                          <MoreVertical className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Big Metric Display */}
-                    <div>
-                      <p className="text-2xl sm:text-3xl font-bold tracking-tight">1,285</p>
-                      <p className={`text-xs mt-0.5 ${isLight ? 'text-slate-400' : 'text-neutral-400'}`}>
-                        Total Bookings
-                      </p>
-                    </div>
-
-                    {/* Chart Container */}
-                    <div className="pt-6 relative">
-                      {/* Y-axis grid lines */}
-                      <div className="absolute inset-0 flex flex-col justify-between pointer-events-none text-[10px] text-neutral-400 opacity-40">
-                        <div className="border-b border-dashed border-neutral-300 dark:border-neutral-800 w-full">800</div>
-                        <div className="border-b border-dashed border-neutral-300 dark:border-neutral-800 w-full">600</div>
-                        <div className="border-b border-dashed border-neutral-300 dark:border-neutral-800 w-full">400</div>
-                        <div className="border-b border-dashed border-neutral-300 dark:border-neutral-800 w-full">200</div>
-                        <div className="border-b border-neutral-300 dark:border-neutral-800 w-full">0</div>
-                      </div>
-
-                      {/* 12 Monthly Bars */}
-                      <div className="relative z-10 flex items-end justify-between gap-1.5 sm:gap-3 h-48 pl-6 pr-2">
-                        {monthlyData.map((d) => (
-                          <div key={d.month} className="flex-1 flex flex-col items-center gap-2 group h-full justify-end">
-                            {/* Active Tooltip Pill for Jun */}
-                            {d.active && (
-                              <div className="absolute top-2 bg-black text-white text-[11px] font-bold px-2.5 py-1 rounded-lg shadow-xl border border-neutral-700 animate-bounce">
-                                212 bookings
-                              </div>
-                            )}
-
-                            {/* Bar Column */}
-                            <div
-                              style={{ height: `${d.value}%` }}
-                              className={`w-full max-w-[34px] rounded-lg transition-all duration-300 ${
-                                d.active
-                                  ? 'bg-[#2563EB] shadow-md shadow-blue-500/20'
-                                  : isLight
-                                  ? 'bg-slate-100 group-hover:bg-slate-200'
-                                  : 'bg-neutral-800/80 group-hover:bg-neutral-700'
-                              }`}
-                            />
-
-                            {/* Month Label */}
-                            <span
-                              className={`text-[11px] font-medium ${
-                                d.active
-                                  ? 'font-bold text-blue-600 dark:text-blue-400'
-                                  : isLight
-                                  ? 'text-slate-400'
-                                  : 'text-neutral-500'
-                              }`}
-                            >
-                              {d.month}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
+                  {/* Card 1: Replaced with exact Monochromatic Area Progress Chart */}
+                  <ChartAreaInteractive title="Total Visitors" />
 
                   {/* Card 2: Recent Reservations Table */}
                   <div
@@ -1193,7 +1101,7 @@ export const AdminDashboardPage: React.FC = () => {
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-2 text-xs font-bold">
-                        <CalendarCheck className="w-4 h-4 opacity-70 text-blue-500" />
+                        <CalendarCheck className="w-4 h-4 opacity-70 text-neutral-400" />
                         <span>Recent Reservations</span>
                       </div>
                       <button
@@ -1299,12 +1207,12 @@ export const AdminDashboardPage: React.FC = () => {
                                 <span
                                   className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-semibold tracking-wide ${
                                     res.status === 'CONFIRMED'
-                                      ? 'bg-emerald-500/10 text-emerald-600 border border-emerald-500/20'
+                                      ? isLight ? 'bg-slate-100 text-slate-800 border border-slate-300' : 'bg-white/10 text-white border border-white/20'
                                       : res.status === 'PENDING'
-                                      ? 'bg-amber-500/10 text-amber-600 border border-amber-500/20'
+                                      ? isLight ? 'bg-slate-50 text-slate-600 border border-slate-200' : 'bg-neutral-800 text-neutral-300 border border-neutral-700'
                                       : res.status === 'COMPLETED'
-                                      ? 'bg-blue-500/10 text-blue-600 border border-blue-500/20'
-                                      : 'bg-rose-500/10 text-rose-600 border border-rose-500/20'
+                                      ? isLight ? 'bg-slate-900 text-white font-bold' : 'bg-white text-black font-bold'
+                                      : isLight ? 'bg-slate-100 text-slate-400 line-through' : 'bg-neutral-900 text-neutral-500 border border-neutral-800 line-through'
                                   }`}
                                 >
                                   {(res.status || 'CONFIRMED').charAt(0).toUpperCase() + (res.status || 'CONFIRMED').slice(1).toLowerCase()}
@@ -1339,8 +1247,8 @@ export const AdminDashboardPage: React.FC = () => {
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-1.5 text-xs font-bold text-amber-500">
-                        <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+                      <div className={`flex items-center space-x-1.5 text-xs font-bold ${isLight ? 'text-slate-900' : 'text-white'}`}>
+                        <Star className={`w-3.5 h-3.5 ${isLight ? 'fill-slate-900 text-slate-900' : 'fill-white text-white'}`} />
                         <span className={isLight ? 'text-slate-900' : 'text-white'}>Featured Vehicle</span>
                       </div>
                       <MoreVertical className="w-3.5 h-3.5 opacity-40 cursor-pointer" />
@@ -1365,7 +1273,7 @@ export const AdminDashboardPage: React.FC = () => {
                     {/* Specs Pills */}
                     <div className="flex items-center justify-between text-[11px] font-medium text-neutral-400 pb-2 border-b border-slate-100 dark:border-neutral-800">
                       <span className="flex items-center gap-1">
-                        <Users className="w-3 h-3 text-blue-500" /> 5 Seats
+                        <Users className="w-3 h-3 text-neutral-400" /> 5 Seats
                       </span>
                       <span>Automatic</span>
                       <span>Premium</span>
@@ -1376,27 +1284,27 @@ export const AdminDashboardPage: React.FC = () => {
                     <div className="space-y-2 text-xs font-medium">
                       <div className="flex justify-between items-center">
                         <span className="flex items-center gap-1.5 opacity-80">
-                          <Car className="w-3.5 h-3.5 text-blue-500" /> Total Fleet
+                          <Car className="w-3.5 h-3.5 text-neutral-400" /> Total Fleet
                         </span>
                         <span className="font-bold tabular-nums">250</span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="flex items-center gap-1.5 opacity-80">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> Available
+                          <CheckCircle2 className="w-3.5 h-3.5 text-neutral-400" /> Available
                         </span>
                         <span className="font-bold tabular-nums">112</span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="flex items-center gap-1.5 opacity-80">
-                          <Clock className="w-3.5 h-3.5 text-sky-500" /> Rented Out
+                          <Clock className="w-3.5 h-3.5 text-neutral-400" /> Rented Out
                         </span>
                         <span className="font-bold tabular-nums">120</span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="flex items-center gap-1.5 opacity-80">
-                          <Wrench className="w-3.5 h-3.5 text-rose-500" /> Maintenance
+                          <Wrench className="w-3.5 h-3.5 text-neutral-400" /> Maintenance
                         </span>
-                        <span className="font-bold text-rose-500 tabular-nums">18</span>
+                        <span className="font-bold text-white tabular-nums">18</span>
                       </div>
                     </div>
 
@@ -1422,7 +1330,7 @@ export const AdminDashboardPage: React.FC = () => {
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-1.5 text-xs font-bold">
-                        <TrendingUp className="w-3.5 h-3.5 text-emerald-500" />
+                        <TrendingUp className="w-3.5 h-3.5 text-neutral-400" />
                         <span>Fleet Performance</span>
                       </div>
                       <span className={`text-[11px] font-semibold ${isLight ? 'text-slate-400' : 'text-neutral-400'}`}>
@@ -1432,28 +1340,28 @@ export const AdminDashboardPage: React.FC = () => {
 
                     <div>
                       <p className="text-2xl font-bold tracking-tight">$128,450</p>
-                      <p className="text-[11px] font-semibold text-emerald-500 mt-0.5">
+                      <p className="text-[11px] font-semibold text-neutral-300 mt-0.5">
                         ↑ 12.4% <span className={isLight ? 'text-slate-400' : 'text-neutral-500'}>vs last month</span>
                       </p>
                     </div>
 
                     {/* Segmented Progress Bar */}
-                    <div className="h-3.5 w-full rounded-full overflow-hidden flex bg-slate-100 dark:bg-neutral-800">
-                      <div style={{ width: '25%' }} className="bg-[#2563EB] h-full" title="Economy: 25%" />
-                      <div style={{ width: '22%' }} className="bg-[#0284C7] h-full" title="Compact: 22%" />
-                      <div style={{ width: '32%' }} className="bg-[#10B981] h-full" title="SUV: 32%" />
-                      <div style={{ width: '15%' }} className="bg-[#8B5CF6] h-full" title="Luxury: 15%" />
-                      <div style={{ width: '6%' }} className="bg-[#F59E0B] h-full" title="Vans: 6%" />
+                    <div className="h-3.5 w-full rounded-full overflow-hidden flex bg-slate-100 dark:bg-neutral-800/80 p-0.5 border border-neutral-800">
+                      <div style={{ width: '25%' }} className="bg-white h-full rounded-l-full" title="Economy: 25%" />
+                      <div style={{ width: '22%' }} className="bg-neutral-300 h-full" title="Compact: 22%" />
+                      <div style={{ width: '32%' }} className="bg-neutral-400 h-full" title="SUV: 32%" />
+                      <div style={{ width: '15%' }} className="bg-neutral-600 h-full" title="Luxury: 15%" />
+                      <div style={{ width: '6%' }} className="bg-neutral-800 h-full rounded-r-full" title="Vans: 6%" />
                     </div>
 
                     {/* Categories Breakdown List */}
                     <div className="space-y-2 text-xs font-medium pt-1">
                       {[
-                        { label: 'Economy', color: 'bg-[#2563EB]', amount: '$32,450', percent: '25%' },
-                        { label: 'Compact', color: 'bg-[#0284C7]', amount: '$28,300', percent: '22%' },
-                        { label: 'SUV', color: 'bg-[#10B981]', amount: '$41,200', percent: '32%' },
-                        { label: 'Luxury', color: 'bg-[#8B5CF6]', amount: '$19,600', percent: '15%' },
-                        { label: 'Vans', color: 'bg-[#F59E0B]', amount: '$6,900', percent: '6%' },
+                        { label: 'Economy', color: 'bg-white', amount: '$32,450', percent: '25%' },
+                        { label: 'Compact', color: 'bg-neutral-300', amount: '$28,300', percent: '22%' },
+                        { label: 'SUV', color: 'bg-neutral-400', amount: '$41,200', percent: '32%' },
+                        { label: 'Luxury', color: 'bg-neutral-600', amount: '$19,600', percent: '15%' },
+                        { label: 'Vans', color: 'bg-neutral-800', amount: '$6,900', percent: '6%' },
                       ].map((item) => (
                         <div key={item.label} className="flex items-center justify-between">
                           <div className="flex items-center space-x-2">
@@ -1472,7 +1380,7 @@ export const AdminDashboardPage: React.FC = () => {
 
                     <button
                       onClick={() => showToast('Full financial analytics report generated.')}
-                      className="w-full text-center text-xs font-bold text-blue-600 hover:underline pt-2 inline-flex items-center justify-center gap-1 cursor-pointer"
+                      className="w-full text-center text-xs font-bold text-neutral-300 hover:text-white pt-2 inline-flex items-center justify-center gap-1 cursor-pointer"
                     >
                       <span>View full report</span>
                       <ArrowRight className="w-3.5 h-3.5" />

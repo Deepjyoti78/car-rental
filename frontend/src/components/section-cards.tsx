@@ -86,7 +86,7 @@ export function SectionCards() {
                 </Badge>
               </div>
               <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                <span className="font-semibold text-emerald-500 inline-flex items-center gap-0.5">
+                <span className="font-semibold text-foreground inline-flex items-center gap-0.5">
                   <IconTrendingUp className="size-3" />
                   {card.change}
                 </span>

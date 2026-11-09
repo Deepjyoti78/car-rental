@@ -6,7 +6,6 @@ import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
   CardHeader,
@@ -18,19 +17,8 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import {
-  ToggleGroup,
-  ToggleGroupItem,
-} from "@/components/ui/toggle-group"
 
-export const description = "An interactive area chart for car rental fleet utilization"
+export const description = "An interactive area chart in monochromatic black and white"
 
 const chartData = [
   { date: "2024-04-01", desktop: 222, mobile: 150 },
@@ -128,19 +116,27 @@ const chartData = [
 
 const chartConfig = {
   visitors: {
-    label: "Total Fleet Bookings",
+    label: "Total Visitors",
   },
   desktop: {
-    label: "Self-Drive Pickups",
-    color: "#3b82f6",
+    label: "Direct Traffic",
+    color: "#ffffff",
   },
   mobile: {
-    label: "Airport Deliveries",
-    color: "#60a5fa",
+    label: "Organic & Referrals",
+    color: "#a1a1aa",
   },
 } satisfies ChartConfig
 
-export function ChartAreaInteractive() {
+interface ChartAreaInteractiveProps {
+  title?: string
+  className?: string
+}
+
+export function ChartAreaInteractive({
+  title = "Total Visitors",
+  className = "",
+}: ChartAreaInteractiveProps) {
   const isMobile = useIsMobile()
   const [timeRange, setTimeRange] = React.useState("90d")
 
@@ -165,88 +161,104 @@ export function ChartAreaInteractive() {
   })
 
   return (
-    <Card className="@container/card">
-      <CardHeader>
-        <CardTitle>Fleet Utilization & Booking Volume</CardTitle>
-        <CardDescription>
-          <span className="hidden @[540px]/card:block">
-            Verified self-drive vs airport meet & greet deliveries
-          </span>
-          <span className="@[540px]/card:hidden">Last 3 months fleet activity</span>
-        </CardDescription>
-        <CardAction>
-          <ToggleGroup
-            type="single"
-            value={timeRange}
-            onValueChange={setTimeRange}
-            variant="outline"
-            className="hidden *:data-[slot=toggle-group-item]:px-4! @[767px]/card:flex"
-          >
-            <ToggleGroupItem value="90d">Last 3 months</ToggleGroupItem>
-            <ToggleGroupItem value="30d">Last 30 days</ToggleGroupItem>
-            <ToggleGroupItem value="7d">Last 7 days</ToggleGroupItem>
-          </ToggleGroup>
-          <Select value={timeRange} onValueChange={setTimeRange}>
-            <SelectTrigger
-              className="flex w-40 **:data-[slot=select-value]:block **:data-[slot=select-value]:truncate @[767px]/card:hidden"
-              size="sm"
-              aria-label="Select a time range"
+    <Card className={`border border-neutral-800 bg-[#0A0A0B] text-white shadow-xs rounded-2xl ${className}`}>
+      <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between space-y-2 sm:space-y-0 pb-3 px-5 sm:px-6 pt-5 sm:pt-6">
+        <div>
+          <CardTitle className="text-base sm:text-lg font-bold text-white tracking-tight">
+            {title}
+          </CardTitle>
+          <CardDescription className="text-xs text-neutral-400 mt-0.5">
+            {timeRange === "7d"
+              ? "Total for the last 7 days"
+              : timeRange === "30d"
+              ? "Total for the last 30 days"
+              : "Total for the last 3 months"}
+          </CardDescription>
+        </div>
+
+        <div className="flex items-center">
+          <div className="inline-flex items-center rounded-lg border border-neutral-800 bg-neutral-900/80 p-0.5">
+            <button
+              type="button"
+              onClick={() => setTimeRange("90d")}
+              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all cursor-pointer ${
+                timeRange === "90d"
+                  ? "bg-neutral-700/90 text-white shadow-xs"
+                  : "text-neutral-400 hover:text-white"
+              }`}
             >
-              <SelectValue placeholder="Last 3 months" />
-            </SelectTrigger>
-            <SelectContent className="rounded-xl">
-              <SelectItem value="90d" className="rounded-lg">
-                Last 3 months
-              </SelectItem>
-              <SelectItem value="30d" className="rounded-lg">
-                Last 30 days
-              </SelectItem>
-              <SelectItem value="7d" className="rounded-lg">
-                Last 7 days
-              </SelectItem>
-            </SelectContent>
-          </Select>
-        </CardAction>
+              Last 3 months
+            </button>
+            <button
+              type="button"
+              onClick={() => setTimeRange("30d")}
+              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all cursor-pointer ${
+                timeRange === "30d"
+                  ? "bg-neutral-700/90 text-white shadow-xs"
+                  : "text-neutral-400 hover:text-white"
+              }`}
+            >
+              Last 30 days
+            </button>
+            <button
+              type="button"
+              onClick={() => setTimeRange("7d")}
+              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all cursor-pointer ${
+                timeRange === "7d"
+                  ? "bg-neutral-700/90 text-white shadow-xs"
+                  : "text-neutral-400 hover:text-white"
+              }`}
+            >
+              Last 7 days
+            </button>
+          </div>
+        </div>
       </CardHeader>
-      <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
+
+      <CardContent className="px-2 pt-2 pb-4 sm:px-6 sm:pb-6">
         <ChartContainer
           config={chartConfig}
           className="aspect-auto h-[250px] w-full"
         >
           <AreaChart data={filteredData}>
             <defs>
+              {/* Upper Wave Monochromatic White Gradient */}
               <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
                 <stop
                   offset="5%"
-                  stopColor="#3b82f6"
-                  stopOpacity={0.8}
+                  stopColor="#ffffff"
+                  stopOpacity={0.28}
                 />
                 <stop
                   offset="95%"
-                  stopColor="#3b82f6"
-                  stopOpacity={0.05}
+                  stopColor="#000000"
+                  stopOpacity={0.0}
                 />
               </linearGradient>
+              {/* Lower Wave Monochromatic Gray Gradient */}
               <linearGradient id="fillMobile" x1="0" y1="0" x2="0" y2="1">
                 <stop
                   offset="5%"
-                  stopColor="#60a5fa"
-                  stopOpacity={0.8}
+                  stopColor="#a1a1aa"
+                  stopOpacity={0.18}
                 />
                 <stop
                   offset="95%"
-                  stopColor="#60a5fa"
-                  stopOpacity={0.05}
+                  stopColor="#000000"
+                  stopOpacity={0.0}
                 />
               </linearGradient>
             </defs>
-            <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.08)" />
+
+            <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.06)" />
+
             <XAxis
               dataKey="date"
               tickLine={false}
               axisLine={false}
-              tickMargin={8}
-              minTickGap={32}
+              tickMargin={10}
+              minTickGap={30}
+              tick={{ fill: "#71717a", fontSize: 11 }}
               tickFormatter={(value) => {
                 const date = new Date(value)
                 return date.toLocaleDateString("en-US", {
@@ -255,33 +267,37 @@ export function ChartAreaInteractive() {
                 })
               }}
             />
+
             <ChartTooltip
-              cursor={false}
+              cursor={{ stroke: "rgba(255,255,255,0.15)", strokeWidth: 1 }}
               content={
                 <ChartTooltipContent
                   labelFormatter={(value: any) => {
                     return new Date(value as string).toLocaleDateString("en-US", {
                       month: "short",
                       day: "numeric",
+                      year: "numeric",
                     })
                   }}
                   indicator="dot"
+                  className="bg-neutral-900 border border-neutral-800 text-white"
                 />
               }
             />
+
             <Area
               dataKey="mobile"
               type="natural"
               fill="url(#fillMobile)"
-              stroke="#60a5fa"
-              strokeWidth={2}
+              stroke="#a1a1aa"
+              strokeWidth={1.5}
               stackId="a"
             />
             <Area
               dataKey="desktop"
               type="natural"
               fill="url(#fillDesktop)"
-              stroke="#3b82f6"
+              stroke="#ffffff"
               strokeWidth={2}
               stackId="a"
             />

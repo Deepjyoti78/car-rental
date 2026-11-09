@@ -30,7 +30,7 @@ export function SiteHeader() {
             <span className="text-muted-foreground hidden sm:inline">/</span>
             <span className="text-foreground">Fleet Operations & Lifecycle</span>
           </div>
-          <span className="hidden md:inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium text-emerald-500 border border-emerald-500/20">
+          <span className="hidden md:inline-flex items-center gap-1 rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-medium text-white border border-white/20">
             ● Live Fleet Telematics
           </span>
         </div>
@@ -63,7 +63,7 @@ export function SiteHeader() {
           aria-label="Fleet Notifications"
         >
           <IconBell className="size-4" />
-          <span className="absolute top-1.5 right-1.5 size-1.5 rounded-full bg-amber-500" />
+          <span className="absolute top-1.5 right-1.5 size-1.5 rounded-full bg-white" />
         </Button>
 
         <Button
