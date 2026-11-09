@@ -201,15 +201,15 @@ export const LandingPage: React.FC = () => {
         </div>
 
         {/* Center Hero Content */}
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 w-full flex-1 flex flex-col items-center justify-center pt-8 sm:pt-10 pb-4 text-center -mt-24 sm:-mt-40 lg:-mt-56">
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 w-full flex-1 flex flex-col items-center justify-center pt-8 sm:pt-10 pb-4 text-center -mt-28 sm:-mt-48 lg:-mt-64">
           {/* Frosted Subtle Badge */}
-          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-black/45 backdrop-blur-md border border-white/20 text-white text-[10px] sm:text-[11px] font-medium mb-2.5 shadow-sm">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white text-[11px] sm:text-xs font-medium mb-3 sm:mb-4 shadow-sm">
             <Sparkles className="w-3 h-3 text-amber-400" />
             <span>Verified Self-Drive Rental Marketplace</span>
           </div>
 
           {/* Headline */}
-          <h1 className="text-2xl sm:text-4xl lg:text-[3rem] font-display font-bold text-white tracking-tight leading-[1.12] max-w-2xl mx-auto drop-shadow-md">
+          <h1 className="text-3xl sm:text-5xl lg:text-[3.65rem] font-display font-bold text-white tracking-tight leading-[1.16] max-w-3xl mx-auto drop-shadow-lg">
             Rediscover the Joy of <br className="hidden sm:inline" />
             the Open Road.
           </h1>
@@ -217,7 +217,7 @@ export const LandingPage: React.FC = () => {
           {/* MODERN HUMAN BOOKING WIDGET */}
           <form
             onSubmit={handleBookingSearch}
-            className="mt-7 sm:mt-8 lg:mt-9 w-full max-w-lg sm:max-w-xl lg:max-w-[38rem] rounded-2xl sm:rounded-full bg-black/60 backdrop-blur-xl border border-white/20 shadow-xl p-1 sm:p-1.5 sm:pl-3 flex flex-col sm:flex-row items-center gap-1 sm:gap-1.5 transition-all hover:border-white/35"
+            className="mt-10 sm:mt-14 lg:mt-16 w-full max-w-lg sm:max-w-xl lg:max-w-[38rem] rounded-2xl sm:rounded-full bg-black/65 backdrop-blur-2xl border border-white/25 shadow-2xl p-1 sm:p-1.5 sm:pl-3 flex flex-col sm:flex-row items-center gap-1 sm:gap-1.5 transition-all hover:border-white/40"
           >
             {/* Field 1: Hub / City */}
             <div className="w-full sm:flex-1 flex items-center gap-1.5 px-2.5 py-1 sm:py-0 text-left border-b sm:border-b-0 sm:border-r border-white/15">
