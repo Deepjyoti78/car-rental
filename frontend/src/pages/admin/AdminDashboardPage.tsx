@@ -35,11 +35,13 @@ import {
   Ban,
   X,
   SlidersHorizontal,
+  Sun,
+  Moon,
 } from 'lucide-react';
 
 export const AdminDashboardPage: React.FC = () => {
   const { user, logout } = useAuthStore();
-  const { theme } = useThemeStore();
+  const { theme, toggleTheme } = useThemeStore();
   const isLight = theme === 'light';
 
   // Navigation tab
@@ -326,8 +328,8 @@ export const AdminDashboardPage: React.FC = () => {
 
   return (
     <div
-      className={`min-h-screen p-3 sm:p-5 lg:p-7 transition-colors duration-200 ${
-        isLight ? 'bg-[#F1F3F5] text-slate-900' : 'bg-black text-white'
+      className={`h-screen w-screen overflow-hidden flex transition-colors duration-200 ${
+        isLight ? 'bg-white text-slate-900' : 'bg-[#0D0D0E] text-white'
       }`}
     >
       {/* Toast Notification */}
@@ -337,201 +339,196 @@ export const AdminDashboardPage: React.FC = () => {
         </div>
       )}
 
-      {/* Main SaaS App Card Shell */}
-      <div
-        className={`w-full max-w-[1560px] mx-auto rounded-3xl border shadow-2xl overflow-hidden flex min-h-[880px] transition-colors ${
-          isLight
-            ? 'bg-white border-slate-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.06)]'
-            : 'bg-[#0D0D0E] border-neutral-800 shadow-[0_25px_60px_rgba(0,0,0,0.8)]'
+      {/* ============================================================== */}
+      {/* LEFT SIDEBAR (Matching reference layout) */}
+      {/* ============================================================== */}
+      <aside
+        className={`w-64 shrink-0 border-r p-4 flex flex-col justify-between h-full hidden lg:flex select-none transition-colors ${
+          isLight ? 'border-slate-200/80 bg-white' : 'border-neutral-800/80 bg-[#0A0A0B]'
         }`}
       >
-        {/* ============================================================== */}
-        {/* LEFT SIDEBAR (Matching reference layout) */}
-        {/* ============================================================== */}
-        <aside
-          className={`w-64 shrink-0 border-r p-5 flex flex-col justify-between hidden lg:flex ${
-            isLight ? 'border-slate-100 bg-white' : 'border-neutral-800/80 bg-[#0A0A0B]'
-          }`}
-        >
-          <div className="space-y-6">
-            {/* Brand Logo & Name */}
-            <Link
-              to="/"
-              title="Return to DriveLoop Public Marketplace"
-              className="flex items-center space-x-3 px-1 group cursor-pointer transition-transform hover:scale-[1.02]"
-            >
-              <div
-                className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold shadow-xs transition-colors ${
-                  isLight ? 'bg-black text-white group-hover:bg-slate-800' : 'bg-white text-black group-hover:bg-neutral-200'
-                }`}
-              >
-                <Car className="w-5 h-5" strokeWidth={2.2} />
-              </div>
-              <div>
-                <h1 className="font-display text-sm font-bold tracking-tight leading-none group-hover:text-blue-500 transition-colors">
-                  DriveLux Rentals
-                </h1>
-                <p
-                  className={`text-[10px] mt-1 font-medium ${
-                    isLight ? 'text-slate-400' : 'text-neutral-400'
-                  }`}
-                >
-                  Car Rental Management
-                </p>
-              </div>
-            </Link>
-
-            {/* Global Search Input */}
-            <div className="relative">
-              <Search
-                className={`w-4 h-4 absolute left-3 top-2.5 ${
-                  isLight ? 'text-slate-400' : 'text-neutral-500'
-                }`}
-              />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search..."
-                className={`w-full pl-9 pr-9 py-2 text-xs font-medium rounded-xl border focus:outline-none transition-all ${
-                  isLight
-                    ? 'border-slate-200 bg-slate-50/70 text-slate-800 placeholder-slate-400 focus:bg-white focus:border-slate-400'
-                    : 'border-neutral-800 bg-black/60 text-white placeholder-neutral-500 focus:border-neutral-600'
-                }`}
-              />
-              <span
-                className={`absolute right-2.5 top-2.5 text-[10px] font-mono px-1 rounded border ${
-                  isLight
-                    ? 'border-slate-200 text-slate-400 bg-white'
-                    : 'border-neutral-800 text-neutral-500 bg-neutral-900'
-                }`}
-              >
-                ⌘K
-              </span>
-            </div>
-
-            {/* Navigation Menu */}
-            <div className="space-y-1">
-              <span
-                className={`block text-[10px] font-mono uppercase tracking-wider px-3 mb-2 font-semibold ${
-                  isLight ? 'text-slate-400' : 'text-neutral-500'
-                }`}
-              >
-                Main Menu
-              </span>
-
-              {[
-                { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-                { id: 'reservations', label: 'Reservations', icon: CalendarCheck, count: bookings.length || 1285 },
-                { id: 'fleet', label: 'Fleet', icon: Car, count: vehicles.length || 250 },
-                { id: 'vendors', label: 'Customers', icon: Users, count: stats?.totalCustomers || 48 },
-                { id: 'payments', label: 'Payments', icon: CreditCard },
-                { id: 'locations', label: 'Locations', icon: MapPin },
-                { id: 'maintenance', label: 'Maintenance', icon: Wrench, count: 18 },
-                { id: 'commission', label: 'Analytics', icon: TrendingUp },
-                { id: 'settings', label: 'Settings', icon: Settings },
-              ].map((item) => {
-                const Icon = item.icon;
-                const isActive = activeTab === item.id;
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => setActiveTab(item.id as any)}
-                    className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
-                      isActive
-                        ? isLight
-                          ? 'bg-slate-100 text-slate-900 shadow-xs'
-                          : 'bg-white/10 text-white shadow-xs'
-                        : isLight
-                        ? 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-                        : 'text-neutral-400 hover:bg-white/5 hover:text-white'
-                    }`}
-                  >
-                    <div className="flex items-center space-x-2.5">
-                      <Icon className={`w-4 h-4 ${isActive ? (isLight ? 'text-slate-900' : 'text-white') : 'opacity-70'}`} />
-                      <span>{item.label}</span>
-                    </div>
-                    {item.count !== undefined && (
-                      <span
-                        className={`text-[10px] font-mono px-1.5 py-0.5 rounded-full ${
-                          isActive
-                            ? isLight
-                              ? 'bg-white text-slate-900 border border-slate-200'
-                              : 'bg-black text-white border border-neutral-700'
-                            : isLight
-                            ? 'bg-slate-100 text-slate-500'
-                            : 'bg-neutral-900 text-neutral-400'
-                        }`}
-                      >
-                        {item.count}
-                      </span>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Bottom Upgrade Card & Admin Profile */}
-          <div className="space-y-4 pt-4 border-t border-dashed border-neutral-200/40">
-            {/* Upgrade / Enterprise Card Banner */}
+        {/* Top Section: Brand, Search, Scrollable Menu */}
+        <div className="flex flex-col min-h-0 flex-1 overflow-hidden space-y-3">
+          {/* Brand Logo & Name */}
+          <Link
+            to="/"
+            title="Return to DriveLoop Public Marketplace"
+            className="flex items-center space-x-3 px-1 group cursor-pointer transition-transform hover:scale-[1.02] shrink-0"
+          >
             <div
-              className={`p-4 rounded-2xl border relative overflow-hidden ${
-                isLight
-                  ? 'bg-gradient-to-br from-amber-50/80 via-white to-orange-50/60 border-amber-200/60 text-slate-800'
-                  : 'bg-gradient-to-br from-amber-950/20 via-black to-neutral-900/60 border-amber-500/20 text-white'
+              className={`w-8 h-8 rounded-xl flex items-center justify-center font-bold shadow-xs transition-colors ${
+                isLight ? 'bg-black text-white group-hover:bg-slate-800' : 'bg-white text-black group-hover:bg-neutral-200'
               }`}
             >
-              <div className="flex items-center space-x-1.5 text-amber-500 mb-1.5">
+              <Car className="w-4 h-4" strokeWidth={2.2} />
+            </div>
+            <div>
+              <h1 className="font-display text-sm font-bold tracking-tight leading-none group-hover:text-blue-500 transition-colors">
+                DriveLux Rentals
+              </h1>
+              <p
+                className={`text-[10px] mt-0.5 font-medium ${
+                  isLight ? 'text-slate-400' : 'text-neutral-400'
+                }`}
+              >
+                Car Rental Management
+              </p>
+            </div>
+          </Link>
+
+          {/* Global Search Input */}
+          <div className="relative shrink-0">
+            <Search
+              className={`w-3.5 h-3.5 absolute left-3 top-2.5 ${
+                isLight ? 'text-slate-400' : 'text-neutral-500'
+              }`}
+            />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search..."
+              className={`w-full pl-8 pr-8 py-1.5 text-xs font-medium rounded-xl border focus:outline-none transition-all ${
+                isLight
+                  ? 'border-slate-200 bg-slate-50/70 text-slate-800 placeholder-slate-400 focus:bg-white focus:border-slate-400'
+                  : 'border-neutral-800 bg-black/60 text-white placeholder-neutral-500 focus:border-neutral-600'
+              }`}
+            />
+            <span
+              className={`absolute right-2.5 top-2 text-[9px] font-mono px-1 rounded border ${
+                isLight
+                  ? 'border-slate-200 text-slate-400 bg-white'
+                  : 'border-neutral-800 text-neutral-500 bg-neutral-900'
+              }`}
+            >
+              ⌘K
+            </span>
+          </div>
+
+          {/* Navigation Menu */}
+          <div className="flex-1 min-h-0 overflow-y-auto space-y-0.5 pr-0.5">
+            <span
+              className={`block text-[10px] font-mono uppercase tracking-wider px-2.5 mb-1.5 font-semibold ${
+                isLight ? 'text-slate-400' : 'text-neutral-500'
+              }`}
+            >
+              Main Menu
+            </span>
+
+            {[
+              { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+              { id: 'reservations', label: 'Reservations', icon: CalendarCheck, count: bookings.length || 1285 },
+              { id: 'fleet', label: 'Fleet', icon: Car, count: vehicles.length || 250 },
+              { id: 'vendors', label: 'Customers', icon: Users, count: stats?.totalCustomers || 48 },
+              { id: 'payments', label: 'Payments', icon: CreditCard },
+              { id: 'locations', label: 'Locations', icon: MapPin },
+              { id: 'maintenance', label: 'Maintenance', icon: Wrench, count: 18 },
+              { id: 'commission', label: 'Analytics', icon: TrendingUp },
+              { id: 'settings', label: 'Settings', icon: Settings },
+            ].map((item) => {
+              const Icon = item.icon;
+              const isActive = activeTab === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => setActiveTab(item.id as any)}
+                  className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                    isActive
+                      ? isLight
+                        ? 'bg-slate-100 text-slate-900 shadow-xs'
+                        : 'bg-white/10 text-white shadow-xs'
+                      : isLight
+                      ? 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                      : 'text-neutral-400 hover:bg-white/5 hover:text-white'
+                  }`}
+                >
+                  <div className="flex items-center space-x-2.5">
+                    <Icon className={`w-4 h-4 ${isActive ? (isLight ? 'text-slate-900' : 'text-white') : 'opacity-70'}`} />
+                    <span>{item.label}</span>
+                  </div>
+                  {item.count !== undefined && (
+                    <span
+                      className={`text-[10px] font-mono px-1.5 py-0.5 rounded-full ${
+                        isActive
+                          ? isLight
+                            ? 'bg-white text-slate-900 border border-slate-200'
+                            : 'bg-black text-white border border-neutral-700'
+                          : isLight
+                          ? 'bg-slate-100 text-slate-500'
+                          : 'bg-neutral-900 text-neutral-400'
+                      }`}
+                    >
+                      {item.count}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Bottom Upgrade Card & Admin Profile - Pinned at bottom, always visible */}
+        <div className="shrink-0 pt-3 border-t border-dashed border-neutral-200/60 dark:border-neutral-800 space-y-2.5">
+          {/* Upgrade Card Banner */}
+          <div
+            className={`p-3 rounded-xl border relative overflow-hidden ${
+              isLight
+                ? 'bg-gradient-to-br from-amber-50/80 via-white to-orange-50/60 border-amber-200/60 text-slate-800'
+                : 'bg-gradient-to-br from-amber-950/20 via-black to-neutral-900/60 border-amber-500/20 text-white'
+            }`}
+          >
+            <div className="flex items-center justify-between mb-1">
+              <div className="flex items-center space-x-1.5 text-amber-500">
                 <Sparkles className="w-3.5 h-3.5" />
                 <span className="text-[11px] font-bold tracking-tight">Upgrade to Pro</span>
               </div>
-              <p className={`text-[11px] leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
-                Unlock advanced analytics, unlimited locations and priority support.
-              </p>
               <button
                 onClick={() => showToast('Enterprise Pro tier features active on this instance.')}
-                className="mt-3 inline-flex items-center space-x-1 text-xs font-bold text-amber-500 hover:text-amber-600 cursor-pointer"
+                className="inline-flex items-center space-x-0.5 text-[10px] font-bold text-amber-500 hover:text-amber-600 cursor-pointer"
               >
-                <span>Upgrade now</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <span>Upgrade</span>
+                <ArrowRight className="w-3 h-3" />
               </button>
             </div>
-
-            {/* Administrator Profile Row */}
-            <div className="flex items-center justify-between px-1">
-              <div className="flex items-center space-x-2.5 min-w-0">
-                <img
-                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&q=80"
-                  alt="Admin Avatar"
-                  className="w-8 h-8 rounded-full object-cover border border-neutral-300 shrink-0"
-                />
-                <div className="min-w-0">
-                  <p className="text-xs font-bold truncate">Alex Morgan</p>
-                  <p className={`text-[10px] truncate ${isLight ? 'text-slate-400' : 'text-neutral-400'}`}>
-                    Administrator
-                  </p>
-                </div>
-              </div>
-              <button
-                onClick={logout}
-                title="Sign out"
-                className={`p-1.5 rounded-lg border text-xs cursor-pointer ${
-                  isLight
-                    ? 'border-slate-200 hover:bg-slate-100 text-slate-600'
-                    : 'border-neutral-800 hover:bg-neutral-900 text-neutral-400 hover:text-white'
-                }`}
-              >
-                <MoreVertical className="w-3.5 h-3.5" />
-              </button>
-            </div>
+            <p className={`text-[10px] leading-snug ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
+              Unlock advanced analytics, unlimited locations and priority support.
+            </p>
           </div>
-        </aside>
 
-        {/* ============================================================== */}
-        {/* MAIN WORKSPACE CONTENT */}
-        {/* ============================================================== */}
-        <main className="flex-1 p-5 sm:p-7 lg:p-8 min-w-0 overflow-y-auto space-y-6">
+          {/* Administrator Profile Row */}
+          <div className="flex items-center justify-between px-1">
+            <div className="flex items-center space-x-2.5 min-w-0">
+              <img
+                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&q=80"
+                alt="Admin Avatar"
+                className="w-7 h-7 rounded-full object-cover border border-neutral-300 shrink-0"
+              />
+              <div className="min-w-0">
+                <p className="text-xs font-bold truncate leading-none">Alex Morgan</p>
+                <p className={`text-[10px] truncate mt-0.5 ${isLight ? 'text-slate-400' : 'text-neutral-400'}`}>
+                  Administrator
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={logout}
+              title="Sign out"
+              className={`p-1.5 rounded-lg border text-xs cursor-pointer ${
+                isLight
+                  ? 'border-slate-200 hover:bg-slate-100 text-slate-600'
+                  : 'border-neutral-800 hover:bg-neutral-900 text-neutral-400 hover:text-white'
+              }`}
+            >
+              <MoreVertical className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      {/* ============================================================== */}
+      {/* MAIN WORKSPACE CONTENT */}
+      {/* ============================================================== */}
+      <main className="flex-1 h-full p-5 sm:p-6 lg:p-8 min-w-0 overflow-y-auto space-y-6">
           {/* Header Row: Title & Action Buttons */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
@@ -567,6 +564,19 @@ export const AdminDashboardPage: React.FC = () => {
               >
                 <Share2 className="w-3.5 h-3.5" />
                 <span>Share</span>
+              </button>
+
+              {/* Theme Toggle Button */}
+              <button
+                onClick={toggleTheme}
+                title={isLight ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
+                className={`p-2 rounded-xl border text-xs font-semibold transition-all cursor-pointer ${
+                  isLight
+                    ? 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+                    : 'bg-[#18181A] border-neutral-800 text-white hover:border-neutral-700'
+                }`}
+              >
+                {isLight ? <Moon className="w-3.5 h-3.5" /> : <Sun className="w-3.5 h-3.5" />}
               </button>
 
               {/* More Actions Dropdown */}
@@ -1276,7 +1286,6 @@ export const AdminDashboardPage: React.FC = () => {
             </div>
           )}
         </main>
-      </div>
     </div>
   );
 };
