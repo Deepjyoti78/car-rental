@@ -209,7 +209,7 @@ export const LandingPage: React.FC = () => {
           </div>
 
           {/* Headline */}
-          <h1 className="text-xl sm:text-3xl lg:text-[2.25rem] font-display font-bold text-white tracking-tight leading-[1.18] max-w-2xl mx-auto drop-shadow-md">
+          <h1 className="text-2xl sm:text-4xl lg:text-[3rem] font-display font-bold text-white tracking-tight leading-[1.12] max-w-2xl mx-auto drop-shadow-md">
             Rediscover the Joy of <br className="hidden sm:inline" />
             the Open Road.
           </h1>
@@ -217,10 +217,10 @@ export const LandingPage: React.FC = () => {
           {/* MODERN HUMAN BOOKING WIDGET */}
           <form
             onSubmit={handleBookingSearch}
-            className="mt-4 sm:mt-5 w-full max-w-xl sm:max-w-2xl rounded-2xl sm:rounded-full bg-black/60 backdrop-blur-xl border border-white/20 shadow-xl p-1.5 sm:p-2 sm:pl-3 flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2 transition-all hover:border-white/35"
+            className="mt-7 sm:mt-8 lg:mt-9 w-full max-w-lg sm:max-w-xl lg:max-w-[38rem] rounded-2xl sm:rounded-full bg-black/60 backdrop-blur-xl border border-white/20 shadow-xl p-1 sm:p-1.5 sm:pl-3 flex flex-col sm:flex-row items-center gap-1 sm:gap-1.5 transition-all hover:border-white/35"
           >
             {/* Field 1: Hub / City */}
-            <div className="w-full sm:flex-1 flex items-center gap-2 px-3 py-1.5 sm:py-0.5 text-left border-b sm:border-b-0 sm:border-r border-white/15">
+            <div className="w-full sm:flex-1 flex items-center gap-1.5 px-2.5 py-1 sm:py-0 text-left border-b sm:border-b-0 sm:border-r border-white/15">
               <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
               <div className="flex-1 min-w-0">
                 <label className="block text-[9px] font-mono uppercase tracking-wider text-neutral-400 leading-tight">
@@ -231,7 +231,7 @@ export const LandingPage: React.FC = () => {
                   onChange={(e) => setSelectedCity(e.target.value)}
                   className="w-full bg-transparent text-[11px] font-semibold text-white focus:outline-none cursor-pointer py-0.5"
                 >
-                  <option value="" className="bg-neutral-900 text-white">All Regional Hubs</option>
+                  <option value="" className="bg-neutral-900 text-white">All Hubs</option>
                   <option value="Delhi" className="bg-neutral-900 text-white">Delhi NCR (Airport T3)</option>
                   <option value="Gurgaon" className="bg-neutral-900 text-white">Gurgaon (Cyber Hub)</option>
                   <option value="Noida" className="bg-neutral-900 text-white">Noida (Sector 18)</option>
@@ -242,7 +242,7 @@ export const LandingPage: React.FC = () => {
             </div>
 
             {/* Field 2: Vehicle Class */}
-            <div className="w-full sm:flex-1 flex items-center gap-2 px-3 py-1.5 sm:py-0.5 text-left border-b sm:border-b-0 sm:border-r border-white/15">
+            <div className="w-full sm:flex-1 flex items-center gap-1.5 px-2.5 py-1 sm:py-0 text-left border-b sm:border-b-0 sm:border-r border-white/15">
               <Car className="w-3.5 h-3.5 text-amber-400 shrink-0" />
               <div className="flex-1 min-w-0">
                 <label className="block text-[9px] font-mono uppercase tracking-wider text-neutral-400 leading-tight">
@@ -253,7 +253,7 @@ export const LandingPage: React.FC = () => {
                   onChange={(e) => setSelectedCategory(e.target.value)}
                   className="w-full bg-transparent text-[11px] font-semibold text-white focus:outline-none cursor-pointer py-0.5"
                 >
-                  <option value="" className="bg-neutral-900 text-white">All Vehicle Classes</option>
+                  <option value="" className="bg-neutral-900 text-white">All Classes</option>
                   <option value="SUV" className="bg-neutral-900 text-white">SUVs & 4x4s</option>
                   <option value="LUXURY" className="bg-neutral-900 text-white">Executive & Luxury</option>
                   <option value="SEDAN" className="bg-neutral-900 text-white">Touring Sedans</option>
@@ -264,7 +264,7 @@ export const LandingPage: React.FC = () => {
             </div>
 
             {/* Field 3: Rental Type */}
-            <div className="w-full sm:w-auto px-3 py-1 text-left hidden md:block">
+            <div className="w-full sm:w-auto px-2 py-0.5 text-left hidden md:block">
               <div className="flex items-center gap-1.5 text-[11px] text-neutral-300 font-medium">
                 <Clock className="w-3 h-3 text-emerald-400" />
                 <span>Instant Confirmation</span>
@@ -274,7 +274,7 @@ export const LandingPage: React.FC = () => {
             {/* Search Submit Action */}
             <button
               type="submit"
-              className="w-full sm:w-auto px-5 py-2.5 rounded-xl sm:rounded-full bg-white hover:bg-neutral-200 text-black font-bold text-[11px] uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 shadow-md active:scale-95 cursor-pointer shrink-0"
+              className="w-full sm:w-auto px-4 py-2 rounded-xl sm:rounded-full bg-white hover:bg-neutral-200 text-black font-bold text-[10px] sm:text-[11px] uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 shadow-md active:scale-95 cursor-pointer shrink-0"
             >
               <span>Explore Fleet</span>
               <ArrowRight className="w-3.5 h-3.5 text-black" />
