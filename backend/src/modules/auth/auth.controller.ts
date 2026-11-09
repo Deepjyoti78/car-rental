@@ -17,7 +17,11 @@ export class AuthController {
 
       sendSuccess(res, result, 'Registration successful', 201);
     } catch (error: any) {
-      sendError(res, error.message || 'Registration failed', 400);
+      const msg = error.message || 'Registration failed';
+      const safeMsg = msg.includes('prisma') || msg.includes('5433') || msg.includes('database')
+        ? 'Registration temporarily unavailable. Please try again or use demo accounts.'
+        : msg;
+      sendError(res, safeMsg, 400);
     }
   }
 
@@ -35,7 +39,11 @@ export class AuthController {
 
       sendSuccess(res, result, 'Login successful');
     } catch (error: any) {
-      sendError(res, error.message || 'Login failed', 401);
+      const msg = error.message || 'Login failed';
+      const safeMsg = msg.includes('prisma') || msg.includes('5433') || msg.includes('database')
+        ? 'Invalid email or password.'
+        : msg;
+      sendError(res, safeMsg, 401);
     }
   }
 

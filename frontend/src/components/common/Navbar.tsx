@@ -19,10 +19,11 @@ import {
 import { miscService } from '../../services/miscService';
 
 export const Navbar: React.FC = () => {
-  const { user, isAuthenticated, logout, openAuthModal } = useAuthStore();
+  const { user, isAuthenticated, logout, openAuthModal, isAuthModalOpen } = useAuthStore();
   const { theme, toggleTheme } = useThemeStore();
   const navigate = useNavigate();
   const location = useLocation();
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
@@ -65,6 +66,13 @@ export const Navbar: React.FC = () => {
     { label: 'How it Works', to: '/how-it-works' },
     { label: 'Support', to: '/how-it-works#faq' },
   ];
+
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
+
+  // Completely hide Navbar on auth pages (/login, /register) or when Auth Modal popup is open
+  if (isAuthPage || isAuthModalOpen) {
+    return null;
+  }
 
   return (
     <header

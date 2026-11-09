@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/authStore';
 import { useThemeStore } from '../../store/themeStore';
-import { Car, Lock, Mail, ArrowRight, AlertCircle } from 'lucide-react';
+import { Car, Lock, Mail, ArrowRight, ArrowLeft, AlertCircle } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -27,7 +27,12 @@ export const LoginPage: React.FC = () => {
         navigate('/dashboard');
       }
     } catch (err: any) {
-      setError(err.message || 'Login failed. Please check your credentials.');
+      const msg = err.message || 'Login failed. Please check your credentials.';
+      setError(
+        msg.includes('prisma') || msg.includes('5433') || msg.includes('database')
+          ? 'Invalid email or password. You can also click one of the demo quick login buttons above.'
+          : msg
+      );
     }
   };
 
@@ -39,10 +44,23 @@ export const LoginPage: React.FC = () => {
 
   return (
     <div
-      className={`min-h-[80vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 transition-colors ${
+      className={`min-h-screen flex flex-col items-center justify-center py-10 px-4 sm:px-6 lg:px-8 transition-colors ${
         isLight ? 'bg-[#F4EFEA]' : 'bg-black'
       }`}
     >
+      {/* Top Back to Home navigation */}
+      <div className="w-full max-w-md flex justify-start mb-4">
+        <Link
+          to="/"
+          className={`inline-flex items-center gap-2 text-xs font-medium transition-colors ${
+            isLight ? 'text-slate-600 hover:text-black' : 'text-neutral-400 hover:text-white'
+          }`}
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span>Back to DriveLoop</span>
+        </Link>
+      </div>
+
       <div
         className={`max-w-md w-full space-y-6 p-8 rounded-2xl border shadow-2xl transition-colors ${
           isLight
@@ -52,17 +70,19 @@ export const LoginPage: React.FC = () => {
       >
         {/* Brand Header */}
         <div className="text-center">
-          <div
-            className={`w-10 h-10 rounded-full flex items-center justify-center mx-auto shadow-md border ${
-              isLight
-                ? 'bg-black text-white border-black'
-                : 'bg-neutral-900 border-neutral-700 text-white'
-            }`}
-          >
-            <Car className="w-5 h-5" strokeWidth={2.2} />
-          </div>
+          <Link to="/" className="inline-block group mb-3">
+            <div
+              className={`w-11 h-11 rounded-full flex items-center justify-center mx-auto shadow-md border transition-transform group-hover:scale-105 ${
+                isLight
+                  ? 'bg-black text-white border-black'
+                  : 'bg-neutral-900 border-neutral-700 text-white'
+              }`}
+            >
+              <Car className="w-5 h-5 text-amber-400" strokeWidth={2.2} />
+            </div>
+          </Link>
           <h2
-            className={`font-display text-2xl font-bold mt-4 tracking-tight ${
+            className={`font-display text-2xl font-bold tracking-tight ${
               isLight ? 'text-slate-900' : 'text-white'
             }`}
           >

@@ -93,7 +93,12 @@ export const AuthModal: React.FC = () => {
         navigate('/dashboard');
       }
     } catch (err: any) {
-      setError(err.message || 'Invalid email or password. Please try again.');
+      const msg = err.message || 'Invalid email or password. Please try again.';
+      setError(
+        msg.includes('prisma') || msg.includes('5433') || msg.includes('database')
+          ? 'Invalid email or password. You can also click one of the demo quick login buttons above.'
+          : msg
+      );
     }
   };
 
@@ -131,13 +136,18 @@ export const AuthModal: React.FC = () => {
         navigate('/dashboard');
       }
     } catch (err: any) {
-      setError(err.message || 'Registration failed. Please check your information.');
+      const msg = err.message || 'Registration failed. Please check your information.';
+      setError(
+        msg.includes('prisma') || msg.includes('5433') || msg.includes('database')
+          ? 'Registration temporarily unavailable. Please try again or use demo accounts.'
+          : msg
+      );
     }
   };
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 bg-black/40 backdrop-blur-sm transition-all duration-300"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md transition-all duration-300"
       onClick={closeAuthModal}
     >
       {/* Modal Card with subtle ring and deep luxury shadow */}

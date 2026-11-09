@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuthStore } from '../../store/authStore';
-import { Car, User, Building2, ArrowRight, AlertCircle, ShieldCheck } from 'lucide-react';
+import { Car, User, Building2, ArrowRight, ArrowLeft, AlertCircle, ShieldCheck } from 'lucide-react';
 
 export const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
@@ -65,19 +65,37 @@ export const RegisterPage: React.FC = () => {
         navigate('/dashboard');
       }
     } catch (err: any) {
-      setError(err.message || 'Registration failed. Please try again.');
+      const msg = err.message || 'Registration failed. Please try again.';
+      setError(
+        msg.includes('prisma') || msg.includes('5433') || msg.includes('database')
+          ? 'Registration temporarily unavailable. Please try again or use demo accounts.'
+          : msg
+      );
     }
   };
 
   return (
-    <div className="min-h-[85vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-black">
+    <div className="min-h-screen flex flex-col items-center justify-center py-10 px-4 sm:px-6 lg:px-8 bg-black">
+      {/* Top Back to Home navigation */}
+      <div className="w-full max-w-xl flex justify-start mb-4">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 text-xs font-medium text-neutral-400 hover:text-white transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span>Back to DriveLoop</span>
+        </Link>
+      </div>
+
       <div className="max-w-xl w-full space-y-6 bg-[#0D0D0E] p-8 rounded-2xl border border-neutral-800 shadow-2xl text-white">
         {/* Brand Header */}
         <div className="text-center">
-          <div className="w-10 h-10 rounded-full bg-neutral-900 border border-neutral-700 flex items-center justify-center text-white mx-auto shadow-card">
-            <Car className="w-5 h-5 text-amber-400" strokeWidth={2.2} />
-          </div>
-          <h2 className="font-display text-2xl font-bold text-white mt-3 tracking-tight">
+          <Link to="/" className="inline-block group mb-3">
+            <div className="w-11 h-11 rounded-full bg-neutral-900 border border-neutral-700 flex items-center justify-center text-white mx-auto shadow-card transition-transform group-hover:scale-105">
+              <Car className="w-5 h-5 text-amber-400" strokeWidth={2.2} />
+            </div>
+          </Link>
+          <h2 className="font-display text-2xl font-bold text-white tracking-tight">
             Create your DriveLoop Account
           </h2>
           <p className="text-xs text-neutral-400 mt-1">

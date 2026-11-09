@@ -1,11 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Car, ShieldCheck, Headphones, HeartHandshake, MapPin } from 'lucide-react';
 import { useThemeStore } from '../../store/themeStore';
 
 export const Footer: React.FC = () => {
   const { theme } = useThemeStore();
   const isLight = theme === 'light';
+  const location = useLocation();
+
+  // Hide footer on focused authentication pages
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
+  if (isAuthPage) {
+    return null;
+  }
 
   return (
     <footer
