@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { VehicleCard } from '../../components/cards/VehicleCard';
 import { vehicleService } from '../../services/vehicleService';
+import { MOCK_FLEET } from '../../services/mockFleet';
 import { useThemeStore } from '../../store/themeStore';
 import { Vehicle } from '../../types';
 import {
@@ -20,8 +21,10 @@ export const LandingPage: React.FC = () => {
   const { theme } = useThemeStore();
   const isLight = theme === 'light';
   const navigate = useNavigate();
-  const [featuredCars, setFeaturedCars] = useState<Vehicle[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [featuredCars, setFeaturedCars] = useState<Vehicle[]>(() =>
+    [...MOCK_FLEET].sort((a, b) => b.rating - a.rating).slice(0, 6)
+  );
+  const [loading, setLoading] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [activeCategoryTab, setActiveCategoryTab] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState('');

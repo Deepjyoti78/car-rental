@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { vehicleService, VehicleSearchParams } from '../../services/vehicleService';
 import { Vehicle } from '../../types';
+import { MOCK_FLEET } from '../../services/mockFleet';
 import { BookingCheckoutModal } from '../../components/booking/BookingCheckoutModal';
 import { useThemeStore } from '../../store/themeStore';
 import {
@@ -52,14 +53,14 @@ export const ExploreCarsPage: React.FC = () => {
   const [availableBrands, setAvailableBrands] = useState<any[]>([]);
   const [showAllBrands, setShowAllBrands] = useState(false);
 
-  // Result state
-  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
-  const [meta, setMeta] = useState<any>({ page: 1, limit: 12, total: 0, totalPages: 1 });
-  const [loading, setLoading] = useState(true);
+  // Result state (pre-warmed for 0ms instantaneous first paint)
+  const [vehicles, setVehicles] = useState<Vehicle[]>(() => MOCK_FLEET.slice(0, 12));
+  const [meta, setMeta] = useState<any>({ page: 1, limit: 12, total: MOCK_FLEET.length, totalPages: Math.ceil(MOCK_FLEET.length / 12) });
+  const [loading, setLoading] = useState(false);
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
 
   // Active selected vehicle for Right Inspector Panel
-  const [activeVehicle, setActiveVehicle] = useState<Vehicle | null>(null);
+  const [activeVehicle, setActiveVehicle] = useState<Vehicle | null>(() => MOCK_FLEET[0]);
   const [showPreviewPanel, setShowPreviewPanel] = useState(true);
 
   // Wishlist state
@@ -112,7 +113,10 @@ export const ExploreCarsPage: React.FC = () => {
   useEffect(() => {
     let active = true;
     const fetchFleet = async () => {
-      setLoading(true);
+      // Only show full skeleton screen if no vehicles are currently rendered
+      if (vehicles.length === 0) {
+        setLoading(true);
+      }
       try {
         const params: VehicleSearchParams = {
           page,
@@ -859,7 +863,7 @@ export const ExploreCarsPage: React.FC = () => {
                 const primaryImage =
                   car.images?.find((img) => img.isPrimary)?.url ||
                   car.images?.[0]?.url ||
-                  'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=1200&q=80';
+                  'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=600&auto=format&fit=crop&q=75';
 
                 return (
                   <div
@@ -940,6 +944,7 @@ export const ExploreCarsPage: React.FC = () => {
                           alt={`${car.brand} ${car.model}`}
                           className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                           loading="lazy"
+                          decoding="async"
                         />
                         <div
                           className={`absolute inset-0 pointer-events-none ${
@@ -1090,10 +1095,11 @@ export const ExploreCarsPage: React.FC = () => {
                   src={
                     activeVehicle.images?.find((img) => img.isPrimary)?.url ||
                     activeVehicle.images?.[0]?.url ||
-                    'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=1200&q=80'
+                    'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=600&auto=format&fit=crop&q=75'
                   }
                   alt={`${activeVehicle.brand} ${activeVehicle.model}`}
                   className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                  decoding="async"
                 />
                 <div
                   className={`absolute inset-0 pointer-events-none ${

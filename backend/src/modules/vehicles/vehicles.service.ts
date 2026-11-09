@@ -1,4 +1,4 @@
-import { prisma } from '../../config/database.js';
+import { prisma, isDatabaseOnline } from '../../config/database.js';
 import { BookingStatus, MaintenanceStatus, Prisma, VehicleCategory, Transmission, FuelType } from '@prisma/client';
 import { AvailabilityService } from '../availability/availability.service.js';
 import { FALLBACK_VEHICLES } from './fallbackData.js';
@@ -129,6 +129,10 @@ export class VehiclesService {
     page: number;
     limit: number;
   }) {
+    if (!(await isDatabaseOnline())) {
+      return searchFallbackVehicles(filters);
+    }
+
     try {
       const where: Prisma.VehicleWhereInput = {
         isActive: true,
@@ -282,6 +286,16 @@ export class VehiclesService {
    * Fetches full vehicle details by ID including images, features, vendor info, and calendar blackout dates
    */
   public static async getVehicleById(vehicleId: string) {
+    if (!(await isDatabaseOnline())) {
+      const fallbackVehicle =
+        FALLBACK_VEHICLES.find((v) => v.id === vehicleId) ||
+        FALLBACK_VEHICLES[0];
+      return {
+        ...fallbackVehicle,
+        bookedRanges: fallbackVehicle.bookedRanges || [],
+      };
+    }
+
     try {
       const vehicle = await prisma.vehicle.findUnique({
         where: { id: vehicleId },
@@ -352,6 +366,12 @@ export class VehiclesService {
    * Get featured vehicles for homepage
    */
   public static async getFeaturedVehicles() {
+    if (!(await isDatabaseOnline())) {
+      return [...FALLBACK_VEHICLES]
+        .sort((a, b) => b.rating - a.rating)
+        .slice(0, 6);
+    }
+
     try {
       const vehicles = await prisma.vehicle.findMany({
         where: {
@@ -391,6 +411,10 @@ export class VehiclesService {
    * Returns list of unique active cities with available vehicle counts
    */
   public static async getActiveCities() {
+    if (!(await isDatabaseOnline())) {
+      return getFallbackCities();
+    }
+
     try {
       const cities = await prisma.vehicle.groupBy({
         by: ['city', 'state'],
@@ -422,6 +446,10 @@ export class VehiclesService {
    * Returns unique brands present in marketplace
    */
   public static async getBrands() {
+    if (!(await isDatabaseOnline())) {
+      return getFallbackBrands();
+    }
+
     try {
       const brands = await prisma.vehicle.groupBy({
         by: ['brand'],

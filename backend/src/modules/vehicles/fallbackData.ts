@@ -114,9 +114,9 @@ export const FALLBACK_VEHICLES: FallbackVehicle[] = [
     totalTrips: 18,
     createdAt: '2024-01-20T10:00:00.000Z',
     images: [
-      { id: 'img-1-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea01', url: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=1200&q=80', isPrimary: true, order: 0 },
-      { id: 'img-1-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea01', url: 'https://images.unsplash.com/photo-1556189250-72ba954cfc2b?w=1200&q=80', isPrimary: false, order: 1 },
-      { id: 'img-1-3', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea01', url: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1200&q=80', isPrimary: false, order: 2 },
+      { id: 'img-1-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea01', url: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=600&auto=format&fit=crop&q=75', isPrimary: true, order: 0 },
+      { id: 'img-1-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea01', url: 'https://images.unsplash.com/photo-1556189250-72ba954cfc2b?w=600&auto=format&fit=crop&q=75', isPrimary: false, order: 1 },
+      { id: 'img-1-3', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea01', url: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&auto=format&fit=crop&q=75', isPrimary: false, order: 2 },
     ],
     features: [
       { id: 'f-1-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea01', name: 'Panoramic Sunroof' },
@@ -161,8 +161,8 @@ export const FALLBACK_VEHICLES: FallbackVehicle[] = [
     totalTrips: 24,
     createdAt: '2024-01-21T10:00:00.000Z',
     images: [
-      { id: 'img-2-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea02', url: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=1200&q=80', isPrimary: true, order: 0 },
-      { id: 'img-2-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea02', url: 'https://images.unsplash.com/photo-1617788138017-80ad40651399?w=1200&q=80', isPrimary: false, order: 1 },
+      { id: 'img-2-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea02', url: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=600&auto=format&fit=crop&q=75', isPrimary: true, order: 0 },
+      { id: 'img-2-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea02', url: 'https://images.unsplash.com/photo-1617788138017-80ad40651399?w=600&auto=format&fit=crop&q=75', isPrimary: false, order: 1 },
     ],
     features: [
       { id: 'f-2-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea02', name: 'MBUX Multimedia' },
@@ -197,8 +197,8 @@ export const FALLBACK_VEHICLES: FallbackVehicle[] = [
     totalTrips: 31,
     createdAt: '2024-01-22T10:00:00.000Z',
     images: [
-      { id: 'img-3-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea03', url: 'https://images.unsplash.com/photo-1563720223185-11003d516935?w=1200&q=80', isPrimary: true, order: 0 },
-      { id: 'img-3-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea03', url: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=1200&q=80', isPrimary: false, order: 1 },
+      { id: 'img-3-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea03', url: 'https://images.unsplash.com/photo-1563720223185-11003d516935?w=600&auto=format&fit=crop&q=75', isPrimary: true, order: 0 },
+      { id: 'img-3-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea03', url: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=600&auto=format&fit=crop&q=75', isPrimary: false, order: 1 },
     ],
     features: [
       { id: 'f-3-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea03', name: 'Fast Charging' },
@@ -232,8 +232,8 @@ export const FALLBACK_VEHICLES: FallbackVehicle[] = [
     totalTrips: 45,
     createdAt: '2024-01-23T10:00:00.000Z',
     images: [
-      { id: 'img-4-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea04', url: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=1200&q=80', isPrimary: true, order: 0 },
-      { id: 'img-4-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea04', url: 'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=1200&q=80', isPrimary: false, order: 1 },
+      { id: 'img-4-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea04', url: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=600&auto=format&fit=crop&q=75', isPrimary: true, order: 0 },
+      { id: 'img-4-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea04', url: 'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=600&auto=format&fit=crop&q=75', isPrimary: false, order: 1 },
     ],
     features: [
       { id: 'f-4-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea04', name: '4x4 Drivetrain' },
@@ -267,8 +267,8 @@ export const FALLBACK_VEHICLES: FallbackVehicle[] = [
     totalTrips: 37,
     createdAt: '2024-01-24T10:00:00.000Z',
     images: [
-      { id: 'img-5-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea54', url: 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=1200&q=80', isPrimary: true, order: 0 },
-      { id: 'img-5-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea54', url: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=1200&q=80', isPrimary: false, order: 1 },
+      { id: 'img-5-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea54', url: 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=600&auto=format&fit=crop&q=75', isPrimary: true, order: 0 },
+      { id: 'img-5-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea54', url: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=600&auto=format&fit=crop&q=75', isPrimary: false, order: 1 },
     ],
     features: [
       { id: 'f-5-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea54', name: '7 Seats' },
@@ -302,8 +302,8 @@ export const FALLBACK_VEHICLES: FallbackVehicle[] = [
     totalTrips: 52,
     createdAt: '2024-01-25T10:00:00.000Z',
     images: [
-      { id: 'img-6-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea06', url: 'https://images.unsplash.com/photo-1502877338535-766e1452684a?w=1200&q=80', isPrimary: true, order: 0 },
-      { id: 'img-6-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea06', url: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1200&q=80', isPrimary: false, order: 1 },
+      { id: 'img-6-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea06', url: 'https://images.unsplash.com/photo-1502877338535-766e1452684a?w=600&auto=format&fit=crop&q=75', isPrimary: true, order: 0 },
+      { id: 'img-6-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea06', url: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=600&auto=format&fit=crop&q=75', isPrimary: false, order: 1 },
     ],
     features: [
       { id: 'f-6-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea06', name: 'Electric Sunroof' },
@@ -336,8 +336,8 @@ export const FALLBACK_VEHICLES: FallbackVehicle[] = [
     totalTrips: 40,
     createdAt: '2024-01-26T10:00:00.000Z',
     images: [
-      { id: 'img-7-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea07', url: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=1200&q=80', isPrimary: true, order: 0 },
-      { id: 'img-7-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea07', url: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1200&q=80', isPrimary: false, order: 1 },
+      { id: 'img-7-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea07', url: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=600&auto=format&fit=crop&q=75', isPrimary: true, order: 0 },
+      { id: 'img-7-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea07', url: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600&auto=format&fit=crop&q=75', isPrimary: false, order: 1 },
     ],
     features: [
       { id: 'f-7-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea07', name: 'Level 2 ADAS' },
@@ -370,8 +370,8 @@ export const FALLBACK_VEHICLES: FallbackVehicle[] = [
     totalTrips: 34,
     createdAt: '2024-01-27T10:00:00.000Z',
     images: [
-      { id: 'img-8-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea08', url: 'https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=1200&q=80', isPrimary: true, order: 0 },
-      { id: 'img-8-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea08', url: 'https://images.unsplash.com/photo-1550355291-bbee04a92027?w=1200&q=80', isPrimary: false, order: 1 },
+      { id: 'img-8-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea08', url: 'https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=600&auto=format&fit=crop&q=75', isPrimary: true, order: 0 },
+      { id: 'img-8-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea08', url: 'https://images.unsplash.com/photo-1550355291-bbee04a92027?w=600&auto=format&fit=crop&q=75', isPrimary: false, order: 1 },
     ],
     features: [
       { id: 'f-8-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea08', name: 'Self-Charging Hybrid' },
@@ -404,8 +404,8 @@ export const FALLBACK_VEHICLES: FallbackVehicle[] = [
     totalTrips: 22,
     createdAt: '2024-01-28T10:00:00.000Z',
     images: [
-      { id: 'img-9-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea09', url: 'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?w=1200&q=80', isPrimary: true, order: 0 },
-      { id: 'img-9-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea09', url: 'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?w=1200&q=80', isPrimary: false, order: 1 },
+      { id: 'img-9-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea09', url: 'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?w=600&auto=format&fit=crop&q=75', isPrimary: true, order: 0 },
+      { id: 'img-9-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea09', url: 'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?w=600&auto=format&fit=crop&q=75', isPrimary: false, order: 1 },
     ],
     features: [
       { id: 'f-9-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea09', name: 'Virtual Cockpit' },
@@ -438,8 +438,8 @@ export const FALLBACK_VEHICLES: FallbackVehicle[] = [
     totalTrips: 48,
     createdAt: '2024-01-29T10:00:00.000Z',
     images: [
-      { id: 'img-10-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea10', url: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=1200&q=80', isPrimary: true, order: 0 },
-      { id: 'img-10-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea10', url: 'https://images.unsplash.com/photo-1502877338535-766e1452684a?w=1200&q=80', isPrimary: false, order: 1 },
+      { id: 'img-10-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea10', url: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=600&auto=format&fit=crop&q=75', isPrimary: true, order: 0 },
+      { id: 'img-10-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea10', url: 'https://images.unsplash.com/photo-1502877338535-766e1452684a?w=600&auto=format&fit=crop&q=75', isPrimary: false, order: 1 },
     ],
     features: [
       { id: 'f-10-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea10', name: '7 Seats' },
@@ -472,8 +472,8 @@ export const FALLBACK_VEHICLES: FallbackVehicle[] = [
     totalTrips: 29,
     createdAt: '2024-01-30T10:00:00.000Z',
     images: [
-      { id: 'img-11-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea11', url: 'https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=1200&q=80', isPrimary: true, order: 0 },
-      { id: 'img-11-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea11', url: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1200&q=80', isPrimary: false, order: 1 },
+      { id: 'img-11-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea11', url: 'https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=600&auto=format&fit=crop&q=75', isPrimary: true, order: 0 },
+      { id: 'img-11-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea11', url: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&auto=format&fit=crop&q=75', isPrimary: false, order: 1 },
     ],
     features: [
       { id: 'f-11-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea11', name: '5-Star Safety Rating' },
@@ -506,8 +506,8 @@ export const FALLBACK_VEHICLES: FallbackVehicle[] = [
     totalTrips: 15,
     createdAt: '2024-02-01T10:00:00.000Z',
     images: [
-      { id: 'img-12-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea12', url: 'https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=1200&q=80', isPrimary: true, order: 0 },
-      { id: 'img-12-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea12', url: 'https://images.unsplash.com/photo-1563720223185-11003d516935?w=1200&q=80', isPrimary: false, order: 1 },
+      { id: 'img-12-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea12', url: 'https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=600&auto=format&fit=crop&q=75', isPrimary: true, order: 0 },
+      { id: 'img-12-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea12', url: 'https://images.unsplash.com/photo-1563720223185-11003d516935?w=600&auto=format&fit=crop&q=75', isPrimary: false, order: 1 },
     ],
     features: [
       { id: 'f-12-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea12', name: '650 km Range' },
@@ -540,8 +540,8 @@ export const FALLBACK_VEHICLES: FallbackVehicle[] = [
     totalTrips: 60,
     createdAt: '2024-02-02T10:00:00.000Z',
     images: [
-      { id: 'img-13-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea13', url: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=1200&q=80', isPrimary: true, order: 0 },
-      { id: 'img-13-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea13', url: 'https://images.unsplash.com/photo-1502877338535-766e1452684a?w=1200&q=80', isPrimary: false, order: 1 },
+      { id: 'img-13-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea13', url: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=600&auto=format&fit=crop&q=75', isPrimary: true, order: 0 },
+      { id: 'img-13-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea13', url: 'https://images.unsplash.com/photo-1502877338535-766e1452684a?w=600&auto=format&fit=crop&q=75', isPrimary: false, order: 1 },
     ],
     features: [
       { id: 'f-13-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea13', name: '6 Airbags' },
@@ -573,8 +573,8 @@ export const FALLBACK_VEHICLES: FallbackVehicle[] = [
     totalTrips: 38,
     createdAt: '2024-02-03T10:00:00.000Z',
     images: [
-      { id: 'img-14-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea14', url: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=1200&q=80', isPrimary: true, order: 0 },
-      { id: 'img-14-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea14', url: 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=1200&q=80', isPrimary: false, order: 1 },
+      { id: 'img-14-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea14', url: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=600&auto=format&fit=crop&q=75', isPrimary: true, order: 0 },
+      { id: 'img-14-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea14', url: 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=600&auto=format&fit=crop&q=75', isPrimary: false, order: 1 },
     ],
     features: [
       { id: 'f-14-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea14', name: '4XPLOR Intelligent Terrain' },
@@ -607,8 +607,8 @@ export const FALLBACK_VEHICLES: FallbackVehicle[] = [
     totalTrips: 27,
     createdAt: '2024-02-04T10:00:00.000Z',
     images: [
-      { id: 'img-15-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea15', url: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=1200&q=80', isPrimary: true, order: 0 },
-      { id: 'img-15-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea15', url: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1200&q=80', isPrimary: false, order: 1 },
+      { id: 'img-15-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea15', url: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=600&auto=format&fit=crop&q=75', isPrimary: true, order: 0 },
+      { id: 'img-15-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea15', url: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600&auto=format&fit=crop&q=75', isPrimary: false, order: 1 },
     ],
     features: [
       { id: 'f-15-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea15', name: 'Dual Panoramic Displays' },
@@ -640,8 +640,8 @@ export const FALLBACK_VEHICLES: FallbackVehicle[] = [
     totalTrips: 20,
     createdAt: '2024-02-05T10:00:00.000Z',
     images: [
-      { id: 'img-16-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea16', url: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=1200&q=80', isPrimary: true, order: 0 },
-      { id: 'img-16-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea16', url: 'https://images.unsplash.com/photo-1617788138017-80ad40651399?w=1200&q=80', isPrimary: false, order: 1 },
+      { id: 'img-16-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea16', url: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=600&auto=format&fit=crop&q=75', isPrimary: true, order: 0 },
+      { id: 'img-16-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea16', url: 'https://images.unsplash.com/photo-1617788138017-80ad40651399?w=600&auto=format&fit=crop&q=75', isPrimary: false, order: 1 },
     ],
     features: [
       { id: 'f-16-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea16', name: 'Burmester Sound' },
