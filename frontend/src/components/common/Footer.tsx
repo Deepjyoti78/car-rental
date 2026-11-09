@@ -12,14 +12,14 @@ export const Footer: React.FC = () => {
       className={`pt-16 pb-12 transition-colors duration-200 border-t ${
         isLight
           ? 'bg-[#EAE4DC] text-slate-900 border-stone-300'
-          : 'bg-[#0B0F14] text-[#FAF8F3] border-[#36424D]'
+          : 'bg-black text-white border-neutral-800'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top Trust Pillars Banner */}
         <div
           className={`grid grid-cols-1 md:grid-cols-4 gap-8 pb-12 border-b ${
-            isLight ? 'border-stone-300' : 'border-[#36424D]'
+            isLight ? 'border-stone-300' : 'border-neutral-800'
           }`}
         >
           <div className="flex items-start space-x-3.5">
@@ -27,7 +27,7 @@ export const Footer: React.FC = () => {
               className={`w-9 h-9 rounded-full border flex items-center justify-center shrink-0 ${
                 isLight
                   ? 'bg-white border-stone-300 text-slate-800 shadow-xs'
-                  : 'bg-[#1A222B] border-[#36424D] text-[#2D7DA6]'
+                  : 'bg-[#0D0D0E] border-neutral-800 text-amber-400'
               }`}
             >
               <ShieldCheck className="w-4 h-4" />
@@ -35,12 +35,12 @@ export const Footer: React.FC = () => {
             <div>
               <h4
                 className={`text-xs font-bold uppercase tracking-wider ${
-                  isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                  isLight ? 'text-slate-900' : 'text-white'
                 }`}
               >
                 Inspected Fleet
               </h4>
-              <p className={`text-xs mt-1 leading-relaxed ${isLight ? 'text-slate-600' : 'text-[#D5DBE1]'}`}>
+              <p className={`text-xs mt-1 leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
                 Multi-point fitness, valid commercial yellow plates, and pre-trip photo logs.
               </p>
             </div>
@@ -51,7 +51,7 @@ export const Footer: React.FC = () => {
               className={`w-9 h-9 rounded-full border flex items-center justify-center shrink-0 ${
                 isLight
                   ? 'bg-white border-stone-300 text-[#E07A3F] shadow-xs'
-                  : 'bg-[#1A222B] border-[#36424D] text-[#E07A3F]'
+                  : 'bg-[#0D0D0E] border-neutral-800 text-amber-400'
               }`}
             >
               <HeartHandshake className="w-4 h-4" />
@@ -59,12 +59,12 @@ export const Footer: React.FC = () => {
             <div>
               <h4
                 className={`text-xs font-bold uppercase tracking-wider ${
-                  isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                  isLight ? 'text-slate-900' : 'text-white'
                 }`}
               >
                 24h Deposit Escrow
               </h4>
-              <p className={`text-xs mt-1 leading-relaxed ${isLight ? 'text-slate-600' : 'text-[#D5DBE1]'}`}>
+              <p className={`text-xs mt-1 leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
                 100% refundable deposits returned within 24 hours of safe vehicle return.
               </p>
             </div>
@@ -75,7 +75,7 @@ export const Footer: React.FC = () => {
               className={`w-9 h-9 rounded-full border flex items-center justify-center shrink-0 ${
                 isLight
                   ? 'bg-white border-stone-300 text-slate-800 shadow-xs'
-                  : 'bg-[#1A222B] border-[#36424D] text-[#2D7DA6]'
+                  : 'bg-[#0D0D0E] border-neutral-800 text-amber-400'
               }`}
             >
               <MapPin className="w-4 h-4" />
@@ -83,12 +83,12 @@ export const Footer: React.FC = () => {
             <div>
               <h4
                 className={`text-xs font-bold uppercase tracking-wider ${
-                  isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                  isLight ? 'text-slate-900' : 'text-white'
                 }`}
               >
                 Verified Hub Delivery
               </h4>
-              <p className={`text-xs mt-1 leading-relaxed ${isLight ? 'text-slate-600' : 'text-[#D5DBE1]'}`}>
+              <p className={`text-xs mt-1 leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
                 Airport terminals and city center hubs across Delhi NCR, Jaipur & Chandigarh.
               </p>
             </div>
@@ -99,7 +99,7 @@ export const Footer: React.FC = () => {
               className={`w-9 h-9 rounded-full border flex items-center justify-center shrink-0 ${
                 isLight
                   ? 'bg-white border-stone-300 text-slate-800 shadow-xs'
-                  : 'bg-[#1A222B] border-[#36424D] text-[#F6E7D7]'
+                  : 'bg-[#0D0D0E] border-neutral-800 text-white'
               }`}
             >
               <Headphones className="w-4 h-4" />
@@ -107,12 +107,12 @@ export const Footer: React.FC = () => {
             <div>
               <h4
                 className={`text-xs font-bold uppercase tracking-wider ${
-                  isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                  isLight ? 'text-slate-900' : 'text-white'
                 }`}
               >
                 24/7 Fleet Support
               </h4>
-              <p className={`text-xs mt-1 leading-relaxed ${isLight ? 'text-slate-600' : 'text-[#D5DBE1]'}`}>
+              <p className={`text-xs mt-1 leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
                 On-call highway emergency assistance and rapid replacement vehicles.
               </p>
             </div>
@@ -122,7 +122,7 @@ export const Footer: React.FC = () => {
         {/* Links Navigation */}
         <div
           className={`grid grid-cols-2 md:grid-cols-5 gap-8 py-12 border-b ${
-            isLight ? 'border-stone-300' : 'border-[#36424D]'
+            isLight ? 'border-stone-300' : 'border-neutral-800'
           }`}
         >
           <div className="col-span-2">
@@ -131,7 +131,7 @@ export const Footer: React.FC = () => {
                 className={`w-9 h-9 rounded-full border flex items-center justify-center ${
                   isLight
                     ? 'bg-white border-stone-300 text-slate-900 shadow-xs'
-                    : 'bg-[#1A222B] border-[#36424D] text-[#FAF8F3]'
+                    : 'bg-[#0D0D0E] border-neutral-800 text-white'
                 }`}
               >
                 <Car className="w-4 h-4" strokeWidth={2.2} />
@@ -309,7 +309,7 @@ export const Footer: React.FC = () => {
           }`}
         >
           <div className="flex items-center space-x-2">
-            <span className="w-2 h-2 rounded-full bg-[#2D7DA6] animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             <span className="font-mono text-[11px]">System Status: All 5 Hubs Operational</span>
           </div>
 

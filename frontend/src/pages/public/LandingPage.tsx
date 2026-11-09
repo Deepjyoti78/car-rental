@@ -151,7 +151,7 @@ export const LandingPage: React.FC = () => {
   return (
     <div
       className={`space-y-24 pb-24 transition-colors duration-200 ${
-        isLight ? 'bg-[#F4EFEA] text-slate-900' : 'bg-[#0B0F14] text-[#FAF8F3]'
+        isLight ? 'bg-[#F4EFEA] text-slate-900' : 'bg-black text-white'
       }`}
     >
       {/* 1. HERO SECTION: Full-bleed Porsche Lakeside Visual Identity matching Image 2 */}
@@ -196,9 +196,9 @@ export const LandingPage: React.FC = () => {
             <button
               type="submit"
               aria-label="Search vehicles"
-              className="w-9 h-9 rounded-full bg-[#F6E7D7] hover:bg-white text-[#0B0F14] flex items-center justify-center shrink-0 shadow-md transition-transform active:scale-95 cursor-pointer"
+              className="w-9 h-9 rounded-full bg-white hover:bg-neutral-200 text-black flex items-center justify-center shrink-0 shadow-md transition-transform active:scale-95 cursor-pointer"
             >
-              <Search className="w-4 h-4 text-[#0B0F14]" strokeWidth={2.2} />
+              <Search className="w-4 h-4 text-black" strokeWidth={2.2} />
             </button>
           </form>
         </div>
@@ -226,16 +226,16 @@ export const LandingPage: React.FC = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
           className={`flex flex-col sm:flex-row sm:items-end justify-between mb-8 pb-4 border-b ${
-            isLight ? 'border-stone-200/80' : 'border-[#36424D]'
+            isLight ? 'border-stone-200/80' : 'border-neutral-800'
           }`}
         >
           <div>
-            <span className="text-[11px] font-mono uppercase tracking-widest text-[#E07A3F]">
+            <span className="text-[11px] font-mono uppercase tracking-widest text-amber-500">
               Class & Capability
             </span>
             <h2
               className={`font-display text-2xl sm:text-3xl font-bold mt-1 ${
-                isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                isLight ? 'text-slate-900' : 'text-white'
               }`}
             >
               Curated Fleet Categories
@@ -244,11 +244,11 @@ export const LandingPage: React.FC = () => {
           <Link
             to="/explore"
             className={`text-xs font-semibold flex items-center space-x-1.5 mt-2 sm:mt-0 transition-colors group ${
-              isLight ? 'text-slate-600 hover:text-black' : 'text-[#D5DBE1] hover:text-[#F6E7D7]'
+              isLight ? 'text-slate-600 hover:text-black' : 'text-neutral-300 hover:text-white'
             }`}
           >
             <span>Explore All 16+ Vehicles</span>
-            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform text-[#2D7DA6]" />
+            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform text-amber-400" />
           </Link>
         </div>
 
@@ -260,11 +260,11 @@ export const LandingPage: React.FC = () => {
               className={`group cursor-pointer rounded-xl border overflow-hidden transition-all duration-300 flex flex-col justify-between ${
                 isLight
                   ? 'bg-white border-stone-200/80 shadow-xs hover:border-stone-400 hover:shadow-md'
-                  : 'bg-[#1A222B] border-[#36424D] hover:border-[#2D7DA6] hover:shadow-card'
+                  : 'bg-[#0D0D0E] border-neutral-800 hover:border-neutral-700 hover:bg-[#121214] hover:shadow-xl'
               }`}
             >
               <div>
-                <div className={`relative aspect-[16/10] overflow-hidden ${isLight ? 'bg-stone-100' : 'bg-[#0B0F14]'}`}>
+                <div className={`relative aspect-[16/10] overflow-hidden ${isLight ? 'bg-stone-100' : 'bg-black'}`}>
                   <img
                     src={cat.image}
                     alt={cat.title}
@@ -274,7 +274,7 @@ export const LandingPage: React.FC = () => {
                     className={`absolute top-2.5 left-2.5 px-2 py-0.5 rounded text-[10px] font-mono tracking-wider border backdrop-blur-sm ${
                       isLight
                         ? 'bg-white/90 text-slate-800 border-stone-200 shadow-xs'
-                        : 'bg-[#0B0F14]/80 text-[#FAF8F3] border-[#36424D]/50'
+                        : 'bg-black/80 text-white border-neutral-700'
                     }`}
                   >
                     {cat.tag}
@@ -284,12 +284,12 @@ export const LandingPage: React.FC = () => {
                 <div className="p-4 sm:p-5">
                   <h3
                     className={`font-display text-lg font-bold transition-colors ${
-                      isLight ? 'text-slate-900 group-hover:text-black' : 'text-[#FAF8F3] group-hover:text-[#F6E7D7]'
+                      isLight ? 'text-slate-900 group-hover:text-black' : 'text-white group-hover:text-amber-400'
                     }`}
                   >
                     {cat.title}
                   </h3>
-                  <p className={`text-xs mt-1.5 leading-relaxed ${isLight ? 'text-slate-600' : 'text-[#D5DBE1]'}`}>
+                  <p className={`text-xs mt-1.5 leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
                     {cat.desc}
                   </p>
                 </div>
@@ -297,19 +297,19 @@ export const LandingPage: React.FC = () => {
 
               <div
                 className={`p-4 sm:p-5 pt-0 border-t mt-2 ${
-                  isLight ? 'border-stone-100' : 'border-[#36424D]'
+                  isLight ? 'border-stone-100' : 'border-neutral-800'
                 }`}
               >
                 <span
                   className={`text-[10px] font-mono uppercase block pt-2 ${
-                    isLight ? 'text-slate-400' : 'text-[#6B7783]'
+                    isLight ? 'text-slate-400' : 'text-neutral-500'
                   }`}
                 >
                   Featured Models:
                 </span>
                 <span
                   className={`text-xs font-medium mt-0.5 block truncate ${
-                    isLight ? 'text-slate-800' : 'text-[#FAF8F3]'
+                    isLight ? 'text-slate-800' : 'text-neutral-200'
                   }`}
                 >
                   {cat.lineup}
@@ -324,16 +324,16 @@ export const LandingPage: React.FC = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
           className={`flex flex-col md:flex-row md:items-end justify-between mb-8 pb-4 border-b gap-4 ${
-            isLight ? 'border-stone-200/80' : 'border-[#36424D]'
+            isLight ? 'border-stone-200/80' : 'border-neutral-800'
           }`}
         >
           <div>
-            <span className="text-[11px] font-mono uppercase tracking-widest text-[#E07A3F]">
+            <span className="text-[11px] font-mono uppercase tracking-widest text-amber-500">
               Showroom Selection
             </span>
             <h2
               className={`font-display text-2xl sm:text-3xl font-bold mt-1 ${
-                isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                isLight ? 'text-slate-900' : 'text-white'
               }`}
             >
               Top Rated Vehicles on DriveLoop
@@ -349,11 +349,11 @@ export const LandingPage: React.FC = () => {
                 className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
                   activeCategoryTab === cat
                     ? isLight
-                      ? 'bg-black text-white shadow-xs'
-                      : 'bg-[#F6E7D7] text-[#0B0F14] shadow-subtle'
-                    : isLight
-                    ? 'bg-white border border-stone-200 text-slate-700 hover:text-black hover:border-slate-400 shadow-xs'
-                    : 'bg-[#1A222B] border border-[#36424D] text-[#D5DBE1] hover:text-[#FAF8F3] hover:border-[#2D7DA6]'
+                    ? 'bg-black text-white shadow-xs'
+                    : 'bg-white text-black font-bold shadow-md'
+                  : isLight
+                  ? 'bg-white border border-stone-200 text-slate-700 hover:text-black hover:border-slate-400 shadow-xs'
+                  : 'bg-[#0D0D0E] border border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700'
                 }`}
               >
                 {cat === 'ALL' ? 'All Fleet' : cat}
@@ -368,7 +368,7 @@ export const LandingPage: React.FC = () => {
               <div
                 key={i}
                 className={`h-96 rounded-xl border animate-pulse ${
-                  isLight ? 'bg-white border-stone-200/80 shadow-xs' : 'bg-[#1A222B] border-[#36424D]'
+                  isLight ? 'bg-white border-stone-200/80 shadow-xs' : 'bg-[#0D0D0E] border-neutral-800'
                 }`}
               />
             ))}
@@ -376,15 +376,15 @@ export const LandingPage: React.FC = () => {
         ) : filteredCars.length === 0 ? (
           <div
             className={`p-12 text-center rounded-xl border ${
-              isLight ? 'bg-white border-stone-200 text-slate-900 shadow-xs' : 'bg-[#1A222B] border-[#36424D]'
+              isLight ? 'bg-white border-stone-200 text-slate-900 shadow-xs' : 'bg-[#0D0D0E] border-neutral-800'
             }`}
           >
-            <p className={`text-sm font-semibold ${isLight ? 'text-slate-800' : 'text-[#FAF8F3]'}`}>
+            <p className={`text-sm font-semibold ${isLight ? 'text-slate-800' : 'text-white'}`}>
               No vehicles found in this category.
             </p>
             <button
               onClick={() => setActiveCategoryTab('ALL')}
-              className="mt-3 text-xs text-[#E07A3F] font-semibold underline hover:text-[#2D7DA6]"
+              className="mt-3 text-xs text-amber-500 font-semibold underline hover:text-amber-400"
             >
               Reset to All Fleet
             </button>
@@ -401,24 +401,24 @@ export const LandingPage: React.FC = () => {
       {/* 4. THE DRIVELOOP DIFFERENCE: Editorial Proof Grid */}
       <section
         className={`border-y py-20 ${
-          isLight ? 'bg-white border-stone-200/80' : 'bg-[#1A222B] border-[#36424D]'
+          isLight ? 'bg-white border-stone-200/80' : 'bg-[#0A0A0C] border-neutral-800'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12">
-            <span className="text-[11px] font-mono uppercase tracking-widest text-[#E07A3F]">
+            <span className="text-[11px] font-mono uppercase tracking-widest text-amber-500">
               Marketplace Integrity
             </span>
             <h2
               className={`font-display text-3xl sm:text-4xl font-bold mt-1 ${
-                isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                isLight ? 'text-slate-900' : 'text-white'
               }`}
             >
               Rethinking Car Rental in India.
             </h2>
             <p
               className={`text-sm sm:text-base mt-2 leading-relaxed ${
-                isLight ? 'text-slate-600' : 'text-[#D5DBE1]'
+                isLight ? 'text-slate-600' : 'text-neutral-400'
               }`}
             >
               We replaced unregulated roadside brokers and deceptive aggregate portals with an auditable multi-vendor platform where verified fleet owners compete on quality and service.
@@ -431,7 +431,7 @@ export const LandingPage: React.FC = () => {
               className={`p-6 rounded-xl border flex flex-col justify-between transition-colors ${
                 isLight
                   ? 'bg-[#F8F6F2] border-stone-200/80 hover:border-stone-400 shadow-xs'
-                  : 'bg-[#0B0F14] border-[#36424D] hover:border-[#2D7DA6]'
+                  : 'bg-[#0D0D0E] border-neutral-800 hover:border-neutral-700'
               }`}
             >
               <div>
@@ -439,24 +439,24 @@ export const LandingPage: React.FC = () => {
                   className={`w-9 h-9 rounded-md flex items-center justify-center font-mono text-xs font-bold mb-4 border ${
                     isLight
                       ? 'bg-black text-white border-black shadow-xs'
-                      : 'bg-[#0E4A6B] text-[#FAF8F3] border-[#2D7DA6]/50'
+                      : 'bg-neutral-900 text-white border-neutral-700'
                   }`}
                 >
                   01
                 </div>
-                <h3 className={`font-display text-lg font-bold ${isLight ? 'text-slate-900' : 'text-[#FAF8F3]'}`}>
+                <h3 className={`font-display text-lg font-bold ${isLight ? 'text-slate-900' : 'text-white'}`}>
                   Dedicated Escrow Deposit
                 </h3>
-                <p className={`text-xs mt-2 leading-relaxed ${isLight ? 'text-slate-600' : 'text-[#D5DBE1]'}`}>
+                <p className={`text-xs mt-2 leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
                   Never worry about delayed deposit returns. Your security deposit is locked in automated escrow and credited back to your original source within 24 hours of inspection sign-off.
                 </p>
               </div>
               <div
                 className={`mt-6 pt-4 border-t flex items-center space-x-2 text-xs font-semibold ${
-                  isLight ? 'border-stone-200 text-slate-900' : 'border-[#36424D] text-[#2D7DA6]'
+                  isLight ? 'border-stone-200 text-slate-900' : 'border-neutral-800 text-neutral-300'
                 }`}
               >
-                <CheckCircle2 className={`w-4 h-4 ${isLight ? 'text-emerald-600' : 'text-[#2D7DA6]'}`} />
+                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                 <span>Automated 24h Payout Guarantee</span>
               </div>
             </div>
@@ -466,7 +466,7 @@ export const LandingPage: React.FC = () => {
               className={`p-6 rounded-xl border flex flex-col justify-between transition-colors ${
                 isLight
                   ? 'bg-[#F8F6F2] border-stone-200/80 hover:border-stone-400 shadow-xs'
-                  : 'bg-[#0B0F14] border-[#36424D] hover:border-[#2D7DA6]'
+                  : 'bg-[#0D0D0E] border-neutral-800 hover:border-neutral-700'
               }`}
             >
               <div>
@@ -474,24 +474,24 @@ export const LandingPage: React.FC = () => {
                   className={`w-9 h-9 rounded-md flex items-center justify-center font-mono text-xs font-bold mb-4 border ${
                     isLight
                       ? 'bg-black text-white border-black shadow-xs'
-                      : 'bg-[#0E4A6B] text-[#FAF8F3] border-[#2D7DA6]/50'
+                      : 'bg-neutral-900 text-white border-neutral-700'
                   }`}
                 >
                   02
                 </div>
-                <h3 className={`font-display text-lg font-bold ${isLight ? 'text-slate-900' : 'text-[#FAF8F3]'}`}>
+                <h3 className={`font-display text-lg font-bold ${isLight ? 'text-slate-900' : 'text-white'}`}>
                   Verified Commercial Yellow Plates
                 </h3>
-                <p className={`text-xs mt-2 leading-relaxed ${isLight ? 'text-slate-600' : 'text-[#D5DBE1]'}`}>
+                <p className={`text-xs mt-2 leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
                   Every listed car carries authentic state transport yellow plates, valid commercial passenger fitness, and comprehensive multi-passenger insurance. No impoundment fears at state borders.
                 </p>
               </div>
               <div
                 className={`mt-6 pt-4 border-t flex items-center space-x-2 text-xs font-semibold ${
-                  isLight ? 'border-stone-200 text-slate-900' : 'border-[#36424D] text-[#2D7DA6]'
+                  isLight ? 'border-stone-200 text-slate-900' : 'border-neutral-800 text-neutral-300'
                 }`}
               >
-                <CheckCircle2 className={`w-4 h-4 ${isLight ? 'text-emerald-600' : 'text-[#2D7DA6]'}`} />
+                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                 <span>100% All-India Tourist Permit</span>
               </div>
             </div>
@@ -501,7 +501,7 @@ export const LandingPage: React.FC = () => {
               className={`p-6 rounded-xl border flex flex-col justify-between transition-colors ${
                 isLight
                   ? 'bg-[#F8F6F2] border-stone-200/80 hover:border-stone-400 shadow-xs'
-                  : 'bg-[#0B0F14] border-[#36424D] hover:border-[#2D7DA6]'
+                  : 'bg-[#0D0D0E] border-neutral-800 hover:border-neutral-700'
               }`}
             >
               <div>
@@ -509,24 +509,24 @@ export const LandingPage: React.FC = () => {
                   className={`w-9 h-9 rounded-md flex items-center justify-center font-mono text-xs font-bold mb-4 border ${
                     isLight
                       ? 'bg-black text-white border-black shadow-xs'
-                      : 'bg-[#0E4A6B] text-[#FAF8F3] border-[#2D7DA6]/50'
+                      : 'bg-neutral-900 text-white border-neutral-700'
                   }`}
                 >
                   03
                 </div>
-                <h3 className={`font-display text-lg font-bold ${isLight ? 'text-slate-900' : 'text-[#FAF8F3]'}`}>
+                <h3 className={`font-display text-lg font-bold ${isLight ? 'text-slate-900' : 'text-white'}`}>
                   Digital Pre-Trip Inspection
                 </h3>
-                <p className={`text-xs mt-2 leading-relaxed ${isLight ? 'text-slate-600' : 'text-[#D5DBE1]'}`}>
+                <p className={`text-xs mt-2 leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
                   Before driving away, both host and driver sign off on odometer reading, fuel level, and a 360° photo walkthrough in the app. Zero fraudulent damage disputes at handover.
                 </p>
               </div>
               <div
                 className={`mt-6 pt-4 border-t flex items-center space-x-2 text-xs font-semibold ${
-                  isLight ? 'border-stone-200 text-slate-900' : 'border-[#36424D] text-[#2D7DA6]'
+                  isLight ? 'border-stone-200 text-slate-900' : 'border-neutral-800 text-neutral-300'
                 }`}
               >
-                <CheckCircle2 className={`w-4 h-4 ${isLight ? 'text-emerald-600' : 'text-[#2D7DA6]'}`} />
+                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                 <span>Mutual Sign-Off Protocol</span>
               </div>
             </div>
@@ -538,16 +538,16 @@ export const LandingPage: React.FC = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
           className={`flex flex-col sm:flex-row sm:items-end justify-between mb-8 pb-4 border-b ${
-            isLight ? 'border-stone-200/80' : 'border-[#36424D]'
+            isLight ? 'border-stone-200/80' : 'border-neutral-800'
           }`}
         >
           <div>
-            <span className="text-[11px] font-mono uppercase tracking-widest text-[#E07A3F]">
+            <span className="text-[11px] font-mono uppercase tracking-widest text-amber-500">
               Strategic Network
             </span>
             <h2
               className={`font-display text-2xl sm:text-3xl font-bold mt-1 ${
-                isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                isLight ? 'text-slate-900' : 'text-white'
               }`}
             >
               Top Self-Drive Hubs Across India
@@ -555,7 +555,7 @@ export const LandingPage: React.FC = () => {
           </div>
           <span
             className={`text-xs font-mono mt-2 sm:mt-0 ${
-              isLight ? 'text-slate-400' : 'text-[#6B7783]'
+              isLight ? 'text-slate-400' : 'text-neutral-500'
             }`}
           >
             Airport & City Center Meet-Points
@@ -570,7 +570,7 @@ export const LandingPage: React.FC = () => {
               className={`group cursor-pointer rounded-xl border p-5 transition-all flex flex-col justify-between ${
                 isLight
                   ? 'bg-white border-stone-200/80 shadow-xs hover:border-stone-400 hover:shadow-md'
-                  : 'bg-[#1A222B] border-[#36424D] hover:border-[#2D7DA6] hover:shadow-card'
+                  : 'bg-[#0D0D0E] border-neutral-800 hover:border-neutral-700 hover:bg-[#121214] hover:shadow-xl'
               }`}
             >
               <div>
@@ -579,14 +579,14 @@ export const LandingPage: React.FC = () => {
                     className={`w-8 h-8 rounded-full border flex items-center justify-center transition-colors ${
                       isLight
                         ? 'bg-slate-100 border-slate-200 text-slate-800 group-hover:bg-black group-hover:text-white'
-                        : 'bg-[#0B0F14] border-[#36424D] text-[#2D7DA6] group-hover:bg-[#2D7DA6] group-hover:text-white'
+                        : 'bg-neutral-900 border-neutral-700 text-amber-400 group-hover:bg-amber-400 group-hover:text-black'
                     }`}
                   >
                     <MapPin className="w-4 h-4" />
                   </div>
                   <span
                     className={`font-mono text-[10px] uppercase font-semibold ${
-                      isLight ? 'text-slate-400' : 'text-[#6B7783]'
+                      isLight ? 'text-slate-400' : 'text-neutral-500'
                     }`}
                   >
                     {hub.fleetCount}
@@ -594,19 +594,19 @@ export const LandingPage: React.FC = () => {
                 </div>
                 <h3
                   className={`font-display text-base font-bold transition-colors ${
-                    isLight ? 'text-slate-900 group-hover:text-black' : 'text-[#FAF8F3] group-hover:text-[#F6E7D7]'
+                    isLight ? 'text-slate-900 group-hover:text-black' : 'text-white group-hover:text-amber-400'
                   }`}
                 >
                   {hub.name}
                 </h3>
-                <p className={`text-[11px] mt-1 leading-snug ${isLight ? 'text-slate-500' : 'text-[#D5DBE1]'}`}>
+                <p className={`text-[11px] mt-1 leading-snug ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
                   {hub.tag}
                 </p>
               </div>
 
               <div
                 className={`mt-4 pt-3 border-t text-[10px] font-mono font-semibold ${
-                  isLight ? 'border-stone-100 text-[#C25E26]' : 'border-[#36424D] text-[#E07A3F]'
+                  isLight ? 'border-stone-100 text-[#C25E26]' : 'border-neutral-800 text-amber-400'
                 }`}
               >
                 {hub.highlight}
@@ -622,17 +622,17 @@ export const LandingPage: React.FC = () => {
           className={`rounded-2xl p-8 sm:p-14 relative overflow-hidden border shadow-xl ${
             isLight
               ? 'bg-gradient-to-r from-stone-900 via-stone-800 to-black text-white border-stone-700'
-              : 'bg-gradient-to-r from-[#0E4A6B] via-[#1A222B] to-[#1A222B] text-white border-[#36424D]'
+              : 'bg-gradient-to-r from-neutral-900 via-[#0D0D0E] to-black text-white border-neutral-800'
           }`}
         >
           <div className="relative z-10 max-w-2xl space-y-4">
-            <span className="font-mono text-xs uppercase tracking-widest text-[#E07A3F]">
+            <span className="font-mono text-xs uppercase tracking-widest text-amber-500">
               FLEET OPERATOR PORTAL
             </span>
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-[#FAF8F3]">
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-white">
               Turn Your Idle Rental Fleet Into Predictable Revenue.
             </h2>
-            <p className="text-xs sm:text-sm text-[#D5DBE1] leading-relaxed">
+            <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed">
               Are you a licensed car rental operator in North India? Join DriveLoop’s verified host network.
               Get pre-screened customers, integrated Razorpay payment collection, automated damage escrow, and weekly direct bank payouts with just 10% marketplace commission.
             </p>
@@ -642,7 +642,7 @@ export const LandingPage: React.FC = () => {
                 className={`px-5 py-3 rounded-full text-xs font-bold uppercase tracking-wider transition-all shadow-card flex items-center space-x-2 ${
                   isLight
                     ? 'bg-white hover:bg-stone-100 text-black'
-                    : 'bg-[#F6E7D7] hover:bg-white text-[#0B0F14]'
+                    : 'bg-white hover:bg-neutral-200 text-black'
                 }`}
               >
                 <span>Register Fleet Business</span>
@@ -653,7 +653,7 @@ export const LandingPage: React.FC = () => {
                 className={`px-5 py-3 rounded-full text-xs font-semibold tracking-wide border transition-colors ${
                   isLight
                     ? 'bg-white/10 hover:bg-white/20 text-white border-white/20'
-                    : 'bg-[#0B0F14]/70 hover:bg-[#0B0F14] text-[#FAF8F3] border-[#36424D]'
+                    : 'bg-neutral-900/90 hover:bg-neutral-800 text-white border-neutral-700'
                 }`}
               >
                 Host FAQ & Commission Rates
@@ -666,12 +666,12 @@ export const LandingPage: React.FC = () => {
       {/* 7. FREQUENTLY ASKED QUESTIONS */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10">
-          <span className="font-mono text-xs uppercase tracking-widest text-[#E07A3F]">
+          <span className="font-mono text-xs uppercase tracking-widest text-amber-500">
             Transparency & Policies
           </span>
           <h2
             className={`font-display text-2xl sm:text-3xl font-bold mt-1 ${
-              isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+              isLight ? 'text-slate-900' : 'text-white'
             }`}
           >
             Frequently Asked Questions
@@ -687,7 +687,7 @@ export const LandingPage: React.FC = () => {
                 className={`rounded-xl border overflow-hidden transition-colors ${
                   isLight
                     ? 'bg-white border-stone-200/80 shadow-xs'
-                    : 'bg-[#1A222B] border-[#36424D]'
+                    : 'bg-[#0D0D0E] border-neutral-800'
                 }`}
               >
                 <button
@@ -696,20 +696,20 @@ export const LandingPage: React.FC = () => {
                   className={`w-full p-4 sm:p-5 text-left flex items-center justify-between text-xs sm:text-sm font-bold transition-colors ${
                     isLight
                       ? 'text-slate-900 hover:text-black'
-                      : 'text-[#FAF8F3] hover:text-[#2D7DA6]'
+                      : 'text-white hover:text-amber-400'
                   }`}
                 >
                   <span>{faq.q}</span>
                   {isOpen ? (
                     <ChevronUp
                       className={`w-4 h-4 shrink-0 ml-4 ${
-                        isLight ? 'text-slate-800' : 'text-[#D5DBE1]'
+                        isLight ? 'text-slate-800' : 'text-neutral-300'
                       }`}
                     />
                   ) : (
                     <ChevronDown
                       className={`w-4 h-4 shrink-0 ml-4 ${
-                        isLight ? 'text-slate-400' : 'text-[#6B7783]'
+                        isLight ? 'text-slate-400' : 'text-neutral-500'
                       }`}
                     />
                   )}
@@ -719,7 +719,7 @@ export const LandingPage: React.FC = () => {
                     className={`px-4 sm:px-5 pb-5 text-xs leading-relaxed border-t pt-3 ${
                       isLight
                         ? 'border-stone-100 text-slate-600'
-                        : 'border-[#36424D] text-[#D5DBE1]'
+                        : 'border-neutral-800 text-neutral-400'
                     }`}
                   >
                     {faq.a}

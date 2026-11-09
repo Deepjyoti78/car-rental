@@ -73,11 +73,11 @@ export const Navbar: React.FC = () => {
           ? scrolled
             ? theme === 'light'
               ? 'fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-md border-b border-stone-200/80 shadow-sm text-[#111827]'
-              : 'fixed top-0 left-0 right-0 bg-[#0B0F14]/90 backdrop-blur-md border-b border-[#36424D]/60 shadow-lg text-white'
+              : 'fixed top-0 left-0 right-0 bg-black/95 backdrop-blur-md border-b border-neutral-800 shadow-lg text-white'
             : 'absolute top-0 left-0 right-0 bg-transparent border-transparent text-white'
           : theme === 'light'
           ? 'sticky top-0 bg-white/95 backdrop-blur-md border-b border-stone-200/80 shadow-xs text-[#111827]'
-          : 'sticky top-0 bg-[#0B0F14]/95 backdrop-blur-md border-b border-[#36424D] text-white'
+          : 'sticky top-0 bg-black/95 backdrop-blur-md border-b border-neutral-800 text-white'
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -158,39 +158,39 @@ export const Navbar: React.FC = () => {
                   >
                     <Bell className="w-4 h-4" />
                     {unreadCount > 0 && (
-                      <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#E07A3F] rounded-full ring-2 ring-[#0B0F14]" />
+                      <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-amber-400 rounded-full ring-2 ring-black" />
                     )}
                   </button>
 
                   {/* Notification Popover */}
                   {notificationsOpen && (
                     <div
-                      className={`absolute right-0 mt-2 w-80 rounded-xl shadow-card py-2 z-50 border ${
+                      className={`absolute right-0 mt-2 w-80 rounded-xl shadow-2xl py-2 z-50 border ${
                         theme === 'light'
                           ? 'bg-white border-stone-200 text-slate-800'
-                          : 'bg-[#1A222B] border-[#36424D] text-[#FAF8F3]'
+                          : 'bg-[#0D0D0E] border-neutral-800 text-white'
                       }`}
                     >
                       <div className={`px-4 py-2 border-b flex items-center justify-between ${
-                        theme === 'light' ? 'border-stone-100' : 'border-[#36424D]'
+                        theme === 'light' ? 'border-stone-100' : 'border-neutral-800'
                       }`}>
                         <span className={`text-[10px] font-mono uppercase tracking-wider ${
-                          theme === 'light' ? 'text-slate-400' : 'text-[#AAB4BE]'
+                          theme === 'light' ? 'text-slate-400' : 'text-neutral-400'
                         }`}>
                           Notifications
                         </span>
                         {unreadCount > 0 && (
-                          <span className="text-xs text-[#E07A3F] font-semibold">
+                          <span className="text-xs text-amber-400 font-semibold">
                             {unreadCount} unread
                           </span>
                         )}
                       </div>
                       <div className={`max-h-72 overflow-y-auto divide-y ${
-                        theme === 'light' ? 'divide-stone-100' : 'divide-[#36424D]'
+                        theme === 'light' ? 'divide-stone-100' : 'divide-neutral-800'
                       }`}>
                         {notifications.length === 0 ? (
                           <div className={`p-4 text-center text-xs ${
-                            theme === 'light' ? 'text-slate-400' : 'text-[#AAB4BE]'
+                            theme === 'light' ? 'text-slate-400' : 'text-neutral-500'
                           }`}>
                             No notifications yet
                           </div>
@@ -199,14 +199,14 @@ export const Navbar: React.FC = () => {
                             <div
                               key={n.id}
                               className={`p-3 transition-colors ${
-                                theme === 'light' ? 'hover:bg-slate-50' : 'hover:bg-[#0B0F14]/50'
+                                theme === 'light' ? 'hover:bg-slate-50' : 'hover:bg-neutral-900'
                               }`}
                             >
                               <p className={`text-xs font-semibold ${
-                                theme === 'light' ? 'text-slate-800' : 'text-[#FAF8F3]'
+                                theme === 'light' ? 'text-slate-800' : 'text-white'
                               }`}>{n.title}</p>
                               <p className={`text-xs mt-0.5 ${
-                                theme === 'light' ? 'text-slate-500' : 'text-[#AAB4BE]'
+                                theme === 'light' ? 'text-slate-500' : 'text-neutral-400'
                               }`}>{n.message}</p>
                             </div>
                           ))
@@ -223,10 +223,10 @@ export const Navbar: React.FC = () => {
                     className={`px-3.5 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 shadow-xs border ${
                       theme === 'light'
                         ? 'bg-slate-100 border-slate-200 text-slate-800 hover:bg-slate-200'
-                        : 'bg-[#1A222B] border-[#36424D] text-[#FAF8F3] hover:border-[#2D7DA6]'
+                        : 'bg-[#0D0D0E] border-neutral-800 text-white hover:border-neutral-700'
                     }`}
                   >
-                    <ShieldCheck className="w-3.5 h-3.5 text-[#2D7DA6]" />
+                    <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
                     Admin
                   </Link>
                 )}
@@ -234,9 +234,9 @@ export const Navbar: React.FC = () => {
                 {user.role === 'VENDOR' && (
                   <Link
                     to="/vendor"
-                    className="px-3.5 py-1.5 rounded-full bg-[#0E4A6B] text-[#FAF8F3] text-xs font-semibold hover:bg-[#2D7DA6] transition-colors flex items-center gap-1.5 shadow-subtle border border-[#2D7DA6]/40"
+                    className="px-3.5 py-1.5 rounded-full bg-neutral-900 text-white text-xs font-semibold hover:bg-neutral-800 transition-colors flex items-center gap-1.5 shadow-subtle border border-neutral-700"
                   >
-                    <LayoutDashboard className="w-3.5 h-3.5" />
+                    <LayoutDashboard className="w-3.5 h-3.5 text-amber-400" />
                     Fleet
                   </Link>
                 )}
@@ -247,10 +247,10 @@ export const Navbar: React.FC = () => {
                     className={`px-3.5 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 shadow-xs border ${
                       theme === 'light'
                         ? 'bg-slate-100 border-slate-200 text-slate-800 hover:bg-slate-200'
-                        : 'bg-[#1A222B] border-[#36424D] text-[#FAF8F3] hover:border-[#F6E7D7]'
+                        : 'bg-[#0D0D0E] border-neutral-800 text-white hover:border-neutral-700'
                     }`}
                   >
-                    <CalendarCheck className="w-3.5 h-3.5 text-[#E07A3F]" />
+                    <CalendarCheck className="w-3.5 h-3.5 text-amber-400" />
                     Bookings
                   </Link>
                 )}
@@ -282,27 +282,27 @@ export const Navbar: React.FC = () => {
 
                   {userDropdownOpen && (
                     <div
-                      className={`absolute right-0 mt-2 w-56 rounded-xl shadow-card py-2 z-50 border ${
+                      className={`absolute right-0 mt-2 w-56 rounded-xl shadow-2xl py-2 z-50 border ${
                         theme === 'light'
                           ? 'bg-white border-stone-200 text-slate-800'
-                          : 'bg-[#1A222B] border-[#36424D] text-[#FAF8F3]'
+                          : 'bg-[#0D0D0E] border-neutral-800 text-white'
                       }`}
                     >
                       <div className={`px-4 py-2 border-b ${
-                        theme === 'light' ? 'border-stone-100' : 'border-[#36424D]'
+                        theme === 'light' ? 'border-stone-100' : 'border-neutral-800'
                       }`}>
                         <p className={`text-xs font-bold ${
-                          theme === 'light' ? 'text-slate-900' : 'text-[#FAF8F3]'
+                          theme === 'light' ? 'text-slate-900' : 'text-white'
                         }`}>
                           {user.firstName} {user.lastName}
                         </p>
                         <p className={`text-[11px] truncate ${
-                          theme === 'light' ? 'text-slate-500' : 'text-[#AAB4BE]'
+                          theme === 'light' ? 'text-slate-500' : 'text-neutral-400'
                         }`}>{user.email}</p>
                         <span className={`inline-block mt-1 font-mono text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded border ${
                           theme === 'light'
                             ? 'bg-slate-100 text-slate-700 border-slate-200'
-                            : 'bg-[#0B0F14] text-[#D5DBE1] border-[#36424D]'
+                            : 'bg-black text-neutral-300 border-neutral-700'
                         }`}>
                           {user.role}
                         </span>
@@ -313,7 +313,7 @@ export const Navbar: React.FC = () => {
                           to="/dashboard"
                           onClick={() => setUserDropdownOpen(false)}
                           className={`flex items-center px-4 py-2 text-xs ${
-                            theme === 'light' ? 'text-slate-800 hover:bg-slate-50' : 'text-[#FAF8F3] hover:bg-[#0B0F14]/60'
+                            theme === 'light' ? 'text-slate-800 hover:bg-slate-50' : 'text-white hover:bg-neutral-900'
                           }`}
                         >
                           <UserIcon className="w-4 h-4 mr-2.5 opacity-70" />
@@ -326,7 +326,7 @@ export const Navbar: React.FC = () => {
                           to="/vendor"
                           onClick={() => setUserDropdownOpen(false)}
                           className={`flex items-center px-4 py-2 text-xs ${
-                            theme === 'light' ? 'text-slate-800 hover:bg-slate-50' : 'text-[#FAF8F3] hover:bg-[#0B0F14]/60'
+                            theme === 'light' ? 'text-slate-800 hover:bg-slate-50' : 'text-white hover:bg-neutral-900'
                           }`}
                         >
                           <LayoutDashboard className="w-4 h-4 mr-2.5 opacity-70" />
@@ -339,7 +339,7 @@ export const Navbar: React.FC = () => {
                           to="/admin"
                           onClick={() => setUserDropdownOpen(false)}
                           className={`flex items-center px-4 py-2 text-xs ${
-                            theme === 'light' ? 'text-slate-800 hover:bg-slate-50' : 'text-[#FAF8F3] hover:bg-[#0B0F14]/60'
+                            theme === 'light' ? 'text-slate-800 hover:bg-slate-50' : 'text-white hover:bg-neutral-900'
                           }`}
                         >
                           <ShieldCheck className="w-4 h-4 mr-2.5 opacity-70" />
@@ -350,7 +350,7 @@ export const Navbar: React.FC = () => {
                       <button
                         onClick={handleLogout}
                         className={`w-full flex items-center px-4 py-2 text-xs text-rose-500 hover:bg-rose-50 transition-colors border-t mt-1 ${
-                          theme === 'light' ? 'border-stone-100 hover:bg-rose-50' : 'border-[#36424D] hover:bg-rose-950/30'
+                          theme === 'light' ? 'border-stone-100 hover:bg-rose-50' : 'border-neutral-800 hover:bg-rose-950/30'
                         }`}
                       >
                         <LogOut className="w-4 h-4 mr-2.5" />
@@ -381,10 +381,10 @@ export const Navbar: React.FC = () => {
                   to="/explore"
                   className={`px-5 py-1.5 rounded-full text-xs font-medium transition-all shadow-sm ${
                     isHeaderTransparent
-                      ? 'bg-[#F6E7D7] hover:bg-white text-[#0B0F14]'
+                      ? 'bg-white hover:bg-neutral-200 text-black'
                       : theme === 'light'
                       ? 'bg-[#111827] hover:bg-black text-white'
-                      : 'bg-[#F6E7D7] hover:bg-white text-[#0B0F14]'
+                      : 'bg-white hover:bg-neutral-200 text-black'
                   }`}
                 >
                   Rent a Car
@@ -432,7 +432,7 @@ export const Navbar: React.FC = () => {
           className={`md:hidden px-4 pt-3 pb-6 space-y-2 border-b backdrop-blur-xl ${
             theme === 'light'
               ? 'bg-white/95 border-stone-200 text-slate-900 shadow-lg'
-              : 'bg-[#0B0F14]/95 border-[#36424D] text-[#FAF8F3]'
+              : 'bg-black/98 border-neutral-800 text-white'
           }`}
         >
           {navLinks.map((link) => (
@@ -441,27 +441,27 @@ export const Navbar: React.FC = () => {
               to={link.to}
               onClick={() => setMobileMenuOpen(false)}
               className={`block px-3 py-2 text-sm rounded-lg ${
-                theme === 'light' ? 'text-slate-800 hover:bg-slate-100' : 'text-[#FAF8F3] hover:bg-[#1A222B]'
+                theme === 'light' ? 'text-slate-800 hover:bg-slate-100' : 'text-white hover:bg-neutral-900'
               }`}
             >
               {link.label}
             </Link>
           ))}
 
-          <div className="pt-3 border-t border-[#36424D]">
+          <div className="pt-3 border-t border-neutral-800">
             {isAuthenticated && user ? (
               <div className="space-y-2">
                 <div className="px-3 py-1">
-                  <p className="text-xs font-bold text-[#FAF8F3]">
+                  <p className="text-xs font-bold text-white">
                     {user.firstName} {user.lastName} ({user.role})
                   </p>
-                  <p className="text-xs text-[#AAB4BE]">{user.email}</p>
+                  <p className="text-xs text-neutral-400">{user.email}</p>
                 </div>
                 {user.role === 'CUSTOMER' && (
                   <Link
                     to="/dashboard"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block px-3 py-2 text-sm font-semibold text-[#FAF8F3] rounded-lg bg-[#1A222B] border border-[#36424D]"
+                    className="block px-3 py-2 text-sm font-semibold text-white rounded-lg bg-[#0D0D0E] border border-neutral-800"
                   >
                     Customer Dashboard
                   </Link>
@@ -470,7 +470,7 @@ export const Navbar: React.FC = () => {
                   <Link
                     to="/vendor"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block px-3 py-2 text-sm font-semibold text-white rounded-lg bg-[#0E4A6B]"
+                    className="block px-3 py-2 text-sm font-semibold text-white rounded-lg bg-neutral-900 border border-neutral-700"
                   >
                     Vendor Fleet Portal
                   </Link>
@@ -479,7 +479,7 @@ export const Navbar: React.FC = () => {
                   <Link
                     to="/admin"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block px-3 py-2 text-sm font-semibold text-[#0B0F14] rounded-lg bg-[#F6E7D7]"
+                    className="block px-3 py-2 text-sm font-semibold text-white rounded-lg bg-[#0D0D0E] border border-neutral-800"
                   >
                     Admin Control Center
                   </Link>
@@ -509,7 +509,7 @@ export const Navbar: React.FC = () => {
                 <Link
                   to="/explore"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full text-center py-2 rounded-full bg-[#F6E7D7] text-[#0B0F14] text-xs font-medium"
+                  className="w-full text-center py-2 rounded-full bg-white text-black text-xs font-bold"
                 >
                   Rent a Car
                 </Link>

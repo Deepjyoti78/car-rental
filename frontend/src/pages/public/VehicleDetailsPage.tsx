@@ -125,7 +125,7 @@ export const VehicleDetailsPage: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div
           className={`h-96 rounded-2xl border animate-pulse ${
-            isLight ? 'bg-white border-stone-200' : 'bg-[#1A222B] border-[#36424D]'
+            isLight ? 'bg-white border-stone-200' : 'bg-[#0D0D0E] border-neutral-800'
           }`}
         />
       </div>
@@ -135,7 +135,7 @@ export const VehicleDetailsPage: React.FC = () => {
   if (!vehicle) {
     return (
       <div className="max-w-md mx-auto py-24 px-4 text-center">
-        <h2 className={`text-xl font-bold ${isLight ? 'text-slate-900' : 'text-[#FAF8F3]'}`}>
+        <h2 className={`text-xl font-bold ${isLight ? 'text-slate-900' : 'text-white'}`}>
           Vehicle not found
         </h2>
         <button
@@ -143,7 +143,7 @@ export const VehicleDetailsPage: React.FC = () => {
           className={`mt-4 px-6 py-2.5 rounded-full text-xs font-bold transition-colors ${
             isLight
               ? 'bg-black text-white hover:bg-slate-800'
-              : 'bg-[#F6E7D7] text-[#0B0F14] hover:bg-white'
+              : 'bg-white text-black hover:bg-neutral-200'
           }`}
         >
           Back to Explore Fleet
@@ -158,19 +158,19 @@ export const VehicleDetailsPage: React.FC = () => {
   return (
     <div
       className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 transition-colors duration-200 ${
-        isLight ? 'bg-[#F4EFEA] text-slate-900' : 'bg-[#0B0F14] text-[#FAF8F3]'
+        isLight ? 'bg-[#F4EFEA] text-slate-900' : 'bg-black text-white'
       }`}
     >
       {/* Top Breadcrumb & Actions */}
       <div
         className={`flex items-center justify-between pb-6 border-b text-xs ${
-          isLight ? 'border-stone-200/80 text-slate-600' : 'border-[#36424D] text-[#D5DBE1]'
+          isLight ? 'border-stone-200/80 text-slate-600' : 'border-neutral-800 text-neutral-400'
         }`}
       >
         <div className="flex items-center space-x-2">
           <span
             className={`cursor-pointer font-medium ${
-              isLight ? 'hover:text-black' : 'hover:text-[#FAF8F3]'
+              isLight ? 'hover:text-black' : 'hover:text-white'
             }`}
             onClick={() => navigate('/explore')}
           >
@@ -179,7 +179,7 @@ export const VehicleDetailsPage: React.FC = () => {
           <ChevronRight className="w-3.5 h-3.5 opacity-60" />
           <span>{vehicle.city}</span>
           <ChevronRight className="w-3.5 h-3.5 opacity-60" />
-          <span className={`font-semibold ${isLight ? 'text-slate-900' : 'text-[#FAF8F3]'}`}>
+          <span className={`font-semibold ${isLight ? 'text-slate-900' : 'text-white'}`}>
             {vehicle.brand} {vehicle.model}
           </span>
         </div>
@@ -189,7 +189,7 @@ export const VehicleDetailsPage: React.FC = () => {
           className={`flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full border text-xs font-semibold transition-colors cursor-pointer ${
             isLight
               ? 'border-stone-200 bg-white text-slate-800 shadow-xs hover:border-slate-400'
-              : 'border-[#36424D] bg-[#1A222B] text-[#FAF8F3] hover:border-[#2D7DA6]'
+              : 'border-neutral-800 bg-[#0D0D0E] text-white hover:border-neutral-600'
           }`}
         >
           <Heart
@@ -198,7 +198,7 @@ export const VehicleDetailsPage: React.FC = () => {
                 ? 'fill-rose-500 text-rose-500'
                 : isLight
                 ? 'text-slate-400'
-                : 'text-[#6B7783]'
+                : 'text-neutral-400'
             }`}
           />
           <span>{isWishlisted ? 'Saved' : 'Save'}</span>
@@ -213,7 +213,7 @@ export const VehicleDetailsPage: React.FC = () => {
           <div className="space-y-3">
             <div
               className={`aspect-[16/10] rounded-2xl overflow-hidden relative border ${
-                isLight ? 'bg-stone-100 border-stone-200/80 shadow-xs' : 'bg-[#0B0F14] border-[#36424D]'
+                isLight ? 'bg-stone-100 border-stone-200/80 shadow-xs' : 'bg-black border-neutral-800'
               }`}
             >
               <img
@@ -225,7 +225,7 @@ export const VehicleDetailsPage: React.FC = () => {
                 className={`absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-widest backdrop-blur-md border ${
                   isLight
                     ? 'bg-white/90 text-slate-800 border-stone-200 shadow-xs'
-                    : 'bg-[#0B0F14]/80 text-[#FAF8F3] border-[#36424D]'
+                    : 'bg-black/80 text-white border-neutral-700'
                 }`}
               >
                 {vehicle.category}
@@ -243,10 +243,10 @@ export const VehicleDetailsPage: React.FC = () => {
                       selectedImageIndex === idx
                         ? isLight
                           ? 'border-black ring-1 ring-black'
-                          : 'border-[#2D7DA6] ring-1 ring-[#2D7DA6]'
+                          : 'border-white ring-1 ring-white'
                         : isLight
                         ? 'border-stone-200 opacity-80 hover:opacity-100'
-                        : 'border-[#36424D] opacity-70 hover:opacity-100'
+                        : 'border-neutral-800 opacity-70 hover:opacity-100'
                     }`}
                   >
                     <img src={img.url} alt="thumbnail" className="w-full h-full object-cover" />
@@ -261,31 +261,31 @@ export const VehicleDetailsPage: React.FC = () => {
             className={`rounded-2xl border p-6 space-y-5 transition-colors ${
               isLight
                 ? 'bg-white border-stone-200/80 shadow-xs text-slate-900'
-                : 'bg-[#1A222B] border-[#36424D] text-[#FAF8F3]'
+                : 'bg-[#0D0D0E] border-neutral-800 text-white'
             }`}
           >
             <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
               <div>
                 <p
                   className={`text-[11px] font-mono tracking-wider uppercase ${
-                    isLight ? 'text-slate-400' : 'text-[#6B7783]'
+                    isLight ? 'text-slate-400' : 'text-neutral-500'
                   }`}
                 >
                   {vehicle.brand} • Year {vehicle.year}
                 </p>
                 <h1
                   className={`font-display text-2xl sm:text-3xl font-bold mt-1 ${
-                    isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                    isLight ? 'text-slate-900' : 'text-white'
                   }`}
                 >
                   {vehicle.brand} {vehicle.model}
                 </h1>
                 <p
                   className={`text-xs flex items-center gap-1.5 mt-2 ${
-                    isLight ? 'text-slate-600' : 'text-[#D5DBE1]'
+                    isLight ? 'text-slate-600' : 'text-neutral-300'
                   }`}
                 >
-                  <MapPin className={`w-4 h-4 ${isLight ? 'text-[#C25E26]' : 'text-[#2D7DA6]'}`} />
+                  <MapPin className="w-4 h-4 text-amber-400" />
                   <span>
                     Pickup Hub: {vehicle.pickupAddress}, {vehicle.city}, {vehicle.state}
                   </span>
@@ -296,14 +296,14 @@ export const VehicleDetailsPage: React.FC = () => {
                 className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-full border text-xs font-bold shrink-0 ${
                   isLight
                     ? 'bg-slate-50 border-stone-200 text-slate-800'
-                    : 'bg-[#0B0F14] border-[#36424D] text-[#FAF8F3]'
+                    : 'bg-black border-neutral-800 text-white'
                 }`}
               >
-                <Star className="w-4 h-4 text-amber-500 fill-amber-400" />
+                <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
                 <span className="tabular-nums">{vehicle.rating.toFixed(2)}</span>
                 <span
                   className={`font-mono text-[11px] ${
-                    isLight ? 'text-slate-400' : 'text-[#6B7783]'
+                    isLight ? 'text-slate-400' : 'text-neutral-500'
                   }`}
                 >
                   ({vehicle.totalTrips} verified trips)
@@ -314,25 +314,25 @@ export const VehicleDetailsPage: React.FC = () => {
             {/* Technical Specifications Grid */}
             <div
               className={`grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t text-xs ${
-                isLight ? 'border-stone-100' : 'border-[#36424D]'
+                isLight ? 'border-stone-100' : 'border-neutral-800'
               }`}
             >
               <div
                 className={`p-3.5 rounded-xl border ${
                   isLight
                     ? 'bg-slate-50 border-stone-200/80 text-slate-800'
-                    : 'bg-[#0B0F14] border-[#36424D] text-[#FAF8F3]'
+                    : 'bg-black border-neutral-800 text-white'
                 }`}
               >
                 <span
                   className={`block text-[10px] font-mono uppercase tracking-wider ${
-                    isLight ? 'text-slate-400' : 'text-[#6B7783]'
+                    isLight ? 'text-slate-400' : 'text-neutral-500'
                   }`}
                 >
                   Transmission
                 </span>
                 <span className="font-semibold capitalize mt-1 flex items-center gap-1">
-                  <Gauge className={`w-3.5 h-3.5 ${isLight ? 'text-slate-700' : 'text-[#2D7DA6]'}`} />
+                  <Gauge className="w-3.5 h-3.5 text-amber-400" />
                   {vehicle.transmission.toLowerCase()}
                 </span>
               </div>
@@ -341,18 +341,18 @@ export const VehicleDetailsPage: React.FC = () => {
                 className={`p-3.5 rounded-xl border ${
                   isLight
                     ? 'bg-slate-50 border-stone-200/80 text-slate-800'
-                    : 'bg-[#0B0F14] border-[#36424D] text-[#FAF8F3]'
+                    : 'bg-black border-neutral-800 text-white'
                 }`}
               >
                 <span
                   className={`block text-[10px] font-mono uppercase tracking-wider ${
-                    isLight ? 'text-slate-400' : 'text-[#6B7783]'
+                    isLight ? 'text-slate-400' : 'text-neutral-500'
                   }`}
                 >
                   Fuel System
                 </span>
                 <span className="font-semibold capitalize mt-1 flex items-center gap-1">
-                  <Fuel className={`w-3.5 h-3.5 ${isLight ? 'text-slate-700' : 'text-[#2D7DA6]'}`} />
+                  <Fuel className="w-3.5 h-3.5 text-amber-400" />
                   {vehicle.fuelType.toLowerCase()}
                 </span>
               </div>
@@ -361,18 +361,18 @@ export const VehicleDetailsPage: React.FC = () => {
                 className={`p-3.5 rounded-xl border ${
                   isLight
                     ? 'bg-slate-50 border-stone-200/80 text-slate-800'
-                    : 'bg-[#0B0F14] border-[#36424D] text-[#FAF8F3]'
+                    : 'bg-black border-neutral-800 text-white'
                 }`}
               >
                 <span
                   className={`block text-[10px] font-mono uppercase tracking-wider ${
-                    isLight ? 'text-slate-400' : 'text-[#6B7783]'
+                    isLight ? 'text-slate-400' : 'text-neutral-500'
                   }`}
                 >
                   Capacity
                 </span>
                 <span className="font-semibold mt-1 flex items-center gap-1">
-                  <Users className={`w-3.5 h-3.5 ${isLight ? 'text-slate-700' : 'text-[#2D7DA6]'}`} />
+                  <Users className="w-3.5 h-3.5 text-amber-400" />
                   {vehicle.seatingCapacity} Passengers
                 </span>
               </div>
@@ -381,18 +381,18 @@ export const VehicleDetailsPage: React.FC = () => {
                 className={`p-3.5 rounded-xl border ${
                   isLight
                     ? 'bg-slate-50 border-stone-200/80 text-slate-800'
-                    : 'bg-[#0B0F14] border-[#36424D] text-[#FAF8F3]'
+                    : 'bg-black border-neutral-800 text-white'
                 }`}
               >
                 <span
                   className={`block text-[10px] font-mono uppercase tracking-wider ${
-                    isLight ? 'text-slate-400' : 'text-[#6B7783]'
+                    isLight ? 'text-slate-400' : 'text-neutral-500'
                   }`}
                 >
                   Mileage Policy
                 </span>
                 <span className="font-semibold mt-1 flex items-center gap-1">
-                  <Clock className={`w-3.5 h-3.5 ${isLight ? 'text-slate-700' : 'text-[#2D7DA6]'}`} />
+                  <Clock className="w-3.5 h-3.5 text-amber-400" />
                   {vehicle.mileagePolicy}
                 </span>
               </div>
@@ -404,20 +404,20 @@ export const VehicleDetailsPage: React.FC = () => {
             className={`rounded-2xl border p-6 space-y-6 transition-colors ${
               isLight
                 ? 'bg-white border-stone-200/80 shadow-xs text-slate-900'
-                : 'bg-[#1A222B] border-[#36424D] text-[#FAF8F3]'
+                : 'bg-[#0D0D0E] border-neutral-800 text-white'
             }`}
           >
             <div>
               <span
                 className={`text-[10px] font-mono uppercase tracking-widest block mb-1 font-semibold ${
-                  isLight ? 'text-[#C25E26]' : 'text-[#E07A3F]'
+                  isLight ? 'text-[#C25E26]' : 'text-amber-500'
                 }`}
               >
                 Vehicle Overview
               </span>
               <p
                 className={`text-xs sm:text-sm leading-relaxed ${
-                  isLight ? 'text-slate-600' : 'text-[#D5DBE1]'
+                  isLight ? 'text-slate-600' : 'text-neutral-300'
                 }`}
               >
                 {vehicle.description}
@@ -427,12 +427,12 @@ export const VehicleDetailsPage: React.FC = () => {
             {vehicle.features && vehicle.features.length > 0 && (
               <div
                 className={`pt-4 border-t ${
-                  isLight ? 'border-stone-100' : 'border-[#36424D]'
+                  isLight ? 'border-stone-100' : 'border-neutral-800'
                 }`}
               >
                 <span
                   className={`text-[10px] font-mono uppercase tracking-widest block mb-3 ${
-                    isLight ? 'text-slate-400' : 'text-[#6B7783]'
+                    isLight ? 'text-slate-400' : 'text-neutral-500'
                   }`}
                 >
                   Included Amenities & Hardware
@@ -444,12 +444,12 @@ export const VehicleDetailsPage: React.FC = () => {
                       className={`flex items-center space-x-2 text-xs font-medium p-2.5 rounded-lg border ${
                         isLight
                           ? 'bg-slate-50 border-stone-200/80 text-slate-800'
-                          : 'bg-[#0B0F14] border-[#36424D] text-[#FAF8F3]'
+                          : 'bg-black border-neutral-800 text-white'
                       }`}
                     >
                       <CheckCircle2
                         className={`w-3.5 h-3.5 shrink-0 ${
-                          isLight ? 'text-emerald-600' : 'text-[#2D7DA6]'
+                          isLight ? 'text-emerald-600' : 'text-emerald-400'
                         }`}
                       />
                       <span>{feat.name}</span>
@@ -466,26 +466,26 @@ export const VehicleDetailsPage: React.FC = () => {
               className={`rounded-2xl border p-6 space-y-4 transition-colors ${
                 isLight
                   ? 'bg-white border-stone-200/80 shadow-xs text-slate-900'
-                  : 'bg-[#1A222B] border-[#36424D] text-[#FAF8F3]'
+                  : 'bg-[#0D0D0E] border-neutral-800 text-white'
               }`}
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
                   <span
                     className={`text-[10px] font-mono uppercase tracking-widest block ${
-                      isLight ? 'text-[#C25E26]' : 'text-[#E07A3F]'
+                      isLight ? 'text-[#C25E26]' : 'text-amber-500'
                     }`}
                   >
                     Fleet Operator
                   </span>
                   <h3
                     className={`font-display text-lg font-bold ${
-                      isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                      isLight ? 'text-slate-900' : 'text-white'
                     }`}
                   >
                     {vehicle.vendor.businessName}
                   </h3>
-                  <p className={`text-xs ${isLight ? 'text-slate-500' : 'text-[#D5DBE1]'}`}>
+                  <p className={`text-xs ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
                     Licensed commercial fleet operator based in {vehicle.vendor.city}
                   </p>
                 </div>
@@ -494,12 +494,10 @@ export const VehicleDetailsPage: React.FC = () => {
                   className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border shrink-0 ${
                     isLight
                       ? 'bg-slate-100 text-slate-800 border-slate-200'
-                      : 'bg-[#0E4A6B]/50 text-[#F6E7D7] border-[#2D7DA6]/50'
+                      : 'bg-neutral-900 text-white border-neutral-700'
                   }`}
                 >
-                  <ShieldCheck
-                    className={`w-4 h-4 ${isLight ? 'text-slate-800' : 'text-[#2D7DA6]'}`}
-                  />
+                  <ShieldCheck className="w-4 h-4 text-emerald-400" />
                   <span>DriveLoop Verified Host</span>
                 </div>
               </div>
@@ -509,7 +507,7 @@ export const VehicleDetailsPage: React.FC = () => {
                   className={`text-xs italic border-l-2 pl-3 py-0.5 ${
                     isLight
                       ? 'text-slate-600 border-slate-300'
-                      : 'text-[#D5DBE1] border-[#2D7DA6]'
+                      : 'text-neutral-300 border-neutral-700'
                   }`}
                 >
                   "{vehicle.vendor.description}"
@@ -523,25 +521,25 @@ export const VehicleDetailsPage: React.FC = () => {
             className={`rounded-2xl border p-6 space-y-4 transition-colors ${
               isLight
                 ? 'bg-white border-stone-200/80 shadow-xs text-slate-900'
-                : 'bg-[#1A222B] border-[#36424D] text-[#FAF8F3]'
+                : 'bg-[#0D0D0E] border-neutral-800 text-white'
             }`}
           >
             <span
               className={`text-[10px] font-mono uppercase tracking-widest block font-semibold ${
-                isLight ? 'text-[#C25E26]' : 'text-[#E07A3F]'
+                isLight ? 'text-[#C25E26]' : 'text-amber-500'
               }`}
             >
               Marketplace Protection & Terms
             </span>
             <div
               className={`grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs ${
-                isLight ? 'text-slate-600' : 'text-[#D5DBE1]'
+                isLight ? 'text-slate-600' : 'text-neutral-300'
               }`}
             >
               <div className="space-y-1">
                 <span
                   className={`font-bold block ${
-                    isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                    isLight ? 'text-slate-900' : 'text-white'
                   }`}
                 >
                   • Security Deposit Escrow
@@ -555,7 +553,7 @@ export const VehicleDetailsPage: React.FC = () => {
               <div className="space-y-1">
                 <span
                   className={`font-bold block ${
-                    isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                    isLight ? 'text-slate-900' : 'text-white'
                   }`}
                 >
                   • Tiered Cancellation
@@ -569,7 +567,7 @@ export const VehicleDetailsPage: React.FC = () => {
               <div className="space-y-1">
                 <span
                   className={`font-bold block ${
-                    isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                    isLight ? 'text-slate-900' : 'text-white'
                   }`}
                 >
                   • Driver Eligibility
@@ -582,7 +580,7 @@ export const VehicleDetailsPage: React.FC = () => {
               <div className="space-y-1">
                 <span
                   className={`font-bold block ${
-                    isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                    isLight ? 'text-slate-900' : 'text-white'
                   }`}
                 >
                   • FASTag & Fuel Policy
@@ -599,12 +597,12 @@ export const VehicleDetailsPage: React.FC = () => {
             className={`rounded-2xl border p-6 space-y-4 transition-colors ${
               isLight
                 ? 'bg-white border-stone-200/80 shadow-xs text-slate-900'
-                : 'bg-[#1A222B] border-[#36424D] text-[#FAF8F3]'
+                : 'bg-[#0D0D0E] border-neutral-800 text-white'
             }`}
           >
             <h3
               className={`font-display text-base font-bold ${
-                isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                isLight ? 'text-slate-900' : 'text-white'
               }`}
             >
               Customer Reviews ({vehicle.reviews?.length || 0})
@@ -612,7 +610,7 @@ export const VehicleDetailsPage: React.FC = () => {
             {vehicle.reviews && vehicle.reviews.length > 0 ? (
               <div
                 className={`space-y-3 divide-y ${
-                  isLight ? 'divide-stone-100' : 'divide-[#36424D]'
+                  isLight ? 'divide-stone-100' : 'divide-neutral-800'
                 }`}
               >
                 {vehicle.reviews.map((rev) => (
@@ -620,23 +618,23 @@ export const VehicleDetailsPage: React.FC = () => {
                     <div className="flex items-center justify-between">
                       <span
                         className={`font-bold ${
-                          isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                          isLight ? 'text-slate-900' : 'text-white'
                         }`}
                       >
                         {rev.customer?.firstName} {rev.customer?.lastName}
                       </span>
-                      <div className="flex items-center text-amber-500">
+                      <div className="flex items-center text-amber-400">
                         {Array.from({ length: rev.rating }).map((_, i) => (
                           <Star key={i} className="w-3 h-3 fill-amber-400 text-amber-400" />
                         ))}
                       </div>
                     </div>
-                    <p className={`leading-relaxed ${isLight ? 'text-slate-600' : 'text-[#D5DBE1]'}`}>
+                    <p className={`leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-300'}`}>
                       {rev.comment}
                     </p>
                     <span
                       className={`text-[10px] font-mono block ${
-                        isLight ? 'text-slate-400' : 'text-[#6B7783]'
+                        isLight ? 'text-slate-400' : 'text-neutral-500'
                       }`}
                     >
                       {formatDate(rev.createdAt)} • Verified Rental Trip
@@ -645,7 +643,7 @@ export const VehicleDetailsPage: React.FC = () => {
                 ))}
               </div>
             ) : (
-              <p className={`text-xs ${isLight ? 'text-slate-400' : 'text-[#6B7783]'}`}>
+              <p className={`text-xs ${isLight ? 'text-slate-400' : 'text-neutral-500'}`}>
                 No reviews yet for this vehicle.
               </p>
             )}
@@ -658,25 +656,25 @@ export const VehicleDetailsPage: React.FC = () => {
             className={`sticky top-28 rounded-2xl border p-5 space-y-4 transition-colors ${
               isLight
                 ? 'bg-white border-stone-200/80 shadow-lg text-slate-900'
-                : 'bg-[#1A222B] border-[#36424D] shadow-2xl text-[#FAF8F3]'
+                : 'bg-[#0D0D0E] border-neutral-800 shadow-2xl text-white'
             }`}
           >
             <div
               className={`flex items-baseline justify-between border-b pb-4 ${
-                isLight ? 'border-stone-100' : 'border-[#36424D]'
+                isLight ? 'border-stone-100' : 'border-neutral-800'
               }`}
             >
               <div>
                 <span
                   className={`text-2xl font-bold font-display tabular-nums ${
-                    isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                    isLight ? 'text-slate-900' : 'text-white'
                   }`}
                 >
                   {formatINR(vehicle.dailyRate)}
                 </span>
                 <span
                   className={`text-xs ${
-                    isLight ? 'text-slate-400' : 'text-[#6B7783]'
+                    isLight ? 'text-slate-400' : 'text-neutral-400'
                   }`}
                 >
                   {' '}
@@ -687,7 +685,7 @@ export const VehicleDetailsPage: React.FC = () => {
                 className={`text-[10px] font-mono uppercase font-semibold px-2.5 py-0.5 rounded-full border ${
                   isLight
                     ? 'bg-slate-100 text-slate-800 border-slate-200'
-                    : 'bg-[#0E4A6B]/50 text-[#F6E7D7] border-[#2D7DA6]/50'
+                    : 'bg-neutral-900 text-white border-neutral-700'
                 }`}
               >
                 Instant Confirmation
@@ -700,12 +698,12 @@ export const VehicleDetailsPage: React.FC = () => {
                 className={`p-3 rounded-xl border ${
                   isLight
                     ? 'bg-slate-50 border-stone-200'
-                    : 'bg-[#0B0F14] border-[#36424D]'
+                    : 'bg-black border-neutral-800'
                 }`}
               >
                 <label
                   className={`block text-[10px] font-mono uppercase tracking-wider mb-1 ${
-                    isLight ? 'text-slate-400' : 'text-[#6B7783]'
+                    isLight ? 'text-slate-400' : 'text-neutral-500'
                   }`}
                 >
                   Pickup Date & Time
@@ -716,7 +714,7 @@ export const VehicleDetailsPage: React.FC = () => {
                   min={new Date().toISOString().slice(0, 16)}
                   onChange={(e) => setStartDate(e.target.value)}
                   className={`w-full bg-transparent text-xs font-semibold focus:outline-none tabular-nums ${
-                    isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                    isLight ? 'text-slate-900' : 'text-white'
                   }`}
                 />
               </div>
@@ -725,12 +723,12 @@ export const VehicleDetailsPage: React.FC = () => {
                 className={`p-3 rounded-xl border ${
                   isLight
                     ? 'bg-slate-50 border-stone-200'
-                    : 'bg-[#0B0F14] border-[#36424D]'
+                    : 'bg-black border-neutral-800'
                 }`}
               >
                 <label
                   className={`block text-[10px] font-mono uppercase tracking-wider mb-1 ${
-                    isLight ? 'text-slate-400' : 'text-[#6B7783]'
+                    isLight ? 'text-slate-400' : 'text-neutral-500'
                   }`}
                 >
                   Return Date & Time
@@ -741,7 +739,7 @@ export const VehicleDetailsPage: React.FC = () => {
                   min={startDate}
                   onChange={(e) => setEndDate(e.target.value)}
                   className={`w-full bg-transparent text-xs font-semibold focus:outline-none tabular-nums ${
-                    isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                    isLight ? 'text-slate-900' : 'text-white'
                   }`}
                 />
               </div>
@@ -753,7 +751,7 @@ export const VehicleDetailsPage: React.FC = () => {
                 className={`p-3 rounded-lg border text-xs ${
                   isLight
                     ? 'bg-amber-50 border-amber-200 text-amber-800'
-                    : 'bg-[#E07A3F]/10 border-[#E07A3F]/30 text-[#E07A3F]'
+                    : 'bg-amber-500/10 border-amber-500/30 text-amber-400'
                 }`}
               >
                 {availabilityMessage}
@@ -766,7 +764,7 @@ export const VehicleDetailsPage: React.FC = () => {
                 className={`rounded-xl border p-3.5 space-y-2 text-xs ${
                   isLight
                     ? 'bg-slate-50 border-stone-200 text-slate-600'
-                    : 'bg-[#0B0F14] border-[#36424D] text-[#D5DBE1]'
+                    : 'bg-black border-neutral-800 text-neutral-300'
                 }`}
               >
                 <div className="flex justify-between">
@@ -776,7 +774,7 @@ export const VehicleDetailsPage: React.FC = () => {
                   </span>
                   <span
                     className={`font-semibold tabular-nums ${
-                      isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                      isLight ? 'text-slate-900' : 'text-white'
                     }`}
                   >
                     {formatINR(calculatedPrice.baseAmount)}
@@ -787,7 +785,7 @@ export const VehicleDetailsPage: React.FC = () => {
                   <span>GST (18% Statutory)</span>
                   <span
                     className={`font-semibold tabular-nums ${
-                      isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                      isLight ? 'text-slate-900' : 'text-white'
                     }`}
                   >
                     {formatINR(calculatedPrice.taxesAmount)}
@@ -798,18 +796,14 @@ export const VehicleDetailsPage: React.FC = () => {
                   <span>Platform Fee</span>
                   <span
                     className={`font-semibold tabular-nums ${
-                      isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                      isLight ? 'text-slate-900' : 'text-white'
                     }`}
                   >
                     {formatINR(calculatedPrice.platformFee)}
                   </span>
                 </div>
 
-                <div
-                  className={`flex justify-between font-medium ${
-                    isLight ? 'text-[#C25E26]' : 'text-[#2D7DA6]'
-                  }`}
-                >
+                <div className="flex justify-between font-medium text-amber-400">
                   <span>Security Deposit (Refundable)</span>
                   <span className="font-bold tabular-nums">
                     {formatINR(calculatedPrice.securityDeposit)}
@@ -820,13 +814,13 @@ export const VehicleDetailsPage: React.FC = () => {
                   className={`pt-2 border-t flex justify-between font-bold ${
                     isLight
                       ? 'border-stone-200 text-slate-900'
-                      : 'border-[#36424D] text-[#FAF8F3]'
+                      : 'border-neutral-800 text-white'
                   }`}
                 >
                   <span>Total Payable</span>
                   <span
                     className={`text-base tabular-nums ${
-                      isLight ? 'text-black' : 'text-[#F6E7D7]'
+                      isLight ? 'text-black' : 'text-white'
                     }`}
                   >
                     {formatINR(calculatedPrice.totalAmount)}
@@ -835,7 +829,7 @@ export const VehicleDetailsPage: React.FC = () => {
               </div>
             )}
 
-            {/* Reserve CTA: Black pill in light mode, Cream in dark mode */}
+            {/* Reserve CTA: Black pill in light mode, White pill in dark mode */}
             <button
               type="button"
               disabled={calculating || !!availabilityMessage}
@@ -843,7 +837,7 @@ export const VehicleDetailsPage: React.FC = () => {
               className={`w-full py-3.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all active:scale-[0.99] disabled:opacity-50 flex items-center justify-center space-x-1.5 cursor-pointer shadow-md ${
                 isLight
                   ? 'bg-black text-white hover:bg-slate-800'
-                  : 'bg-[#F6E7D7] hover:bg-white text-[#0B0F14]'
+                  : 'bg-white hover:bg-neutral-200 text-black'
               }`}
             >
               <span>
@@ -854,7 +848,7 @@ export const VehicleDetailsPage: React.FC = () => {
 
             <p
               className={`text-[10px] font-mono text-center ${
-                isLight ? 'text-slate-400' : 'text-[#6B7783]'
+                isLight ? 'text-slate-400' : 'text-neutral-500'
               }`}
             >
               Zero hidden fees • 24h Refundable Deposit Guarantee

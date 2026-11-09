@@ -57,7 +57,7 @@ export const App: React.FC = () => {
           className={`min-h-screen flex flex-col transition-colors duration-200 ${
             theme === 'light'
               ? 'bg-[#F4EFEA] text-[#111827] selection:bg-black selection:text-white'
-              : 'bg-[#0B0F14] text-[#FAF8F3] selection:bg-[#2D7DA6] selection:text-white'
+              : 'bg-black text-white selection:bg-white selection:text-black'
           }`}
         >
           <Navbar />

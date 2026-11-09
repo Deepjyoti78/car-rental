@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/authStore';
-import { Car, Lock, Mail, ArrowRight, ShieldCheck, AlertCircle } from 'lucide-react';
+import { useThemeStore } from '../../store/themeStore';
+import { Car, Lock, Mail, ArrowRight, AlertCircle } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
+  const { theme } = useThemeStore();
+  const isLight = theme === 'light';
   const { login, isLoading } = useAuthStore();
 
   const [email, setEmail] = useState('');
@@ -35,31 +38,69 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-[#0B0F14]">
-      <div className="max-w-md w-full space-y-6 bg-[#1A222B] p-8 rounded-2xl border border-[#36424D] shadow-2xl text-[#FAF8F3]">
+    <div
+      className={`min-h-[80vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 transition-colors ${
+        isLight ? 'bg-[#F4EFEA]' : 'bg-black'
+      }`}
+    >
+      <div
+        className={`max-w-md w-full space-y-6 p-8 rounded-2xl border shadow-2xl transition-colors ${
+          isLight
+            ? 'bg-white border-stone-200 text-slate-900'
+            : 'bg-[#0D0D0E] border-neutral-800 text-white'
+        }`}
+      >
         {/* Brand Header */}
         <div className="text-center">
-          <div className="w-10 h-10 rounded-full bg-[#0E4A6B] border border-[#2D7DA6]/50 flex items-center justify-center text-[#FAF8F3] mx-auto shadow-card">
-            <Car className="w-5 h-5 text-[#FAF8F3]" strokeWidth={2.2} />
+          <div
+            className={`w-10 h-10 rounded-full flex items-center justify-center mx-auto shadow-md border ${
+              isLight
+                ? 'bg-black text-white border-black'
+                : 'bg-neutral-900 border-neutral-700 text-white'
+            }`}
+          >
+            <Car className="w-5 h-5" strokeWidth={2.2} />
           </div>
-          <h2 className="font-display text-2xl font-bold text-[#FAF8F3] mt-4 tracking-tight">
+          <h2
+            className={`font-display text-2xl font-bold mt-4 tracking-tight ${
+              isLight ? 'text-slate-900' : 'text-white'
+            }`}
+          >
             Sign in to DriveLoop
           </h2>
-          <p className="text-xs text-[#D5DBE1] mt-1 font-normal">
+          <p
+            className={`text-xs mt-1 font-normal ${
+              isLight ? 'text-slate-500' : 'text-neutral-400'
+            }`}
+          >
             Access your customer bookings, fleet operations, or admin console
           </p>
         </div>
 
         {/* Demo Quick-fill buttons */}
-        <div className="p-3.5 rounded-xl bg-[#0B0F14] border border-[#36424D] space-y-2">
-          <p className="text-[10px] font-mono uppercase tracking-wider text-[#6B7783]">
+        <div
+          className={`p-3.5 rounded-xl border space-y-2 ${
+            isLight
+              ? 'bg-slate-50 border-stone-200'
+              : 'bg-black border-neutral-800'
+          }`}
+        >
+          <p
+            className={`text-[10px] font-mono uppercase tracking-wider ${
+              isLight ? 'text-slate-400' : 'text-neutral-500'
+            }`}
+          >
             Demo Quick Login (Click to auto-fill)
           </p>
           <div className="grid grid-cols-3 gap-1.5">
             <button
               type="button"
               onClick={() => fillDemoAccount('admin@drivio.com', 'Admin@12345')}
-              className="py-1.5 px-2 rounded-lg bg-[#1A222B] border border-[#36424D] text-[11px] font-semibold text-[#FAF8F3] hover:border-[#2D7DA6] transition-colors truncate"
+              className={`py-1.5 px-2 rounded-lg border text-[11px] font-semibold transition-colors truncate ${
+                isLight
+                  ? 'bg-white border-stone-200 text-slate-800 hover:bg-slate-100 shadow-xs'
+                  : 'bg-neutral-900 border-neutral-700 text-white hover:border-neutral-500'
+              }`}
               title="Admin role"
             >
               Admin
@@ -67,7 +108,11 @@ export const LoginPage: React.FC = () => {
             <button
               type="button"
               onClick={() => fillDemoAccount('vendor1@royalwheels.in', 'Vendor@12345')}
-              className="py-1.5 px-2 rounded-lg bg-[#1A222B] border border-[#36424D] text-[11px] font-semibold text-[#E07A3F] hover:border-[#E07A3F] transition-colors truncate"
+              className={`py-1.5 px-2 rounded-lg border text-[11px] font-semibold transition-colors truncate ${
+                isLight
+                  ? 'bg-white border-stone-200 text-[#E07A3F] hover:bg-slate-100 shadow-xs'
+                  : 'bg-neutral-900 border-neutral-700 text-amber-400 hover:border-amber-300'
+              }`}
               title="Approved Vendor"
             >
               Vendor
@@ -75,7 +120,11 @@ export const LoginPage: React.FC = () => {
             <button
               type="button"
               onClick={() => fillDemoAccount('aarav@example.com', 'Customer@12345')}
-              className="py-1.5 px-2 rounded-lg bg-[#1A222B] border border-[#36424D] text-[11px] font-semibold text-[#2D7DA6] hover:border-[#2D7DA6] transition-colors truncate"
+              className={`py-1.5 px-2 rounded-lg border text-[11px] font-semibold transition-colors truncate ${
+                isLight
+                  ? 'bg-white border-stone-200 text-slate-800 hover:bg-slate-100 shadow-xs'
+                  : 'bg-neutral-900 border-neutral-700 text-neutral-300 hover:border-neutral-500'
+              }`}
               title="Customer with bookings"
             >
               Customer
@@ -84,7 +133,7 @@ export const LoginPage: React.FC = () => {
         </div>
 
         {error && (
-          <div className="p-3 rounded-lg bg-[#E07A3F]/10 border border-[#E07A3F]/30 text-xs text-[#E07A3F] flex items-center space-x-2">
+          <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/30 text-xs text-amber-400 flex items-center space-x-2">
             <AlertCircle className="w-4 h-4 shrink-0" />
             <span>{error}</span>
           </div>
@@ -92,31 +141,59 @@ export const LoginPage: React.FC = () => {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold text-[#FAF8F3] mb-1">Email Address</label>
+            <label
+              className={`block text-xs font-semibold mb-1 ${
+                isLight ? 'text-slate-800' : 'text-white'
+              }`}
+            >
+              Email Address
+            </label>
             <div className="relative">
-              <Mail className="w-4 h-4 text-[#6B7783] absolute left-3 top-3" />
+              <Mail
+                className={`w-4 h-4 absolute left-3 top-3 ${
+                  isLight ? 'text-slate-400' : 'text-neutral-500'
+                }`}
+              />
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="name@example.com"
-                className="w-full pl-9 pr-3 py-2 rounded-lg border border-[#36424D] bg-[#0B0F14] text-xs font-semibold text-[#FAF8F3] focus:outline-none focus:border-[#2D7DA6]"
+                className={`w-full pl-9 pr-3 py-2 rounded-lg border text-xs font-semibold focus:outline-none transition-colors ${
+                  isLight
+                    ? 'border-stone-200 bg-slate-50 text-slate-900 focus:border-black'
+                    : 'border-neutral-800 bg-black text-white focus:border-white'
+                }`}
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#FAF8F3] mb-1">Password</label>
+            <label
+              className={`block text-xs font-semibold mb-1 ${
+                isLight ? 'text-slate-800' : 'text-white'
+              }`}
+            >
+              Password
+            </label>
             <div className="relative">
-              <Lock className="w-4 h-4 text-[#6B7783] absolute left-3 top-3" />
+              <Lock
+                className={`w-4 h-4 absolute left-3 top-3 ${
+                  isLight ? 'text-slate-400' : 'text-neutral-500'
+                }`}
+              />
               <input
                 type="password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full pl-9 pr-3 py-2 rounded-lg border border-[#36424D] bg-[#0B0F14] text-xs font-semibold text-[#FAF8F3] focus:outline-none focus:border-[#2D7DA6]"
+                className={`w-full pl-9 pr-3 py-2 rounded-lg border text-xs font-semibold focus:outline-none transition-colors ${
+                  isLight
+                    ? 'border-stone-200 bg-slate-50 text-slate-900 focus:border-black'
+                    : 'border-neutral-800 bg-black text-white focus:border-white'
+                }`}
               />
             </div>
           </div>
@@ -124,16 +201,29 @@ export const LoginPage: React.FC = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-2.5 rounded-full bg-[#F6E7D7] hover:bg-white text-[#0B0F14] text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center space-x-2 shadow-card disabled:opacity-50"
+            className={`w-full py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center space-x-2 shadow-card disabled:opacity-50 ${
+              isLight
+                ? 'bg-black hover:bg-slate-800 text-white'
+                : 'bg-white hover:bg-neutral-200 text-black'
+            }`}
           >
             <span>{isLoading ? 'Signing In...' : 'Sign In'}</span>
-            <ArrowRight className="w-4 h-4 text-[#0B0F14]" />
+            <ArrowRight className="w-4 h-4" />
           </button>
         </form>
 
-        <div className="text-center text-xs text-[#D5DBE1]">
+        <div
+          className={`text-center text-xs ${
+            isLight ? 'text-slate-500' : 'text-neutral-400'
+          }`}
+        >
           Don't have an account?{' '}
-          <Link to="/register" className="font-semibold text-[#2D7DA6] hover:text-[#F6E7D7] hover:underline">
+          <Link
+            to="/register"
+            className={`font-semibold hover:underline ${
+              isLight ? 'text-black' : 'text-amber-400 hover:text-white'
+            }`}
+          >
             Register here
           </Link>
         </div>

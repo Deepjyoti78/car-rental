@@ -214,19 +214,19 @@ export const VendorDashboardPage: React.FC = () => {
   const vendorInfo = dashboardData?.vendor || user?.vendor;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 bg-[#0B0F14] text-[#FAF8F3]">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 bg-[#000000] text-[#ffffff]">
       {/* Vendor Profile & Status Banner */}
-      <div className="bg-[#1A222B] p-6 rounded-2xl border border-[#36424D] shadow-card flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-[#0D0D0E] p-6 rounded-2xl border border-[#262626] shadow-card flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="space-y-1">
           <div className="flex items-center space-x-2.5">
-            <h1 className="font-display text-2xl font-bold text-[#FAF8F3]">
+            <h1 className="font-display text-2xl font-bold text-[#ffffff]">
               {vendorInfo?.businessName || 'Vendor Fleet Portal'}
             </h1>
             <span className={getStatusBadgeClass(vendorInfo?.status || 'PENDING')}>
               {vendorInfo?.status || 'PENDING'}
             </span>
           </div>
-          <p className="text-xs text-[#D5DBE1]">
+          <p className="text-xs text-[#a3a3a3]">
             {vendorInfo?.city}, {vendorInfo?.state} • Contact: {vendorInfo?.contactNumber} • Platform Commission: {vendorInfo?.commissionRate ?? 10}%
           </p>
         </div>
@@ -234,13 +234,13 @@ export const VendorDashboardPage: React.FC = () => {
         {vendorInfo?.status === 'APPROVED' ? (
           <button
             onClick={() => setAddVehicleModalOpen(true)}
-            className="px-5 py-2.5 rounded-full bg-[#F6E7D7] hover:bg-white text-[#0B0F14] text-xs font-bold uppercase tracking-wider shadow-card transition-all flex items-center space-x-1.5"
+            className="px-5 py-2.5 rounded-full bg-[#f59e0b] hover:bg-white text-[#000000] text-xs font-bold uppercase tracking-wider shadow-card transition-all flex items-center space-x-1.5"
           >
-            <Plus className="w-4 h-4 text-[#0B0F14]" />
+            <Plus className="w-4 h-4 text-[#000000]" />
             <span>Add Vehicle to Fleet</span>
           </button>
         ) : (
-          <div className="px-3.5 py-2 rounded-full bg-[#E07A3F]/10 border border-[#E07A3F]/30 text-xs text-[#E07A3F] font-semibold flex items-center gap-1.5">
+          <div className="px-3.5 py-2 rounded-full bg-[#f59e0b]/10 border border-[#f59e0b]/30 text-xs text-[#f59e0b] font-semibold flex items-center gap-1.5">
             <AlertTriangle className="w-4 h-4" />
             <span>Account Pending Verification</span>
           </div>
@@ -249,12 +249,12 @@ export const VendorDashboardPage: React.FC = () => {
 
       {/* Pending Account Notice */}
       {vendorInfo?.status !== 'APPROVED' && (
-        <div className="p-4 rounded-xl bg-[#E07A3F]/10 border border-[#E07A3F]/30 text-xs text-[#E07A3F] space-y-1">
+        <div className="p-4 rounded-xl bg-[#f59e0b]/10 border border-[#f59e0b]/30 text-xs text-[#f59e0b] space-y-1">
           <p className="font-bold flex items-center gap-1">
             <Clock className="w-4 h-4" />
             Compliance Verification Underway:
           </p>
-          <p className="text-[#D5DBE1]">
+          <p className="text-[#a3a3a3]">
             Your business documentation is currently being reviewed by DriveLoop compliance specialists.
             Public booking engine listings and vehicle addition will automatically unlock upon approval.
           </p>
@@ -263,71 +263,71 @@ export const VendorDashboardPage: React.FC = () => {
 
       {/* KPI Metrics Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-        <div className="bg-[#1A222B] p-4 rounded-xl border border-[#36424D] space-y-1">
-          <span className="text-[10px] font-mono uppercase tracking-wider text-[#6B7783]">
+        <div className="bg-[#0D0D0E] p-4 rounded-xl border border-[#262626] space-y-1">
+          <span className="text-[10px] font-mono uppercase tracking-wider text-[#737373]">
             Total Fleet
           </span>
-          <p className="text-xl font-bold font-display text-[#FAF8F3] tabular-nums">
+          <p className="text-xl font-bold font-display text-[#ffffff] tabular-nums">
             {stats?.totalVehicles ?? 0}
           </p>
-          <span className="text-[10px] font-mono text-[#2D7DA6] font-semibold">
+          <span className="text-[10px] font-mono text-[#f59e0b] font-semibold">
             {stats?.activeVehicles ?? 0} Active
           </span>
         </div>
 
-        <div className="bg-[#1A222B] p-4 rounded-xl border border-[#36424D] space-y-1">
-          <span className="text-[10px] font-mono uppercase tracking-wider text-[#6B7783]">
+        <div className="bg-[#0D0D0E] p-4 rounded-xl border border-[#262626] space-y-1">
+          <span className="text-[10px] font-mono uppercase tracking-wider text-[#737373]">
             Total Trips
           </span>
-          <p className="text-xl font-bold font-display text-[#FAF8F3] tabular-nums">
+          <p className="text-xl font-bold font-display text-[#ffffff] tabular-nums">
             {stats?.totalBookings ?? 0}
           </p>
-          <span className="text-[10px] font-mono text-[#E07A3F] font-semibold">
+          <span className="text-[10px] font-mono text-[#f59e0b] font-semibold">
             {stats?.activeRentals ?? 0} Currently Out
           </span>
         </div>
 
-        <div className="bg-[#1A222B] p-4 rounded-xl border border-[#36424D] space-y-1">
-          <span className="text-[10px] font-mono uppercase tracking-wider text-[#6B7783]">
+        <div className="bg-[#0D0D0E] p-4 rounded-xl border border-[#262626] space-y-1">
+          <span className="text-[10px] font-mono uppercase tracking-wider text-[#737373]">
             Fleet Utilization
           </span>
-          <p className="text-xl font-bold font-display text-[#FAF8F3] tabular-nums">
+          <p className="text-xl font-bold font-display text-[#ffffff] tabular-nums">
             {stats?.utilizationRate ?? 0}%
           </p>
-          <span className="text-[10px] font-mono text-[#D5DBE1]">Active/Total</span>
+          <span className="text-[10px] font-mono text-[#a3a3a3]">Active/Total</span>
         </div>
 
-        <div className="bg-[#1A222B] p-4 rounded-xl border border-[#36424D] space-y-1">
-          <span className="text-[10px] font-mono uppercase tracking-wider text-[#6B7783]">
+        <div className="bg-[#0D0D0E] p-4 rounded-xl border border-[#262626] space-y-1">
+          <span className="text-[10px] font-mono uppercase tracking-wider text-[#737373]">
             Gross GMV
           </span>
-          <p className="text-xl font-bold font-display text-[#FAF8F3] tabular-nums">
+          <p className="text-xl font-bold font-display text-[#ffffff] tabular-nums">
             {formatINR(stats?.grossRevenue ?? 0)}
           </p>
-          <span className="text-[10px] font-mono text-[#D5DBE1]">Before fee</span>
+          <span className="text-[10px] font-mono text-[#a3a3a3]">Before fee</span>
         </div>
 
-        <div className="bg-[#1A222B] p-4 rounded-xl border border-[#36424D] space-y-1">
-          <span className="text-[10px] font-mono uppercase tracking-wider text-[#6B7783]">
+        <div className="bg-[#0D0D0E] p-4 rounded-xl border border-[#262626] space-y-1">
+          <span className="text-[10px] font-mono uppercase tracking-wider text-[#737373]">
             Net Host Earnings
           </span>
-          <p className="text-xl font-bold font-display text-[#F6E7D7] tabular-nums">
+          <p className="text-xl font-bold font-display text-[#f59e0b] tabular-nums">
             {formatINR(stats?.netEarnings ?? 0)}
           </p>
-          <span className="text-[10px] font-mono text-[#D5DBE1]">90% net payout</span>
+          <span className="text-[10px] font-mono text-[#a3a3a3]">90% net payout</span>
         </div>
 
-        <div className="bg-[#1A222B] p-4 rounded-xl border border-[#36424D] space-y-1">
-          <span className="text-[10px] font-mono uppercase tracking-wider text-[#6B7783]">
+        <div className="bg-[#0D0D0E] p-4 rounded-xl border border-[#262626] space-y-1">
+          <span className="text-[10px] font-mono uppercase tracking-wider text-[#737373]">
             Available Payout
           </span>
-          <p className="text-xl font-bold font-display text-[#F6E7D7] tabular-nums">
+          <p className="text-xl font-bold font-display text-[#f59e0b] tabular-nums">
             {formatINR(stats?.availableBalance ?? 0)}
           </p>
           <button
             onClick={() => setPayoutModalOpen(true)}
             disabled={(stats?.availableBalance || 0) < 100000}
-            className="text-[10px] text-[#2D7DA6] font-bold uppercase tracking-wider hover:underline disabled:opacity-40"
+            className="text-[10px] text-[#f59e0b] font-bold uppercase tracking-wider hover:underline disabled:opacity-40"
           >
             Withdraw &rarr;
           </button>
@@ -335,7 +335,7 @@ export const VendorDashboardPage: React.FC = () => {
       </div>
 
       {/* Sub Tabs */}
-      <div className="flex space-x-1 border-b border-[#36424D] overflow-x-auto pb-px">
+      <div className="flex space-x-1 border-b border-[#262626] overflow-x-auto pb-px">
         {[
           { id: 'overview', label: 'Overview & Activity' },
           { id: 'fleet', label: `Fleet Inventory (${vehicles.length})` },
@@ -347,8 +347,8 @@ export const VendorDashboardPage: React.FC = () => {
             onClick={() => setActiveTab(tab.id as any)}
             className={`py-3 px-4 text-xs font-semibold tracking-wide transition-all border-b-2 whitespace-nowrap ${
               activeTab === tab.id
-                ? 'border-[#F6E7D7] text-[#F6E7D7]'
-                : 'border-transparent text-[#D5DBE1] hover:text-[#FAF8F3]'
+                ? 'border-[#f59e0b] text-[#f59e0b]'
+                : 'border-transparent text-[#a3a3a3] hover:text-[#ffffff]'
             }`}
           >
             {tab.label}
@@ -359,21 +359,21 @@ export const VendorDashboardPage: React.FC = () => {
       {/* TAB: OVERVIEW */}
       {activeTab === 'overview' && (
         <div className="space-y-6">
-          <div className="bg-[#1A222B] rounded-2xl border border-[#36424D] p-6 space-y-4 shadow-card">
-            <h3 className="font-display text-base font-bold text-[#FAF8F3]">
+          <div className="bg-[#0D0D0E] rounded-2xl border border-[#262626] p-6 space-y-4 shadow-card">
+            <h3 className="font-display text-base font-bold text-[#ffffff]">
               Recent Booking Feed
             </h3>
             {dashboardData?.recentBookings?.length === 0 ? (
-              <p className="text-xs text-[#D5DBE1]">No booking requests received yet.</p>
+              <p className="text-xs text-[#a3a3a3]">No booking requests received yet.</p>
             ) : (
-              <div className="divide-y divide-[#36424D]">
+              <div className="divide-y divide-[#262626]">
                 {dashboardData?.recentBookings?.map((rb: any) => (
                   <div key={rb.id} className="py-3 first:pt-0 flex items-center justify-between text-xs">
                     <div>
-                      <p className="font-bold text-[#FAF8F3]">
-                        <span className="font-mono text-[#F6E7D7]">{rb.bookingCode}</span> • {rb.vehicle?.brand} {rb.vehicle?.model}
+                      <p className="font-bold text-[#ffffff]">
+                        <span className="font-mono text-[#f59e0b]">{rb.bookingCode}</span> • {rb.vehicle?.brand} {rb.vehicle?.model}
                       </p>
-                      <p className="text-[#D5DBE1] text-[11px]">
+                      <p className="text-[#a3a3a3] text-[11px]">
                         Customer: {rb.customer?.firstName} {rb.customer?.lastName} ({rb.customer?.phone})
                       </p>
                     </div>
@@ -381,7 +381,7 @@ export const VendorDashboardPage: React.FC = () => {
                       <span className={getStatusBadgeClass(rb.status)}>
                         {rb.status}
                       </span>
-                      <p className="text-[#6B7783] font-mono text-[11px] mt-1">{formatDate(rb.startDate)}</p>
+                      <p className="text-[#737373] font-mono text-[11px] mt-1">{formatDate(rb.startDate)}</p>
                     </div>
                   </div>
                 ))}
@@ -395,24 +395,24 @@ export const VendorDashboardPage: React.FC = () => {
       {activeTab === 'fleet' && (
         <div className="space-y-4">
           <div className="flex justify-between items-center">
-            <h3 className="font-display text-lg font-bold text-[#FAF8F3]">
+            <h3 className="font-display text-lg font-bold text-[#ffffff]">
               Your Managed Fleet
             </h3>
             {vendorInfo?.status === 'APPROVED' && (
               <button
                 onClick={() => setAddVehicleModalOpen(true)}
-                className="px-4 py-2 rounded-full bg-[#F6E7D7] text-[#0B0F14] text-xs font-bold hover:bg-white flex items-center space-x-1.5 transition-colors"
+                className="px-4 py-2 rounded-full bg-[#f59e0b] text-[#000000] text-xs font-bold hover:bg-white flex items-center space-x-1.5 transition-colors"
               >
-                <Plus className="w-4 h-4 text-[#0B0F14]" />
+                <Plus className="w-4 h-4 text-[#000000]" />
                 <span>Add Vehicle</span>
               </button>
             )}
           </div>
 
-          <div className="bg-[#1A222B] rounded-2xl border border-[#36424D] overflow-hidden shadow-card">
+          <div className="bg-[#0D0D0E] rounded-2xl border border-[#262626] overflow-hidden shadow-card">
             <div className="overflow-x-auto">
               <table className="w-full text-xs text-left">
-                <thead className="bg-[#0B0F14] text-[#6B7783] font-mono uppercase tracking-wider text-[10px] border-b border-[#36424D]">
+                <thead className="bg-[#000000] text-[#737373] font-mono uppercase tracking-wider text-[10px] border-b border-[#262626]">
                   <tr>
                     <th className="p-3.5">Vehicle</th>
                     <th className="p-3.5">Registration</th>
@@ -423,27 +423,27 @@ export const VendorDashboardPage: React.FC = () => {
                     <th className="p-3.5">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#36424D]">
+                <tbody className="divide-y divide-[#262626]">
                   {vehicles.map((v) => (
-                    <tr key={v.id} className="hover:bg-[#0B0F14]/50">
-                      <td className="p-3.5 font-bold text-[#FAF8F3] flex items-center space-x-2.5">
+                    <tr key={v.id} className="hover:bg-[#000000]/50">
+                      <td className="p-3.5 font-bold text-[#ffffff] flex items-center space-x-2.5">
                         <img
                           src={v.images?.[0]?.url}
                           alt={v.model}
-                          className="w-10 h-8 rounded-lg object-cover bg-[#0B0F14] border border-[#36424D]"
+                          className="w-10 h-8 rounded-lg object-cover bg-[#000000] border border-[#262626]"
                         />
                         <span>{v.brand} {v.model} ({v.year})</span>
                       </td>
-                      <td className="p-3.5 font-mono text-[#D5DBE1]">{v.registrationNumber}</td>
+                      <td className="p-3.5 font-mono text-[#a3a3a3]">{v.registrationNumber}</td>
                       <td className="p-3.5 font-medium">{v.category}</td>
-                      <td className="p-3.5 font-bold tabular-nums text-[#FAF8F3]">{formatINR(v.dailyRate)}</td>
-                      <td className="p-3.5 tabular-nums text-[#D5DBE1]">{formatINR(v.securityDeposit)}</td>
+                      <td className="p-3.5 font-bold tabular-nums text-[#ffffff]">{formatINR(v.dailyRate)}</td>
+                      <td className="p-3.5 tabular-nums text-[#a3a3a3]">{formatINR(v.securityDeposit)}</td>
                       <td className="p-3.5">
                         <span
                           className={`px-2.5 py-0.5 rounded-full font-mono text-[10px] uppercase font-semibold border ${
                             v.isActive
-                              ? 'bg-[#0E4A6B]/50 text-[#F6E7D7] border-[#2D7DA6]/50'
-                              : 'bg-[#0B0F14] text-[#6B7783] border-[#36424D]'
+                              ? 'bg-[#18181b]/50 text-[#f59e0b] border-[#f59e0b]/50'
+                              : 'bg-[#000000] text-[#737373] border-[#262626]'
                           }`}
                         >
                           {v.isActive ? 'Active' : 'Inactive'}
@@ -452,17 +452,17 @@ export const VendorDashboardPage: React.FC = () => {
                       <td className="p-3.5 space-x-2">
                         <button
                           onClick={() => handleToggleStatus(v.id)}
-                          className="text-[11px] font-semibold text-[#D5DBE1] hover:text-[#FAF8F3] underline"
+                          className="text-[11px] font-semibold text-[#a3a3a3] hover:text-[#ffffff] underline"
                         >
                           {v.isActive ? 'Deactivate' : 'Activate'}
                         </button>
-                        <span className="text-[#36424D]">•</span>
+                        <span className="text-[#262626]">•</span>
                         <button
                           onClick={() => {
                             setSelectedVehicleForMaint(v.id);
                             setMaintenanceModalOpen(true);
                           }}
-                          className="text-[11px] font-semibold text-[#2D7DA6] hover:text-[#F6E7D7] hover:underline"
+                          className="text-[11px] font-semibold text-[#f59e0b] hover:text-[#f59e0b] hover:underline"
                         >
                           Maintenance
                         </button>
@@ -479,13 +479,13 @@ export const VendorDashboardPage: React.FC = () => {
       {/* TAB: BOOKINGS OPERATIONS */}
       {activeTab === 'bookings' && (
         <div className="space-y-4">
-          <h3 className="font-display text-lg font-bold text-[#FAF8F3]">
+          <h3 className="font-display text-lg font-bold text-[#ffffff]">
             Booking Dispatch & Operations
           </h3>
-          <div className="bg-[#1A222B] rounded-2xl border border-[#36424D] overflow-hidden shadow-card">
+          <div className="bg-[#0D0D0E] rounded-2xl border border-[#262626] overflow-hidden shadow-card">
             <div className="overflow-x-auto">
               <table className="w-full text-xs text-left">
-                <thead className="bg-[#0B0F14] text-[#6B7783] font-mono uppercase tracking-wider text-[10px] border-b border-[#36424D]">
+                <thead className="bg-[#000000] text-[#737373] font-mono uppercase tracking-wider text-[10px] border-b border-[#262626]">
                   <tr>
                     <th className="p-3.5">Booking</th>
                     <th className="p-3.5">Vehicle</th>
@@ -496,21 +496,21 @@ export const VendorDashboardPage: React.FC = () => {
                     <th className="p-3.5">Operation Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#36424D]">
+                <tbody className="divide-y divide-[#262626]">
                   {bookings.map((b) => (
-                    <tr key={b.id} className="hover:bg-[#0B0F14]/50">
-                      <td className="p-3.5 font-bold font-mono text-[#F6E7D7]">{b.bookingCode}</td>
-                      <td className="p-3.5 font-semibold text-[#FAF8F3]">
+                    <tr key={b.id} className="hover:bg-[#000000]/50">
+                      <td className="p-3.5 font-bold font-mono text-[#f59e0b]">{b.bookingCode}</td>
+                      <td className="p-3.5 font-semibold text-[#ffffff]">
                         {b.vehicle?.brand} {b.vehicle?.model}
                       </td>
                       <td className="p-3.5">
-                        <span className="font-semibold block text-[#FAF8F3]">{b.customer?.firstName} {b.customer?.lastName}</span>
-                        <span className="text-[#6B7783] font-mono text-[11px]">{b.customer?.phone}</span>
+                        <span className="font-semibold block text-[#ffffff]">{b.customer?.firstName} {b.customer?.lastName}</span>
+                        <span className="text-[#737373] font-mono text-[11px]">{b.customer?.phone}</span>
                       </td>
-                      <td className="p-3.5 text-[#D5DBE1] font-mono">
+                      <td className="p-3.5 text-[#a3a3a3] font-mono">
                         {formatDate(b.startDate)} to {formatDate(b.endDate)}
                       </td>
-                      <td className="p-3.5 font-bold text-[#F6E7D7] tabular-nums">
+                      <td className="p-3.5 font-bold text-[#f59e0b] tabular-nums">
                         {formatINR(b.vendorEarnings)}
                       </td>
                       <td className="p-3.5">
@@ -526,7 +526,7 @@ export const VendorDashboardPage: React.FC = () => {
                               setTransitionBooking(b);
                               setTargetStatus('ACTIVE');
                             }}
-                            className="px-3 py-1 rounded-full bg-[#F6E7D7] text-[#0B0F14] font-bold text-[11px] hover:bg-white transition-colors"
+                            className="px-3 py-1 rounded-full bg-[#f59e0b] text-[#000000] font-bold text-[11px] hover:bg-white transition-colors"
                           >
                             Handover Vehicle
                           </button>
@@ -537,7 +537,7 @@ export const VendorDashboardPage: React.FC = () => {
                               setTransitionBooking(b);
                               setTargetStatus('COMPLETED');
                             }}
-                            className="px-3 py-1 rounded-full bg-[#0E4A6B] text-[#FAF8F3] border border-[#2D7DA6]/50 font-bold text-[11px] hover:bg-[#2D7DA6] transition-colors"
+                            className="px-3 py-1 rounded-full bg-[#18181b] text-[#ffffff] border border-[#f59e0b]/50 font-bold text-[11px] hover:bg-[#f59e0b] transition-colors"
                           >
                             Mark Returned
                           </button>
@@ -556,61 +556,61 @@ export const VendorDashboardPage: React.FC = () => {
       {activeTab === 'payouts' && (
         <div className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-[#1A222B] p-5 rounded-2xl border border-[#36424D] shadow-card space-y-2">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-[#6B7783]">
+            <div className="bg-[#0D0D0E] p-5 rounded-2xl border border-[#262626] shadow-card space-y-2">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-[#737373]">
                 Gross Booking Value
               </span>
-              <p className="text-2xl font-bold font-display text-[#FAF8F3] tabular-nums">
+              <p className="text-2xl font-bold font-display text-[#ffffff] tabular-nums">
                 {formatINR(financials?.financials?.grossRevenue || 0)}
               </p>
-              <p className="text-xs text-[#D5DBE1]">Total vehicle base rental volume</p>
+              <p className="text-xs text-[#a3a3a3]">Total vehicle base rental volume</p>
             </div>
 
-            <div className="bg-[#1A222B] p-5 rounded-2xl border border-[#36424D] shadow-card space-y-2">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-[#6B7783]">
+            <div className="bg-[#0D0D0E] p-5 rounded-2xl border border-[#262626] shadow-card space-y-2">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-[#737373]">
                 Platform Commission (10%)
               </span>
-              <p className="text-2xl font-bold font-display text-[#E07A3F] tabular-nums">
+              <p className="text-2xl font-bold font-display text-[#f59e0b] tabular-nums">
                 {formatINR(financials?.financials?.platformCommission || 0)}
               </p>
-              <p className="text-xs text-[#D5DBE1]">DriveLoop service & marketplace fee</p>
+              <p className="text-xs text-[#a3a3a3]">DriveLoop service & marketplace fee</p>
             </div>
 
-            <div className="bg-[#1A222B] p-5 rounded-2xl border border-[#36424D] shadow-card space-y-2">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-[#6B7783]">
+            <div className="bg-[#0D0D0E] p-5 rounded-2xl border border-[#262626] shadow-card space-y-2">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-[#737373]">
                 Available for Bank Payout
               </span>
-              <p className="text-2xl font-bold font-display text-[#F6E7D7] tabular-nums">
+              <p className="text-2xl font-bold font-display text-[#f59e0b] tabular-nums">
                 {formatINR(financials?.financials?.availableBalance || 0)}
               </p>
               <button
                 onClick={() => setPayoutModalOpen(true)}
                 disabled={(financials?.financials?.availableBalance || 0) < 100000}
-                className="mt-2 w-full py-2.5 rounded-full bg-[#F6E7D7] hover:bg-white text-[#0B0F14] text-xs font-bold uppercase tracking-wider transition-colors disabled:opacity-40"
+                className="mt-2 w-full py-2.5 rounded-full bg-[#f59e0b] hover:bg-white text-[#000000] text-xs font-bold uppercase tracking-wider transition-colors disabled:opacity-40"
               >
                 Withdraw Funds
               </button>
             </div>
           </div>
 
-          <div className="bg-[#1A222B] rounded-2xl border border-[#36424D] p-6 space-y-4 shadow-card">
-            <h3 className="font-display text-base font-bold text-[#FAF8F3]">
+          <div className="bg-[#0D0D0E] rounded-2xl border border-[#262626] p-6 space-y-4 shadow-card">
+            <h3 className="font-display text-base font-bold text-[#ffffff]">
               Payout Transfer History
             </h3>
             {financials?.payouts?.length === 0 ? (
-              <p className="text-xs text-[#D5DBE1]">No payout transfers requested yet.</p>
+              <p className="text-xs text-[#a3a3a3]">No payout transfers requested yet.</p>
             ) : (
-              <div className="divide-y divide-[#36424D]">
+              <div className="divide-y divide-[#262626]">
                 {financials?.payouts?.map((p: Payout) => (
                   <div key={p.id} className="py-3 flex justify-between items-center text-xs">
                     <div>
-                      <p className="font-bold font-mono text-[#FAF8F3]">
+                      <p className="font-bold font-mono text-[#ffffff]">
                         {p.referenceId || 'BANK-TRANSFER'}
                       </p>
-                      <p className="text-[#D5DBE1]">{p.notes}</p>
+                      <p className="text-[#a3a3a3]">{p.notes}</p>
                     </div>
                     <div className="text-right">
-                      <span className="font-bold text-[#FAF8F3] block tabular-nums">{formatINR(p.amount)}</span>
+                      <span className="font-bold text-[#ffffff] block tabular-nums">{formatINR(p.amount)}</span>
                       <span className={getStatusBadgeClass(p.status)}>
                         {p.status}
                       </span>
@@ -625,206 +625,206 @@ export const VendorDashboardPage: React.FC = () => {
 
       {/* ADD VEHICLE MODAL */}
       {addVehicleModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0B0F14]/85 backdrop-blur-md overflow-y-auto">
-          <div className="bg-[#1A222B] rounded-2xl border border-[#36424D] max-w-2xl w-full p-6 space-y-4 shadow-2xl my-8 text-[#FAF8F3]">
-            <div className="flex justify-between items-center border-b border-[#36424D] pb-3">
-              <h3 className="font-display text-base font-bold text-[#FAF8F3]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#000000]/85 backdrop-blur-md overflow-y-auto">
+          <div className="bg-[#0D0D0E] rounded-2xl border border-[#262626] max-w-2xl w-full p-6 space-y-4 shadow-2xl my-8 text-[#ffffff]">
+            <div className="flex justify-between items-center border-b border-[#262626] pb-3">
+              <h3 className="font-display text-base font-bold text-[#ffffff]">
                 Add New Rental Vehicle to Fleet
               </h3>
               <button onClick={() => setAddVehicleModalOpen(false)}>
-                <X className="w-5 h-5 text-[#6B7783] hover:text-[#FAF8F3]" />
+                <X className="w-5 h-5 text-[#737373] hover:text-[#ffffff]" />
               </button>
             </div>
 
             <form onSubmit={handleCreateVehicle} className="space-y-4 text-xs">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block font-semibold mb-1 text-[#FAF8F3]">Make / Brand *</label>
+                  <label className="block font-semibold mb-1 text-[#ffffff]">Make / Brand *</label>
                   <input
                     type="text"
                     required
                     value={vBrand}
                     onChange={(e) => setVBrand(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg border border-[#36424D] bg-[#0B0F14] text-[#FAF8F3] font-semibold focus:outline-none focus:border-[#2D7DA6]"
+                    className="w-full px-3 py-2 rounded-lg border border-[#262626] bg-[#000000] text-[#ffffff] font-semibold focus:outline-none focus:border-[#f59e0b]"
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold mb-1 text-[#FAF8F3]">Model Name *</label>
+                  <label className="block font-semibold mb-1 text-[#ffffff]">Model Name *</label>
                   <input
                     type="text"
                     required
                     value={vModel}
                     onChange={(e) => setVModel(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg border border-[#36424D] bg-[#0B0F14] text-[#FAF8F3] font-semibold focus:outline-none focus:border-[#2D7DA6]"
+                    className="w-full px-3 py-2 rounded-lg border border-[#262626] bg-[#000000] text-[#ffffff] font-semibold focus:outline-none focus:border-[#f59e0b]"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-3 gap-3">
                 <div>
-                  <label className="block font-semibold mb-1 text-[#FAF8F3]">Mfg Year *</label>
+                  <label className="block font-semibold mb-1 text-[#ffffff]">Mfg Year *</label>
                   <input
                     type="number"
                     required
                     value={vYear}
                     onChange={(e) => setVYear(Number(e.target.value))}
-                    className="w-full px-3 py-2 rounded-lg border border-[#36424D] bg-[#0B0F14] text-[#FAF8F3] font-semibold focus:outline-none focus:border-[#2D7DA6]"
+                    className="w-full px-3 py-2 rounded-lg border border-[#262626] bg-[#000000] text-[#ffffff] font-semibold focus:outline-none focus:border-[#f59e0b]"
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold mb-1 text-[#FAF8F3]">Category *</label>
+                  <label className="block font-semibold mb-1 text-[#ffffff]">Category *</label>
                   <select
                     value={vCategory}
                     onChange={(e) => setVCategory(e.target.value as any)}
-                    className="w-full px-3 py-2 rounded-lg border border-[#36424D] bg-[#0B0F14] text-[#FAF8F3] font-semibold focus:outline-none focus:border-[#2D7DA6]"
+                    className="w-full px-3 py-2 rounded-lg border border-[#262626] bg-[#000000] text-[#ffffff] font-semibold focus:outline-none focus:border-[#f59e0b]"
                   >
-                    <option value="SUV" className="bg-[#1A222B]">SUV</option>
-                    <option value="SEDAN" className="bg-[#1A222B]">Sedan</option>
-                    <option value="LUXURY" className="bg-[#1A222B]">Luxury</option>
-                    <option value="ELECTRIC" className="bg-[#1A222B]">Electric</option>
-                    <option value="HATCHBACK" className="bg-[#1A222B]">Hatchback</option>
+                    <option value="SUV" className="bg-[#0D0D0E]">SUV</option>
+                    <option value="SEDAN" className="bg-[#0D0D0E]">Sedan</option>
+                    <option value="LUXURY" className="bg-[#0D0D0E]">Luxury</option>
+                    <option value="ELECTRIC" className="bg-[#0D0D0E]">Electric</option>
+                    <option value="HATCHBACK" className="bg-[#0D0D0E]">Hatchback</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block font-semibold mb-1 text-[#FAF8F3]">Registration # *</label>
+                  <label className="block font-semibold mb-1 text-[#ffffff]">Registration # *</label>
                   <input
                     type="text"
                     required
                     value={vReg}
                     onChange={(e) => setVReg(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg border border-[#36424D] bg-[#0B0F14] text-[#FAF8F3] font-semibold uppercase font-mono focus:outline-none focus:border-[#2D7DA6]"
+                    className="w-full px-3 py-2 rounded-lg border border-[#262626] bg-[#000000] text-[#ffffff] font-semibold uppercase font-mono focus:outline-none focus:border-[#f59e0b]"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-3 gap-3">
                 <div>
-                  <label className="block font-semibold mb-1 text-[#FAF8F3]">Transmission</label>
+                  <label className="block font-semibold mb-1 text-[#ffffff]">Transmission</label>
                   <select
                     value={vTrans}
                     onChange={(e) => setVTrans(e.target.value as any)}
-                    className="w-full px-3 py-2 rounded-lg border border-[#36424D] bg-[#0B0F14] text-[#FAF8F3] font-semibold focus:outline-none focus:border-[#2D7DA6]"
+                    className="w-full px-3 py-2 rounded-lg border border-[#262626] bg-[#000000] text-[#ffffff] font-semibold focus:outline-none focus:border-[#f59e0b]"
                   >
-                    <option value="AUTOMATIC" className="bg-[#1A222B]">Automatic</option>
-                    <option value="MANUAL" className="bg-[#1A222B]">Manual</option>
+                    <option value="AUTOMATIC" className="bg-[#0D0D0E]">Automatic</option>
+                    <option value="MANUAL" className="bg-[#0D0D0E]">Manual</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block font-semibold mb-1 text-[#FAF8F3]">Fuel Type</label>
+                  <label className="block font-semibold mb-1 text-[#ffffff]">Fuel Type</label>
                   <select
                     value={vFuel}
                     onChange={(e) => setVFuel(e.target.value as any)}
-                    className="w-full px-3 py-2 rounded-lg border border-[#36424D] bg-[#0B0F14] text-[#FAF8F3] font-semibold focus:outline-none focus:border-[#2D7DA6]"
+                    className="w-full px-3 py-2 rounded-lg border border-[#262626] bg-[#000000] text-[#ffffff] font-semibold focus:outline-none focus:border-[#f59e0b]"
                   >
-                    <option value="PETROL" className="bg-[#1A222B]">Petrol</option>
-                    <option value="DIESEL" className="bg-[#1A222B]">Diesel</option>
-                    <option value="ELECTRIC" className="bg-[#1A222B]">Electric</option>
-                    <option value="HYBRID" className="bg-[#1A222B]">Hybrid</option>
+                    <option value="PETROL" className="bg-[#0D0D0E]">Petrol</option>
+                    <option value="DIESEL" className="bg-[#0D0D0E]">Diesel</option>
+                    <option value="ELECTRIC" className="bg-[#0D0D0E]">Electric</option>
+                    <option value="HYBRID" className="bg-[#0D0D0E]">Hybrid</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block font-semibold mb-1 text-[#FAF8F3]">Seats</label>
+                  <label className="block font-semibold mb-1 text-[#ffffff]">Seats</label>
                   <input
                     type="number"
                     value={vSeats}
                     onChange={(e) => setVSeats(Number(e.target.value))}
-                    className="w-full px-3 py-2 rounded-lg border border-[#36424D] bg-[#0B0F14] text-[#FAF8F3] font-semibold focus:outline-none focus:border-[#2D7DA6]"
+                    className="w-full px-3 py-2 rounded-lg border border-[#262626] bg-[#000000] text-[#ffffff] font-semibold focus:outline-none focus:border-[#f59e0b]"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block font-semibold mb-1 text-[#FAF8F3]">Daily Rental Price (₹ INR) *</label>
+                  <label className="block font-semibold mb-1 text-[#ffffff]">Daily Rental Price (₹ INR) *</label>
                   <input
                     type="number"
                     required
                     min={500}
                     value={vDailyRate}
                     onChange={(e) => setVDailyRate(Number(e.target.value))}
-                    className="w-full px-3 py-2 rounded-lg border border-[#36424D] bg-[#0B0F14] text-[#FAF8F3] font-semibold focus:outline-none focus:border-[#2D7DA6]"
+                    className="w-full px-3 py-2 rounded-lg border border-[#262626] bg-[#000000] text-[#ffffff] font-semibold focus:outline-none focus:border-[#f59e0b]"
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold mb-1 text-[#FAF8F3]">Security Deposit (₹ INR) *</label>
+                  <label className="block font-semibold mb-1 text-[#ffffff]">Security Deposit (₹ INR) *</label>
                   <input
                     type="number"
                     required
                     min={0}
                     value={vDeposit}
                     onChange={(e) => setVDeposit(Number(e.target.value))}
-                    className="w-full px-3 py-2 rounded-lg border border-[#36424D] bg-[#0B0F14] text-[#FAF8F3] font-semibold focus:outline-none focus:border-[#2D7DA6]"
+                    className="w-full px-3 py-2 rounded-lg border border-[#262626] bg-[#000000] text-[#ffffff] font-semibold focus:outline-none focus:border-[#f59e0b]"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block font-semibold mb-1 text-[#FAF8F3]">Hub City *</label>
+                  <label className="block font-semibold mb-1 text-[#ffffff]">Hub City *</label>
                   <input
                     type="text"
                     required
                     value={vCity}
                     onChange={(e) => setVCity(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg border border-[#36424D] bg-[#0B0F14] text-[#FAF8F3] font-semibold focus:outline-none focus:border-[#2D7DA6]"
+                    className="w-full px-3 py-2 rounded-lg border border-[#262626] bg-[#000000] text-[#ffffff] font-semibold focus:outline-none focus:border-[#f59e0b]"
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold mb-1 text-[#FAF8F3]">Pickup Address *</label>
+                  <label className="block font-semibold mb-1 text-[#ffffff]">Pickup Address *</label>
                   <input
                     type="text"
                     required
                     value={vPickup}
                     onChange={(e) => setVPickup(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg border border-[#36424D] bg-[#0B0F14] text-[#FAF8F3] font-semibold focus:outline-none focus:border-[#2D7DA6]"
+                    className="w-full px-3 py-2 rounded-lg border border-[#262626] bg-[#000000] text-[#ffffff] font-semibold focus:outline-none focus:border-[#f59e0b]"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block font-semibold mb-1 text-[#FAF8F3]">Image URL (High-res photo) *</label>
+                <label className="block font-semibold mb-1 text-[#ffffff]">Image URL (High-res photo) *</label>
                 <input
                   type="url"
                   required
                   value={vImageUrl}
                   onChange={(e) => setVImageUrl(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg border border-[#36424D] bg-[#0B0F14] text-[#FAF8F3] font-semibold focus:outline-none focus:border-[#2D7DA6]"
+                  className="w-full px-3 py-2 rounded-lg border border-[#262626] bg-[#000000] text-[#ffffff] font-semibold focus:outline-none focus:border-[#f59e0b]"
                 />
               </div>
 
               <div>
-                <label className="block font-semibold mb-1 text-[#FAF8F3]">Features (comma-separated)</label>
+                <label className="block font-semibold mb-1 text-[#ffffff]">Features (comma-separated)</label>
                 <input
                   type="text"
                   value={vFeatures}
                   onChange={(e) => setVFeatures(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg border border-[#36424D] bg-[#0B0F14] text-[#FAF8F3] font-semibold focus:outline-none focus:border-[#2D7DA6]"
+                  className="w-full px-3 py-2 rounded-lg border border-[#262626] bg-[#000000] text-[#ffffff] font-semibold focus:outline-none focus:border-[#f59e0b]"
                 />
               </div>
 
               <div>
-                <label className="block font-semibold mb-1 text-[#FAF8F3]">Description *</label>
+                <label className="block font-semibold mb-1 text-[#ffffff]">Description *</label>
                 <textarea
                   rows={2}
                   required
                   value={vDesc}
                   onChange={(e) => setVDesc(e.target.value)}
-                  className="w-full p-2 rounded-lg border border-[#36424D] bg-[#0B0F14] text-[#FAF8F3] font-semibold focus:outline-none focus:border-[#2D7DA6]"
+                  className="w-full p-2 rounded-lg border border-[#262626] bg-[#000000] text-[#ffffff] font-semibold focus:outline-none focus:border-[#f59e0b]"
                 />
               </div>
 
-              <div className="flex justify-end space-x-2 pt-2 border-t border-[#36424D]">
+              <div className="flex justify-end space-x-2 pt-2 border-t border-[#262626]">
                 <button
                   type="button"
                   onClick={() => setAddVehicleModalOpen(false)}
-                  className="px-4 py-2 rounded-full border border-[#36424D] text-xs font-semibold text-[#D5DBE1] hover:text-[#FAF8F3]"
+                  className="px-4 py-2 rounded-full border border-[#262626] text-xs font-semibold text-[#a3a3a3] hover:text-[#ffffff]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={creatingVehicle}
-                  className="px-6 py-2 rounded-full bg-[#F6E7D7] hover:bg-white text-[#0B0F14] text-xs font-bold uppercase tracking-wider transition-colors disabled:opacity-50"
+                  className="px-6 py-2 rounded-full bg-[#f59e0b] hover:bg-white text-[#000000] text-xs font-bold uppercase tracking-wider transition-colors disabled:opacity-50"
                 >
                   {creatingVehicle ? 'Publishing...' : 'Publish Vehicle'}
                 </button>
@@ -836,24 +836,24 @@ export const VendorDashboardPage: React.FC = () => {
 
       {/* HANDOVER & RETURN TRANSITION MODAL */}
       {transitionBooking && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0B0F14]/85 backdrop-blur-md">
-          <div className="bg-[#1A222B] rounded-2xl border border-[#36424D] max-w-md w-full p-6 space-y-4 shadow-2xl text-[#FAF8F3]">
-            <h3 className="font-display text-base font-bold text-[#FAF8F3]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#000000]/85 backdrop-blur-md">
+          <div className="bg-[#0D0D0E] rounded-2xl border border-[#262626] max-w-md w-full p-6 space-y-4 shadow-2xl text-[#ffffff]">
+            <h3 className="font-display text-base font-bold text-[#ffffff]">
               {targetStatus === 'ACTIVE' ? 'Vehicle Handover (Start Trip)' : 'Vehicle Return (Complete Trip)'}
             </h3>
-            <p className="text-xs text-[#D5DBE1]">
-              Booking: <strong className="text-[#F6E7D7] font-mono">{transitionBooking.bookingCode}</strong> ({transitionBooking.vehicle?.brand} {transitionBooking.vehicle?.model})
+            <p className="text-xs text-[#a3a3a3]">
+              Booking: <strong className="text-[#f59e0b] font-mono">{transitionBooking.bookingCode}</strong> ({transitionBooking.vehicle?.brand} {transitionBooking.vehicle?.model})
             </p>
 
             {targetStatus === 'ACTIVE' && (
               <div>
-                <label className="block text-xs font-semibold mb-1 text-[#FAF8F3]">Starting Odometer Reading (km) *</label>
+                <label className="block text-xs font-semibold mb-1 text-[#ffffff]">Starting Odometer Reading (km) *</label>
                 <input
                   type="number"
                   value={startOdometer}
                   onChange={(e) => setStartOdometer(Number(e.target.value))}
                   placeholder="e.g. 24500"
-                  className="w-full px-3 py-2 rounded-lg border border-[#36424D] bg-[#0B0F14] text-xs font-semibold text-[#FAF8F3] focus:outline-none focus:border-[#2D7DA6]"
+                  className="w-full px-3 py-2 rounded-lg border border-[#262626] bg-[#000000] text-xs font-semibold text-[#ffffff] focus:outline-none focus:border-[#f59e0b]"
                 />
               </div>
             )}
@@ -861,44 +861,44 @@ export const VendorDashboardPage: React.FC = () => {
             {targetStatus === 'COMPLETED' && (
               <div className="space-y-3">
                 <div>
-                  <label className="block text-xs font-semibold mb-1 text-[#FAF8F3]">Ending Odometer Reading (km) *</label>
+                  <label className="block text-xs font-semibold mb-1 text-[#ffffff]">Ending Odometer Reading (km) *</label>
                   <input
                     type="number"
                     value={returnOdometer}
                     onChange={(e) => setReturnOdometer(Number(e.target.value))}
                     placeholder="e.g. 25100"
-                    className="w-full px-3 py-2 rounded-lg border border-[#36424D] bg-[#0B0F14] text-xs font-semibold text-[#FAF8F3] focus:outline-none focus:border-[#2D7DA6]"
+                    className="w-full px-3 py-2 rounded-lg border border-[#262626] bg-[#000000] text-xs font-semibold text-[#ffffff] focus:outline-none focus:border-[#f59e0b]"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold mb-1 text-[#FAF8F3]">Damage / Inspection Report (if any)</label>
+                  <label className="block text-xs font-semibold mb-1 text-[#ffffff]">Damage / Inspection Report (if any)</label>
                   <textarea
                     rows={2}
                     value={damageReport}
                     onChange={(e) => setDamageReport(e.target.value)}
                     placeholder="No damage observed, vehicle returned in pristine condition."
-                    className="w-full p-2 rounded-lg border border-[#36424D] bg-[#0B0F14] text-xs font-semibold text-[#FAF8F3] focus:outline-none focus:border-[#2D7DA6]"
+                    className="w-full p-2 rounded-lg border border-[#262626] bg-[#000000] text-xs font-semibold text-[#ffffff] focus:outline-none focus:border-[#f59e0b]"
                   />
                 </div>
               </div>
             )}
 
             <div>
-              <label className="block text-xs font-semibold mb-1 text-[#FAF8F3]">Operator Notes</label>
+              <label className="block text-xs font-semibold mb-1 text-[#ffffff]">Operator Notes</label>
               <input
                 type="text"
                 value={statusNotes}
                 onChange={(e) => setStatusNotes(e.target.value)}
                 placeholder="Handover completed at designated airport hub"
-                className="w-full px-3 py-2 rounded-lg border border-[#36424D] bg-[#0B0F14] text-xs font-semibold text-[#FAF8F3] focus:outline-none focus:border-[#2D7DA6]"
+                className="w-full px-3 py-2 rounded-lg border border-[#262626] bg-[#000000] text-xs font-semibold text-[#ffffff] focus:outline-none focus:border-[#f59e0b]"
               />
             </div>
 
-            <div className="flex justify-end space-x-2 pt-2 border-t border-[#36424D]">
+            <div className="flex justify-end space-x-2 pt-2 border-t border-[#262626]">
               <button
                 type="button"
                 onClick={() => setTransitionBooking(null)}
-                className="px-4 py-2 rounded-full border border-[#36424D] text-xs font-semibold text-[#D5DBE1] hover:text-[#FAF8F3]"
+                className="px-4 py-2 rounded-full border border-[#262626] text-xs font-semibold text-[#a3a3a3] hover:text-[#ffffff]"
               >
                 Cancel
               </button>
@@ -906,7 +906,7 @@ export const VendorDashboardPage: React.FC = () => {
                 type="button"
                 disabled={transitioning}
                 onClick={handleStatusTransition}
-                className="px-5 py-2 rounded-full bg-[#F6E7D7] text-[#0B0F14] text-xs font-bold uppercase tracking-wider hover:bg-white transition-colors disabled:opacity-50"
+                className="px-5 py-2 rounded-full bg-[#f59e0b] text-[#000000] text-xs font-bold uppercase tracking-wider hover:bg-white transition-colors disabled:opacity-50"
               >
                 {transitioning ? 'Saving...' : 'Confirm Status Update'}
               </button>
@@ -917,74 +917,74 @@ export const VendorDashboardPage: React.FC = () => {
 
       {/* REQUEST PAYOUT MODAL */}
       {payoutModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0B0F14]/85 backdrop-blur-md">
-          <div className="bg-[#1A222B] rounded-2xl border border-[#36424D] max-w-md w-full p-6 space-y-4 shadow-2xl text-[#FAF8F3]">
-            <h3 className="font-display text-base font-bold text-[#FAF8F3]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#000000]/85 backdrop-blur-md">
+          <div className="bg-[#0D0D0E] rounded-2xl border border-[#262626] max-w-md w-full p-6 space-y-4 shadow-2xl text-[#ffffff]">
+            <h3 className="font-display text-base font-bold text-[#ffffff]">
               Request Host Bank Payout
             </h3>
-            <p className="text-xs text-[#D5DBE1]">
-              Available Balance: <strong className="text-[#F6E7D7] tabular-nums font-mono">{formatINR(stats?.availableBalance || 0)}</strong>
+            <p className="text-xs text-[#a3a3a3]">
+              Available Balance: <strong className="text-[#f59e0b] tabular-nums font-mono">{formatINR(stats?.availableBalance || 0)}</strong>
             </p>
             <form onSubmit={handleRequestPayout} className="space-y-3 text-xs">
               <div>
-                <label className="block font-semibold mb-1 text-[#FAF8F3]">Withdrawal Amount (₹ INR) *</label>
+                <label className="block font-semibold mb-1 text-[#ffffff]">Withdrawal Amount (₹ INR) *</label>
                 <input
                   type="number"
                   required
                   min={1000}
                   value={payoutAmount}
                   onChange={(e) => setPayoutAmount(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg border border-[#36424D] bg-[#0B0F14] text-[#FAF8F3] font-semibold focus:outline-none focus:border-[#2D7DA6]"
+                  className="w-full px-3 py-2 rounded-lg border border-[#262626] bg-[#000000] text-[#ffffff] font-semibold focus:outline-none focus:border-[#f59e0b]"
                 />
               </div>
 
               <div>
-                <label className="block font-semibold mb-1 text-[#FAF8F3]">Bank Name *</label>
+                <label className="block font-semibold mb-1 text-[#ffffff]">Bank Name *</label>
                 <input
                   type="text"
                   required
                   value={bankName}
                   onChange={(e) => setBankName(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg border border-[#36424D] bg-[#0B0F14] text-[#FAF8F3] font-semibold focus:outline-none focus:border-[#2D7DA6]"
+                  className="w-full px-3 py-2 rounded-lg border border-[#262626] bg-[#000000] text-[#ffffff] font-semibold focus:outline-none focus:border-[#f59e0b]"
                 />
               </div>
 
               <div>
-                <label className="block font-semibold mb-1 text-[#FAF8F3]">Bank Account Number *</label>
+                <label className="block font-semibold mb-1 text-[#ffffff]">Bank Account Number *</label>
                 <input
                   type="text"
                   required
                   value={accountNumber}
                   onChange={(e) => setAccountNumber(e.target.value)}
                   placeholder="50100XXXXXXXXXX"
-                  className="w-full px-3 py-2 rounded-lg border border-[#36424D] bg-[#0B0F14] text-[#FAF8F3] font-semibold font-mono focus:outline-none focus:border-[#2D7DA6]"
+                  className="w-full px-3 py-2 rounded-lg border border-[#262626] bg-[#000000] text-[#ffffff] font-semibold font-mono focus:outline-none focus:border-[#f59e0b]"
                 />
               </div>
 
               <div>
-                <label className="block font-semibold mb-1 text-[#FAF8F3]">IFSC Code *</label>
+                <label className="block font-semibold mb-1 text-[#ffffff]">IFSC Code *</label>
                 <input
                   type="text"
                   required
                   value={ifscCode}
                   onChange={(e) => setIfscCode(e.target.value)}
                   placeholder="HDFC0001234"
-                  className="w-full px-3 py-2 rounded-lg border border-[#36424D] bg-[#0B0F14] text-[#FAF8F3] font-semibold uppercase font-mono focus:outline-none focus:border-[#2D7DA6]"
+                  className="w-full px-3 py-2 rounded-lg border border-[#262626] bg-[#000000] text-[#ffffff] font-semibold uppercase font-mono focus:outline-none focus:border-[#f59e0b]"
                 />
               </div>
 
-              <div className="flex justify-end space-x-2 pt-2 border-t border-[#36424D]">
+              <div className="flex justify-end space-x-2 pt-2 border-t border-[#262626]">
                 <button
                   type="button"
                   onClick={() => setPayoutModalOpen(false)}
-                  className="px-4 py-2 rounded-full border border-[#36424D] text-xs font-semibold text-[#D5DBE1] hover:text-[#FAF8F3]"
+                  className="px-4 py-2 rounded-full border border-[#262626] text-xs font-semibold text-[#a3a3a3] hover:text-[#ffffff]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={requestingPayout}
-                  className="px-5 py-2 rounded-full bg-[#F6E7D7] hover:bg-white text-[#0B0F14] text-xs font-bold uppercase tracking-wider transition-colors disabled:opacity-50"
+                  className="px-5 py-2 rounded-full bg-[#f59e0b] hover:bg-white text-[#000000] text-xs font-bold uppercase tracking-wider transition-colors disabled:opacity-50"
                 >
                   {requestingPayout ? 'Submitting...' : 'Request Payout'}
                 </button>
@@ -996,60 +996,60 @@ export const VendorDashboardPage: React.FC = () => {
 
       {/* SCHEDULE MAINTENANCE MODAL */}
       {maintenanceModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0B0F14]/85 backdrop-blur-md">
-          <div className="bg-[#1A222B] rounded-2xl border border-[#36424D] max-w-md w-full p-6 space-y-4 shadow-2xl text-[#FAF8F3]">
-            <h3 className="font-display text-base font-bold text-[#FAF8F3]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#000000]/85 backdrop-blur-md">
+          <div className="bg-[#0D0D0E] rounded-2xl border border-[#262626] max-w-md w-full p-6 space-y-4 shadow-2xl text-[#ffffff]">
+            <h3 className="font-display text-base font-bold text-[#ffffff]">
               Schedule Fleet Maintenance Period
             </h3>
-            <p className="text-xs text-[#D5DBE1]">
+            <p className="text-xs text-[#a3a3a3]">
               Block dates from public search and booking engine during vehicle servicing.
             </p>
             <form onSubmit={handleAddMaintenance} className="space-y-3 text-xs">
               <div>
-                <label className="block font-semibold mb-1 text-[#FAF8F3]">Start Date & Time *</label>
+                <label className="block font-semibold mb-1 text-[#ffffff]">Start Date & Time *</label>
                 <input
                   type="datetime-local"
                   required
                   value={maintStart}
                   onChange={(e) => setMaintStart(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg border border-[#36424D] bg-[#0B0F14] text-[#FAF8F3] font-semibold focus:outline-none focus:border-[#2D7DA6]"
+                  className="w-full px-3 py-2 rounded-lg border border-[#262626] bg-[#000000] text-[#ffffff] font-semibold focus:outline-none focus:border-[#f59e0b]"
                 />
               </div>
 
               <div>
-                <label className="block font-semibold mb-1 text-[#FAF8F3]">End Date & Time *</label>
+                <label className="block font-semibold mb-1 text-[#ffffff]">End Date & Time *</label>
                 <input
                   type="datetime-local"
                   required
                   value={maintEnd}
                   onChange={(e) => setMaintEnd(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg border border-[#36424D] bg-[#0B0F14] text-[#FAF8F3] font-semibold focus:outline-none focus:border-[#2D7DA6]"
+                  className="w-full px-3 py-2 rounded-lg border border-[#262626] bg-[#000000] text-[#ffffff] font-semibold focus:outline-none focus:border-[#f59e0b]"
                 />
               </div>
 
               <div>
-                <label className="block font-semibold mb-1 text-[#FAF8F3]">Reason / Service Details *</label>
+                <label className="block font-semibold mb-1 text-[#ffffff]">Reason / Service Details *</label>
                 <input
                   type="text"
                   required
                   value={maintReason}
                   onChange={(e) => setMaintReason(e.target.value)}
                   placeholder="e.g. 20,000 km general service & brake inspection"
-                  className="w-full px-3 py-2 rounded-lg border border-[#36424D] bg-[#0B0F14] text-[#FAF8F3] font-semibold focus:outline-none focus:border-[#2D7DA6]"
+                  className="w-full px-3 py-2 rounded-lg border border-[#262626] bg-[#000000] text-[#ffffff] font-semibold focus:outline-none focus:border-[#f59e0b]"
                 />
               </div>
 
-              <div className="flex justify-end space-x-2 pt-2 border-t border-[#36424D]">
+              <div className="flex justify-end space-x-2 pt-2 border-t border-[#262626]">
                 <button
                   type="button"
                   onClick={() => setMaintenanceModalOpen(false)}
-                  className="px-4 py-2 rounded-full border border-[#36424D] text-xs font-semibold text-[#D5DBE1] hover:text-[#FAF8F3]"
+                  className="px-4 py-2 rounded-full border border-[#262626] text-xs font-semibold text-[#a3a3a3] hover:text-[#ffffff]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-full bg-[#F6E7D7] hover:bg-white text-[#0B0F14] text-xs font-bold uppercase tracking-wider transition-colors"
+                  className="px-5 py-2 rounded-full bg-[#f59e0b] hover:bg-white text-[#000000] text-xs font-bold uppercase tracking-wider transition-colors"
                 >
                   Schedule Maintenance
                 </button>

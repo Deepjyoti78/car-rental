@@ -166,7 +166,7 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
           contact: driverPhone,
         },
         theme: {
-          color: '#2D7DA6',
+          color: '#000000',
         },
       };
 
@@ -189,20 +189,20 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
   return (
     <div
       className={`fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-md overflow-y-auto ${
-        isLight ? 'bg-black/35' : 'bg-[#0B0F14]/85'
+        isLight ? 'bg-black/35' : 'bg-black/85'
       }`}
     >
       <div
         className={`relative w-full max-w-2xl rounded-2xl border shadow-2xl overflow-hidden my-8 transition-colors duration-200 ${
           isLight
             ? 'bg-white border-stone-200 text-slate-900'
-            : 'bg-[#1A222B] border-[#36424D] text-[#FAF8F3]'
+            : 'bg-[#0D0D0E] border-neutral-800 text-white'
         }`}
       >
         {/* Header */}
         <div
           className={`px-6 py-4 border-b flex items-center justify-between ${
-            isLight ? 'bg-slate-50 border-stone-200' : 'bg-[#0B0F14] border-[#36424D]'
+            isLight ? 'bg-slate-50 border-stone-200' : 'bg-[#0A0A0C] border-neutral-800'
           }`}
         >
           <div className="flex items-center space-x-3">
@@ -210,7 +210,7 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
               className={`w-8 h-8 rounded-full flex items-center justify-center font-mono font-bold text-xs ${
                 isLight
                   ? 'bg-black text-white'
-                  : 'bg-[#0E4A6B] border border-[#2D7DA6]/50 text-[#FAF8F3]'
+                  : 'bg-neutral-800 border border-neutral-700 text-white'
               }`}
             >
               {step < 4 ? `0${step}` : '✓'}
@@ -218,7 +218,7 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
             <div>
               <h3
                 className={`font-display text-base font-bold ${
-                  isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                  isLight ? 'text-slate-900' : 'text-white'
                 }`}
               >
                 {step === 1 && 'Confirm Rental Dates & Pricing'}
@@ -226,7 +226,7 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                 {step === 3 && 'Review & Authorize Payment'}
                 {step === 4 && 'Reservation Confirmed'}
               </h3>
-              <p className={`text-xs ${isLight ? 'text-slate-500' : 'text-[#D5DBE1]'}`}>
+              <p className={`text-xs ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
                 {vehicle.brand} {vehicle.model} • {vehicle.city}
               </p>
             </div>
@@ -236,7 +236,7 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
             className={`p-1.5 rounded-full transition-colors cursor-pointer ${
               isLight
                 ? 'text-slate-400 hover:text-black hover:bg-slate-200'
-                : 'text-[#6B7783] hover:text-[#FAF8F3] hover:bg-[#36424D]/60'
+                : 'text-neutral-400 hover:text-white hover:bg-neutral-800'
             }`}
             aria-label="Close modal"
           >
@@ -253,12 +253,12 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div
                   className={`p-3.5 rounded-xl border ${
-                    isLight ? 'bg-slate-50 border-stone-200' : 'bg-[#0B0F14] border-[#36424D]'
+                    isLight ? 'bg-slate-50 border-stone-200' : 'bg-black border-neutral-800'
                   }`}
                 >
                   <label
                     className={`block text-[10px] font-mono uppercase tracking-wider mb-1 ${
-                      isLight ? 'text-slate-400' : 'text-[#6B7783]'
+                      isLight ? 'text-slate-400' : 'text-neutral-500'
                     }`}
                   >
                     Pickup Date & Time
@@ -269,19 +269,19 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                     min={new Date().toISOString().slice(0, 16)}
                     onChange={(e) => setStartDate(new Date(e.target.value).toISOString())}
                     className={`w-full bg-transparent text-xs sm:text-sm font-semibold focus:outline-none tabular-nums ${
-                      isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                      isLight ? 'text-slate-900' : 'text-white'
                     }`}
                   />
                 </div>
 
                 <div
                   className={`p-3.5 rounded-xl border ${
-                    isLight ? 'bg-slate-50 border-stone-200' : 'bg-[#0B0F14] border-[#36424D]'
+                    isLight ? 'bg-slate-50 border-stone-200' : 'bg-black border-neutral-800'
                   }`}
                 >
                   <label
                     className={`block text-[10px] font-mono uppercase tracking-wider mb-1 ${
-                      isLight ? 'text-slate-400' : 'text-[#6B7783]'
+                      isLight ? 'text-slate-400' : 'text-neutral-500'
                     }`}
                   >
                     Return Date & Time
@@ -292,7 +292,7 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                     min={startDate.slice(0, 16)}
                     onChange={(e) => setEndDate(new Date(e.target.value).toISOString())}
                     className={`w-full bg-transparent text-xs sm:text-sm font-semibold focus:outline-none tabular-nums ${
-                      isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                      isLight ? 'text-slate-900' : 'text-white'
                     }`}
                   />
                 </div>
@@ -303,19 +303,15 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                 className={`p-3.5 rounded-xl border flex items-start space-x-3 ${
                   isLight
                     ? 'bg-slate-50 border-stone-200 text-slate-800'
-                    : 'bg-[#0B0F14] border-[#36424D]'
+                    : 'bg-black border-neutral-800'
                 }`}
               >
-                <MapPin
-                  className={`w-4 h-4 shrink-0 mt-0.5 ${
-                    isLight ? 'text-[#C25E26]' : 'text-[#2D7DA6]'
-                  }`}
-                />
+                <MapPin className="w-4 h-4 shrink-0 mt-0.5 text-amber-400" />
                 <div className="text-xs">
-                  <p className={`font-semibold ${isLight ? 'text-slate-900' : 'text-[#FAF8F3]'}`}>
+                  <p className={`font-semibold ${isLight ? 'text-slate-900' : 'text-white'}`}>
                     Designated Fleet Hub
                   </p>
-                  <p className={isLight ? 'text-slate-600' : 'text-[#D5DBE1]'}>
+                  <p className={isLight ? 'text-slate-600' : 'text-neutral-400'}>
                     {vehicle.pickupAddress}, {vehicle.city}
                   </p>
                 </div>
@@ -323,7 +319,7 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
 
               {/* Conflict Error if any */}
               {calcError && (
-                <div className="p-3 rounded-lg bg-[#E07A3F]/10 border border-[#E07A3F]/30 text-xs text-[#E07A3F] flex items-center space-x-2">
+                <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/30 text-xs text-amber-400 flex items-center space-x-2">
                   <AlertCircle className="w-4 h-4 shrink-0" />
                   <span>{calcError}</span>
                 </div>
@@ -333,58 +329,54 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
               {priceData && (
                 <div
                   className={`rounded-xl border p-4 space-y-2.5 text-xs ${
-                    isLight ? 'bg-slate-50 border-stone-200' : 'bg-[#0B0F14] border-[#36424D]'
+                    isLight ? 'bg-slate-50 border-stone-200' : 'bg-black border-neutral-800'
                   }`}
                 >
                   <p
                     className={`font-mono text-[10px] uppercase tracking-wider border-b pb-2 ${
-                      isLight ? 'text-slate-400 border-stone-200' : 'text-[#6B7783] border-[#36424D]'
+                      isLight ? 'text-slate-400 border-stone-200' : 'text-neutral-500 border-neutral-800'
                     }`}
                   >
                     Verified Pricing Schedule
                   </p>
 
-                  <div className={`flex justify-between ${isLight ? 'text-slate-600' : 'text-[#D5DBE1]'}`}>
+                  <div className={`flex justify-between ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
                     <span>
                       Base Rental ({priceData.rentalDays}{' '}
                       {priceData.rentalDays === 1 ? 'day' : 'days'} × {formatINR(priceData.baseRate)}/day)
                     </span>
                     <span
                       className={`font-semibold tabular-nums ${
-                        isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                        isLight ? 'text-slate-900' : 'text-white'
                       }`}
                     >
                       {formatINR(priceData.baseAmount)}
                     </span>
                   </div>
 
-                  <div className={`flex justify-between ${isLight ? 'text-slate-600' : 'text-[#D5DBE1]'}`}>
+                  <div className={`flex justify-between ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
                     <span>Applicable Statutory GST (18%)</span>
                     <span
                       className={`font-semibold tabular-nums ${
-                        isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                        isLight ? 'text-slate-900' : 'text-white'
                       }`}
                     >
                       {formatINR(priceData.taxesAmount)}
                     </span>
                   </div>
 
-                  <div className={`flex justify-between ${isLight ? 'text-slate-600' : 'text-[#D5DBE1]'}`}>
+                  <div className={`flex justify-between ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
                     <span>Marketplace Booking & Insurance Escrow Fee</span>
                     <span
                       className={`font-semibold tabular-nums ${
-                        isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                        isLight ? 'text-slate-900' : 'text-white'
                       }`}
                     >
                       {formatINR(priceData.platformFee)}
                     </span>
                   </div>
 
-                  <div
-                    className={`flex justify-between ${
-                      isLight ? 'text-[#C25E26]' : 'text-[#2D7DA6]'
-                    }`}
-                  >
+                  <div className="flex justify-between text-amber-400">
                     <span>Refundable Security Deposit (Returned in 24h)</span>
                     <span className="font-bold tabular-nums">
                       {formatINR(priceData.securityDeposit)}
@@ -393,13 +385,13 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
 
                   <div
                     className={`pt-2 border-t flex justify-between text-sm font-bold ${
-                      isLight ? 'border-stone-200 text-slate-900' : 'border-[#36424D] text-[#FAF8F3]'
+                      isLight ? 'border-stone-200 text-slate-900' : 'border-neutral-800 text-white'
                     }`}
                   >
                     <span>Total Amount Payable</span>
                     <span
                       className={`text-base font-display tabular-nums ${
-                        isLight ? 'text-black' : 'text-[#F6E7D7]'
+                        isLight ? 'text-black' : 'text-white'
                       }`}
                     >
                       {formatINR(priceData.totalAmount)}
@@ -416,11 +408,11 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                   className={`px-6 py-2.5 rounded-full text-xs font-bold flex items-center space-x-2 transition-all disabled:opacity-50 cursor-pointer ${
                     isLight
                       ? 'bg-black text-white hover:bg-slate-800'
-                      : 'bg-[#F6E7D7] hover:bg-white text-[#0B0F14]'
+                      : 'bg-white hover:bg-neutral-200 text-black'
                   }`}
                 >
                   <span>Continue to Driver Details</span>
-                  <ArrowRight className={`w-3.5 h-3.5 ${isLight ? 'text-white' : 'text-[#0B0F14]'}`} />
+                  <ArrowRight className={`w-3.5 h-3.5 ${isLight ? 'text-white' : 'text-black'}`} />
                 </button>
               </div>
             </div>
@@ -433,7 +425,7 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                 <div>
                   <label
                     className={`block text-xs font-semibold mb-1 ${
-                      isLight ? 'text-slate-800' : 'text-[#FAF8F3]'
+                      isLight ? 'text-slate-800' : 'text-white'
                     }`}
                   >
                     Primary Driver Full Name *
@@ -446,7 +438,7 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                     className={`w-full px-3 py-2 rounded-lg border text-xs font-semibold focus:outline-none transition-colors ${
                       isLight
                         ? 'bg-slate-50 border-stone-200 text-slate-900 focus:border-black'
-                        : 'bg-[#0B0F14] border-[#36424D] text-[#FAF8F3] focus:border-[#2D7DA6]'
+                        : 'bg-black border-neutral-800 text-white focus:border-white'
                     }`}
                   />
                 </div>
@@ -454,7 +446,7 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                 <div>
                   <label
                     className={`block text-xs font-semibold mb-1 ${
-                      isLight ? 'text-slate-800' : 'text-[#FAF8F3]'
+                      isLight ? 'text-slate-800' : 'text-white'
                     }`}
                   >
                     Contact Phone Number *
@@ -467,7 +459,7 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                     className={`w-full px-3 py-2 rounded-lg border text-xs font-semibold focus:outline-none transition-colors ${
                       isLight
                         ? 'bg-slate-50 border-stone-200 text-slate-900 focus:border-black'
-                        : 'bg-[#0B0F14] border-[#36424D] text-[#FAF8F3] focus:border-[#2D7DA6]'
+                        : 'bg-black border-neutral-800 text-white focus:border-white'
                     }`}
                   />
                 </div>
@@ -475,7 +467,7 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                 <div>
                   <label
                     className={`block text-xs font-semibold mb-1 ${
-                      isLight ? 'text-slate-800' : 'text-[#FAF8F3]'
+                      isLight ? 'text-slate-800' : 'text-white'
                     }`}
                   >
                     Email Address *
@@ -488,7 +480,7 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                     className={`w-full px-3 py-2 rounded-lg border text-xs font-semibold focus:outline-none transition-colors ${
                       isLight
                         ? 'bg-slate-50 border-stone-200 text-slate-900 focus:border-black'
-                        : 'bg-[#0B0F14] border-[#36424D] text-[#FAF8F3] focus:border-[#2D7DA6]'
+                        : 'bg-black border-neutral-800 text-white focus:border-white'
                     }`}
                   />
                 </div>
@@ -496,7 +488,7 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                 <div>
                   <label
                     className={`block text-xs font-semibold mb-1 ${
-                      isLight ? 'text-slate-800' : 'text-[#FAF8F3]'
+                      isLight ? 'text-slate-800' : 'text-white'
                     }`}
                   >
                     Driving License Number *
@@ -509,7 +501,7 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                     className={`w-full px-3 py-2 rounded-lg border text-xs font-semibold focus:outline-none transition-colors ${
                       isLight
                         ? 'bg-slate-50 border-stone-200 text-slate-900 focus:border-black'
-                        : 'bg-[#0B0F14] border-[#36424D] text-[#FAF8F3] focus:border-[#2D7DA6]'
+                        : 'bg-black border-neutral-800 text-white focus:border-white'
                     }`}
                   />
                 </div>
@@ -520,17 +512,17 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                 className={`p-3.5 rounded-xl border text-[11px] space-y-1 ${
                   isLight
                     ? 'bg-amber-50/70 border-amber-200/80 text-amber-900'
-                    : 'bg-[#0B0F14] border-[#36424D] text-[#D5DBE1]'
+                    : 'bg-black border-neutral-800 text-neutral-300'
                 }`}
               >
                 <p
                   className={`font-semibold flex items-center gap-1 ${
-                    isLight ? 'text-[#C25E26]' : 'text-[#E07A3F]'
+                    isLight ? 'text-[#C25E26]' : 'text-amber-400'
                   }`}
                 >
                   <ShieldCheck
                     className={`w-3.5 h-3.5 ${
-                      isLight ? 'text-[#C25E26]' : 'text-[#2D7DA6]'
+                      isLight ? 'text-[#C25E26]' : 'text-amber-400'
                     }`}
                   />
                   DriveLoop Cancellation & Refund Schedule:
@@ -549,16 +541,16 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                   className={`mt-0.5 rounded ${
                     isLight
                       ? 'border-stone-300 text-black focus:ring-black'
-                      : 'border-[#36424D] bg-[#0B0F14] text-[#2D7DA6] focus:ring-0'
+                      : 'border-neutral-700 bg-black text-amber-400 focus:ring-0'
                   }`}
                 />
-                <span className={`text-xs ${isLight ? 'text-slate-600' : 'text-[#D5DBE1]'}`}>
+                <span className={`text-xs ${isLight ? 'text-slate-600' : 'text-neutral-300'}`}>
                   I certify that the driver holds an active valid driving license, and I agree to DriveLoop's{' '}
-                  <span className={`font-semibold underline ${isLight ? 'text-black' : 'text-[#FAF8F3]'}`}>
+                  <span className={`font-semibold underline ${isLight ? 'text-black' : 'text-white'}`}>
                     Rental Agreement
                   </span>{' '}
                   and{' '}
-                  <span className={`font-semibold underline ${isLight ? 'text-black' : 'text-[#FAF8F3]'}`}>
+                  <span className={`font-semibold underline ${isLight ? 'text-black' : 'text-white'}`}>
                     Cancellation Terms
                   </span>.
                 </span>
@@ -566,7 +558,7 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
 
               <div
                 className={`flex items-center justify-between pt-4 border-t ${
-                  isLight ? 'border-stone-100' : 'border-[#36424D]'
+                  isLight ? 'border-stone-100' : 'border-neutral-800'
                 }`}
               >
                 <button
@@ -575,7 +567,7 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                   className={`px-4 py-2 rounded-full border text-xs font-semibold flex items-center space-x-1.5 transition-colors cursor-pointer ${
                     isLight
                       ? 'border-stone-200 text-slate-700 hover:text-black bg-white hover:bg-slate-50'
-                      : 'border-[#36424D] text-[#D5DBE1] hover:text-[#FAF8F3]'
+                      : 'border-neutral-800 text-neutral-300 hover:text-white'
                   }`}
                 >
                   <ArrowLeft className="w-3.5 h-3.5" />
@@ -589,11 +581,11 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                   className={`px-6 py-2.5 rounded-full text-xs font-bold flex items-center space-x-2 transition-colors disabled:opacity-50 cursor-pointer ${
                     isLight
                       ? 'bg-black text-white hover:bg-slate-800'
-                      : 'bg-[#F6E7D7] hover:bg-white text-[#0B0F14]'
+                      : 'bg-white hover:bg-neutral-200 text-black'
                   }`}
                 >
                   <span>Review & Pay</span>
-                  <ArrowRight className={`w-3.5 h-3.5 ${isLight ? 'text-white' : 'text-[#0B0F14]'}`} />
+                  <ArrowRight className={`w-3.5 h-3.5 ${isLight ? 'text-white' : 'text-black'}`} />
                 </button>
               </div>
             </div>
@@ -606,44 +598,44 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                 className={`p-4 rounded-xl border space-y-3 ${
                   isLight
                     ? 'bg-slate-50 border-stone-200 text-slate-800'
-                    : 'bg-[#0B0F14] border-[#36424D]'
+                    : 'bg-black border-neutral-800'
                 }`}
               >
                 <div
                   className={`flex items-center justify-between border-b pb-2 ${
-                    isLight ? 'border-stone-200' : 'border-[#36424D]'
+                    isLight ? 'border-stone-200' : 'border-neutral-800'
                   }`}
                 >
-                  <span className={`text-xs font-bold ${isLight ? 'text-slate-900' : 'text-[#FAF8F3]'}`}>
+                  <span className={`text-xs font-bold ${isLight ? 'text-slate-900' : 'text-white'}`}>
                     Vehicle Reserved
                   </span>
-                  <span className={`text-xs font-bold ${isLight ? 'text-black' : 'text-[#F6E7D7]'}`}>
+                  <span className={`text-xs font-bold ${isLight ? 'text-black' : 'text-white'}`}>
                     {vehicle.brand} {vehicle.model}
                   </span>
                 </div>
 
-                <div className={`grid grid-cols-2 gap-2 text-xs ${isLight ? 'text-slate-600' : 'text-[#D5DBE1]'}`}>
+                <div className={`grid grid-cols-2 gap-2 text-xs ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
                   <div>
                     <span
                       className={`block text-[10px] font-mono uppercase ${
-                        isLight ? 'text-slate-400' : 'text-[#6B7783]'
+                        isLight ? 'text-slate-400' : 'text-neutral-500'
                       }`}
                     >
                       Pickup
                     </span>
-                    <span className={`font-medium ${isLight ? 'text-slate-900' : 'text-[#FAF8F3]'}`}>
+                    <span className={`font-medium ${isLight ? 'text-slate-900' : 'text-white'}`}>
                       {formatDate(startDate)}
                     </span>
                   </div>
                   <div>
                     <span
                       className={`block text-[10px] font-mono uppercase ${
-                        isLight ? 'text-slate-400' : 'text-[#6B7783]'
+                        isLight ? 'text-slate-400' : 'text-neutral-500'
                       }`}
                     >
                       Return
                     </span>
-                    <span className={`font-medium ${isLight ? 'text-slate-900' : 'text-[#FAF8F3]'}`}>
+                    <span className={`font-medium ${isLight ? 'text-slate-900' : 'text-white'}`}>
                       {formatDate(endDate)}
                     </span>
                   </div>
@@ -651,26 +643,26 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
 
                 <div
                   className={`border-t pt-2 flex items-center justify-between text-xs ${
-                    isLight ? 'border-stone-200' : 'border-[#36424D]'
+                    isLight ? 'border-stone-200' : 'border-neutral-800'
                   }`}
                 >
-                  <span className={`font-medium ${isLight ? 'text-slate-600' : 'text-[#D5DBE1]'}`}>
+                  <span className={`font-medium ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
                     Primary Driver
                   </span>
-                  <span className={`font-semibold ${isLight ? 'text-slate-900' : 'text-[#FAF8F3]'}`}>
+                  <span className={`font-semibold ${isLight ? 'text-slate-900' : 'text-white'}`}>
                     {driverFullName}
                   </span>
                 </div>
 
                 <div
                   className={`border-t pt-2 flex items-center justify-between text-sm font-bold ${
-                    isLight ? 'border-stone-200 text-slate-900' : 'border-[#36424D] text-[#FAF8F3]'
+                    isLight ? 'border-stone-200 text-slate-900' : 'border-neutral-800 text-white'
                   }`}
                 >
                   <span>Total Amount to Pay</span>
                   <span
                     className={`text-base font-display tabular-nums ${
-                      isLight ? 'text-black font-extrabold' : 'text-[#F6E7D7]'
+                      isLight ? 'text-black font-extrabold' : 'text-white font-extrabold'
                     }`}
                   >
                     {priceData && formatINR(priceData.totalAmount)}
@@ -683,24 +675,24 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                 className={`p-3 rounded-xl border text-xs flex items-center space-x-2.5 ${
                   isLight
                     ? 'bg-slate-100 border-stone-200 text-slate-700'
-                    : 'border-[#2D7DA6]/40 bg-[#0E4A6B]/30 text-[#D5DBE1]'
+                    : 'border-neutral-700 bg-neutral-900/60 text-neutral-300'
                 }`}
               >
                 <ShieldCheck
                   className={`w-5 h-5 shrink-0 ${
-                    isLight ? 'text-slate-800' : 'text-[#2D7DA6]'
+                    isLight ? 'text-slate-800' : 'text-amber-400'
                   }`}
                 />
                 <span>
                   Payments encrypted and processed via{' '}
-                  <strong className={isLight ? 'text-slate-900' : 'text-[#FAF8F3]'}>Razorpay</strong>. Cards,
+                  <strong className={isLight ? 'text-slate-900' : 'text-white'}>Razorpay</strong>. Cards,
                   UPI, Netbanking & Wallets supported.
                 </span>
               </div>
 
               <div
                 className={`flex items-center justify-between pt-4 border-t ${
-                  isLight ? 'border-stone-100' : 'border-[#36424D]'
+                  isLight ? 'border-stone-100' : 'border-neutral-800'
                 }`}
               >
                 <button
@@ -709,7 +701,7 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                   className={`px-4 py-2 rounded-full border text-xs font-semibold flex items-center space-x-1.5 transition-colors cursor-pointer ${
                     isLight
                       ? 'border-stone-200 text-slate-700 hover:text-black bg-white hover:bg-slate-50'
-                      : 'border-[#36424D] text-[#D5DBE1] hover:text-[#FAF8F3]'
+                      : 'border-neutral-800 text-neutral-300 hover:text-white'
                   }`}
                 >
                   <ArrowLeft className="w-3.5 h-3.5" />
@@ -723,10 +715,10 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                   className={`px-7 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider flex items-center space-x-2 shadow-card transition-all disabled:opacity-50 cursor-pointer ${
                     isLight
                       ? 'bg-black text-white hover:bg-slate-800'
-                      : 'bg-[#F6E7D7] hover:bg-white text-[#0B0F14]'
+                      : 'bg-white hover:bg-neutral-200 text-black'
                   }`}
                 >
-                  <CreditCard className={`w-4 h-4 ${isLight ? 'text-white' : 'text-[#0B0F14]'}`} />
+                  <CreditCard className={`w-4 h-4 ${isLight ? 'text-white' : 'text-black'}`} />
                   <span>{isSubmitting ? 'Processing Payment...' : 'Pay with Razorpay'}</span>
                 </button>
               </div>
@@ -740,27 +732,27 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                 className={`w-12 h-12 rounded-full flex items-center justify-center mx-auto border ${
                   isLight
                     ? 'bg-slate-100 text-slate-900 border-slate-300'
-                    : 'bg-[#0E4A6B] text-[#F6E7D7] border-[#2D7DA6]'
+                    : 'bg-neutral-900 text-white border-neutral-700'
                 }`}
               >
                 <CheckCircle
-                  className={`w-6 h-6 ${isLight ? 'text-emerald-600' : 'text-[#2D7DA6]'}`}
+                  className={`w-6 h-6 ${isLight ? 'text-emerald-600' : 'text-emerald-400'}`}
                 />
               </div>
 
               <div>
                 <h3
                   className={`font-display text-xl font-bold ${
-                    isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                    isLight ? 'text-slate-900' : 'text-white'
                   }`}
                 >
                   Reservation Successfully Confirmed!
                 </h3>
-                <p className={`text-xs mt-1 ${isLight ? 'text-slate-600' : 'text-[#D5DBE1]'}`}>
+                <p className={`text-xs mt-1 ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
                   Your trip is locked in. Booking Code:{' '}
                   <span
                     className={`font-mono font-bold ${
-                      isLight ? 'text-[#C25E26]' : 'text-[#F6E7D7]'
+                      isLight ? 'text-[#C25E26]' : 'text-amber-400'
                     }`}
                   >
                     {completedBooking.bookingCode}
@@ -772,44 +764,44 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                 className={`p-4 rounded-xl border text-left text-xs space-y-2 max-w-md mx-auto ${
                   isLight
                     ? 'bg-slate-50 border-stone-200 text-slate-700'
-                    : 'border-[#36424D] bg-[#0B0F14]'
+                    : 'border-neutral-800 bg-black'
                 }`}
               >
                 <div className="flex justify-between">
-                  <span className={isLight ? 'text-slate-500' : 'text-[#D5DBE1]'}>Vehicle:</span>
+                  <span className={isLight ? 'text-slate-500' : 'text-neutral-400'}>Vehicle:</span>
                   <span
                     className={`font-semibold ${
-                      isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                      isLight ? 'text-slate-900' : 'text-white'
                     }`}
                   >
                     {vehicle.brand} {vehicle.model}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className={isLight ? 'text-slate-500' : 'text-[#D5DBE1]'}>Duration:</span>
+                  <span className={isLight ? 'text-slate-500' : 'text-neutral-400'}>Duration:</span>
                   <span
                     className={`font-semibold ${
-                      isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                      isLight ? 'text-slate-900' : 'text-white'
                     }`}
                   >
                     {formatDate(completedBooking.startDate)} to {formatDate(completedBooking.endDate)} ({completedBooking.rentalDays} days)
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className={isLight ? 'text-slate-500' : 'text-[#D5DBE1]'}>Total Paid:</span>
+                  <span className={isLight ? 'text-slate-500' : 'text-neutral-400'}>Total Paid:</span>
                   <span
                     className={`font-bold tabular-nums ${
-                      isLight ? 'text-black' : 'text-[#F6E7D7]'
+                      isLight ? 'text-black' : 'text-white'
                     }`}
                   >
                     {formatINR(completedBooking.totalAmount)}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className={isLight ? 'text-slate-500' : 'text-[#D5DBE1]'}>Security Deposit:</span>
+                  <span className={isLight ? 'text-slate-500' : 'text-neutral-400'}>Security Deposit:</span>
                   <span
                     className={`font-medium tabular-nums ${
-                      isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                      isLight ? 'text-slate-900' : 'text-white'
                     }`}
                   >
                     {formatINR(completedBooking.securityDeposit)} (Refundable on return)
@@ -827,7 +819,7 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                   className={`px-5 py-2.5 rounded-full text-xs font-bold transition-colors cursor-pointer ${
                     isLight
                       ? 'bg-black text-white hover:bg-slate-800'
-                      : 'bg-[#F6E7D7] text-[#0B0F14] hover:bg-white'
+                      : 'bg-white text-black hover:bg-neutral-200'
                   }`}
                 >
                   Go to Customer Dashboard
@@ -838,7 +830,7 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                   className={`px-4 py-2.5 rounded-full border text-xs font-semibold transition-colors cursor-pointer ${
                     isLight
                       ? 'border-stone-200 text-slate-700 hover:text-black bg-white hover:bg-slate-50'
-                      : 'border-[#36424D] text-[#D5DBE1] hover:text-[#FAF8F3]'
+                      : 'border-neutral-800 text-neutral-300 hover:text-white'
                   }`}
                 >
                   Done

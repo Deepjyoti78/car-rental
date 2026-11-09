@@ -142,22 +142,22 @@ export const AuthModal: React.FC = () => {
     >
       {/* Modal Card with subtle ring and deep luxury shadow */}
       <div
-        className={`relative w-full max-w-4xl border rounded-2xl sm:rounded-3xl shadow-[0_25px_80px_rgba(0,0,0,0.5)] overflow-hidden grid grid-cols-1 md:grid-cols-12 max-h-[92vh] transition-colors duration-200 animate-in fade-in zoom-in-95 duration-200 ${
+        className={`relative w-full max-w-4xl border rounded-2xl sm:rounded-3xl shadow-[0_25px_80px_rgba(0,0,0,0.8)] overflow-hidden grid grid-cols-1 md:grid-cols-12 max-h-[92vh] transition-colors duration-200 animate-in fade-in zoom-in-95 duration-200 ${
           isLight
             ? 'bg-white border-stone-200 text-slate-900 ring-1 ring-black/5'
-            : 'bg-[#161D26] border-white/20 text-[#FAF8F3] ring-1 ring-white/10'
+            : 'bg-[#0D0D0E] border-neutral-800 text-white ring-1 ring-white/10'
         }`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* LEFT COLUMN: User's Uploaded Image with Clear, Vivid Automotive Presentation */}
-        <div className="hidden md:block md:col-span-5 relative bg-[#0B0F14] overflow-hidden">
+        <div className="hidden md:block md:col-span-5 relative bg-black overflow-hidden">
           <img
             src="/auth-modal-bg.jpg"
             alt="DriveLoop Luxury Mobility"
             className="absolute inset-0 w-full h-full object-cover object-center scale-100 transition-transform duration-700 hover:scale-105"
           />
           {/* Subtle natural gradient at bottom only so the car image is vivid and crisp */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F14]/95 via-[#0B0F14]/25 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/25 to-transparent" />
           <div className="absolute inset-0 bg-black/10" />
 
           {/* Left Overlay Content */}
@@ -172,24 +172,24 @@ export const AuthModal: React.FC = () => {
 
             {/* Bottom Value Proposition */}
             <div className="space-y-3 pb-2">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-[11px] text-[#FAF8F3] font-medium">
-                <Sparkles className="w-3.5 h-3.5 text-[#E07A3F]" />
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-[11px] text-white font-medium">
+                <Sparkles className="w-3.5 h-3.5 text-amber-400" />
                 <span>Premium Rental Marketplace</span>
               </div>
               <h3 className="text-2xl font-light text-white leading-snug tracking-tight">
                 Every journey begins with trust and freedom.
               </h3>
-              <div className="pt-2 flex flex-col space-y-1.5 text-xs text-[#D5DBE1]/90">
+              <div className="pt-2 flex flex-col space-y-1.5 text-xs text-neutral-300">
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#2D7DA6]" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
                   <span>Verified local fleet hosts</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#2D7DA6]" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
                   <span>Automated 24h deposit escrow</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#2D7DA6]" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
                   <span>Instant confirmed bookings</span>
                 </div>
               </div>
@@ -200,7 +200,7 @@ export const AuthModal: React.FC = () => {
         {/* RIGHT COLUMN: Elevated UI/UX Content Workspace */}
         <div
           className={`md:col-span-7 p-6 sm:p-9 flex flex-col justify-between overflow-y-auto max-h-[92vh] ${
-            isLight ? 'bg-white text-slate-900' : 'bg-[#161D26] text-[#FAF8F3]'
+            isLight ? 'bg-white text-slate-900' : 'bg-[#0D0D0E] text-white'
           }`}
         >
           {/* Header & Close Button */}
@@ -209,14 +209,14 @@ export const AuthModal: React.FC = () => {
               <div>
                 <h2
                   className={`text-2xl sm:text-[1.65rem] font-bold tracking-tight ${
-                    isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
+                    isLight ? 'text-slate-900' : 'text-white'
                   }`}
                 >
                   {tab === 'LOGIN' ? 'Welcome to DriveLoop' : 'Create an Account'}
                 </h2>
                 <p
                   className={`text-xs mt-1 font-normal ${
-                    isLight ? 'text-slate-500' : 'text-[#D5DBE1]'
+                    isLight ? 'text-slate-500' : 'text-neutral-400'
                   }`}
                 >
                   {tab === 'LOGIN'
@@ -243,7 +243,7 @@ export const AuthModal: React.FC = () => {
             {/* Segmented Pill Tab Selector */}
             <div
               className={`mt-5 inline-flex p-1 rounded-full border ${
-                isLight ? 'bg-slate-100 border-slate-200' : 'bg-[#0B0F14]/70 border-white/10'
+                isLight ? 'bg-slate-100 border-slate-200' : 'bg-black border-neutral-800'
               }`}
             >
               <button
@@ -256,10 +256,10 @@ export const AuthModal: React.FC = () => {
                   tab === 'LOGIN'
                     ? isLight
                       ? 'bg-black text-white shadow-xs font-semibold'
-                      : 'bg-[#F6E7D7] text-[#0B0F14] shadow-sm font-semibold'
+                      : 'bg-white text-black shadow-sm font-bold'
                     : isLight
                     ? 'text-slate-600 hover:text-black font-medium'
-                    : 'text-[#D5DBE1] hover:text-white font-medium'
+                    : 'text-neutral-400 hover:text-white font-medium'
                 }`}
               >
                 Sign In
@@ -274,10 +274,10 @@ export const AuthModal: React.FC = () => {
                   tab === 'REGISTER'
                     ? isLight
                       ? 'bg-black text-white shadow-xs font-semibold'
-                      : 'bg-[#F6E7D7] text-[#0B0F14] shadow-sm font-semibold'
+                      : 'bg-white text-black shadow-sm font-bold'
                     : isLight
                     ? 'text-slate-600 hover:text-black font-medium'
-                    : 'text-[#D5DBE1] hover:text-white font-medium'
+                    : 'text-neutral-400 hover:text-white font-medium'
                 }`}
               >
                 Create Account
@@ -286,7 +286,7 @@ export const AuthModal: React.FC = () => {
 
             {/* Error Message */}
             {error && (
-              <div className="mt-4 p-3 rounded-xl bg-[#E07A3F]/10 border border-[#E07A3F]/30 text-xs text-[#E07A3F] flex items-center space-x-2 animate-in fade-in">
+              <div className="mt-4 p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs text-amber-400 flex items-center space-x-2 animate-in fade-in">
                 <AlertCircle className="w-4 h-4 shrink-0" />
                 <span>{error}</span>
               </div>
@@ -298,15 +298,15 @@ export const AuthModal: React.FC = () => {
                 {/* Elevated Quick Demo Autofill Bar */}
                 <div
                   className={`p-2.5 sm:p-3 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-2 ${
-                    isLight ? 'bg-slate-50 border-slate-200/80' : 'bg-[#0B0F14]/60 border-white/10'
+                    isLight ? 'bg-slate-50 border-slate-200/80' : 'bg-black border-neutral-800'
                   }`}
                 >
                   <span
                     className={`text-[11px] font-medium flex items-center gap-1.5 ${
-                      isLight ? 'text-slate-600' : 'text-[#AAB4BE]'
+                      isLight ? 'text-slate-600' : 'text-neutral-400'
                     }`}
                   >
-                    <Zap className="w-3.5 h-3.5 text-[#E07A3F]" />
+                    <Zap className="w-3.5 h-3.5 text-amber-400" />
                     <span>Quick Demo:</span>
                   </span>
                   <div className="flex items-center gap-1.5">
@@ -316,7 +316,7 @@ export const AuthModal: React.FC = () => {
                       className={`px-2.5 py-1 rounded-lg border text-[10px] font-medium transition-all cursor-pointer active:scale-95 ${
                         isLight
                           ? 'bg-white border-slate-200 text-slate-800 hover:bg-slate-100 shadow-xs'
-                          : 'bg-white/5 hover:bg-white/10 border-white/10 hover:border-[#2D7DA6] text-white'
+                          : 'bg-white/5 hover:bg-white/10 border-white/10 hover:border-neutral-700 text-white'
                       }`}
                     >
                       Admin
@@ -327,7 +327,7 @@ export const AuthModal: React.FC = () => {
                       className={`px-2.5 py-1 rounded-lg border text-[10px] font-medium transition-all cursor-pointer active:scale-95 ${
                         isLight
                           ? 'bg-white border-slate-200 text-[#E07A3F] hover:bg-slate-100 shadow-xs'
-                          : 'bg-white/5 hover:bg-white/10 border-white/10 hover:border-[#E07A3F] text-[#E07A3F]'
+                          : 'bg-white/5 hover:bg-white/10 border-white/10 hover:border-amber-400 text-amber-400'
                       }`}
                     >
                       Vendor
@@ -337,8 +337,8 @@ export const AuthModal: React.FC = () => {
                       onClick={() => fillDemoAccount('aarav@example.com', 'Customer@12345')}
                       className={`px-2.5 py-1 rounded-lg border text-[10px] font-medium transition-all cursor-pointer active:scale-95 ${
                         isLight
-                          ? 'bg-white border-slate-200 text-[#2D7DA6] hover:bg-slate-100 shadow-xs'
-                          : 'bg-white/5 hover:bg-white/10 border-white/10 hover:border-[#2D7DA6] text-[#2D7DA6]'
+                          ? 'bg-white border-slate-200 text-slate-800 hover:bg-slate-100 shadow-xs'
+                          : 'bg-white/5 hover:bg-white/10 border-white/10 hover:border-neutral-700 text-white'
                       }`}
                     >
                       Customer
@@ -350,7 +350,7 @@ export const AuthModal: React.FC = () => {
                   <div className="space-y-1.5">
                     <label
                       className={`block text-xs font-medium ${
-                        isLight ? 'text-slate-800' : 'text-[#FAF8F3]'
+                        isLight ? 'text-slate-800' : 'text-white'
                       }`}
                     >
                       Email Address
@@ -359,7 +359,7 @@ export const AuthModal: React.FC = () => {
                       className={`relative flex items-center rounded-xl border transition-all ${
                         isLight
                           ? 'bg-slate-50 border-slate-200 focus-within:border-black focus-within:ring-1 focus-within:ring-black'
-                          : 'bg-[#0B0F14]/70 border-white/15 focus-within:border-[#2D7DA6] focus-within:ring-1 focus-within:ring-[#2D7DA6]'
+                          : 'bg-black border-neutral-800 focus-within:border-white focus-within:ring-1 focus-within:ring-white/20'
                       }`}
                     >
                       <Mail
@@ -386,7 +386,7 @@ export const AuthModal: React.FC = () => {
                     <div className="flex items-center justify-between">
                       <label
                         className={`text-xs font-medium ${
-                          isLight ? 'text-slate-800' : 'text-[#FAF8F3]'
+                          isLight ? 'text-slate-800' : 'text-white'
                         }`}
                       >
                         Password
@@ -395,7 +395,7 @@ export const AuthModal: React.FC = () => {
                         type="button"
                         onClick={() => fillDemoAccount('aarav@example.com', 'Customer@12345')}
                         className={`text-[11px] transition-colors ${
-                          isLight ? 'text-slate-500 hover:text-black' : 'text-[#2D7DA6] hover:text-[#F6E7D7]'
+                          isLight ? 'text-slate-500 hover:text-black' : 'text-amber-400 hover:text-white'
                         }`}
                       >
                         Demo auto-fill
@@ -405,7 +405,7 @@ export const AuthModal: React.FC = () => {
                       className={`relative flex items-center rounded-xl border transition-all ${
                         isLight
                           ? 'bg-slate-50 border-slate-200 focus-within:border-black focus-within:ring-1 focus-within:ring-black'
-                          : 'bg-[#0B0F14]/70 border-white/15 focus-within:border-[#2D7DA6] focus-within:ring-1 focus-within:ring-[#2D7DA6]'
+                          : 'bg-black border-neutral-800 focus-within:border-white focus-within:ring-1 focus-within:ring-white/20'
                       }`}
                     >
                       <Lock
@@ -445,11 +445,11 @@ export const AuthModal: React.FC = () => {
                     className={`w-full mt-3 py-3 rounded-full text-xs font-semibold tracking-wide transition-all flex items-center justify-center space-x-2 shadow-md hover:shadow-lg active:scale-[0.99] disabled:opacity-50 cursor-pointer ${
                       isLight
                         ? 'bg-black hover:bg-slate-800 text-white'
-                        : 'bg-[#F6E7D7] hover:bg-white text-[#0B0F14]'
+                        : 'bg-white hover:bg-neutral-200 text-black font-bold'
                     }`}
                   >
                     <span>{isLoading ? 'Signing In...' : 'Sign In'}</span>
-                    <ArrowRight className={`w-4 h-4 ${isLight ? 'text-white' : 'text-[#0B0F14]'}`} />
+                    <ArrowRight className={`w-4 h-4 ${isLight ? 'text-white' : 'text-black'}`} />
                   </button>
                 </form>
               </div>
@@ -467,10 +467,10 @@ export const AuthModal: React.FC = () => {
                       regRole === 'CUSTOMER'
                         ? isLight
                           ? 'border-black bg-black text-white shadow-xs'
-                          : 'border-[#F6E7D7] bg-[#0B0F14] text-[#FAF8F3] shadow-sm'
+                          : 'border-white bg-black text-white shadow-sm'
                         : isLight
                         ? 'border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300'
-                        : 'border-white/10 bg-[#0B0F14]/50 text-[#AAB4BE] hover:border-white/20'
+                        : 'border-neutral-800 bg-black/50 text-neutral-400 hover:border-neutral-700'
                     }`}
                   >
                     <User className="w-3.5 h-3.5 opacity-80" />
@@ -483,10 +483,10 @@ export const AuthModal: React.FC = () => {
                       regRole === 'VENDOR'
                         ? isLight
                           ? 'border-black bg-black text-white shadow-xs'
-                          : 'border-[#E07A3F] bg-[#0B0F14] text-[#FAF8F3] shadow-sm'
+                          : 'border-amber-400 bg-black text-white shadow-sm'
                         : isLight
                         ? 'border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300'
-                        : 'border-white/10 bg-[#0B0F14]/50 text-[#AAB4BE] hover:border-white/20'
+                        : 'border-neutral-800 bg-black/50 text-neutral-400 hover:border-neutral-700'
                     }`}
                   >
                     <Building2 className="w-3.5 h-3.5 opacity-80" />
@@ -496,7 +496,7 @@ export const AuthModal: React.FC = () => {
 
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <label className={`block text-[11px] font-medium mb-1 ${isLight ? 'text-slate-800' : 'text-[#FAF8F3]'}`}>
+                    <label className={`block text-[11px] font-medium mb-1 ${isLight ? 'text-slate-800' : 'text-white'}`}>
                       First Name
                     </label>
                     <input
@@ -508,12 +508,12 @@ export const AuthModal: React.FC = () => {
                       className={`w-full px-3 py-2 rounded-xl border text-xs focus:outline-none ${
                         isLight
                           ? 'border-slate-200 bg-slate-50 text-slate-900 focus:border-black'
-                          : 'border-white/15 bg-[#0B0F14]/70 text-[#FAF8F3] focus:border-[#2D7DA6]'
+                          : 'border-neutral-800 bg-black text-white focus:border-white'
                       }`}
                     />
                   </div>
                   <div>
-                    <label className={`block text-[11px] font-medium mb-1 ${isLight ? 'text-slate-800' : 'text-[#FAF8F3]'}`}>
+                    <label className={`block text-[11px] font-medium mb-1 ${isLight ? 'text-slate-800' : 'text-white'}`}>
                       Last Name
                     </label>
                     <input
@@ -525,7 +525,7 @@ export const AuthModal: React.FC = () => {
                       className={`w-full px-3 py-2 rounded-xl border text-xs focus:outline-none ${
                         isLight
                           ? 'border-slate-200 bg-slate-50 text-slate-900 focus:border-black'
-                          : 'border-white/15 bg-[#0B0F14]/70 text-[#FAF8F3] focus:border-[#2D7DA6]'
+                          : 'border-neutral-800 bg-black text-white focus:border-white'
                       }`}
                     />
                   </div>
@@ -533,7 +533,7 @@ export const AuthModal: React.FC = () => {
 
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <label className={`block text-[11px] font-medium mb-1 ${isLight ? 'text-slate-800' : 'text-[#FAF8F3]'}`}>
+                    <label className={`block text-[11px] font-medium mb-1 ${isLight ? 'text-slate-800' : 'text-white'}`}>
                       Email
                     </label>
                     <input
@@ -545,12 +545,12 @@ export const AuthModal: React.FC = () => {
                       className={`w-full px-3 py-2 rounded-xl border text-xs focus:outline-none ${
                         isLight
                           ? 'border-slate-200 bg-slate-50 text-slate-900 focus:border-black'
-                          : 'border-white/15 bg-[#0B0F14]/70 text-[#FAF8F3] focus:border-[#2D7DA6]'
+                          : 'border-neutral-800 bg-black text-white focus:border-white'
                       }`}
                     />
                   </div>
                   <div>
-                    <label className={`block text-[11px] font-medium mb-1 ${isLight ? 'text-slate-800' : 'text-[#FAF8F3]'}`}>
+                    <label className={`block text-[11px] font-medium mb-1 ${isLight ? 'text-slate-800' : 'text-white'}`}>
                       Phone Number
                     </label>
                     <input
@@ -562,16 +562,16 @@ export const AuthModal: React.FC = () => {
                       className={`w-full px-3 py-2 rounded-xl border text-xs focus:outline-none ${
                         isLight
                           ? 'border-slate-200 bg-slate-50 text-slate-900 focus:border-black'
-                          : 'border-white/15 bg-[#0B0F14]/70 text-[#FAF8F3] focus:border-[#2D7DA6]'
+                          : 'border-neutral-800 bg-black text-white focus:border-white'
                       }`}
                     />
                   </div>
                 </div>
 
                 {regRole === 'VENDOR' && (
-                  <div className={`grid grid-cols-2 gap-2 pt-1 border-t ${isLight ? 'border-stone-100' : 'border-white/10'}`}>
+                  <div className={`grid grid-cols-2 gap-2 pt-1 border-t ${isLight ? 'border-stone-100' : 'border-neutral-800'}`}>
                     <div>
-                      <label className={`block text-[11px] font-medium mb-1 ${isLight ? 'text-slate-800' : 'text-[#FAF8F3]'}`}>
+                      <label className={`block text-[11px] font-medium mb-1 ${isLight ? 'text-slate-800' : 'text-white'}`}>
                         Business Name
                       </label>
                       <input
@@ -583,12 +583,12 @@ export const AuthModal: React.FC = () => {
                         className={`w-full px-3 py-2 rounded-xl border text-xs focus:outline-none ${
                           isLight
                             ? 'border-slate-200 bg-slate-50 text-slate-900 focus:border-black'
-                            : 'border-white/15 bg-[#0B0F14]/70 text-[#FAF8F3] focus:border-[#2D7DA6]'
+                            : 'border-neutral-800 bg-black text-white focus:border-white'
                         }`}
                       />
                     </div>
                     <div>
-                      <label className={`block text-[11px] font-medium mb-1 ${isLight ? 'text-slate-800' : 'text-[#FAF8F3]'}`}>
+                      <label className={`block text-[11px] font-medium mb-1 ${isLight ? 'text-slate-800' : 'text-white'}`}>
                         Operating City
                       </label>
                       <input
@@ -600,7 +600,7 @@ export const AuthModal: React.FC = () => {
                         className={`w-full px-3 py-2 rounded-xl border text-xs focus:outline-none ${
                           isLight
                             ? 'border-slate-200 bg-slate-50 text-slate-900 focus:border-black'
-                            : 'border-white/15 bg-[#0B0F14]/70 text-[#FAF8F3] focus:border-[#2D7DA6]'
+                            : 'border-neutral-800 bg-black text-white focus:border-white'
                         }`}
                       />
                     </div>
@@ -608,7 +608,7 @@ export const AuthModal: React.FC = () => {
                 )}
 
                 <div>
-                  <label className={`block text-[11px] font-medium mb-1 ${isLight ? 'text-slate-800' : 'text-[#FAF8F3]'}`}>
+                  <label className={`block text-[11px] font-medium mb-1 ${isLight ? 'text-slate-800' : 'text-white'}`}>
                     Password
                   </label>
                   <input
@@ -620,7 +620,7 @@ export const AuthModal: React.FC = () => {
                     className={`w-full px-3 py-2 rounded-xl border text-xs focus:outline-none ${
                       isLight
                         ? 'border-slate-200 bg-slate-50 text-slate-900 focus:border-black'
-                        : 'border-white/15 bg-[#0B0F14]/70 text-[#FAF8F3] focus:border-[#2D7DA6]'
+                        : 'border-neutral-800 bg-black text-white focus:border-white'
                     }`}
                   />
                 </div>
@@ -631,11 +631,11 @@ export const AuthModal: React.FC = () => {
                   className={`w-full mt-2 py-3 rounded-full text-xs font-semibold tracking-wide transition-all flex items-center justify-center space-x-2 shadow-md hover:shadow-lg disabled:opacity-50 cursor-pointer active:scale-[0.99] ${
                     isLight
                       ? 'bg-black hover:bg-slate-800 text-white'
-                      : 'bg-[#F6E7D7] hover:bg-white text-[#0B0F14]'
+                      : 'bg-white hover:bg-neutral-200 text-black font-bold'
                   }`}
                 >
                   <span>{isLoading ? 'Creating Account...' : 'Complete Registration'}</span>
-                  <ArrowRight className={`w-4 h-4 ${isLight ? 'text-white' : 'text-[#0B0F14]'}`} />
+                  <ArrowRight className={`w-4 h-4 ${isLight ? 'text-white' : 'text-black'}`} />
                 </button>
               </form>
             )}
@@ -644,7 +644,7 @@ export const AuthModal: React.FC = () => {
           {/* Footer toggle note */}
           <div
             className={`pt-4 mt-2 border-t text-center text-xs ${
-              isLight ? 'border-stone-100 text-slate-600' : 'border-white/10 text-[#D5DBE1]'
+              isLight ? 'border-stone-100 text-slate-600' : 'border-neutral-800 text-neutral-400'
             }`}
           >
             {tab === 'LOGIN' ? (
@@ -657,7 +657,7 @@ export const AuthModal: React.FC = () => {
                     setError(null);
                   }}
                   className={`font-semibold hover:underline cursor-pointer ${
-                    isLight ? 'text-black' : 'text-[#2D7DA6] hover:text-[#F6E7D7]'
+                    isLight ? 'text-black' : 'text-amber-400 hover:text-white'
                   }`}
                 >
                   Create one now
@@ -673,7 +673,7 @@ export const AuthModal: React.FC = () => {
                     setError(null);
                   }}
                   className={`font-semibold hover:underline cursor-pointer ${
-                    isLight ? 'text-black' : 'text-[#2D7DA6] hover:text-[#F6E7D7]'
+                    isLight ? 'text-black' : 'text-amber-400 hover:text-white'
                   }`}
                 >
                   Sign in here

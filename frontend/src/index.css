@@ -3,29 +3,29 @@
 @tailwind utilities;
 
 :root {
-  --color-background: #0B0F14;
-  --color-surface: #1A222B;
-  --color-surface-elevated: #222C38;
-  --color-border: #36424D;
-  --color-border-subtle: rgba(107, 119, 131, 0.25);
+  --color-background: #000000;
+  --color-surface: #0d0d0e;
+  --color-surface-elevated: #18181b;
+  --color-border: #262626;
+  --color-border-subtle: rgba(255, 255, 255, 0.08);
   
-  --color-primary-cream: #F6E7D7;
-  --color-primary-cream-hover: #EAD5C1;
-  --color-primary-text: #0B0F14;
+  --color-primary-cream: #FFFFFF;
+  --color-primary-cream-hover: #E5E5E5;
+  --color-primary-text: #000000;
   
-  --color-deep-teal: #0E4A6B;
-  --color-ocean-blue: #2D7DA6;
-  --color-sunset-orange: #E07A3F;
+  --color-deep-teal: #18181b;
+  --color-ocean-blue: #FFFFFF;
+  --color-sunset-orange: #F59E0B;
   
-  --color-text-primary: #FAF8F3;
-  --color-text-secondary: #D5DBE1;
-  --color-text-muted: #6B7783;
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #A1A1AA;
+  --color-text-muted: #71717A;
 }
 
 @layer base {
   body {
-    background-color: #0B0F14;
-    color: #FAF8F3;
+    background-color: #000000;
+    color: #FFFFFF;
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -50,16 +50,16 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #0B0F14;
+  background: #000000;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #36424D;
+  background: #262626;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #6B7783;
+  background: #3f3f46;
 }
 
 html.light body {

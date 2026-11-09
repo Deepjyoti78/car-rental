@@ -98,7 +98,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 
   return (
     <div
-      className={`bg-[#1A222B]/85 backdrop-blur-xl rounded-2xl md:rounded-full border border-[#36424D] shadow-2xl transition-all ${
+      className={`bg-[#0D0D0E]/95 backdrop-blur-xl rounded-2xl md:rounded-full border border-neutral-800 shadow-2xl transition-all ${
         compact ? 'p-2.5' : 'p-3 sm:p-4'
       }`}
     >
@@ -108,12 +108,12 @@ export const SearchBar: React.FC<SearchBarProps> = ({
           <div className="md:col-span-4 relative">
             <div
               onClick={() => setShowCityDropdown(!showCityDropdown)}
-              className="px-4 py-2.5 rounded-xl md:rounded-full bg-[#0B0F14]/70 border border-[#36424D] hover:border-[#2D7DA6] transition-colors cursor-pointer group flex items-center justify-between"
+              className="px-4 py-2.5 rounded-xl md:rounded-full bg-black/80 border border-neutral-800 hover:border-neutral-700 transition-colors cursor-pointer group flex items-center justify-between"
             >
               <div className="flex items-center space-x-2.5 w-full">
-                <MapPin className="w-4 h-4 text-[#2D7DA6] shrink-0" />
+                <MapPin className="w-4 h-4 text-amber-400 shrink-0" />
                 <div className="w-full">
-                  <span className="text-[9px] font-mono uppercase tracking-wider text-[#AAB4BE] block leading-none mb-1">
+                  <span className="text-[9px] font-mono uppercase tracking-wider text-neutral-400 block leading-none mb-1">
                     Pickup Hub
                   </span>
                   <input
@@ -125,17 +125,17 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                     }}
                     onClick={(e) => e.stopPropagation()}
                     placeholder="Delhi, Gurgaon, Noida, Jaipur..."
-                    className="w-full bg-transparent text-xs font-semibold text-[#FAF8F3] placeholder-[#6B7783] focus:outline-none"
+                    className="w-full bg-transparent text-xs font-semibold text-white placeholder-neutral-500 focus:outline-none"
                   />
                 </div>
               </div>
-              <ChevronDown className="w-3.5 h-3.5 text-[#6B7783] group-hover:text-[#FAF8F3] transition-colors shrink-0 ml-1" />
+              <ChevronDown className="w-3.5 h-3.5 text-neutral-500 group-hover:text-white transition-colors shrink-0 ml-1" />
             </div>
 
             {/* Hub Dropdown */}
             {showCityDropdown && (
-              <div className="absolute top-full left-0 right-0 mt-2 bg-[#1A222B] border border-[#36424D] rounded-xl shadow-card z-50 py-1 divide-y divide-[#36424D]">
-                <div className="px-3.5 py-1.5 text-[9px] font-mono uppercase tracking-wider text-[#AAB4BE] bg-[#0B0F14]/60">
+              <div className="absolute top-full left-0 right-0 mt-2 bg-[#0D0D0E] border border-neutral-800 rounded-xl shadow-2xl z-50 py-1 divide-y divide-neutral-800">
+                <div className="px-3.5 py-1.5 text-[9px] font-mono uppercase tracking-wider text-neutral-400 bg-black/60">
                   Select Hub Location
                 </div>
                 {popularHubs.map((h) => (
@@ -146,14 +146,14 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                       setCity(h.name);
                       setShowCityDropdown(false);
                     }}
-                    className="w-full px-3.5 py-2 text-left hover:bg-[#0B0F14]/50 transition-colors flex items-center justify-between text-xs"
+                    className="w-full px-3.5 py-2 text-left hover:bg-neutral-900 transition-colors flex items-center justify-between text-xs"
                   >
                     <div>
-                      <span className="font-semibold text-[#FAF8F3]">{h.name}</span>
-                      <span className="text-[#AAB4BE] text-[10px] block">{h.region}</span>
+                      <span className="font-semibold text-white">{h.name}</span>
+                      <span className="text-neutral-400 text-[10px] block">{h.region}</span>
                     </div>
                     {city.toLowerCase() === h.name.toLowerCase() && (
-                      <Check className="w-3.5 h-3.5 text-[#2D7DA6]" />
+                      <Check className="w-3.5 h-3.5 text-amber-400" />
                     )}
                   </button>
                 ))}
@@ -162,9 +162,9 @@ export const SearchBar: React.FC<SearchBarProps> = ({
           </div>
 
           {/* 2. Pickup Date & Time */}
-          <div className="md:col-span-3 px-4 py-2 rounded-xl md:rounded-full bg-[#0B0F14]/70 border border-[#36424D] hover:border-[#2D7DA6] transition-colors">
-            <span className="block text-[9px] font-mono uppercase tracking-wider text-[#AAB4BE] mb-0.5 flex items-center gap-1.5">
-              <Calendar className="w-3 h-3 text-[#2D7DA6]" />
+          <div className="md:col-span-3 px-4 py-2 rounded-xl md:rounded-full bg-black/80 border border-neutral-800 hover:border-neutral-700 transition-colors">
+            <span className="block text-[9px] font-mono uppercase tracking-wider text-neutral-400 mb-0.5 flex items-center gap-1.5">
+              <Calendar className="w-3 h-3 text-amber-400" />
               Pickup Date & Time
             </span>
             <div className="flex items-center space-x-1">
@@ -173,12 +173,12 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                 value={pickupDate}
                 min={new Date().toISOString().slice(0, 10)}
                 onChange={(e) => setPickupDate(e.target.value)}
-                className="w-full bg-transparent text-xs font-semibold text-[#FAF8F3] focus:outline-none tabular-nums"
+                className="w-full bg-transparent text-xs font-semibold text-white focus:outline-none tabular-nums"
               />
               <select
                 value={pickupTime}
                 onChange={(e) => setPickupTime(e.target.value)}
-                className="bg-[#1A222B] text-[10px] font-semibold text-[#D5DBE1] rounded border border-[#36424D] px-1 py-0.5 focus:outline-none"
+                className="bg-[#0D0D0E] text-[10px] font-semibold text-neutral-300 rounded border border-neutral-800 px-1 py-0.5 focus:outline-none"
               >
                 <option value="08:00">08:00 AM</option>
                 <option value="10:00">10:00 AM</option>
@@ -191,13 +191,13 @@ export const SearchBar: React.FC<SearchBarProps> = ({
           </div>
 
           {/* 3. Return Date & Time */}
-          <div className="md:col-span-3 px-4 py-2 rounded-xl md:rounded-full bg-[#0B0F14]/70 border border-[#36424D] hover:border-[#2D7DA6] transition-colors">
+          <div className="md:col-span-3 px-4 py-2 rounded-xl md:rounded-full bg-black/80 border border-neutral-800 hover:border-neutral-700 transition-colors">
             <div className="flex items-center justify-between mb-0.5">
-              <span className="text-[9px] font-mono uppercase tracking-wider text-[#AAB4BE] flex items-center gap-1.5">
-                <Clock className="w-3 h-3 text-[#2D7DA6]" />
+              <span className="text-[9px] font-mono uppercase tracking-wider text-neutral-400 flex items-center gap-1.5">
+                <Clock className="w-3 h-3 text-amber-400" />
                 Return Date & Time
               </span>
-              <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-[#1A222B] text-[#D5DBE1] border border-[#36424D]">
+              <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-neutral-900 text-neutral-300 border border-neutral-800">
                 {rentalDays} {rentalDays === 1 ? 'Day' : 'Days'}
               </span>
             </div>
@@ -207,12 +207,12 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                 value={returnDate}
                 min={pickupDate}
                 onChange={(e) => setReturnDate(e.target.value)}
-                className="w-full bg-transparent text-xs font-semibold text-[#FAF8F3] focus:outline-none tabular-nums"
+                className="w-full bg-transparent text-xs font-semibold text-white focus:outline-none tabular-nums"
               />
               <select
                 value={returnTime}
                 onChange={(e) => setReturnTime(e.target.value)}
-                className="bg-[#1A222B] text-[10px] font-semibold text-[#D5DBE1] rounded border border-[#36424D] px-1 py-0.5 focus:outline-none"
+                className="bg-[#0D0D0E] text-[10px] font-semibold text-neutral-300 rounded border border-neutral-800 px-1 py-0.5 focus:outline-none"
               >
                 <option value="08:00">08:00 AM</option>
                 <option value="10:00">10:00 AM</option>
@@ -224,13 +224,13 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             </div>
           </div>
 
-          {/* 4. Search Button (Warm Cream with dark icon/text matching Image 1) */}
+          {/* 4. Search Button */}
           <div className="md:col-span-2 flex items-center justify-center">
             <button
               type="submit"
-              className="w-full md:w-auto md:min-w-[120px] h-[46px] rounded-xl md:rounded-full bg-[#F6E7D7] hover:bg-[#EAD5C1] text-[#0B0F14] text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-card transition-all active:scale-[0.98] hover:scale-[1.02]"
+              className="w-full md:w-auto md:min-w-[120px] h-[46px] rounded-xl md:rounded-full bg-white hover:bg-neutral-200 text-black text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-card transition-all active:scale-[0.98] hover:scale-[1.02]"
             >
-              <Search className="w-4 h-4 text-[#0B0F14]" strokeWidth={2.5} />
+              <Search className="w-4 h-4 text-black" strokeWidth={2.5} />
               <span>Search</span>
             </button>
           </div>
@@ -239,32 +239,32 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         {/* Quick presets footer */}
         {!compact && (
           <div className="flex flex-wrap items-center justify-between gap-2 px-3 pt-1 text-xs">
-            <div className="flex items-center gap-1.5 text-[#AAB4BE]">
-              <span className="font-mono text-[9px] uppercase tracking-wider text-[#6B7783]">Presets:</span>
+            <div className="flex items-center gap-1.5 text-neutral-400">
+              <span className="font-mono text-[9px] uppercase tracking-wider text-neutral-500">Presets:</span>
               <button
                 type="button"
                 onClick={() => setPreset('weekend')}
-                className="px-2.5 py-0.5 rounded-full text-[10px] bg-[#0B0F14]/60 border border-[#36424D] hover:border-[#2D7DA6] text-[#D5DBE1] hover:text-[#FAF8F3] transition-colors"
+                className="px-2.5 py-0.5 rounded-full text-[10px] bg-black/80 border border-neutral-800 hover:border-neutral-700 text-neutral-300 hover:text-white transition-colors"
               >
                 This Weekend
               </button>
               <button
                 type="button"
                 onClick={() => setPreset('3days')}
-                className="px-2.5 py-0.5 rounded-full text-[10px] bg-[#0B0F14]/60 border border-[#36424D] hover:border-[#2D7DA6] text-[#D5DBE1] hover:text-[#FAF8F3] transition-colors"
+                className="px-2.5 py-0.5 rounded-full text-[10px] bg-black/80 border border-neutral-800 hover:border-neutral-700 text-neutral-300 hover:text-white transition-colors"
               >
                 3-Day Trip
               </button>
               <button
                 type="button"
                 onClick={() => setPreset('week')}
-                className="px-2.5 py-0.5 rounded-full text-[10px] bg-[#0B0F14]/60 border border-[#36424D] hover:border-[#2D7DA6] text-[#D5DBE1] hover:text-[#FAF8F3] transition-colors"
+                className="px-2.5 py-0.5 rounded-full text-[10px] bg-black/80 border border-neutral-800 hover:border-neutral-700 text-neutral-300 hover:text-white transition-colors"
               >
                 Full Week
               </button>
             </div>
 
-            <div className="hidden sm:flex items-center gap-2 text-[10px] font-mono text-[#6B7783]">
+            <div className="hidden sm:flex items-center gap-2 text-[10px] font-mono text-neutral-500">
               <span>Direct Fleet Hosts</span>
               <span>•</span>
               <span>Zero Surge Multipliers</span>

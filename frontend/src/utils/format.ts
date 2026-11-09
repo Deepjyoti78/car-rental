@@ -39,30 +39,25 @@ export function getStatusBadgeClass(status: string): string {
     case 'COMPLETED':
     case 'PROCESSED':
     case 'RESOLVED':
-      // Ocean Blue & Deep Teal
-      return `${base} bg-[#0E4A6B]/40 text-[#FAF8F3] border-[#2D7DA6]/50 shadow-[0_0_10px_rgba(45,125,166,0.2)]`;
+      return `${base} bg-emerald-950/40 text-emerald-300 border-emerald-800/60`;
     case 'ACTIVE':
     case 'IN_PROGRESS':
     case 'PROCESSING':
-      // Ocean Blue
-      return `${base} bg-[#2D7DA6]/30 text-[#D5DBE1] border-[#2D7DA6]`;
+      return `${base} bg-amber-950/40 text-amber-300 border-amber-800/60`;
     case 'PENDING':
     case 'PENDING_PAYMENT':
     case 'AWAITING_APPROVAL':
     case 'OPEN':
-      // Sunset Orange
-      return `${base} bg-[#E07A3F]/20 text-[#E07A3F] border-[#E07A3F]/50`;
+      return `${base} bg-amber-950/40 text-amber-300 border-amber-800/60`;
     case 'CANCELLED':
     case 'REJECTED':
     case 'FAILED':
     case 'SUSPENDED':
-      // Rose / Alert with Sunset Orange accent
       return `${base} bg-rose-950/40 text-rose-300 border-rose-800/60`;
     case 'REFUND_PENDING':
     case 'REFUNDED':
-      // Deep Teal / Slate
-      return `${base} bg-[#1A222B] text-[#D5DBE1] border-[#36424D]`;
+      return `${base} bg-neutral-900 text-neutral-300 border-neutral-800`;
     default:
-      return `${base} bg-[#1A222B] text-[#6B7783] border-[#36424D]`;
+      return `${base} bg-neutral-900 text-neutral-400 border-neutral-800`;
   }
 }
