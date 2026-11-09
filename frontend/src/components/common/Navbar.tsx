@@ -68,9 +68,10 @@ export const Navbar: React.FC = () => {
   ];
 
   const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
+  const isAdminDashboard = location.pathname.startsWith('/admin');
 
-  // Completely hide Navbar on auth pages (/login, /register) or when Auth Modal popup is open
-  if (isAuthPage || isAuthModalOpen) {
+  // Completely hide Navbar on auth pages (/login, /register), admin console (/admin), or when Auth Modal popup is open
+  if (isAuthPage || isAdminDashboard || isAuthModalOpen) {
     return null;
   }
 

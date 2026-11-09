@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuthStore } from '../../store/authStore';
 import { useThemeStore } from '../../store/themeStore';
 import { adminService } from '../../services/adminService';
@@ -354,16 +355,20 @@ export const AdminDashboardPage: React.FC = () => {
         >
           <div className="space-y-6">
             {/* Brand Logo & Name */}
-            <div className="flex items-center space-x-3 px-1">
+            <Link
+              to="/"
+              title="Return to DriveLoop Public Marketplace"
+              className="flex items-center space-x-3 px-1 group cursor-pointer transition-transform hover:scale-[1.02]"
+            >
               <div
-                className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold shadow-xs ${
-                  isLight ? 'bg-black text-white' : 'bg-white text-black'
+                className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold shadow-xs transition-colors ${
+                  isLight ? 'bg-black text-white group-hover:bg-slate-800' : 'bg-white text-black group-hover:bg-neutral-200'
                 }`}
               >
                 <Car className="w-5 h-5" strokeWidth={2.2} />
               </div>
               <div>
-                <h1 className="font-display text-sm font-bold tracking-tight leading-none">
+                <h1 className="font-display text-sm font-bold tracking-tight leading-none group-hover:text-blue-500 transition-colors">
                   DriveLux Rentals
                 </h1>
                 <p
@@ -374,7 +379,7 @@ export const AdminDashboardPage: React.FC = () => {
                   Car Rental Management
                 </p>
               </div>
-            </div>
+            </Link>
 
             {/* Global Search Input */}
             <div className="relative">
