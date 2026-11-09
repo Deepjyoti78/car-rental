@@ -12,8 +12,6 @@ import {
   X,
   ArrowRight,
   AlertCircle,
-  Sparkles,
-  CheckCircle2,
   Eye,
   EyeOff,
   Zap,
@@ -180,29 +178,11 @@ export const AuthModal: React.FC = () => {
               </span>
             </div>
 
-            {/* Bottom Value Proposition */}
-            <div className="space-y-3 pb-2">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-[11px] text-white font-medium">
-                <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                <span>Premium Rental Marketplace</span>
-              </div>
-              <h3 className="text-2xl font-light text-white leading-snug tracking-tight">
+            {/* Bottom Tagline */}
+            <div className="pb-2">
+              <h3 className="text-xl sm:text-2xl font-light text-white leading-snug tracking-tight drop-shadow-md">
                 Every journey begins with trust and freedom.
               </h3>
-              <div className="pt-2 flex flex-col space-y-1.5 text-xs text-neutral-300">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Verified local fleet hosts</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Automated 24h deposit escrow</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Instant confirmed bookings</span>
-                </div>
-              </div>
             </div>
           </div>
         </div>

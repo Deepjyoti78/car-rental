@@ -201,27 +201,23 @@ export const LandingPage: React.FC = () => {
         </div>
 
         {/* Center Hero Content */}
-        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 w-full flex-1 flex flex-col items-center justify-center pt-24 sm:pt-28 text-center">
+        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 w-full flex-1 flex flex-col items-center justify-center pt-16 sm:pt-20 pb-4 text-center -mt-6 sm:-mt-10">
           {/* Frosted Subtle Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white text-xs font-medium mb-4 shadow-sm">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white text-[11px] sm:text-xs font-medium mb-3 shadow-sm">
             <Sparkles className="w-3.5 h-3.5 text-amber-400" />
             <span>Verified Self-Drive Rental Marketplace</span>
           </div>
 
           {/* Headline */}
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display font-bold text-white tracking-tight leading-[1.12] max-w-4xl mx-auto drop-shadow-md">
+          <h1 className="text-2xl sm:text-4xl lg:text-[2.85rem] font-display font-bold text-white tracking-tight leading-[1.16] max-w-3xl mx-auto drop-shadow-md">
             Rediscover the Joy of <br className="hidden sm:inline" />
             the Open Road.
           </h1>
 
-          <p className="mt-3.5 text-xs sm:text-sm lg:text-base text-neutral-200 max-w-xl mx-auto font-normal leading-relaxed drop-shadow-sm">
-            Clean, inspected self-drive cars from verified local fleet operators. Direct delivery to your airport terminal or ready at the hub.
-          </p>
-
           {/* MODERN HUMAN BOOKING WIDGET */}
           <form
             onSubmit={handleBookingSearch}
-            className="mt-8 w-full max-w-3xl rounded-2xl sm:rounded-full bg-black/60 backdrop-blur-xl border border-white/25 shadow-2xl p-2 sm:p-2.5 flex flex-col sm:flex-row items-center gap-2 transition-all hover:border-white/40"
+            className="mt-6 sm:mt-7 w-full max-w-3xl rounded-2xl sm:rounded-full bg-black/60 backdrop-blur-xl border border-white/25 shadow-2xl p-2 sm:p-2.5 flex flex-col sm:flex-row items-center gap-2 transition-all hover:border-white/40"
           >
             {/* Field 1: Hub / City */}
             <div className="w-full sm:flex-1 flex items-center gap-2.5 px-4 py-2 sm:py-1 text-left border-b sm:border-b-0 sm:border-r border-white/15">
