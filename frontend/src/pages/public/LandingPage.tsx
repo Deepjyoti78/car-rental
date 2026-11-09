@@ -189,7 +189,7 @@ export const LandingPage: React.FC = () => {
       }`}
     >
       {/* 1. CINEMATIC HERO SECTION */}
-      <section className="relative min-h-[640px] sm:min-h-[720px] lg:h-[90vh] max-h-[1080px] flex flex-col justify-between overflow-hidden">
+      <section className="relative min-h-[640px] sm:min-h-screen lg:h-screen flex flex-col justify-between overflow-hidden">
         {/* Full-bleed Photography Background */}
         <div className="absolute inset-0 z-0">
           <img
@@ -201,15 +201,15 @@ export const LandingPage: React.FC = () => {
         </div>
 
         {/* Center Hero Content */}
-        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 w-full flex-1 flex flex-col items-center justify-center pt-10 sm:pt-12 pb-4 text-center -mt-20 sm:-mt-32 lg:-mt-44">
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 w-full flex-1 flex flex-col items-center justify-center pt-8 sm:pt-10 pb-4 text-center -mt-24 sm:-mt-40 lg:-mt-56">
           {/* Frosted Subtle Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white text-[11px] sm:text-xs font-medium mb-3 shadow-sm">
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-black/45 backdrop-blur-md border border-white/20 text-white text-[10px] sm:text-[11px] font-medium mb-2.5 shadow-sm">
+            <Sparkles className="w-3 h-3 text-amber-400" />
             <span>Verified Self-Drive Rental Marketplace</span>
           </div>
 
           {/* Headline */}
-          <h1 className="text-2xl sm:text-4xl lg:text-[2.85rem] font-display font-bold text-white tracking-tight leading-[1.16] max-w-3xl mx-auto drop-shadow-md">
+          <h1 className="text-xl sm:text-3xl lg:text-[2.25rem] font-display font-bold text-white tracking-tight leading-[1.18] max-w-2xl mx-auto drop-shadow-md">
             Rediscover the Joy of <br className="hidden sm:inline" />
             the Open Road.
           </h1>
@@ -217,19 +217,19 @@ export const LandingPage: React.FC = () => {
           {/* MODERN HUMAN BOOKING WIDGET */}
           <form
             onSubmit={handleBookingSearch}
-            className="mt-6 sm:mt-7 w-full max-w-3xl rounded-2xl sm:rounded-full bg-black/60 backdrop-blur-xl border border-white/25 shadow-2xl p-2 sm:p-2.5 flex flex-col sm:flex-row items-center gap-2 transition-all hover:border-white/40"
+            className="mt-4 sm:mt-5 w-full max-w-xl sm:max-w-2xl rounded-2xl sm:rounded-full bg-black/60 backdrop-blur-xl border border-white/20 shadow-xl p-1.5 sm:p-2 sm:pl-3 flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2 transition-all hover:border-white/35"
           >
             {/* Field 1: Hub / City */}
-            <div className="w-full sm:flex-1 flex items-center gap-2.5 px-4 py-2 sm:py-1 text-left border-b sm:border-b-0 sm:border-r border-white/15">
-              <MapPin className="w-4 h-4 text-amber-400 shrink-0" />
+            <div className="w-full sm:flex-1 flex items-center gap-2 px-3 py-1.5 sm:py-0.5 text-left border-b sm:border-b-0 sm:border-r border-white/15">
+              <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
               <div className="flex-1 min-w-0">
-                <label className="block text-[10px] font-mono uppercase tracking-wider text-neutral-400">
+                <label className="block text-[9px] font-mono uppercase tracking-wider text-neutral-400 leading-tight">
                   Pick-up Hub
                 </label>
                 <select
                   value={selectedCity}
                   onChange={(e) => setSelectedCity(e.target.value)}
-                  className="w-full bg-transparent text-xs font-semibold text-white focus:outline-none cursor-pointer"
+                  className="w-full bg-transparent text-[11px] font-semibold text-white focus:outline-none cursor-pointer py-0.5"
                 >
                   <option value="" className="bg-neutral-900 text-white">All Regional Hubs</option>
                   <option value="Delhi" className="bg-neutral-900 text-white">Delhi NCR (Airport T3)</option>
@@ -242,16 +242,16 @@ export const LandingPage: React.FC = () => {
             </div>
 
             {/* Field 2: Vehicle Class */}
-            <div className="w-full sm:flex-1 flex items-center gap-2.5 px-4 py-2 sm:py-1 text-left border-b sm:border-b-0 sm:border-r border-white/15">
-              <Car className="w-4 h-4 text-amber-400 shrink-0" />
+            <div className="w-full sm:flex-1 flex items-center gap-2 px-3 py-1.5 sm:py-0.5 text-left border-b sm:border-b-0 sm:border-r border-white/15">
+              <Car className="w-3.5 h-3.5 text-amber-400 shrink-0" />
               <div className="flex-1 min-w-0">
-                <label className="block text-[10px] font-mono uppercase tracking-wider text-neutral-400">
+                <label className="block text-[9px] font-mono uppercase tracking-wider text-neutral-400 leading-tight">
                   Vehicle Class
                 </label>
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="w-full bg-transparent text-xs font-semibold text-white focus:outline-none cursor-pointer"
+                  className="w-full bg-transparent text-[11px] font-semibold text-white focus:outline-none cursor-pointer py-0.5"
                 >
                   <option value="" className="bg-neutral-900 text-white">All Vehicle Classes</option>
                   <option value="SUV" className="bg-neutral-900 text-white">SUVs & 4x4s</option>
@@ -264,9 +264,9 @@ export const LandingPage: React.FC = () => {
             </div>
 
             {/* Field 3: Rental Type */}
-            <div className="w-full sm:w-auto px-4 py-2 sm:py-1 text-left hidden md:block">
-              <div className="flex items-center gap-1.5 text-xs text-neutral-300 font-medium">
-                <Clock className="w-3.5 h-3.5 text-emerald-400" />
+            <div className="w-full sm:w-auto px-3 py-1 text-left hidden md:block">
+              <div className="flex items-center gap-1.5 text-[11px] text-neutral-300 font-medium">
+                <Clock className="w-3 h-3 text-emerald-400" />
                 <span>Instant Confirmation</span>
               </div>
             </div>
@@ -274,10 +274,10 @@ export const LandingPage: React.FC = () => {
             {/* Search Submit Action */}
             <button
               type="submit"
-              className="w-full sm:w-auto px-6 py-3 rounded-xl sm:rounded-full bg-white hover:bg-neutral-200 text-black font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95 cursor-pointer shrink-0"
+              className="w-full sm:w-auto px-5 py-2.5 rounded-xl sm:rounded-full bg-white hover:bg-neutral-200 text-black font-bold text-[11px] uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 shadow-md active:scale-95 cursor-pointer shrink-0"
             >
               <span>Explore Fleet</span>
-              <ArrowRight className="w-4 h-4 text-black" />
+              <ArrowRight className="w-3.5 h-3.5 text-black" />
             </button>
           </form>
         </div>
