@@ -24,7 +24,7 @@ export const Footer: React.FC = () => {
         >
           <div className="flex items-start space-x-3.5">
             <div
-              className={`w-9 h-9 rounded-full border flex items-center justify-center shrink-0 ${
+              className={`w-9 h-9 rounded-xl border flex items-center justify-center shrink-0 ${
                 isLight
                   ? 'bg-white border-stone-300 text-slate-800 shadow-xs'
                   : 'bg-[#0D0D0E] border-neutral-800 text-amber-400'
@@ -41,16 +41,16 @@ export const Footer: React.FC = () => {
                 Inspected Fleet
               </h4>
               <p className={`text-xs mt-1 leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
-                Multi-point fitness, valid commercial yellow plates, and pre-trip photo logs.
+                Commercial yellow plates, multi-point fitness checks, and mutual pre-trip photo logs.
               </p>
             </div>
           </div>
 
           <div className="flex items-start space-x-3.5">
             <div
-              className={`w-9 h-9 rounded-full border flex items-center justify-center shrink-0 ${
+              className={`w-9 h-9 rounded-xl border flex items-center justify-center shrink-0 ${
                 isLight
-                  ? 'bg-white border-stone-300 text-[#E07A3F] shadow-xs'
+                  ? 'bg-white border-stone-300 text-amber-600 shadow-xs'
                   : 'bg-[#0D0D0E] border-neutral-800 text-amber-400'
               }`}
             >
@@ -62,17 +62,17 @@ export const Footer: React.FC = () => {
                   isLight ? 'text-slate-900' : 'text-white'
                 }`}
               >
-                24h Deposit Escrow
+                24h Deposit Release
               </h4>
               <p className={`text-xs mt-1 leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
-                100% refundable deposits returned within 24 hours of safe vehicle return.
+                100% refundable deposits returned directly to your source within 24 hours of safe vehicle return.
               </p>
             </div>
           </div>
 
           <div className="flex items-start space-x-3.5">
             <div
-              className={`w-9 h-9 rounded-full border flex items-center justify-center shrink-0 ${
+              className={`w-9 h-9 rounded-xl border flex items-center justify-center shrink-0 ${
                 isLight
                   ? 'bg-white border-stone-300 text-slate-800 shadow-xs'
                   : 'bg-[#0D0D0E] border-neutral-800 text-amber-400'
@@ -86,20 +86,20 @@ export const Footer: React.FC = () => {
                   isLight ? 'text-slate-900' : 'text-white'
                 }`}
               >
-                Verified Hub Delivery
+                Direct Hub Delivery
               </h4>
               <p className={`text-xs mt-1 leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
-                Airport terminals and city center hubs across Delhi NCR, Jaipur & Chandigarh.
+                Airport terminal and city center hubs across Delhi NCR, Jaipur, and Chandigarh.
               </p>
             </div>
           </div>
 
           <div className="flex items-start space-x-3.5">
             <div
-              className={`w-9 h-9 rounded-full border flex items-center justify-center shrink-0 ${
+              className={`w-9 h-9 rounded-xl border flex items-center justify-center shrink-0 ${
                 isLight
                   ? 'bg-white border-stone-300 text-slate-800 shadow-xs'
-                  : 'bg-[#0D0D0E] border-neutral-800 text-white'
+                  : 'bg-[#0D0D0E] border-neutral-800 text-amber-400'
               }`}
             >
               <Headphones className="w-4 h-4" />
@@ -110,10 +110,10 @@ export const Footer: React.FC = () => {
                   isLight ? 'text-slate-900' : 'text-white'
                 }`}
               >
-                24/7 Fleet Support
+                24/7 Roadside Care
               </h4>
               <p className={`text-xs mt-1 leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
-                On-call highway emergency assistance and rapid replacement vehicles.
+                On-call highway emergency assistance and replacement support on all journeys.
               </p>
             </div>
           </div>
@@ -126,88 +126,64 @@ export const Footer: React.FC = () => {
           }`}
         >
           <div className="col-span-2">
-            <Link to="/" className="flex items-center space-x-3">
+            <Link to="/" className="flex items-center space-x-2.5">
               <div
-                className={`w-9 h-9 rounded-full border flex items-center justify-center ${
+                className={`w-8 h-8 rounded-xl border flex items-center justify-center ${
                   isLight
                     ? 'bg-white border-stone-300 text-slate-900 shadow-xs'
-                    : 'bg-[#0D0D0E] border-neutral-800 text-white'
+                    : 'bg-[#0D0D0E] border-neutral-800 text-amber-400'
                 }`}
               >
-                <Car className="w-4 h-4" strokeWidth={2.2} />
+                <Car className="w-4 h-4" strokeWidth={2} />
               </div>
-              <div className="flex flex-col">
-                <span
-                  className={`font-display text-lg font-bold tracking-tight leading-none ${
-                    isLight ? 'text-slate-900' : 'text-[#FAF8F3]'
-                  }`}
-                >
-                  DriveLoop
-                </span>
-                <span
-                  className={`text-[9px] font-mono tracking-widest uppercase mt-0.5 ${
-                    isLight ? 'text-slate-500' : 'text-[#6B7783]'
-                  }`}
-                >
-                  CAR RENTAL, REINVENTED
-                </span>
-              </div>
+              <span
+                className={`font-display text-lg font-bold tracking-tight ${
+                  isLight ? 'text-slate-900' : 'text-white'
+                }`}
+              >
+                Drive<span className="text-amber-400">Loop</span>
+              </span>
             </Link>
-            <p className={`text-xs mt-4 leading-relaxed max-w-sm ${isLight ? 'text-slate-600' : 'text-[#D5DBE1]'}`}>
-              India's premier multi-vendor car rental marketplace connecting selective travelers
+            <p className={`text-xs mt-3.5 leading-relaxed max-w-sm ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
+              India's premier verified car rental marketplace connecting selective travelers
               with verified independent fleet operators. Experience the joy of self-drive with transparent pricing.
             </p>
-            <p className={`text-[10px] font-mono mt-3 ${isLight ? 'text-slate-500' : 'text-[#6B7783]'}`}>
-              Razorpay Secured • PCI-DSS Compliant • 256-bit TLS
+            <p className={`text-[10px] font-mono mt-3 ${isLight ? 'text-slate-500' : 'text-neutral-500'}`}>
+              Razorpay Secured • PCI-DSS Compliant • 256-bit Encryption
             </p>
           </div>
 
           <div>
             <h5
               className={`text-[10px] font-mono uppercase tracking-widest mb-4 ${
-                isLight ? 'text-slate-500' : 'text-[#6B7783]'
+                isLight ? 'text-slate-500' : 'text-neutral-400 font-semibold'
               }`}
             >
               Explore Fleet
             </h5>
-            <ul className={`space-y-2.5 text-xs ${isLight ? 'text-slate-600' : 'text-[#D5DBE1]'}`}>
+            <ul className={`space-y-2.5 text-xs ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
               <li>
-                <Link
-                  to="/explore"
-                  className={isLight ? 'hover:text-black transition-colors' : 'hover:text-[#F6E7D7] transition-colors'}
-                >
+                <Link to="/explore" className="hover:text-amber-400 transition-colors">
                   All Vehicles
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/explore?category=SUV"
-                  className={isLight ? 'hover:text-black transition-colors' : 'hover:text-[#F6E7D7] transition-colors'}
-                >
+                <Link to="/explore?category=SUV" className="hover:text-amber-400 transition-colors">
                   Performance SUVs
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/explore?category=LUXURY"
-                  className={isLight ? 'hover:text-black transition-colors' : 'hover:text-[#F6E7D7] transition-colors'}
-                >
+                <Link to="/explore?category=LUXURY" className="hover:text-amber-400 transition-colors">
                   Luxury Saloons
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/explore?category=ELECTRIC"
-                  className={isLight ? 'hover:text-black transition-colors' : 'hover:text-[#F6E7D7] transition-colors'}
-                >
+                <Link to="/explore?category=ELECTRIC" className="hover:text-amber-400 transition-colors">
                   Electric Vehicles
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/explore?category=SEDAN"
-                  className={isLight ? 'hover:text-black transition-colors' : 'hover:text-[#F6E7D7] transition-colors'}
-                >
+                <Link to="/explore?category=SEDAN" className="hover:text-amber-400 transition-colors">
                   Touring Sedans
                 </Link>
               </li>
@@ -217,41 +193,29 @@ export const Footer: React.FC = () => {
           <div>
             <h5
               className={`text-[10px] font-mono uppercase tracking-widest mb-4 ${
-                isLight ? 'text-slate-500' : 'text-[#6B7783]'
+                isLight ? 'text-slate-500' : 'text-neutral-400 font-semibold'
               }`}
             >
               Fleet Partners
             </h5>
-            <ul className={`space-y-2.5 text-xs ${isLight ? 'text-slate-600' : 'text-[#D5DBE1]'}`}>
+            <ul className={`space-y-2.5 text-xs ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
               <li>
-                <Link
-                  to="/host"
-                  className={isLight ? 'hover:text-black transition-colors' : 'hover:text-[#F6E7D7] transition-colors'}
-                >
+                <Link to="/host" className="hover:text-amber-400 transition-colors">
                   Become a Host
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/register?role=VENDOR"
-                  className={isLight ? 'hover:text-black transition-colors' : 'hover:text-[#F6E7D7] transition-colors'}
-                >
+                <Link to="/register?role=VENDOR" className="hover:text-amber-400 transition-colors">
                   Host Registration
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/login"
-                  className={isLight ? 'hover:text-black transition-colors' : 'hover:text-[#F6E7D7] transition-colors'}
-                >
+                <Link to="/login" className="hover:text-amber-400 transition-colors">
                   Vendor Portal Login
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/how-it-works"
-                  className={isLight ? 'hover:text-black transition-colors' : 'hover:text-[#F6E7D7] transition-colors'}
-                >
+                <Link to="/how-it-works" className="hover:text-amber-400 transition-colors">
                   Escrow Guarantee
                 </Link>
               </li>
@@ -261,40 +225,34 @@ export const Footer: React.FC = () => {
           <div>
             <h5
               className={`text-[10px] font-mono uppercase tracking-widest mb-4 ${
-                isLight ? 'text-slate-500' : 'text-[#6B7783]'
+                isLight ? 'text-slate-500' : 'text-neutral-400 font-semibold'
               }`}
             >
               Platform & Legal
             </h5>
-            <ul className={`space-y-2.5 text-xs ${isLight ? 'text-slate-600' : 'text-[#D5DBE1]'}`}>
+            <ul className={`space-y-2.5 text-xs ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
               <li>
-                <Link
-                  to="/how-it-works"
-                  className={isLight ? 'hover:text-black transition-colors' : 'hover:text-[#F6E7D7] transition-colors'}
-                >
+                <Link to="/how-it-works" className="hover:text-amber-400 transition-colors">
                   Security Deposit Escrow
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/how-it-works"
-                  className={isLight ? 'hover:text-black transition-colors' : 'hover:text-[#F6E7D7] transition-colors'}
-                >
+                <Link to="/how-it-works" className="hover:text-amber-400 transition-colors">
                   Cancellation Schedule
                 </Link>
               </li>
               <li>
-                <span className={isLight ? 'text-slate-400 cursor-not-allowed' : 'text-[#6B7783] cursor-not-allowed'}>
+                <span className="text-neutral-500 cursor-not-allowed">
                   Terms of Service
                 </span>
               </li>
               <li>
-                <span className={isLight ? 'text-slate-400 cursor-not-allowed' : 'text-[#6B7783] cursor-not-allowed'}>
+                <span className="text-neutral-500 cursor-not-allowed">
                   Privacy & Telematics
                 </span>
               </li>
               <li>
-                <span className={isLight ? 'text-slate-400 cursor-not-allowed' : 'text-[#6B7783] cursor-not-allowed'}>
+                <span className="text-neutral-500 cursor-not-allowed">
                   Insurance Policy Terms
                 </span>
               </li>
@@ -305,12 +263,12 @@ export const Footer: React.FC = () => {
         {/* Bottom Copyright & Status */}
         <div
           className={`pt-8 flex flex-col sm:flex-row items-center justify-between text-xs gap-4 ${
-            isLight ? 'text-slate-500' : 'text-[#6B7783]'
+            isLight ? 'text-slate-500' : 'text-neutral-400'
           }`}
         >
           <div className="flex items-center space-x-2">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="font-mono text-[11px]">System Status: All 5 Hubs Operational</span>
+            <span className="font-mono text-[11px]">All 5 Verified Hubs Operational</span>
           </div>
 
           <p className="font-mono text-[11px] text-center sm:text-right">

@@ -265,111 +265,48 @@ export const ExploreCarsPage: React.FC = () => {
           </p>
         </div>
 
-        {/* Right: Three Metric Stat Cards (Matching Reference Image) */}
-        <div className="grid grid-cols-3 gap-2 w-full md:w-auto md:flex md:items-center md:gap-3">
-          {/* Card 1: Available Cars */}
-          <div
-            className={`flex items-center space-x-2 sm:space-x-3 px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-xl shadow-xs border min-w-0 ${
-              isLight
-                ? 'bg-white border-stone-200/80 text-slate-900'
-                : 'bg-[#0D0D0E] border-neutral-800 text-white'
-            }`}
-          >
-            <div
-              className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center shrink-0 ${
+        {/* Right: Modern Trust Highlights & Sort Controls */}
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="hidden sm:flex items-center gap-2 text-xs font-medium">
+            <span
+              className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border text-[11px] ${
                 isLight
-                  ? 'bg-slate-100 text-slate-800'
-                  : 'bg-neutral-900 border border-neutral-700 text-white'
+                  ? 'bg-emerald-50 text-emerald-800 border-emerald-200/60'
+                  : 'bg-emerald-950/30 text-emerald-400 border-emerald-800/40'
               }`}
             >
-              <Car className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-            </div>
-            <div className="min-w-0">
-              <span
-                className={`text-[9px] sm:text-[10px] font-mono uppercase block leading-none truncate ${
-                  isLight ? 'text-slate-400' : 'text-neutral-400'
-                }`}
-              >
-                Available
-              </span>
-              <span
-                className={`text-xs sm:text-sm font-bold mt-0.5 block leading-tight ${
-                  isLight ? 'text-slate-900' : 'text-white'
-                }`}
-              >
-                {meta.total || vehicles.length || 16}
-              </span>
-            </div>
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+              <span>24h Escrow Return</span>
+            </span>
+
+            <span
+              className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border text-[11px] ${
+                isLight
+                  ? 'bg-amber-50 text-amber-800 border-amber-200/60'
+                  : 'bg-amber-950/30 text-amber-400 border-amber-800/40'
+              }`}
+            >
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <span>Inspected Yellow Plates</span>
+            </span>
           </div>
 
-          {/* Card 2: Average Rating */}
-          <div
-            className={`flex items-center space-x-2 sm:space-x-3 px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-xl shadow-xs border min-w-0 ${
-              isLight
-                ? 'bg-white border-stone-200/80 text-slate-900'
-                : 'bg-[#0D0D0E] border-neutral-800 text-white'
-            }`}
-          >
-            <div
-              className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center shrink-0 ${
+          {/* Quick Sort Dropdown */}
+          <div className="flex items-center gap-2 text-xs">
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className={`px-3 py-1.5 rounded-full border text-xs font-medium cursor-pointer transition-colors ${
                 isLight
-                  ? 'bg-amber-50 text-amber-500 border border-amber-200/60'
-                  : 'bg-amber-500/10 border border-amber-500/30 text-amber-400'
+                  ? 'bg-white border-stone-200 text-slate-800 shadow-xs'
+                  : 'bg-[#0D0D0E] border-neutral-800 text-white hover:border-neutral-700'
               }`}
             >
-              <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-amber-400 text-amber-500" />
-            </div>
-            <div className="min-w-0">
-              <span
-                className={`text-[9px] sm:text-[10px] font-mono uppercase block leading-none truncate ${
-                  isLight ? 'text-slate-400' : 'text-neutral-400'
-                }`}
-              >
-                Rating
-              </span>
-              <span
-                className={`text-xs sm:text-sm font-bold mt-0.5 block leading-tight ${
-                  isLight ? 'text-slate-900' : 'text-white'
-                }`}
-              >
-                4.9/5
-              </span>
-            </div>
-          </div>
-
-          {/* Card 3: Happy Customers */}
-          <div
-            className={`flex items-center space-x-2 sm:space-x-3 px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-xl shadow-xs border min-w-0 ${
-              isLight
-                ? 'bg-white border-stone-200/80 text-slate-900'
-                : 'bg-[#0D0D0E] border-neutral-800 text-white'
-            }`}
-          >
-            <div
-              className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center shrink-0 ${
-                isLight
-                  ? 'bg-emerald-50 text-emerald-600 border border-emerald-200/60'
-                  : 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-400'
-              }`}
-            >
-              <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-            </div>
-            <div className="min-w-0">
-              <span
-                className={`text-[9px] sm:text-[10px] font-mono uppercase block leading-none truncate ${
-                  isLight ? 'text-slate-400' : 'text-neutral-400'
-                }`}
-              >
-                Users
-              </span>
-              <span
-                className={`text-xs sm:text-sm font-bold mt-0.5 block leading-tight ${
-                  isLight ? 'text-slate-900' : 'text-white'
-                }`}
-              >
-                2.4K+
-              </span>
-            </div>
+              <option value="popular_desc" className="bg-neutral-900 text-white">Sort: Most Popular</option>
+              <option value="price_asc" className="bg-neutral-900 text-white">Sort: Price (Low to High)</option>
+              <option value="price_desc" className="bg-neutral-900 text-white">Sort: Price (High to Low)</option>
+              <option value="rating_desc" className="bg-neutral-900 text-white">Sort: Highest Rated</option>
+            </select>
           </div>
         </div>
       </div>
@@ -962,12 +899,12 @@ export const ExploreCarsPage: React.FC = () => {
                           {car.category}
                         </div>
 
-                        {/* SNEAK PEEK HOVER OVERLAY */}
+                        {/* REFINED SNEAK PEEK: Slides up as a graceful bottom sheet */}
                         <div
-                          className={`absolute inset-0 p-3 flex flex-col justify-between opacity-0 group-hover:opacity-100 transition-all duration-300 backdrop-blur-md pointer-events-none ${
+                          className={`absolute inset-x-0 bottom-0 p-3 pt-2.5 transition-all duration-300 transform translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 pointer-events-none backdrop-blur-md border-t rounded-b-xl ${
                             isLight
-                              ? 'bg-white/95 text-slate-900 border border-black/10'
-                              : 'bg-black/92 text-white border border-white/10'
+                              ? 'bg-white/95 text-slate-900 border-slate-200 shadow-lg'
+                              : 'bg-black/90 text-white border-neutral-700 shadow-2xl'
                           }`}
                         >
                           {/* Sneak Peek Top: Specs & Mileage */}
@@ -985,34 +922,15 @@ export const ExploreCarsPage: React.FC = () => {
                               </span>
                             </div>
 
-                            <div className="flex items-center gap-1 text-[11px] font-medium truncate mt-1">
+                            <div className="flex items-center gap-1 text-[11px] font-medium truncate mt-0.5">
                               <MapPin className={`w-3.5 h-3.5 shrink-0 ${isLight ? 'text-slate-600' : 'text-amber-400'}`} />
                               <span className="truncate">{car.pickupAddress || `${car.city}, ${car.state}`}</span>
                             </div>
                           </div>
 
-                          {/* Sneak Peek Middle: Feature tags */}
-                          <div className="flex flex-wrap gap-1 my-1">
-                            {(car.features || []).slice(0, 3).map((feat: any, idx: number) => {
-                              const featName = typeof feat === 'string' ? feat : feat.name;
-                              return (
-                                <span
-                                  key={idx}
-                                  className={`px-1.5 py-0.5 rounded text-[9px] font-medium border truncate max-w-[125px] ${
-                                    isLight
-                                      ? 'bg-slate-100 border-slate-200 text-slate-800'
-                                      : 'bg-neutral-900 border-neutral-700 text-neutral-200'
-                                  }`}
-                                >
-                                  {featName}
-                                </span>
-                              );
-                            })}
-                          </div>
-
                           {/* Sneak Peek Bottom: Deposit & Action */}
                           <div
-                            className={`pt-1.5 border-t flex items-center justify-between text-[10px] ${
+                            className={`pt-1.5 mt-1 border-t flex items-center justify-between text-[10px] ${
                               isLight ? 'border-slate-200' : 'border-neutral-800'
                             }`}
                           >

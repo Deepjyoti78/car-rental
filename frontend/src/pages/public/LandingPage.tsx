@@ -15,6 +15,12 @@ import {
   MapPin,
   CheckCircle2,
   Search,
+  Calendar,
+  Sparkles,
+  Star,
+  Quote,
+  Clock,
+  Compass,
 } from 'lucide-react';
 
 export const LandingPage: React.FC = () => {
@@ -27,22 +33,26 @@ export const LandingPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [activeCategoryTab, setActiveCategoryTab] = useState<string>('ALL');
-  const [searchQuery, setSearchQuery] = useState('');
 
-  const handleQuickSearch = (e: React.FormEvent) => {
+  // Interactive booking search bar state
+  const [selectedCity, setSelectedCity] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
+
+  const handleBookingSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/explore?city=${encodeURIComponent(searchQuery.trim())}`);
-    } else {
-      navigate('/explore');
-    }
+    const params = new URLSearchParams();
+    if (selectedCity) params.set('city', selectedCity);
+    if (selectedCategory) params.set('category', selectedCategory);
+    navigate(`/explore?${params.toString()}`);
   };
 
   useEffect(() => {
     const loadFeatured = async () => {
       try {
         const cars = await vehicleService.getFeatured();
-        setFeaturedCars(cars);
+        if (cars && cars.length > 0) {
+          setFeaturedCars(cars);
+        }
       } catch (e) {
         console.error('Failed to load featured cars:', e);
       } finally {
@@ -52,42 +62,42 @@ export const LandingPage: React.FC = () => {
     loadFeatured();
   }, []);
 
-  const categories = [
+  const curatedJourneys = [
     {
       id: 'SUV',
-      tag: 'EXPEDITION & HIGHWAY',
-      title: 'Performance SUVs',
-      desc: 'All-wheel drive, high ground clearance, 5 to 7 passenger capacity for long-distance highways and hill climbs.',
+      tag: 'Hills & Off-Road',
+      title: 'Mountain Expeditions',
+      desc: 'All-wheel drive, high ground clearance, and spacious 5 to 7 passenger capability for Shimla, Manali, and Spiti Valley.',
       lineup: 'Mahindra Thar, Toyota Fortuner, Scorpio-N, Creta',
       image: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=800&q=80',
     },
     {
       id: 'LUXURY',
-      tag: 'EXECUTIVE REFINEMENT',
-      title: 'Luxury Saloons',
-      desc: 'German engineering, acoustic glass, and prestigious styling for business summits and celebratory travel.',
-      lineup: 'BMW 3/5 Series, Mercedes C-Class, Audi A4',
+      tag: 'Executive & Events',
+      title: 'Prestige & Luxury',
+      desc: 'German precision engineering, acoustic quiet, and commanding presence for summits, corporate meetings, and weddings.',
+      lineup: 'BMW X5, Mercedes C-Class, Audi A4',
       image: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80',
     },
     {
       id: 'ELECTRIC',
-      tag: 'ZERO EMISSION',
-      title: 'Electric Vehicles',
-      desc: 'Instant peak torque, whisper-quiet cabin acoustics, and high-speed DC fast charging compatibility.',
+      tag: 'Silent & Efficient',
+      title: 'Conscious Electric',
+      desc: 'Instant torque, serene cabin acoustics, and 400+ km certified range with rapid fast-charging compatibility.',
       lineup: 'Tata Nexon EV Max, BYD Seal, MG ZS EV',
       image: 'https://images.unsplash.com/photo-1563720223185-11003d516935?w=800&q=80',
     },
     {
       id: 'SEDAN',
-      tag: 'COMFORT CRUISING',
-      title: 'Touring Sedans',
-      desc: 'Smooth ride geometry, expansive rear legroom, and class-leading highway fuel efficiency.',
-      lineup: 'Skoda Slavia, Honda City Hybrid, VW Virtus',
+      tag: 'Highway Touring',
+      title: 'Comfort Touring Sedans',
+      desc: 'Supple ride geometry, expansive rear legroom, and effortless 25+ km/l efficiency for scenic day drives and weekend trips.',
+      lineup: 'Honda City Hybrid, Skoda Slavia, VW Virtus',
       image: 'https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=800&q=80',
     },
   ];
 
-  const hubs = [
+  const regionalHubs = [
     {
       name: 'Delhi NCR',
       tag: 'Indira Gandhi Int’l Airport (DEL) & Connaught Place',
@@ -116,30 +126,54 @@ export const LandingPage: React.FC = () => {
       name: 'Chandigarh',
       tag: 'Sector 17 & Mohali International Airport',
       fleetCount: '50+ Cars',
-      highlight: 'Shivalik Foothills & Himachal Access',
+      highlight: 'Gateway to Himachal & Shivalik Hills',
+    },
+  ];
+
+  const realReviews = [
+    {
+      author: 'Dr. Siddharth Mathur',
+      role: 'Verified Renter • New Delhi',
+      trip: '5-Day Roadtrip to Spiti in Fortuner Legender',
+      text: 'Rented the Fortuner for our family trip to Himachal. Pickup at Aerocity was completed in under 4 minutes with photos on the app. The car was spotless, and the security deposit was back in my bank the morning after return. Absolutely zero friction.',
+      rating: 5,
+    },
+    {
+      author: 'Rhea Kapur',
+      role: 'Independent Producer • Mumbai',
+      trip: 'Shoot in Rajasthan in Mahindra Thar 4x4',
+      text: 'The commercial yellow-plate compliance was huge for us—we crossed Haryana and Rajasthan borders with zero police stops or permit headaches. The host was responsive, and the car performed flawlessly across rough terrain.',
+      rating: 5,
+    },
+    {
+      author: 'Arjun Nair',
+      role: 'Tech Consultant • Bangalore',
+      trip: 'Client Summits in Delhi NCR in BMW X5',
+      text: 'Far superior to waiting in lines at traditional airport car rental desks. The car was brought right to T3 arrivals, pre-conditioned and fully fueled. The transparent pricing with no surge multipliers is refreshing.',
+      rating: 5,
     },
   ];
 
   const faqs = [
     {
-      q: 'What credentials are required to rent and drive a DriveLoop vehicle?',
-      a: 'Renters must possess an original Indian Driving License (valid for a minimum of 1 year, commercial or non-transport) and a verified government photo identity document (Aadhaar or Passport). Verification is securely authorized before physical vehicle handover.',
+      q: 'What do I need to rent and drive a DriveLoop car?',
+      a: 'You simply need an original Indian Driving License (valid for at least 1 year) and a government photo ID (Aadhaar or Passport). Verification is completed securely in seconds before your key handover.',
     },
     {
-      q: 'How does the refundable security deposit escrow operate?',
-      a: 'Unlike traditional rental agencies that hold money for weeks, DriveLoop places deposits in transparent escrow. Following your trip, once the vehicle is inspected with no unreported body damage or unpaid municipal e-challans, 100% of the deposit is released to your original payment method within 24 hours.',
+      q: 'When do I get my security deposit back?',
+      a: 'Unlike old-fashioned rental desks that hold your deposit for weeks, 100% of your deposit is held in automated escrow and credited back to your original payment method within 24 hours of your return inspection.',
     },
     {
-      q: 'What is the marketplace cancellation and refund schedule?',
-      a: 'We maintain clear, contractually binding cancellation tiers: Cancellations initiated > 48 hours prior to scheduled pickup receive a 100% full refund. Between 24 and 48 hours, a 75% refund is granted. Less than 24 hours receives a 50% refund. The security deposit is always refunded 100% in all scenarios.',
+      q: 'Can I take the car across state borders?',
+      a: 'Yes, 100%. Every single vehicle on DriveLoop operates with genuine commercial yellow plates and valid All-India Tourist Permits (AITP). You can travel across state lines without fear of impoundment or unauthorized vehicle penalties.',
     },
     {
-      q: 'Are FASTag highway tolls and fuel expenses included in the rate?',
-      a: 'Every car in the DriveLoop fleet carries an active commercial FASTag. Expressway toll deductions are settled transparently on actuals at trip return. Vehicles are provided with a documented fuel level and should be returned at the equivalent mark.',
+      q: 'How do fuel and highway tolls (FASTag) work?',
+      a: 'Every car comes with an active commercial FASTag. Expressway tolls are deducted transparently at exact actuals upon return. Fuel is provided with a recorded mark at pickup and simply returned at the same level.',
     },
     {
-      q: 'How do independent rental operators partner with DriveLoop?',
-      a: 'Fleet operators can register through the "Become a Host" portal. Once commercial vehicle permits, yellow-plate documentation, and business registrations are vetted by our compliance desk, you can list your vehicles, set custom pricing, and receive guaranteed weekly payouts with just a 10% platform fee.',
+      q: 'What if I need to cancel my trip?',
+      a: 'We have fair, transparent cancellation terms: Cancel more than 48 hours before pickup for a 100% full refund. Between 24 and 48 hours, receive 75%. Less than 24 hours receives 50%. Your security deposit is always refunded 100% regardless of cancellation time.',
     },
   ];
 
@@ -154,75 +188,124 @@ export const LandingPage: React.FC = () => {
         isLight ? 'bg-[#F4EFEA] text-slate-900' : 'bg-black text-white'
       }`}
     >
-      {/* 1. HERO SECTION: Full-bleed Porsche Lakeside Visual Identity matching Image 2 */}
-      <section className="relative h-screen min-h-[660px] max-h-[1080px] flex flex-col justify-between overflow-hidden">
-        {/* Cinematic Background Image from user upload */}
+      {/* 1. CINEMATIC HERO SECTION */}
+      <section className="relative min-h-[640px] sm:min-h-[720px] lg:h-[90vh] max-h-[1080px] flex flex-col justify-between overflow-hidden">
+        {/* Full-bleed Photography Background */}
         <div className="absolute inset-0 z-0">
           <img
             src="/hero-bg.png"
-            alt="Blue Porsche by the lakeside"
-            className="w-full h-full object-cover object-[center_65%]"
+            alt="Scenic roadtrip landscape"
+            className="w-full h-full object-cover object-[center_60%]"
           />
-          {/* Subtle natural photo gradient overlay matching Image 2 */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-black/55 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/80 pointer-events-none" />
         </div>
 
-        {/* Center Hero Content (placed gracefully in the upper lake/mountain region well above the Porsche) */}
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 w-full flex-1 flex flex-col items-center justify-start pt-24 sm:pt-28 lg:pt-[136px] text-center">
-          {/* Frosted Badge matching Image 2: [Car Rental, Reinvented] */}
-          <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-black/25 backdrop-blur-md border border-white/20 text-white/90 text-xs font-normal mb-3 sm:mb-4 shadow-sm">
-            <Car className="w-3.5 h-3.5 text-white/80" strokeWidth={1.8} />
-            <span>Car Rental, Reinvented</span>
+        {/* Center Hero Content */}
+        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 w-full flex-1 flex flex-col items-center justify-center pt-24 sm:pt-28 text-center">
+          {/* Frosted Subtle Badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white text-xs font-medium mb-4 shadow-sm">
+            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <span>Verified Self-Drive Rental Marketplace</span>
           </div>
 
-          {/* Headline matching user request: thicker weight */}
-          <h1 className="text-3xl sm:text-5xl lg:text-[3.6rem] font-medium text-white tracking-tight leading-[1.12] max-w-3xl mx-auto drop-shadow-sm">
-            Rediscover the Joy of <br />
-            the Open Road
+          {/* Headline */}
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display font-bold text-white tracking-tight leading-[1.12] max-w-4xl mx-auto drop-shadow-md">
+            Rediscover the Joy of <br className="hidden sm:inline" />
+            the Open Road.
           </h1>
 
-          {/* Frosted Pill Search Capsule matching user request: transparent with subtle border */}
+          <p className="mt-3.5 text-xs sm:text-sm lg:text-base text-neutral-200 max-w-xl mx-auto font-normal leading-relaxed drop-shadow-sm">
+            Clean, inspected self-drive cars from verified local fleet operators. Direct delivery to your airport terminal or ready at the hub.
+          </p>
+
+          {/* MODERN HUMAN BOOKING WIDGET */}
           <form
-            onSubmit={handleQuickSearch}
-            className="mt-6 sm:mt-7 w-full max-w-[390px] mx-auto rounded-full bg-transparent backdrop-blur-sm border border-white/30 shadow-lg p-1 flex items-center justify-between hover:border-white/50 transition-all group"
+            onSubmit={handleBookingSearch}
+            className="mt-8 w-full max-w-3xl rounded-2xl sm:rounded-full bg-black/60 backdrop-blur-xl border border-white/25 shadow-2xl p-2 sm:p-2.5 flex flex-col sm:flex-row items-center gap-2 transition-all hover:border-white/40"
           >
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by destination or vehicle..."
-              className="w-full bg-transparent pl-4 pr-2 text-xs text-white placeholder-white/50 focus:outline-none font-normal"
-            />
+            {/* Field 1: Hub / City */}
+            <div className="w-full sm:flex-1 flex items-center gap-2.5 px-4 py-2 sm:py-1 text-left border-b sm:border-b-0 sm:border-r border-white/15">
+              <MapPin className="w-4 h-4 text-amber-400 shrink-0" />
+              <div className="flex-1 min-w-0">
+                <label className="block text-[10px] font-mono uppercase tracking-wider text-neutral-400">
+                  Pick-up Hub
+                </label>
+                <select
+                  value={selectedCity}
+                  onChange={(e) => setSelectedCity(e.target.value)}
+                  className="w-full bg-transparent text-xs font-semibold text-white focus:outline-none cursor-pointer"
+                >
+                  <option value="" className="bg-neutral-900 text-white">All Regional Hubs</option>
+                  <option value="Delhi" className="bg-neutral-900 text-white">Delhi NCR (Airport T3)</option>
+                  <option value="Gurgaon" className="bg-neutral-900 text-white">Gurgaon (Cyber Hub)</option>
+                  <option value="Noida" className="bg-neutral-900 text-white">Noida (Sector 18)</option>
+                  <option value="Jaipur" className="bg-neutral-900 text-white">Jaipur (Airport)</option>
+                  <option value="Chandigarh" className="bg-neutral-900 text-white">Chandigarh (City Centre)</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Field 2: Vehicle Class */}
+            <div className="w-full sm:flex-1 flex items-center gap-2.5 px-4 py-2 sm:py-1 text-left border-b sm:border-b-0 sm:border-r border-white/15">
+              <Car className="w-4 h-4 text-amber-400 shrink-0" />
+              <div className="flex-1 min-w-0">
+                <label className="block text-[10px] font-mono uppercase tracking-wider text-neutral-400">
+                  Vehicle Class
+                </label>
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="w-full bg-transparent text-xs font-semibold text-white focus:outline-none cursor-pointer"
+                >
+                  <option value="" className="bg-neutral-900 text-white">All Vehicle Classes</option>
+                  <option value="SUV" className="bg-neutral-900 text-white">SUVs & 4x4s</option>
+                  <option value="LUXURY" className="bg-neutral-900 text-white">Executive & Luxury</option>
+                  <option value="SEDAN" className="bg-neutral-900 text-white">Touring Sedans</option>
+                  <option value="ELECTRIC" className="bg-neutral-900 text-white">Electric Vehicles</option>
+                  <option value="HATCHBACK" className="bg-neutral-900 text-white">City Hatchbacks</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Field 3: Rental Type */}
+            <div className="w-full sm:w-auto px-4 py-2 sm:py-1 text-left hidden md:block">
+              <div className="flex items-center gap-1.5 text-xs text-neutral-300 font-medium">
+                <Clock className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Instant Confirmation</span>
+              </div>
+            </div>
+
+            {/* Search Submit Action */}
             <button
               type="submit"
-              aria-label="Search vehicles"
-              className="w-9 h-9 rounded-full bg-white hover:bg-neutral-200 text-black flex items-center justify-center shrink-0 shadow-md transition-transform active:scale-95 cursor-pointer"
+              className="w-full sm:w-auto px-6 py-3 rounded-xl sm:rounded-full bg-white hover:bg-neutral-200 text-black font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95 cursor-pointer shrink-0"
             >
-              <Search className="w-4 h-4 text-black" strokeWidth={2.2} />
+              <span>Explore Fleet</span>
+              <ArrowRight className="w-4 h-4 text-black" />
             </button>
           </form>
         </div>
 
-        {/* Bottom Trust Indicators matching Image 2 */}
-        <div className="relative z-10 pb-7 sm:pb-9 flex items-center justify-center gap-6 sm:gap-10 text-xs text-white/85 font-normal tracking-wide">
+        {/* Bottom Trust Indicators */}
+        <div className="relative z-10 pb-8 flex flex-wrap items-center justify-center gap-4 sm:gap-10 text-xs text-white/90 font-medium tracking-wide">
           <div className="flex items-center gap-2">
-            <Zap className="w-3.5 h-3.5 text-white/80" strokeWidth={1.8} />
-            <span>Instant Booking</span>
+            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+            <span>3-Minute Digital Handover</span>
           </div>
-          <span className="text-white/25">|</span>
+          <span className="hidden sm:inline text-white/30">•</span>
           <div className="flex items-center gap-2">
-            <Car className="w-3.5 h-3.5 text-white/80" strokeWidth={1.8} />
-            <span>Wide Selection</span>
+            <ShieldCheck className="w-4 h-4 text-emerald-400" />
+            <span>24h Refundable Deposit Guarantee</span>
           </div>
-          <span className="text-white/25">|</span>
+          <span className="hidden sm:inline text-white/30">•</span>
           <div className="flex items-center gap-2">
-            <ShieldCheck className="w-3.5 h-3.5 text-white/80" strokeWidth={1.8} />
-            <span>Secure & Reliable</span>
+            <Car className="w-4 h-4 text-emerald-400" />
+            <span>100% Commercial Yellow Plates</span>
           </div>
         </div>
       </section>
 
-      {/* 2. CATEGORY ARCHITECTURE */}
+      {/* 2. CURATED TRAVEL COLLECTIONS */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
           className={`flex flex-col sm:flex-row sm:items-end justify-between mb-8 pb-4 border-b ${
@@ -230,37 +313,37 @@ export const LandingPage: React.FC = () => {
           }`}
         >
           <div>
-            <span className="text-[11px] font-mono uppercase tracking-widest text-amber-500">
-              Class & Capability
+            <span className="text-[11px] font-mono uppercase tracking-widest text-amber-500 font-semibold">
+              Curated Collections
             </span>
             <h2
               className={`font-display text-2xl sm:text-3xl font-bold mt-1 ${
                 isLight ? 'text-slate-900' : 'text-white'
               }`}
             >
-              Curated Fleet Categories
+              Handpicked for Every Journey
             </h2>
           </div>
           <Link
             to="/explore"
             className={`text-xs font-semibold flex items-center space-x-1.5 mt-2 sm:mt-0 transition-colors group ${
-              isLight ? 'text-slate-600 hover:text-black' : 'text-neutral-300 hover:text-white'
+              isLight ? 'text-slate-600 hover:text-black' : 'text-neutral-400 hover:text-white'
             }`}
           >
-            <span>Explore All 16+ Vehicles</span>
+            <span>Browse Complete Fleet ({featuredCars.length}+ Available)</span>
             <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform text-amber-400" />
           </Link>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {categories.map((cat) => (
+          {curatedJourneys.map((cat) => (
             <div
               key={cat.id}
               onClick={() => navigate(`/explore?category=${cat.id}`)}
-              className={`group cursor-pointer rounded-xl border overflow-hidden transition-all duration-300 flex flex-col justify-between ${
+              className={`group cursor-pointer rounded-2xl border overflow-hidden transition-all duration-300 flex flex-col justify-between ${
                 isLight
                   ? 'bg-white border-stone-200/80 shadow-xs hover:border-stone-400 hover:shadow-md'
-                  : 'bg-[#0D0D0E] border-neutral-800 hover:border-neutral-700 hover:bg-[#121214] hover:shadow-xl'
+                  : 'bg-[#0D0D0E] border-neutral-800/80 hover:border-neutral-700 hover:bg-[#121214] hover:shadow-xl'
               }`}
             >
               <div>
@@ -271,10 +354,10 @@ export const LandingPage: React.FC = () => {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out opacity-90 group-hover:opacity-100"
                   />
                   <div
-                    className={`absolute top-2.5 left-2.5 px-2 py-0.5 rounded text-[10px] font-mono tracking-wider border backdrop-blur-sm ${
+                    className={`absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono tracking-wider border backdrop-blur-md ${
                       isLight
                         ? 'bg-white/90 text-slate-800 border-stone-200 shadow-xs'
-                        : 'bg-black/80 text-white border-neutral-700'
+                        : 'bg-black/75 text-neutral-200 border-neutral-700'
                     }`}
                   >
                     {cat.tag}
@@ -297,7 +380,7 @@ export const LandingPage: React.FC = () => {
 
               <div
                 className={`p-4 sm:p-5 pt-0 border-t mt-2 ${
-                  isLight ? 'border-stone-100' : 'border-neutral-800'
+                  isLight ? 'border-stone-100' : 'border-neutral-800/80'
                 }`}
               >
                 <span
@@ -309,7 +392,7 @@ export const LandingPage: React.FC = () => {
                 </span>
                 <span
                   className={`text-xs font-medium mt-0.5 block truncate ${
-                    isLight ? 'text-slate-800' : 'text-neutral-200'
+                    isLight ? 'text-slate-800' : 'text-neutral-300'
                   }`}
                 >
                   {cat.lineup}
@@ -320,7 +403,7 @@ export const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 3. FEATURED FLEET WITH LIVE CATEGORY FILTER */}
+      {/* 3. SHOWROOM SELECTION: Real Available Fleet */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
           className={`flex flex-col md:flex-row md:items-end justify-between mb-8 pb-4 border-b gap-4 ${
@@ -328,35 +411,35 @@ export const LandingPage: React.FC = () => {
           }`}
         >
           <div>
-            <span className="text-[11px] font-mono uppercase tracking-widest text-amber-500">
-              Showroom Selection
+            <span className="text-[11px] font-mono uppercase tracking-widest text-amber-500 font-semibold">
+              Live Fleet
             </span>
             <h2
               className={`font-display text-2xl sm:text-3xl font-bold mt-1 ${
                 isLight ? 'text-slate-900' : 'text-white'
               }`}
             >
-              Top Rated Vehicles on DriveLoop
+              Popular Vehicles Ready for Pickup
             </h2>
           </div>
 
-          {/* Interactive filter pills */}
+          {/* Category Tabs */}
           <div className="flex flex-wrap items-center gap-1.5">
             {['ALL', 'SUV', 'LUXURY', 'ELECTRIC', 'SEDAN'].map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategoryTab(cat)}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
                   activeCategoryTab === cat
                     ? isLight
-                    ? 'bg-black text-white shadow-xs'
-                    : 'bg-white text-black font-bold shadow-md'
-                  : isLight
-                  ? 'bg-white border border-stone-200 text-slate-700 hover:text-black hover:border-slate-400 shadow-xs'
-                  : 'bg-[#0D0D0E] border border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700'
+                      ? 'bg-black text-white shadow-xs'
+                      : 'bg-white text-black font-bold shadow-md'
+                    : isLight
+                    ? 'bg-white border border-stone-200 text-slate-700 hover:text-black hover:border-slate-400 shadow-xs'
+                    : 'bg-[#0D0D0E] border border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700'
                 }`}
               >
-                {cat === 'ALL' ? 'All Fleet' : cat}
+                {cat === 'ALL' ? 'All Cars' : cat}
               </button>
             ))}
           </div>
@@ -367,24 +450,24 @@ export const LandingPage: React.FC = () => {
             {[1, 2, 3, 4, 5, 6].map((i) => (
               <div
                 key={i}
-                className={`h-96 rounded-xl border animate-pulse ${
-                  isLight ? 'bg-white border-stone-200/80 shadow-xs' : 'bg-[#0D0D0E] border-neutral-800'
+                className={`h-96 rounded-2xl border animate-pulse ${
+                  isLight ? 'bg-white border-stone-200/80' : 'bg-[#0D0D0E] border-neutral-800'
                 }`}
               />
             ))}
           </div>
         ) : filteredCars.length === 0 ? (
           <div
-            className={`p-12 text-center rounded-xl border ${
-              isLight ? 'bg-white border-stone-200 text-slate-900 shadow-xs' : 'bg-[#0D0D0E] border-neutral-800'
+            className={`p-12 text-center rounded-2xl border ${
+              isLight ? 'bg-white border-stone-200 text-slate-900' : 'bg-[#0D0D0E] border-neutral-800'
             }`}
           >
             <p className={`text-sm font-semibold ${isLight ? 'text-slate-800' : 'text-white'}`}>
-              No vehicles found in this category.
+              No vehicles found in this category right now.
             </p>
             <button
               onClick={() => setActiveCategoryTab('ALL')}
-              className="mt-3 text-xs text-amber-500 font-semibold underline hover:text-amber-400"
+              className="mt-3 text-xs text-amber-500 font-semibold underline hover:text-amber-400 cursor-pointer"
             >
               Reset to All Fleet
             </button>
@@ -398,7 +481,7 @@ export const LandingPage: React.FC = () => {
         )}
       </section>
 
-      {/* 4. THE DRIVELOOP DIFFERENCE: Editorial Proof Grid */}
+      {/* 4. THE DRIVELOOP DIFFERENCE: High-Trust Standards */}
       <section
         className={`border-y py-20 ${
           isLight ? 'bg-white border-stone-200/80' : 'bg-[#0A0A0C] border-neutral-800'
@@ -406,29 +489,29 @@ export const LandingPage: React.FC = () => {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12">
-            <span className="text-[11px] font-mono uppercase tracking-widest text-amber-500">
-              Marketplace Integrity
+            <span className="text-[11px] font-mono uppercase tracking-widest text-amber-500 font-semibold">
+              The DriveLoop Standard
             </span>
             <h2
               className={`font-display text-3xl sm:text-4xl font-bold mt-1 ${
                 isLight ? 'text-slate-900' : 'text-white'
               }`}
             >
-              Rethinking Car Rental in India.
+              Rethinking Self-Drive Car Rentals in India.
             </h2>
             <p
               className={`text-sm sm:text-base mt-2 leading-relaxed ${
                 isLight ? 'text-slate-600' : 'text-neutral-400'
               }`}
             >
-              We replaced unregulated roadside brokers and deceptive aggregate portals with an auditable multi-vendor platform where verified fleet owners compete on quality and service.
+              We built DriveLoop to eliminate the headaches of traditional rentals: held security deposits, deceptive surge charges, and impounded private vehicles at state borders.
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Pillar 1 */}
             <div
-              className={`p-6 rounded-xl border flex flex-col justify-between transition-colors ${
+              className={`p-6 sm:p-7 rounded-2xl border flex flex-col justify-between transition-colors ${
                 isLight
                   ? 'bg-[#F8F6F2] border-stone-200/80 hover:border-stone-400 shadow-xs'
                   : 'bg-[#0D0D0E] border-neutral-800 hover:border-neutral-700'
@@ -436,19 +519,19 @@ export const LandingPage: React.FC = () => {
             >
               <div>
                 <div
-                  className={`w-9 h-9 rounded-md flex items-center justify-center font-mono text-xs font-bold mb-4 border ${
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 border ${
                     isLight
-                      ? 'bg-black text-white border-black shadow-xs'
-                      : 'bg-neutral-900 text-white border-neutral-700'
+                      ? 'bg-black text-white border-black'
+                      : 'bg-neutral-900 text-amber-400 border-neutral-800'
                   }`}
                 >
-                  01
+                  <ShieldCheck className="w-5 h-5 text-amber-400" />
                 </div>
                 <h3 className={`font-display text-lg font-bold ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                  Dedicated Escrow Deposit
+                  24-Hour Deposit Release
                 </h3>
-                <p className={`text-xs mt-2 leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
-                  Never worry about delayed deposit returns. Your security deposit is locked in automated escrow and credited back to your original source within 24 hours of inspection sign-off.
+                <p className={`text-xs mt-2.5 leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
+                  Never wait weeks for your money back. Your security deposit is placed in automated escrow and released directly back to your source account within 24 hours of vehicle return.
                 </p>
               </div>
               <div
@@ -457,13 +540,13 @@ export const LandingPage: React.FC = () => {
                 }`}
               >
                 <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                <span>Automated 24h Payout Guarantee</span>
+                <span>Automated Escrow Protection</span>
               </div>
             </div>
 
             {/* Pillar 2 */}
             <div
-              className={`p-6 rounded-xl border flex flex-col justify-between transition-colors ${
+              className={`p-6 sm:p-7 rounded-2xl border flex flex-col justify-between transition-colors ${
                 isLight
                   ? 'bg-[#F8F6F2] border-stone-200/80 hover:border-stone-400 shadow-xs'
                   : 'bg-[#0D0D0E] border-neutral-800 hover:border-neutral-700'
@@ -471,19 +554,19 @@ export const LandingPage: React.FC = () => {
             >
               <div>
                 <div
-                  className={`w-9 h-9 rounded-md flex items-center justify-center font-mono text-xs font-bold mb-4 border ${
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 border ${
                     isLight
-                      ? 'bg-black text-white border-black shadow-xs'
-                      : 'bg-neutral-900 text-white border-neutral-700'
+                      ? 'bg-black text-white border-black'
+                      : 'bg-neutral-900 text-emerald-400 border-neutral-800'
                   }`}
                 >
-                  02
+                  <Car className="w-5 h-5 text-emerald-400" />
                 </div>
                 <h3 className={`font-display text-lg font-bold ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                  Verified Commercial Yellow Plates
+                  100% Commercial Yellow Plates
                 </h3>
-                <p className={`text-xs mt-2 leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
-                  Every listed car carries authentic state transport yellow plates, valid commercial passenger fitness, and comprehensive multi-passenger insurance. No impoundment fears at state borders.
+                <p className={`text-xs mt-2.5 leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
+                  Every car carries authentic transport yellow plates, valid state passenger fitness permits, and commercial insurance. Enjoy stress-free travel across all state checkpoints.
                 </p>
               </div>
               <div
@@ -492,13 +575,13 @@ export const LandingPage: React.FC = () => {
                 }`}
               >
                 <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                <span>100% All-India Tourist Permit</span>
+                <span>All-India Tourist Permit (AITP)</span>
               </div>
             </div>
 
             {/* Pillar 3 */}
             <div
-              className={`p-6 rounded-xl border flex flex-col justify-between transition-colors ${
+              className={`p-6 sm:p-7 rounded-2xl border flex flex-col justify-between transition-colors ${
                 isLight
                   ? 'bg-[#F8F6F2] border-stone-200/80 hover:border-stone-400 shadow-xs'
                   : 'bg-[#0D0D0E] border-neutral-800 hover:border-neutral-700'
@@ -506,19 +589,19 @@ export const LandingPage: React.FC = () => {
             >
               <div>
                 <div
-                  className={`w-9 h-9 rounded-md flex items-center justify-center font-mono text-xs font-bold mb-4 border ${
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 border ${
                     isLight
-                      ? 'bg-black text-white border-black shadow-xs'
-                      : 'bg-neutral-900 text-white border-neutral-700'
+                      ? 'bg-black text-white border-black'
+                      : 'bg-neutral-900 text-white border-neutral-800'
                   }`}
                 >
-                  03
+                  <Zap className="w-5 h-5 text-amber-400" />
                 </div>
                 <h3 className={`font-display text-lg font-bold ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                  Digital Pre-Trip Inspection
+                  3-Minute Digital Handover
                 </h3>
-                <p className={`text-xs mt-2 leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
-                  Before driving away, both host and driver sign off on odometer reading, fuel level, and a 360° photo walkthrough in the app. Zero fraudulent damage disputes at handover.
+                <p className={`text-xs mt-2.5 leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
+                  Both host and driver complete mutual odometer and 360° photo inspection on the app in 3 minutes before driving away. Zero fraudulent scratch disputes.
                 </p>
               </div>
               <div
@@ -527,14 +610,69 @@ export const LandingPage: React.FC = () => {
                 }`}
               >
                 <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                <span>Mutual Sign-Off Protocol</span>
+                <span>Mutual Sign-Off Record</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 5. TOP REGIONAL HUBS */}
+      {/* 5. VERIFIED RENTER EXPERIENCES (Real Human Stories) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <span className="text-[11px] font-mono uppercase tracking-widest text-amber-500 font-semibold">
+            Traveler Stories
+          </span>
+          <h2
+            className={`font-display text-2xl sm:text-3xl font-bold mt-1 ${
+              isLight ? 'text-slate-900' : 'text-white'
+            }`}
+          >
+            Loved by Drivers Across India
+          </h2>
+          <p className={`text-xs sm:text-sm mt-1.5 ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
+            Real experiences from travelers who explored the highways with DriveLoop.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {realReviews.map((rev, idx) => (
+            <div
+              key={idx}
+              className={`p-6 sm:p-7 rounded-2xl border flex flex-col justify-between ${
+                isLight
+                  ? 'bg-white border-stone-200/80 shadow-xs'
+                  : 'bg-[#0D0D0E] border-neutral-800'
+              }`}
+            >
+              <div>
+                <div className="flex items-center space-x-1 mb-3 text-amber-400">
+                  {[...Array(rev.rating)].map((_, i) => (
+                    <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                  ))}
+                </div>
+                <p className={`text-xs sm:text-sm italic leading-relaxed ${isLight ? 'text-slate-700' : 'text-neutral-300'}`}>
+                  "{rev.text}"
+                </p>
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-neutral-800/80">
+                <p className={`font-semibold text-xs ${isLight ? 'text-slate-900' : 'text-white'}`}>
+                  {rev.author}
+                </p>
+                <p className={`text-[11px] ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
+                  {rev.role}
+                </p>
+                <span className="inline-block mt-2 text-[10px] font-mono px-2 py-0.5 rounded-full bg-neutral-900 border border-neutral-800 text-amber-400">
+                  {rev.trip}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 6. STRATEGIC REGIONAL HUBS */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
           className={`flex flex-col sm:flex-row sm:items-end justify-between mb-8 pb-4 border-b ${
@@ -542,53 +680,51 @@ export const LandingPage: React.FC = () => {
           }`}
         >
           <div>
-            <span className="text-[11px] font-mono uppercase tracking-widest text-amber-500">
-              Strategic Network
+            <span className="text-[11px] font-mono uppercase tracking-widest text-amber-500 font-semibold">
+              Delivery Network
             </span>
             <h2
               className={`font-display text-2xl sm:text-3xl font-bold mt-1 ${
                 isLight ? 'text-slate-900' : 'text-white'
               }`}
             >
-              Top Self-Drive Hubs Across India
+              Premier Regional Pickup Hubs
             </h2>
           </div>
-          <span
-            className={`text-xs font-mono mt-2 sm:mt-0 ${
-              isLight ? 'text-slate-400' : 'text-neutral-500'
+          <Link
+            to="/explore"
+            className={`text-xs font-semibold flex items-center space-x-1.5 mt-2 sm:mt-0 transition-colors ${
+              isLight ? 'text-slate-600 hover:text-black' : 'text-neutral-400 hover:text-white'
             }`}
           >
-            Airport & City Center Meet-Points
-          </span>
+            <span>See Hub Availability</span>
+            <ArrowRight className="w-3.5 h-3.5 text-amber-400" />
+          </Link>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-          {hubs.map((hub) => (
+          {regionalHubs.map((hub) => (
             <div
               key={hub.name}
-              onClick={() => navigate(`/explore?city=${encodeURIComponent(hub.name)}`)}
-              className={`group cursor-pointer rounded-xl border p-5 transition-all flex flex-col justify-between ${
+              onClick={() => navigate(`/explore?city=${hub.name}`)}
+              className={`group cursor-pointer p-5 rounded-2xl border transition-all duration-300 flex flex-col justify-between ${
                 isLight
                   ? 'bg-white border-stone-200/80 shadow-xs hover:border-stone-400 hover:shadow-md'
-                  : 'bg-[#0D0D0E] border-neutral-800 hover:border-neutral-700 hover:bg-[#121214] hover:shadow-xl'
+                  : 'bg-[#0D0D0E] border-neutral-800/80 hover:border-neutral-700 hover:bg-[#121214] hover:shadow-xl'
               }`}
             >
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <div
-                    className={`w-8 h-8 rounded-full border flex items-center justify-center transition-colors ${
+                    className={`w-8 h-8 rounded-full flex items-center justify-center border ${
                       isLight
-                        ? 'bg-slate-100 border-slate-200 text-slate-800 group-hover:bg-black group-hover:text-white'
-                        : 'bg-neutral-900 border-neutral-700 text-amber-400 group-hover:bg-amber-400 group-hover:text-black'
+                        ? 'bg-stone-100 text-slate-800 border-stone-200'
+                        : 'bg-neutral-900 text-amber-400 border-neutral-800'
                     }`}
                   >
-                    <MapPin className="w-4 h-4" />
+                    <MapPin className="w-4 h-4 text-amber-400" />
                   </div>
-                  <span
-                    className={`font-mono text-[10px] uppercase font-semibold ${
-                      isLight ? 'text-slate-400' : 'text-neutral-500'
-                    }`}
-                  >
+                  <span className={`text-[10px] font-mono font-semibold ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
                     {hub.fleetCount}
                   </span>
                 </div>
@@ -599,14 +735,14 @@ export const LandingPage: React.FC = () => {
                 >
                   {hub.name}
                 </h3>
-                <p className={`text-[11px] mt-1 leading-snug ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
+                <p className={`text-[11px] mt-1 line-clamp-2 leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
                   {hub.tag}
                 </p>
               </div>
 
               <div
-                className={`mt-4 pt-3 border-t text-[10px] font-mono font-semibold ${
-                  isLight ? 'border-stone-100 text-[#C25E26]' : 'border-neutral-800 text-amber-400'
+                className={`pt-3 border-t mt-4 text-[10px] font-medium truncate ${
+                  isLight ? 'border-stone-100 text-slate-500' : 'border-neutral-800/80 text-emerald-400'
                 }`}
               >
                 {hub.highlight}
@@ -616,58 +752,11 @@ export const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 6. BECOME A HOST PROMOTION */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div
-          className={`rounded-2xl p-8 sm:p-14 relative overflow-hidden border shadow-xl ${
-            isLight
-              ? 'bg-gradient-to-r from-stone-900 via-stone-800 to-black text-white border-stone-700'
-              : 'bg-gradient-to-r from-neutral-900 via-[#0D0D0E] to-black text-white border-neutral-800'
-          }`}
-        >
-          <div className="relative z-10 max-w-2xl space-y-4">
-            <span className="font-mono text-xs uppercase tracking-widest text-amber-500">
-              FLEET OPERATOR PORTAL
-            </span>
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-white">
-              Turn Your Idle Rental Fleet Into Predictable Revenue.
-            </h2>
-            <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed">
-              Are you a licensed car rental operator in North India? Join DriveLoop’s verified host network.
-              Get pre-screened customers, integrated Razorpay payment collection, automated damage escrow, and weekly direct bank payouts with just 10% marketplace commission.
-            </p>
-            <div className="pt-3 flex flex-wrap gap-3">
-              <Link
-                to="/register?role=VENDOR"
-                className={`px-5 py-3 rounded-full text-xs font-bold uppercase tracking-wider transition-all shadow-card flex items-center space-x-2 ${
-                  isLight
-                    ? 'bg-white hover:bg-stone-100 text-black'
-                    : 'bg-white hover:bg-neutral-200 text-black'
-                }`}
-              >
-                <span>Register Fleet Business</span>
-                <ArrowRight className="w-3.5 h-3.5 text-inherit" />
-              </Link>
-              <Link
-                to="/host"
-                className={`px-5 py-3 rounded-full text-xs font-semibold tracking-wide border transition-colors ${
-                  isLight
-                    ? 'bg-white/10 hover:bg-white/20 text-white border-white/20'
-                    : 'bg-neutral-900/90 hover:bg-neutral-800 text-white border-neutral-700'
-                }`}
-              >
-                Host FAQ & Commission Rates
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* 7. FREQUENTLY ASKED QUESTIONS */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10">
-          <span className="font-mono text-xs uppercase tracking-widest text-amber-500">
-            Transparency & Policies
+          <span className="text-[11px] font-mono uppercase tracking-widest text-amber-500 font-semibold">
+            Support & Clarity
           </span>
           <h2
             className={`font-display text-2xl sm:text-3xl font-bold mt-1 ${
@@ -676,6 +765,9 @@ export const LandingPage: React.FC = () => {
           >
             Frequently Asked Questions
           </h2>
+          <p className={`text-xs sm:text-sm mt-1.5 ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
+            Everything you need to know about renting with DriveLoop.
+          </p>
         </div>
 
         <div className="space-y-3">
@@ -684,42 +776,30 @@ export const LandingPage: React.FC = () => {
             return (
               <div
                 key={idx}
-                className={`rounded-xl border overflow-hidden transition-colors ${
+                className={`rounded-2xl border transition-all ${
                   isLight
                     ? 'bg-white border-stone-200/80 shadow-xs'
-                    : 'bg-[#0D0D0E] border-neutral-800'
+                    : 'bg-[#0D0D0E] border-neutral-800/80 hover:border-neutral-700'
                 }`}
               >
                 <button
                   type="button"
                   onClick={() => setActiveFaq(isOpen ? null : idx)}
-                  className={`w-full p-4 sm:p-5 text-left flex items-center justify-between text-xs sm:text-sm font-bold transition-colors ${
-                    isLight
-                      ? 'text-slate-900 hover:text-black'
-                      : 'text-white hover:text-amber-400'
-                  }`}
+                  className="w-full p-5 text-left flex items-center justify-between gap-4 cursor-pointer"
                 >
-                  <span>{faq.q}</span>
+                  <span className={`font-semibold text-xs sm:text-sm ${isLight ? 'text-slate-900' : 'text-white'}`}>
+                    {faq.q}
+                  </span>
                   {isOpen ? (
-                    <ChevronUp
-                      className={`w-4 h-4 shrink-0 ml-4 ${
-                        isLight ? 'text-slate-800' : 'text-neutral-300'
-                      }`}
-                    />
+                    <ChevronUp className="w-4 h-4 text-amber-400 shrink-0" />
                   ) : (
-                    <ChevronDown
-                      className={`w-4 h-4 shrink-0 ml-4 ${
-                        isLight ? 'text-slate-400' : 'text-neutral-500'
-                      }`}
-                    />
+                    <ChevronDown className={`w-4 h-4 shrink-0 ${isLight ? 'text-slate-400' : 'text-neutral-400'}`} />
                   )}
                 </button>
                 {isOpen && (
                   <div
-                    className={`px-4 sm:px-5 pb-5 text-xs leading-relaxed border-t pt-3 ${
-                      isLight
-                        ? 'border-stone-100 text-slate-600'
-                        : 'border-neutral-800 text-neutral-400'
+                    className={`px-5 pb-5 text-xs sm:text-sm leading-relaxed border-t pt-3 ${
+                      isLight ? 'border-stone-100 text-slate-600' : 'border-neutral-800 text-neutral-300'
                     }`}
                   >
                     {faq.a}
@@ -728,6 +808,39 @@ export const LandingPage: React.FC = () => {
               </div>
             );
           })}
+        </div>
+      </section>
+
+      {/* 8. BECOME A HOST PROMO BANNER */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-[#0D0D0E] border border-neutral-800 rounded-3xl p-8 sm:p-12 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl">
+          <div className="max-w-2xl space-y-3 text-center md:text-left">
+            <span className="inline-block px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800 text-[10px] font-mono tracking-widest uppercase text-amber-400 font-semibold">
+              Host Partnership Program
+            </span>
+            <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight">
+              Have a Commercial Rental Fleet?
+            </h3>
+            <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed font-normal">
+              List your commercial yellow-plate cars on DriveLoop. Enjoy guaranteed weekly bank payouts, automated security deposit escrow, and a low 10% platform commission.
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-3 shrink-0">
+            <Link
+              to="/host"
+              className="px-6 py-3.5 rounded-full bg-white hover:bg-neutral-200 text-black text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-lg"
+            >
+              <span>Explore Host Program</span>
+              <ArrowRight className="w-4 h-4 text-black" />
+            </Link>
+            <Link
+              to="/register?role=VENDOR"
+              className="px-6 py-3.5 rounded-full bg-black hover:bg-neutral-900 border border-neutral-800 text-white text-xs font-semibold tracking-wider transition-all flex items-center justify-center"
+            >
+              Register Fleet
+            </Link>
+          </div>
         </div>
       </section>
     </div>

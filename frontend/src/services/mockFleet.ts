@@ -265,7 +265,7 @@ export const MOCK_FLEET: Vehicle[] = [
     totalTrips: 40,
     createdAt: '2024-01-26T10:00:00.000Z',
     images: [
-      { id: 'img-7-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea07', url: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=600&auto=format&fit=crop&q=75', isPrimary: true, order: 0 },
+      { id: 'img-7-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea07', url: 'https://images.unsplash.com/photo-1542362567-b07e54358753?w=800&auto=format&fit=crop&q=80', isPrimary: true, order: 0 },
       { id: 'img-7-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea07', url: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600&auto=format&fit=crop&q=75', isPrimary: false, order: 1 },
     ],
     features: [
@@ -382,7 +382,7 @@ export const MOCK_FLEET: Vehicle[] = [
     totalTrips: 48,
     createdAt: '2024-01-29T10:00:00.000Z',
     images: [
-      { id: 'img-10-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea10', url: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=600&auto=format&fit=crop&q=75', isPrimary: true, order: 0 },
+      { id: 'img-10-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea10', url: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=800&auto=format&fit=crop&q=80', isPrimary: true, order: 0 },
       { id: 'img-10-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea10', url: 'https://images.unsplash.com/photo-1502877338535-766e1452684a?w=600&auto=format&fit=crop&q=75', isPrimary: false, order: 1 },
     ],
     features: [
@@ -499,7 +499,7 @@ export const MOCK_FLEET: Vehicle[] = [
     totalTrips: 60,
     createdAt: '2024-02-02T10:00:00.000Z',
     images: [
-      { id: 'img-13-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea13', url: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=600&auto=format&fit=crop&q=75', isPrimary: true, order: 0 },
+      { id: 'img-13-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea13', url: 'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=800&auto=format&fit=crop&q=80', isPrimary: true, order: 0 },
       { id: 'img-13-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea13', url: 'https://images.unsplash.com/photo-1502877338535-766e1452684a?w=600&auto=format&fit=crop&q=75', isPrimary: false, order: 1 },
     ],
     features: [
@@ -577,7 +577,7 @@ export const MOCK_FLEET: Vehicle[] = [
     totalTrips: 27,
     createdAt: '2024-02-04T10:00:00.000Z',
     images: [
-      { id: 'img-15-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea15', url: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=600&auto=format&fit=crop&q=75', isPrimary: true, order: 0 },
+      { id: 'img-15-1', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea15', url: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&auto=format&fit=crop&q=80', isPrimary: true, order: 0 },
       { id: 'img-15-2', vehicleId: 'b1c698df-9252-4ebc-8b26-b4cb24d8ea15', url: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600&auto=format&fit=crop&q=75', isPrimary: false, order: 1 },
     ],
     features: [

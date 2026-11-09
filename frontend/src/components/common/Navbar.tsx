@@ -84,18 +84,24 @@ export const Navbar: React.FC = () => {
         <div className="flex items-center justify-between h-14 sm:h-16">
           {/* Brand Logo: adaptive to theme & transparency */}
           <Link to="/" className="flex items-center space-x-2.5 group">
-            <Car
-              className={`w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:scale-105 ${
-                isHeaderTransparent || theme === 'dark' ? 'text-white' : 'text-[#111827]'
-              }`}
-              strokeWidth={1.8}
-            />
+            <div className={`w-8 h-8 rounded-xl flex items-center justify-center transition-colors border ${
+              isHeaderTransparent || theme === 'dark'
+                ? 'bg-neutral-900/90 border-neutral-700/80 group-hover:border-amber-400/60'
+                : 'bg-slate-100 border-stone-200 group-hover:border-slate-400'
+            }`}>
+              <Car
+                className={`w-4 h-4 transition-transform group-hover:scale-105 ${
+                  isHeaderTransparent || theme === 'dark' ? 'text-amber-400' : 'text-slate-900'
+                }`}
+                strokeWidth={2}
+              />
+            </div>
             <span
-              className={`text-lg sm:text-xl font-medium tracking-tight drop-shadow-sm ${
+              className={`text-lg sm:text-xl font-bold tracking-tight drop-shadow-sm font-display ${
                 isHeaderTransparent || theme === 'dark' ? 'text-white' : 'text-[#111827]'
               }`}
             >
-              DriveLoop
+              Drive<span className="text-amber-400">Loop</span>
             </span>
           </Link>
 

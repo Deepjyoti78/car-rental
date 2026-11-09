@@ -411,7 +411,7 @@ async function main() {
       rating: 4.82,
       totalTrips: 40,
       images: [
-        { url: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=1200&q=80', isPrimary: true, order: 0 },
+        { url: 'https://images.unsplash.com/photo-1542362567-b07e54358753?w=1200&q=80', isPrimary: true, order: 0 },
         { url: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1200&q=80', isPrimary: false, order: 1 },
       ],
       features: ['Level 2 ADAS', 'Panoramic Sunroof', 'Ventilated Front Seats', '360 View Monitor', 'Electronic Parking Brake'],
@@ -489,7 +489,7 @@ async function main() {
       rating: 4.68,
       totalTrips: 48,
       images: [
-        { url: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=1200&q=80', isPrimary: true, order: 0 },
+        { url: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=1200&q=80', isPrimary: true, order: 0 },
         { url: 'https://images.unsplash.com/photo-1502877338535-766e1452684a?w=1200&q=80', isPrimary: false, order: 1 },
       ],
       features: ['7 Seats', 'SmartPlay Pro Plus', 'Cruise Control', 'Rear AC Vents', 'Hill Hold Assist'],
@@ -567,7 +567,7 @@ async function main() {
       rating: 4.65,
       totalTrips: 60,
       images: [
-        { url: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=1200&q=80', isPrimary: true, order: 0 },
+        { url: 'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=1200&q=80', isPrimary: true, order: 0 },
         { url: 'https://images.unsplash.com/photo-1502877338535-766e1452684a?w=1200&q=80', isPrimary: false, order: 1 },
       ],
       features: ['6 Airbags Standard', 'Wireless Android Auto', 'Rear Parking Camera', 'LED Projector Lamps', 'Keyless Push Start'],
@@ -619,7 +619,7 @@ async function main() {
       rating: 4.89,
       totalTrips: 27,
       images: [
-        { url: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=1200&q=80', isPrimary: true, order: 0 },
+        { url: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1200&q=80', isPrimary: true, order: 0 },
         { url: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1200&q=80', isPrimary: false, order: 1 },
       ],
       features: ['Dual Panoramic Displays', 'Bose 8-Speaker Audio', 'Matte Finish Exterior', 'Level 2 ADAS', 'Paddle Shifters'],
