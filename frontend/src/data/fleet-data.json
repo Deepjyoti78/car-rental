@@ -1,0 +1,614 @@
+[
+  {
+    "id": 1,
+    "header": "Vehicle Handover & 3-Min Inspection Protocol",
+    "type": "Fleet Operations",
+    "status": "In Process",
+    "target": "18",
+    "limit": "5",
+    "reviewer": "Eddie Lake"
+  },
+  {
+    "id": 2,
+    "header": "Commercial Yellow-Plate State Permit Roster",
+    "type": "Compliance & Legal",
+    "status": "Done",
+    "target": "29",
+    "limit": "24",
+    "reviewer": "Eddie Lake"
+  },
+  {
+    "id": 3,
+    "header": "Automated 24h Deposit Escrow Refund Batch",
+    "type": "Financial & Escrow",
+    "status": "Done",
+    "target": "10",
+    "limit": "13",
+    "reviewer": "Eddie Lake"
+  },
+  {
+    "id": 4,
+    "header": "Aerocity T3 Dedicated Bay Meet & Greet Logistics",
+    "type": "Regional Logistics",
+    "status": "Done",
+    "target": "27",
+    "limit": "23",
+    "reviewer": "Jamik Tashpulatov"
+  },
+  {
+    "id": 5,
+    "header": "BMW X5 xDrive40i 15,000 km Brake & Rotor Overhaul",
+    "type": "Maintenance",
+    "status": "In Process",
+    "target": "2",
+    "limit": "16",
+    "reviewer": "Jamik Tashpulatov"
+  },
+  {
+    "id": 6,
+    "header": "FASTag NHAI Toll Auto-Reconciliation Gateway",
+    "type": "Telematics & Tech",
+    "status": "In Process",
+    "target": "20",
+    "limit": "8",
+    "reviewer": "Jamik Tashpulatov"
+  },
+  {
+    "id": 7,
+    "header": "DigiLocker Renter DL & Aadhaar KYC Verification",
+    "type": "Guest KYC",
+    "status": "In Process",
+    "target": "19",
+    "limit": "21",
+    "reviewer": "Jamik Tashpulatov"
+  },
+  {
+    "id": 8,
+    "header": "EV High-Speed DC Fast Charging Hub Telemetry",
+    "type": "Fleet Operations",
+    "status": "Done",
+    "target": "25",
+    "limit": "26",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 9,
+    "header": "Mahindra Thar 4x4 Transfer Case & Differential Service",
+    "type": "Maintenance",
+    "status": "Done",
+    "target": "7",
+    "limit": "23",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 10,
+    "header": "Speed Governor 80 km/h IoT Telematics Safety Audit",
+    "type": "Telematics & Tech",
+    "status": "Done",
+    "target": "30",
+    "limit": "28",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 11,
+    "header": "Delhi-NCR to Jaipur Highway Cross-Border Permit Sync",
+    "type": "Regional Logistics",
+    "status": "Done",
+    "target": "9",
+    "limit": "31",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 12,
+    "header": "Zero-Deduction Comprehensive Fleet Insurance Renewal",
+    "type": "Compliance & Legal",
+    "status": "Done",
+    "target": "12",
+    "limit": "0",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 13,
+    "header": "Guest Feedback & Cleanliness Handover Scorecard",
+    "type": "Guest KYC",
+    "status": "Done",
+    "target": "22",
+    "limit": "33",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 14,
+    "header": "Airport Curbside Priority Dispatch Dispatchers",
+    "type": "Regional Logistics",
+    "status": "Done",
+    "target": "15",
+    "limit": "34",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 15,
+    "header": "Fuel Level & GPS Geofence Tamper Detection Rules",
+    "type": "Telematics & Tech",
+    "status": "Done",
+    "target": "3",
+    "limit": "35",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 16,
+    "header": "Host Fleet Onboarding & Vehicle RC Verification",
+    "type": "Compliance & Legal",
+    "status": "In Process",
+    "target": "6",
+    "limit": "36",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 17,
+    "header": "Cyber Hub Executive Sedan Rapid Turnaround Bay",
+    "type": "Regional Logistics",
+    "status": "Done",
+    "target": "4",
+    "limit": "37",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 18,
+    "header": "Razorpay Escrow Multi-Bank Payment Gateway SLA",
+    "type": "Financial & Escrow",
+    "status": "Done",
+    "target": "14",
+    "limit": "38",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 19,
+    "header": "On-Demand Chauffeur Training & Customer Etiquette",
+    "type": "Fleet Operations",
+    "status": "Done",
+    "target": "17",
+    "limit": "39",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 20,
+    "header": "Electric Vehicle Fleet Expansion (BYD Seal & Ioniq 5)",
+    "type": "Fleet Operations",
+    "status": "Done",
+    "target": "11",
+    "limit": "40",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 21,
+    "header": "Centralized Fleet OBD-II Sensor Diagnostics Engine",
+    "type": "Telematics & Tech",
+    "status": "In Process",
+    "target": "24",
+    "limit": "18",
+    "reviewer": "Maya Johnson"
+  },
+  {
+    "id": 22,
+    "header": "Severe Weather & Monsoon Tire Tread Safety Protocol",
+    "type": "Maintenance",
+    "status": "Done",
+    "target": "15",
+    "limit": "22",
+    "reviewer": "Carlos Rodriguez"
+  },
+  {
+    "id": 23,
+    "header": "RTO Commercial Vehicle Tax & Fitness Certifications",
+    "type": "Compliance & Legal",
+    "status": "In Process",
+    "target": "31",
+    "limit": "27",
+    "reviewer": "Sarah Chen"
+  },
+  {
+    "id": 24,
+    "header": "REST API Gateway for External Travel & Flight Bookings",
+    "type": "Telematics & Tech",
+    "status": "Done",
+    "target": "8",
+    "limit": "12",
+    "reviewer": "Raj Patel"
+  },
+  {
+    "id": 25,
+    "header": "Guest Mobile App Handover Photo Upload Flow",
+    "type": "Guest KYC",
+    "status": "In Process",
+    "target": "19",
+    "limit": "25",
+    "reviewer": "Leila Ahmadi"
+  },
+  {
+    "id": 26,
+    "header": "Fleet Availability & Real-Time Booking Ledger Schema",
+    "type": "Telematics & Tech",
+    "status": "Done",
+    "target": "22",
+    "limit": "20",
+    "reviewer": "Thomas Wilson"
+  },
+  {
+    "id": 27,
+    "header": "Automated Damage Detection with High-Res AI Inspection",
+    "type": "Maintenance",
+    "status": "In Process",
+    "target": "17",
+    "limit": "14",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 28,
+    "header": "Zero-Downtime Weekend Peak Fleet Deployment Strategy",
+    "type": "Regional Logistics",
+    "status": "Done",
+    "target": "26",
+    "limit": "30",
+    "reviewer": "Eddie Lake"
+  },
+  {
+    "id": 29,
+    "header": "Quarterly Fleet Maintenance & Consumables Budget",
+    "type": "Financial & Escrow",
+    "status": "In Process",
+    "target": "13",
+    "limit": "16",
+    "reviewer": "Jamik Tashpulatov"
+  },
+  {
+    "id": 30,
+    "header": "Self-Drive Rental Pricing & Demand Elasticity Matrix",
+    "type": "Financial & Escrow",
+    "status": "Done",
+    "target": "29",
+    "limit": "32",
+    "reviewer": "Sophia Martinez"
+  },
+  {
+    "id": 31,
+    "header": "Competitor Fleet Class & Hourly Pricing Benchmark",
+    "type": "Financial & Escrow",
+    "status": "In Process",
+    "target": "21",
+    "limit": "19",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 32,
+    "header": "Winter Engine Coolant & Battery Cold-Start Protocol",
+    "type": "Maintenance",
+    "status": "Done",
+    "target": "16",
+    "limit": "23",
+    "reviewer": "Alex Thompson"
+  },
+  {
+    "id": 33,
+    "header": "Corporate Executive & Business Traveler Personas",
+    "type": "Guest KYC",
+    "status": "In Process",
+    "target": "27",
+    "limit": "24",
+    "reviewer": "Nina Patel"
+  },
+  {
+    "id": 34,
+    "header": "Wheelchair Accessible Van & Ramp Vehicle Compliance",
+    "type": "Compliance & Legal",
+    "status": "Done",
+    "target": "18",
+    "limit": "21",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 35,
+    "header": "Sub-4-Minute Airport Handover Latency Metric",
+    "type": "Regional Logistics",
+    "status": "In Process",
+    "target": "23",
+    "limit": "26",
+    "reviewer": "David Kim"
+  },
+  {
+    "id": 36,
+    "header": "Emergency Roadside Assistance (RSA) Dispatch SOP",
+    "type": "Fleet Operations",
+    "status": "Done",
+    "target": "14",
+    "limit": "17",
+    "reviewer": "Jamik Tashpulatov"
+  },
+  {
+    "id": 37,
+    "header": "Third-Party Hotel Concierge & Airline App Sync",
+    "type": "Telematics & Tech",
+    "status": "In Process",
+    "target": "25",
+    "limit": "28",
+    "reviewer": "Eddie Lake"
+  },
+  {
+    "id": 38,
+    "header": "Renter Post-Trip Net Promoter Score (NPS) Analysis",
+    "type": "Guest KYC",
+    "status": "Done",
+    "target": "20",
+    "limit": "15",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 39,
+    "header": "Multi-Language Airport Welcome Guides (Hindi & English)",
+    "type": "Fleet Operations",
+    "status": "In Process",
+    "target": "12",
+    "limit": "19",
+    "reviewer": "Maria Garcia"
+  },
+  {
+    "id": 40,
+    "header": "PWA Mobile Web Handover & Offline Digital Key Access",
+    "type": "Telematics & Tech",
+    "status": "Done",
+    "target": "28",
+    "limit": "31",
+    "reviewer": "James Wilson"
+  },
+  {
+    "id": 41,
+    "header": "Legacy Fleet Telematics Migration to Cloud MQTT",
+    "type": "Telematics & Tech",
+    "status": "In Process",
+    "target": "19",
+    "limit": "22",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 42,
+    "header": "Certified 200-Point Automotive Mechanical Inspection",
+    "type": "Maintenance",
+    "status": "Done",
+    "target": "30",
+    "limit": "33",
+    "reviewer": "Priya Singh"
+  },
+  {
+    "id": 43,
+    "header": "Airport Authority (DIAL) Bay Lease & Concourse SLA",
+    "type": "Regional Logistics",
+    "status": "In Process",
+    "target": "11",
+    "limit": "14",
+    "reviewer": "Eddie Lake"
+  },
+  {
+    "id": 44,
+    "header": "Fleet Carbon Offset & Green EV Km Accounting",
+    "type": "Fleet Operations",
+    "status": "Done",
+    "target": "24",
+    "limit": "27",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 45,
+    "header": "DriveLoop Smart Keyless Handover Patent Filing",
+    "type": "Compliance & Legal",
+    "status": "In Process",
+    "target": "17",
+    "limit": "20",
+    "reviewer": "Sarah Johnson"
+  },
+  {
+    "id": 46,
+    "header": "24/7 Dedicated Concierge & WhatsApp Guest Support",
+    "type": "Fleet Operations",
+    "status": "Done",
+    "target": "22",
+    "limit": "25",
+    "reviewer": "Jamik Tashpulatov"
+  },
+  {
+    "id": 47,
+    "header": "Fleet Firmware Over-The-Air (FOTA) Security Audit",
+    "type": "Telematics & Tech",
+    "status": "In Process",
+    "target": "15",
+    "limit": "18",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 48,
+    "header": "Automated Host Payout Direct Bank Transfer Pipeline",
+    "type": "Financial & Escrow",
+    "status": "Done",
+    "target": "26",
+    "limit": "29",
+    "reviewer": "Michael Chen"
+  },
+  {
+    "id": 49,
+    "header": "Motor Vehicles Act 2024 Self-Drive Compliance Audit",
+    "type": "Compliance & Legal",
+    "status": "In Process",
+    "target": "13",
+    "limit": "16",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 50,
+    "header": "Biometric & OTP Vehicle Unlock Authorization",
+    "type": "Telematics & Tech",
+    "status": "Done",
+    "target": "28",
+    "limit": "31",
+    "reviewer": "Eddie Lake"
+  },
+  {
+    "id": 51,
+    "header": "Fleet Utilization & Revenue Heatmap Analytics",
+    "type": "Telematics & Tech",
+    "status": "In Process",
+    "target": "21",
+    "limit": "24",
+    "reviewer": "Jamik Tashpulatov"
+  },
+  {
+    "id": 52,
+    "header": "Google Cloud Vehicle Telematics & Ingestion Pipeline",
+    "type": "Telematics & Tech",
+    "status": "Done",
+    "target": "16",
+    "limit": "19",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 53,
+    "header": "CAN Bus Zero-Trust Encrypted Vehicle Network",
+    "type": "Telematics & Tech",
+    "status": "In Process",
+    "target": "29",
+    "limit": "32",
+    "reviewer": "Lisa Wong"
+  },
+  {
+    "id": 54,
+    "header": "Holiday Season Fleet Scale-Up Project Timeline",
+    "type": "Fleet Operations",
+    "status": "Done",
+    "target": "14",
+    "limit": "17",
+    "reviewer": "Eddie Lake"
+  },
+  {
+    "id": 55,
+    "header": "Regional Hub Vehicle Balancing & Intercity Relocation",
+    "type": "Regional Logistics",
+    "status": "In Process",
+    "target": "27",
+    "limit": "30",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 56,
+    "header": "Regional Operations Team Rosters & Shift Leads",
+    "type": "Fleet Operations",
+    "status": "Done",
+    "target": "20",
+    "limit": "23",
+    "reviewer": "Jamik Tashpulatov"
+  },
+  {
+    "id": 57,
+    "header": "Driver-Host Emergency Signal Frequency Standards",
+    "type": "Telematics & Tech",
+    "status": "In Process",
+    "target": "15",
+    "limit": "18",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 58,
+    "header": "Quarterly Target: 99.8% On-Time Vehicle Handover",
+    "type": "Fleet Operations",
+    "status": "Done",
+    "target": "30",
+    "limit": "33",
+    "reviewer": "Eddie Lake"
+  },
+  {
+    "id": 59,
+    "header": "Foreign Tourist International Driving Permit (IDP) KYC",
+    "type": "Guest KYC",
+    "status": "In Process",
+    "target": "23",
+    "limit": "26",
+    "reviewer": "Jamik Tashpulatov"
+  },
+  {
+    "id": 60,
+    "header": "Daily Cloud Telemetry Backup & Crash Log Archival",
+    "type": "Telematics & Tech",
+    "status": "Done",
+    "target": "18",
+    "limit": "21",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 61,
+    "header": "Geo-Fence Breach & Unauthorized Border Crossing Alerter",
+    "type": "Telematics & Tech",
+    "status": "In Process",
+    "target": "25",
+    "limit": "28",
+    "reviewer": "Daniel Park"
+  },
+  {
+    "id": 62,
+    "header": "Fleet Maintenance Technician Certification Guidelines",
+    "type": "Maintenance",
+    "status": "Done",
+    "target": "12",
+    "limit": "15",
+    "reviewer": "Eddie Lake"
+  },
+  {
+    "id": 63,
+    "header": "Vehicle Interior Detailing & Ozone Sterilization SOP",
+    "type": "Maintenance",
+    "status": "In Process",
+    "target": "27",
+    "limit": "30",
+    "reviewer": "Jamik Tashpulatov"
+  },
+  {
+    "id": 64,
+    "header": "New Model Fleet Launch: 2026 Thar Roxx 4x4 Rollout",
+    "type": "Fleet Operations",
+    "status": "Done",
+    "target": "22",
+    "limit": "25",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 65,
+    "header": "EV Charger Priority Allocation Matrix for Long Trips",
+    "type": "Fleet Operations",
+    "status": "In Process",
+    "target": "19",
+    "limit": "22",
+    "reviewer": "Emma Davis"
+  },
+  {
+    "id": 66,
+    "header": "Fleet Aging Analysis & 36-Month Vehicle Decommission",
+    "type": "Fleet Operations",
+    "status": "Done",
+    "target": "24",
+    "limit": "27",
+    "reviewer": "Eddie Lake"
+  },
+  {
+    "id": 67,
+    "header": "Chandigarh & Jaipur Hub Expansion Capacity Planning",
+    "type": "Regional Logistics",
+    "status": "In Process",
+    "target": "21",
+    "limit": "24",
+    "reviewer": "Jamik Tashpulatov"
+  },
+  {
+    "id": 68,
+    "header": "Commercial Host SLA & Maintenance Assurance Contract",
+    "type": "Compliance & Legal",
+    "status": "Done",
+    "target": "26",
+    "limit": "29",
+    "reviewer": "Assign reviewer"
+  }
+]

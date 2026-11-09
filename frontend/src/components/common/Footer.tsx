@@ -10,7 +10,7 @@ export const Footer: React.FC = () => {
 
   // Hide footer on focused authentication pages and admin console
   const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
-  const isAdminDashboard = location.pathname.startsWith('/admin');
+  const isAdminDashboard = location.pathname.startsWith('/admin') || location.pathname.startsWith('/fleet-ops');
   if (isAuthPage || isAdminDashboard) {
     return null;
   }

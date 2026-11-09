@@ -23,6 +23,7 @@ import { RegisterPage } from './pages/public/RegisterPage';
 import { CustomerDashboardPage } from './pages/customer/CustomerDashboardPage';
 import { VendorDashboardPage } from './pages/vendor/VendorDashboardPage';
 import { AdminDashboardPage } from './pages/admin/AdminDashboardPage';
+import { FleetOperationsDashboardPage } from './pages/admin/FleetOperationsDashboardPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -100,6 +101,20 @@ export const App: React.FC = () => {
                     <AdminDashboardPage />
                   </ProtectedRoute>
                 }
+              />
+
+              {/* Shadcn UI Dashboard-01: Fleet Operations & Lifecycle Console */}
+              <Route
+                path="/admin/fleet-ops"
+                element={
+                  <ProtectedRoute allowedRoles={['ADMIN']}>
+                    <FleetOperationsDashboardPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/fleet-ops"
+                element={<FleetOperationsDashboardPage />}
               />
 
               {/* Fallback */}

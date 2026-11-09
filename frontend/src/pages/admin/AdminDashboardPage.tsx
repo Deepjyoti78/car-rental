@@ -48,6 +48,7 @@ import {
   ArrowUpRight,
   Zap,
   Fuel,
+  Layers,
 } from 'lucide-react';
 
 export const AdminDashboardPage: React.FC = () => {
@@ -925,6 +926,15 @@ export const AdminDashboardPage: React.FC = () => {
             </div>
 
             <div className="flex items-center space-x-2.5">
+              {/* Fleet Ops (shadcn) Navigation */}
+              <Link
+                to="/fleet-ops"
+                className="px-3.5 py-1.5 rounded-xl border text-xs font-semibold flex items-center space-x-1.5 transition-all cursor-pointer shadow-xs bg-blue-600 hover:bg-blue-500 text-white border-blue-500"
+              >
+                <Layers className="w-3.5 h-3.5" />
+                <span>Fleet Ops Console</span>
+              </Link>
+
               {/* Export Button */}
               <button
                 onClick={handleExportData}
