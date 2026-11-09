@@ -700,6 +700,8 @@ export const AdminDashboardPage: React.FC = () => {
               return (
                 <button
                   key={item.id}
+                  data-tab={item.id}
+                  aria-label={`Tab ${item.label}`}
                   onClick={() => setActiveTab(item.id as any)}
                   className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                     isActive
