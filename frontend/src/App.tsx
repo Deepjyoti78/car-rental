@@ -16,6 +16,7 @@ import { ExploreCarsPage } from './pages/public/ExploreCarsPage';
 import { VehicleDetailsPage } from './pages/public/VehicleDetailsPage';
 import { HostLandingPage } from './pages/public/HostLandingPage';
 import { HowItWorksPage } from './pages/public/HowItWorksPage';
+import { LocationsPage } from './pages/public/LocationsPage';
 import { LoginPage } from './pages/public/LoginPage';
 import { RegisterPage } from './pages/public/RegisterPage';
 
@@ -68,6 +69,7 @@ export const App: React.FC = () => {
               <Route path="/" element={<LandingPage />} />
               <Route path="/explore" element={<ExploreCarsPage />} />
               <Route path="/cars" element={<ExploreCarsPage />} />
+              <Route path="/locations" element={<LocationsPage />} />
               <Route path="/vehicles/:id" element={<VehicleDetailsPage />} />
               <Route path="/host" element={<HostLandingPage />} />
               <Route path="/how-it-works" element={<HowItWorksPage />} />
