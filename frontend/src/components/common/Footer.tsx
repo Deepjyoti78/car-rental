@@ -11,121 +11,125 @@ export const Footer: React.FC = () => {
   // Hide footer on focused authentication pages and admin console
   const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
   const isAdminDashboard = location.pathname.startsWith('/admin') || location.pathname.startsWith('/fleet-ops');
+  const isLocationsPage = location.pathname === '/locations';
+
   if (isAuthPage || isAdminDashboard) {
     return null;
   }
 
   return (
     <footer
-      className={`pt-16 pb-12 transition-colors duration-200 border-t ${
+      className={`${isLocationsPage ? 'pt-8' : 'pt-16'} pb-12 transition-colors duration-200 border-t ${
         isLight
           ? 'bg-[#EAE4DC] text-slate-900 border-stone-300'
           : 'bg-black text-white border-neutral-800'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Top Trust Pillars Banner */}
-        <div
-          className={`grid grid-cols-1 md:grid-cols-4 gap-8 pb-12 border-b ${
-            isLight ? 'border-stone-300' : 'border-neutral-800'
-          }`}
-        >
-          <div className="flex items-start space-x-3.5">
-            <div
-              className={`w-9 h-9 rounded-xl border flex items-center justify-center shrink-0 ${
-                isLight
-                  ? 'bg-white border-stone-300 text-slate-800 shadow-xs'
-                  : 'bg-[#0D0D0E] border-neutral-800 text-amber-400'
-              }`}
-            >
-              <ShieldCheck className="w-4 h-4" />
-            </div>
-            <div>
-              <h4
-                className={`text-xs font-bold uppercase tracking-wider ${
-                  isLight ? 'text-slate-900' : 'text-white'
+        {/* Top Trust Pillars Banner (hidden on Locations page where custom value props are shown) */}
+        {!isLocationsPage && (
+          <div
+            className={`grid grid-cols-1 md:grid-cols-4 gap-8 pb-12 border-b ${
+              isLight ? 'border-stone-300' : 'border-neutral-800'
+            }`}
+          >
+            <div className="flex items-start space-x-3.5">
+              <div
+                className={`w-9 h-9 rounded-xl border flex items-center justify-center shrink-0 ${
+                  isLight
+                    ? 'bg-white border-stone-300 text-slate-800 shadow-xs'
+                    : 'bg-[#0D0D0E] border-neutral-800 text-amber-400'
                 }`}
               >
-                Inspected Fleet
-              </h4>
-              <p className={`text-xs mt-1 leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
-                Commercial yellow plates, multi-point fitness checks, and mutual pre-trip photo logs.
-              </p>
+                <ShieldCheck className="w-4 h-4" />
+              </div>
+              <div>
+                <h4
+                  className={`text-xs font-bold uppercase tracking-wider ${
+                    isLight ? 'text-slate-900' : 'text-white'
+                  }`}
+                >
+                  Inspected Fleet
+                </h4>
+                <p className={`text-xs mt-1 leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
+                  Commercial yellow plates, multi-point fitness checks, and mutual pre-trip photo logs.
+                </p>
+              </div>
             </div>
-          </div>
 
-          <div className="flex items-start space-x-3.5">
-            <div
-              className={`w-9 h-9 rounded-xl border flex items-center justify-center shrink-0 ${
-                isLight
-                  ? 'bg-white border-stone-300 text-amber-600 shadow-xs'
-                  : 'bg-[#0D0D0E] border-neutral-800 text-amber-400'
-              }`}
-            >
-              <HeartHandshake className="w-4 h-4" />
-            </div>
-            <div>
-              <h4
-                className={`text-xs font-bold uppercase tracking-wider ${
-                  isLight ? 'text-slate-900' : 'text-white'
+            <div className="flex items-start space-x-3.5">
+              <div
+                className={`w-9 h-9 rounded-xl border flex items-center justify-center shrink-0 ${
+                  isLight
+                    ? 'bg-white border-stone-300 text-amber-600 shadow-xs'
+                    : 'bg-[#0D0D0E] border-neutral-800 text-amber-400'
                 }`}
               >
-                24h Deposit Release
-              </h4>
-              <p className={`text-xs mt-1 leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
-                100% refundable deposits returned directly to your source within 24 hours of safe vehicle return.
-              </p>
+                <HeartHandshake className="w-4 h-4" />
+              </div>
+              <div>
+                <h4
+                  className={`text-xs font-bold uppercase tracking-wider ${
+                    isLight ? 'text-slate-900' : 'text-white'
+                  }`}
+                >
+                  24h Deposit Release
+                </h4>
+                <p className={`text-xs mt-1 leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
+                  100% refundable deposits returned directly to your source within 24 hours of safe vehicle return.
+                </p>
+              </div>
             </div>
-          </div>
 
-          <div className="flex items-start space-x-3.5">
-            <div
-              className={`w-9 h-9 rounded-xl border flex items-center justify-center shrink-0 ${
-                isLight
-                  ? 'bg-white border-stone-300 text-slate-800 shadow-xs'
-                  : 'bg-[#0D0D0E] border-neutral-800 text-amber-400'
-              }`}
-            >
-              <MapPin className="w-4 h-4" />
-            </div>
-            <div>
-              <h4
-                className={`text-xs font-bold uppercase tracking-wider ${
-                  isLight ? 'text-slate-900' : 'text-white'
+            <div className="flex items-start space-x-3.5">
+              <div
+                className={`w-9 h-9 rounded-xl border flex items-center justify-center shrink-0 ${
+                  isLight
+                    ? 'bg-white border-stone-300 text-slate-800 shadow-xs'
+                    : 'bg-[#0D0D0E] border-neutral-800 text-amber-400'
                 }`}
               >
-                Direct Hub Delivery
-              </h4>
-              <p className={`text-xs mt-1 leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
-                Airport terminal and city center hubs across Delhi NCR, Jaipur, and Chandigarh.
-              </p>
+                <MapPin className="w-4 h-4" />
+              </div>
+              <div>
+                <h4
+                  className={`text-xs font-bold uppercase tracking-wider ${
+                    isLight ? 'text-slate-900' : 'text-white'
+                  }`}
+                >
+                  Direct Hub Delivery
+                </h4>
+                <p className={`text-xs mt-1 leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
+                  Airport terminal and city center hubs across Delhi NCR, Jaipur, and Chandigarh.
+                </p>
+              </div>
             </div>
-          </div>
 
-          <div className="flex items-start space-x-3.5">
-            <div
-              className={`w-9 h-9 rounded-xl border flex items-center justify-center shrink-0 ${
-                isLight
-                  ? 'bg-white border-stone-300 text-slate-800 shadow-xs'
-                  : 'bg-[#0D0D0E] border-neutral-800 text-amber-400'
-              }`}
-            >
-              <Headphones className="w-4 h-4" />
-            </div>
-            <div>
-              <h4
-                className={`text-xs font-bold uppercase tracking-wider ${
-                  isLight ? 'text-slate-900' : 'text-white'
+            <div className="flex items-start space-x-3.5">
+              <div
+                className={`w-9 h-9 rounded-xl border flex items-center justify-center shrink-0 ${
+                  isLight
+                    ? 'bg-white border-stone-300 text-slate-800 shadow-xs'
+                    : 'bg-[#0D0D0E] border-neutral-800 text-amber-400'
                 }`}
               >
-                24/7 Roadside Care
-              </h4>
-              <p className={`text-xs mt-1 leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
-                On-call highway emergency assistance and replacement support on all journeys.
-              </p>
+                <Headphones className="w-4 h-4" />
+              </div>
+              <div>
+                <h4
+                  className={`text-xs font-bold uppercase tracking-wider ${
+                    isLight ? 'text-slate-900' : 'text-white'
+                  }`}
+                >
+                  24/7 Roadside Care
+                </h4>
+                <p className={`text-xs mt-1 leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
+                  On-call highway emergency assistance and replacement support on all journeys.
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Links Navigation */}
         <div
