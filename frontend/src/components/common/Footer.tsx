@@ -31,7 +31,7 @@ export const Footer: React.FC = () => {
           : 'bg-[#090A0C] text-white border-neutral-800/80'
       }`}
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* =========================================================================
             TOP ROW: Brand Info + 3 Nav Columns
            ========================================================================= */}

@@ -153,24 +153,24 @@ export const LocationsPage: React.FC = () => {
         isLight ? 'bg-[#F8F6F1] text-slate-900' : 'bg-[#0a0b0d] text-white'
       }`}
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-5">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-6">
         {/* =========================================================================
-            1. TOP HERO BANNER: Compact & Sleek
+            1. TOP HERO BANNER: Sleek & Expansive
            ========================================================================= */}
         <div
-          className={`rounded-2xl border overflow-hidden relative mb-5 min-h-[180px] sm:min-h-[200px] flex items-center justify-between px-5 sm:px-8 py-5 ${
+          className={`rounded-2xl border overflow-hidden relative mb-5 sm:mb-6 min-h-[190px] sm:min-h-[210px] flex items-center justify-between px-6 sm:px-10 py-6 ${
             isLight
               ? 'bg-gradient-to-r from-[#F6F2EB] via-[#F3EEE5] to-[#EBE4D8] border-stone-200/80 shadow-xs'
               : 'bg-gradient-to-r from-[#15161a] via-[#1a1b20] to-[#202228] border-neutral-800'
           }`}
         >
           {/* Left Text Content & Search */}
-          <div className="relative z-10 max-w-md">
+          <div className="relative z-10 max-w-lg">
             <span className="text-[10px] font-bold tracking-widest text-stone-500 uppercase font-mono block">
               LOCATIONS
             </span>
             <h1
-              className={`text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight mt-1 mb-1.5 ${
+              className={`text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight mt-1 mb-2 ${
                 isLight ? 'text-slate-900' : 'text-white'
               }`}
             >
@@ -185,27 +185,27 @@ export const LocationsPage: React.FC = () => {
             </p>
 
             {/* Compact Pill Search Input */}
-            <form onSubmit={handleSearchSubmit} className="mt-3.5 max-w-xs sm:max-w-sm w-full">
+            <form onSubmit={handleSearchSubmit} className="mt-4 max-w-sm sm:max-w-md w-full">
               <div
-                className={`rounded-full border py-1 pl-3.5 pr-1 flex items-center gap-2 shadow-xs transition-all ${
+                className={`rounded-full border py-1.5 pl-4 pr-1.5 flex items-center gap-2.5 shadow-xs transition-all ${
                   isLight
                     ? 'bg-white border-stone-300/80 focus-within:border-stone-500 focus-within:ring-2 focus-within:ring-stone-200'
                     : 'bg-neutral-900 border-neutral-700 focus-within:border-neutral-500'
                 }`}
               >
-                <MapPin className="w-3.5 h-3.5 text-stone-500 shrink-0" />
+                <MapPin className="w-4 h-4 text-stone-500 shrink-0" />
                 <input
                   type="text"
                   placeholder="Search city or area"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className={`w-full text-xs bg-transparent focus:outline-none ${
+                  className={`w-full text-xs sm:text-sm bg-transparent focus:outline-none ${
                     isLight ? 'text-slate-900 placeholder:text-stone-400' : 'text-white placeholder:text-neutral-500'
                   }`}
                 />
                 <button
                   type="submit"
-                  className="w-7 h-7 rounded-full bg-[#1c1c1e] hover:bg-black text-white flex items-center justify-center shrink-0 transition-all shadow-xs cursor-pointer active:scale-95"
+                  className="w-8 h-8 rounded-full bg-[#1c1c1e] hover:bg-black text-white flex items-center justify-center shrink-0 transition-all shadow-xs cursor-pointer active:scale-95"
                   title="Search"
                   aria-label="Search"
                 >
@@ -216,14 +216,14 @@ export const LocationsPage: React.FC = () => {
           </div>
 
           {/* Right India Gate Panoramic Visual */}
-          <div className="absolute right-0 top-0 bottom-0 w-[52%] pointer-events-none overflow-hidden hidden md:block">
+          <div className="absolute right-0 top-0 bottom-0 w-[50%] lg:w-[48%] pointer-events-none overflow-hidden hidden md:block">
             <img
               src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=1000&auto=format&fit=crop&q=80"
               alt="India Gate National Landmark"
               className="w-full h-full object-cover object-center"
               style={{
-                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.5) 20%, black 60%)',
-                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.5) 20%, black 60%)',
+                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.4) 15%, black 50%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.4) 15%, black 50%)',
               }}
               loading="eager"
             />
@@ -279,11 +279,11 @@ export const LocationsPage: React.FC = () => {
           </div>
 
           {/* Two-Column Grid: Map on Left (4 cols), Cards on Right (8 cols) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 items-stretch">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-5 items-stretch">
             {/* LEFT COLUMN (4 Cols): Coverage Across India with Map */}
             <div className="lg:col-span-4 xl:col-span-4">
               <div
-                className={`rounded-xl border p-4 sm:p-4.5 shadow-xs h-full flex flex-col justify-between ${
+                className={`rounded-xl border p-4.5 sm:p-5 shadow-xs h-full flex flex-col justify-between ${
                   isLight
                     ? 'bg-[#FAF8F5] border-stone-200/80 text-slate-900'
                     : 'bg-[#101115] border-neutral-800/80 text-white'
@@ -292,25 +292,25 @@ export const LocationsPage: React.FC = () => {
                 {/* Header */}
                 <div className="flex items-start justify-between">
                   <div>
-                    <h3 className="font-bold text-sm tracking-tight">Coverage Across India</h3>
-                    <p className={`text-[11px] mt-0.5 font-medium ${isLight ? 'text-stone-500' : 'text-neutral-400'}`}>
+                    <h3 className="font-bold text-sm sm:text-base tracking-tight">Coverage Across India</h3>
+                    <p className={`text-xs mt-0.5 font-medium ${isLight ? 'text-stone-500' : 'text-neutral-400'}`}>
                       12+ Cities
                     </p>
                   </div>
                   <button
                     type="button"
                     onClick={() => setSelectedRegion('All')}
-                    className={`text-[11px] font-semibold transition-colors flex items-center gap-1 cursor-pointer ${
+                    className={`text-xs font-semibold transition-colors flex items-center gap-1 cursor-pointer ${
                       isLight ? 'text-stone-600 hover:text-black' : 'text-neutral-400 hover:text-white'
                     }`}
                   >
                     <span>View All</span>
-                    <ArrowRight className="w-3 h-3" />
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
 
                 {/* User's Custom India Map (Adaptive Light / Dark Mode) */}
-                <div className="relative w-full aspect-[3/4] max-w-[240px] sm:max-w-[260px] mx-auto my-auto flex items-center justify-center py-2 overflow-hidden rounded-xl">
+                <div className="relative w-full aspect-[3/4] max-w-[330px] sm:max-w-[370px] mx-auto my-auto flex items-center justify-center py-3 overflow-hidden rounded-xl">
                   <img
                     src={isLight ? '/india-map-light.png' : '/india-map-dark.png'}
                     alt="Coverage Across India Map"
@@ -361,7 +361,7 @@ export const LocationsPage: React.FC = () => {
 
                 {/* Footer caption */}
                 <div
-                  className={`pt-2.5 border-t text-[11px] flex items-center justify-between ${
+                  className={`pt-3 border-t text-xs flex items-center justify-between ${
                     isLight ? 'border-stone-100 text-stone-500' : 'border-neutral-850 text-neutral-400'
                   }`}
                 >
@@ -398,12 +398,12 @@ export const LocationsPage: React.FC = () => {
                   </button>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2.5 sm:gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-3.5">
                   {filteredLocations.map((item) => (
                     <div
                       key={item.id}
                       onClick={() => handleCitySelect(item)}
-                      className={`rounded-xl border p-2 transition-all duration-200 cursor-pointer group flex flex-col justify-between shadow-xs hover:shadow-md ${
+                      className={`rounded-xl border p-2.5 transition-all duration-200 cursor-pointer group flex flex-col justify-between shadow-xs hover:shadow-md ${
                         isLight
                           ? 'border-stone-200/80 bg-white hover:border-stone-300'
                           : 'border-neutral-800/80 bg-[#121316] hover:border-neutral-700'
@@ -411,7 +411,7 @@ export const LocationsPage: React.FC = () => {
                     >
                       {/* Photo aspect ratio */}
                       <div
-                        className={`aspect-[16/10] w-full rounded-lg overflow-hidden relative mb-1.5 border ${
+                        className={`aspect-[16/10] w-full rounded-lg overflow-hidden relative mb-2 border ${
                           isLight ? 'bg-stone-100 border-stone-200/60' : 'bg-neutral-950 border-neutral-800/60'
                         }`}
                       >
@@ -431,7 +431,7 @@ export const LocationsPage: React.FC = () => {
                           }`}
                         >
                           <MapPin
-                            className={`w-3 h-3 shrink-0 ${
+                            className={`w-3.5 h-3.5 shrink-0 ${
                               isLight ? 'text-stone-700' : 'text-stone-300'
                             }`}
                           />
@@ -439,14 +439,14 @@ export const LocationsPage: React.FC = () => {
                         </div>
 
                         <div
-                          className={`text-[11px] font-medium flex items-center gap-1 transition-colors ${
+                          className={`text-xs font-medium flex items-center gap-1 transition-colors ${
                             isLight
                               ? 'text-stone-500 group-hover:text-black'
                               : 'text-stone-400 group-hover:text-white'
                           }`}
                         >
                           <span>{item.locationsCount} Locations</span>
-                          <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                         </div>
                       </div>
                     </div>
@@ -458,28 +458,28 @@ export const LocationsPage: React.FC = () => {
         </div>
 
         {/* =========================================================================
-            3. BOTTOM VALUE PROPS BAR: Compact & Refined
+            3. BOTTOM VALUE PROPS BAR: Expansive & Refined
            ========================================================================= */}
         <div
-          className={`rounded-xl border p-3.5 sm:p-4 mt-5 ${
+          className={`rounded-xl border p-4 sm:p-5 mt-5 sm:mt-6 ${
             isLight
               ? 'bg-[#F1ECE4] border-stone-200/80 text-slate-900'
               : 'bg-[#15161a] border-neutral-800 text-white'
           }`}
         >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-3 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-4 items-center">
             {/* Value Prop 1: Wide Coverage */}
-            <div className="flex items-center gap-3 px-1">
+            <div className="flex items-center gap-3.5 px-2">
               <div
-                className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 border ${
+                className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 border ${
                   isLight ? 'bg-white border-stone-300/80 text-slate-900' : 'bg-neutral-800 border-neutral-700 text-white'
                 }`}
               >
-                <Car className="w-4 h-4" />
+                <Car className="w-4.5 h-4.5" />
               </div>
               <div>
                 <h4 className="font-bold text-xs sm:text-[13px] tracking-tight">Wide Coverage</h4>
-                <p className={`text-[11px] mt-0.5 ${isLight ? 'text-stone-600' : 'text-neutral-400'}`}>
+                <p className={`text-[11px] sm:text-xs mt-0.5 ${isLight ? 'text-stone-600' : 'text-neutral-400'}`}>
                   Cars available across major Indian cities
                 </p>
               </div>
@@ -487,20 +487,20 @@ export const LocationsPage: React.FC = () => {
 
             {/* Value Prop 2: Flexible Pickups */}
             <div
-              className={`flex items-center gap-3 px-1 md:border-l ${
+              className={`flex items-center gap-3.5 px-2 md:border-l ${
                 isLight ? 'md:border-stone-300/80' : 'md:border-neutral-800'
               }`}
             >
               <div
-                className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 border ${
+                className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 border ${
                   isLight ? 'bg-white border-stone-300/80 text-slate-900' : 'bg-neutral-800 border-neutral-700 text-white'
                 }`}
               >
-                <Calendar className="w-4 h-4" />
+                <Calendar className="w-4.5 h-4.5" />
               </div>
               <div>
                 <h4 className="font-bold text-xs sm:text-[13px] tracking-tight">Flexible Pickups</h4>
-                <p className={`text-[11px] mt-0.5 ${isLight ? 'text-stone-600' : 'text-neutral-400'}`}>
+                <p className={`text-[11px] sm:text-xs mt-0.5 ${isLight ? 'text-stone-600' : 'text-neutral-400'}`}>
                   Choose from multiple pickup points
                 </p>
               </div>
@@ -508,20 +508,20 @@ export const LocationsPage: React.FC = () => {
 
             {/* Value Prop 3: Easy Returns */}
             <div
-              className={`flex items-center gap-3 px-1 md:border-l ${
+              className={`flex items-center gap-3.5 px-2 md:border-l ${
                 isLight ? 'md:border-stone-300/80' : 'md:border-neutral-800'
               }`}
             >
               <div
-                className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 border ${
+                className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 border ${
                   isLight ? 'bg-white border-stone-300/80 text-slate-900' : 'bg-neutral-800 border-neutral-700 text-white'
                 }`}
               >
-                <RotateCcw className="w-4 h-4" />
+                <RotateCcw className="w-4.5 h-4.5" />
               </div>
               <div>
                 <h4 className="font-bold text-xs sm:text-[13px] tracking-tight">Easy Returns</h4>
-                <p className={`text-[11px] mt-0.5 ${isLight ? 'text-stone-600' : 'text-neutral-400'}`}>
+                <p className={`text-[11px] sm:text-xs mt-0.5 ${isLight ? 'text-stone-600' : 'text-neutral-400'}`}>
                   Drop off at a location that suits you
                 </p>
               </div>

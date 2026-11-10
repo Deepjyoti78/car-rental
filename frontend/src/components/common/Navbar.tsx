@@ -89,7 +89,7 @@ export const Navbar: React.FC = () => {
           : 'sticky top-0 bg-black/95 backdrop-blur-md border-b border-neutral-800 text-white'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="max-w-[1600px] mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 sm:h-16">
           {/* Brand Logo: adaptive to theme & transparency */}
           <Link to="/" className="flex items-center space-x-2.5 group">
