@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useThemeStore } from '../../store/themeStore';
-import { IndiaMapPath } from '../../components/IndiaMapSvg';
 import {
   MapPin,
   Search,
@@ -286,8 +285,8 @@ export const LocationsPage: React.FC = () => {
               <div
                 className={`rounded-xl border p-4 sm:p-4.5 shadow-xs h-full flex flex-col justify-between ${
                   isLight
-                    ? 'bg-white border-stone-200/80 text-slate-900'
-                    : 'bg-[#121316] border-neutral-800/80 text-white'
+                    ? 'bg-[#FAF8F5] border-stone-200/80 text-slate-900'
+                    : 'bg-[#101115] border-neutral-800/80 text-white'
                 }`}
               >
                 {/* Header */}
@@ -310,55 +309,52 @@ export const LocationsPage: React.FC = () => {
                   </button>
                 </div>
 
-                {/* Geographically Authentic Vector Silhouette Map of India */}
-                <div className="relative w-full max-w-[250px] aspect-square mx-auto my-auto py-2">
-                  <svg
-                    viewBox="0 0 1024 1024"
-                    className="w-full h-full select-none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <g
-                      transform="translate(0, 1024) scale(0.1, -0.1)"
-                      fill={isLight ? '#DFD9D1' : '#282A31'}
-                      stroke={isLight ? '#CFBFA' : '#363942'}
-                      strokeWidth="2"
-                    >
-                      <path d={IndiaMapPath} />
-                    </g>
-                  </svg>
+                {/* User's Custom India Map (Adaptive Light / Dark Mode) */}
+                <div className="relative w-full aspect-[3/4] max-w-[240px] sm:max-w-[260px] mx-auto my-auto flex items-center justify-center py-2 overflow-hidden rounded-xl">
+                  <img
+                    src={isLight ? '/india-map-light.png' : '/india-map-dark.png'}
+                    alt="Coverage Across India Map"
+                    className="w-full h-full object-contain select-none transition-all duration-300"
+                    draggable={false}
+                  />
 
-                  {/* Interactive City Pins */}
-                  {MAP_PINS.map((pin) => {
+                  {/* Interactive Hotspots matching the map's luminous hubs */}
+                  {[
+                    { name: 'Delhi', left: 42, top: 32 },
+                    { name: 'Jaipur', left: 35, top: 40 },
+                    { name: 'Mumbai', left: 25, top: 59 },
+                    { name: 'Pune', left: 30, top: 64 },
+                    { name: 'Hyderabad', left: 47, top: 62 },
+                    { name: 'Bengaluru', left: 40, top: 78 },
+                    { name: 'Kolkata', left: 63, top: 51 },
+                  ].map((pin) => {
                     const isSelected = activeCity?.name.toLowerCase() === pin.name.toLowerCase();
                     return (
-                      <div
+                      <button
                         key={pin.name}
+                        type="button"
                         onClick={() => {
                           const found = ALL_LOCATIONS.find((l) => l.name === pin.name);
                           if (found) handleCitySelect(found);
                         }}
                         style={{ left: `${pin.left}%`, top: `${pin.top}%` }}
-                        className="absolute -translate-x-1/2 -translate-y-1/2 group cursor-pointer z-10"
+                        className="absolute -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full flex items-center justify-center group cursor-pointer z-10"
+                        title={pin.name}
+                        aria-label={`Select ${pin.name}`}
                       >
-                        {/* Ping ring on selection */}
-                        {isSelected && (
-                          <span className="absolute -inset-1 rounded-full bg-amber-400/40 animate-ping" />
-                        )}
-                        {/* Dot */}
+                        {/* Hover / selection pulse */}
                         <span
-                          className={`block w-2 h-2 rounded-full border transition-transform shadow-xs ${
+                          className={`w-3.5 h-3.5 rounded-full transition-all duration-200 ${
                             isSelected
-                              ? 'bg-amber-400 border-white scale-125'
-                              : isLight
-                              ? 'bg-[#18181A] border-white group-hover:scale-125 group-hover:bg-amber-500'
-                              : 'bg-white border-black group-hover:scale-125 group-hover:bg-amber-400'
+                              ? 'bg-amber-400/50 ring-2 ring-amber-300 animate-pulse'
+                              : 'opacity-0 group-hover:opacity-100 bg-amber-400/40 ring-1 ring-white/80'
                           }`}
                         />
                         {/* Hover Tooltip */}
-                        <span className="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-3.5 left-1/2 -translate-x-1/2 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-black/90 text-white shadow-md whitespace-nowrap pointer-events-none z-20">
-                          {pin.name} ({pin.count})
+                        <span className="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-4 left-1/2 -translate-x-1/2 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-black/90 text-white shadow-md whitespace-nowrap pointer-events-none z-20">
+                          {pin.name}
                         </span>
-                      </div>
+                      </button>
                     );
                   })}
                 </div>
