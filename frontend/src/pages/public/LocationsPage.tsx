@@ -239,7 +239,7 @@ export const LocationsPage: React.FC = () => {
           {/* LEFT COLUMN (3 Cols): Coverage Across India with Map */}
           <div className="lg:col-span-3 xl:col-span-3 flex flex-col">
             <div
-              className={`rounded-xl border p-3 sm:p-3.5 shadow-xs flex-1 flex flex-col justify-between ${
+              className={`rounded-xl border p-3 sm:p-3.5 shadow-xs flex-1 flex flex-col ${
                 isLight
                   ? 'bg-[#FAF8F5] border-stone-200/80 text-slate-900'
                   : 'bg-[#101115] border-neutral-800/80 text-white'
@@ -265,54 +265,56 @@ export const LocationsPage: React.FC = () => {
                 </button>
               </div>
 
-              {/* Tightly-fitted India Map (Reduced Height, Snug Boundaries) */}
-              <div className="relative w-full max-w-[260px] sm:max-w-[280px] max-h-[300px] aspect-[610/725] mx-auto my-auto flex items-center justify-center overflow-hidden rounded-lg">
-                <img
-                  src={isLight ? '/india-map-light.png' : '/india-map-dark.png'}
-                  alt="Coverage Across India Map"
-                  className="w-full h-full object-contain select-none transition-all duration-300"
-                  draggable={false}
-                />
+              {/* Tightly-fitted India Map (Snug top/bottom boundaries, no excess empty space) */}
+              <div className="relative w-full flex-1 min-h-[380px] flex items-center justify-center mt-0.5 overflow-hidden">
+                <div className="relative h-full w-full max-h-[480px] aspect-[610/725] mx-auto flex items-center justify-center">
+                  <img
+                    src={isLight ? '/india-map-light.png' : '/india-map-dark.png'}
+                    alt="Coverage Across India Map"
+                    className="w-full h-full object-contain select-none transition-all duration-300"
+                    draggable={false}
+                  />
 
-                {/* Interactive Hotspots matching tightly-cropped map coordinates */}
-                {[
-                  { name: 'Delhi', left: 31, top: 32 },
-                  { name: 'Jaipur', left: 24.5, top: 35.5 },
-                  { name: 'Mumbai', left: 17, top: 56 },
-                  { name: 'Pune', left: 20.5, top: 59 },
-                  { name: 'Hyderabad', left: 36.5, top: 59 },
-                  { name: 'Bengaluru', left: 31, top: 75 },
-                  { name: 'Kolkata', left: 63, top: 51 },
-                ].map((pin) => {
-                  const isSelected = activeCity?.name.toLowerCase() === pin.name.toLowerCase();
-                  return (
-                    <button
-                      key={pin.name}
-                      type="button"
-                      onClick={() => {
-                        const found = ALL_LOCATIONS.find((l) => l.name === pin.name);
-                        if (found) handleCitySelect(found);
-                      }}
-                      style={{ left: `${pin.left}%`, top: `${pin.top}%` }}
-                      className="absolute -translate-x-1/2 -translate-y-1/2 w-5 h-5 rounded-full flex items-center justify-center group cursor-pointer z-10"
-                      title={pin.name}
-                      aria-label={`Select ${pin.name}`}
-                    >
-                      {/* Hover / selection pulse */}
-                      <span
-                        className={`w-3 h-3 rounded-full transition-all duration-200 ${
-                          isSelected
-                            ? 'bg-amber-400/50 ring-2 ring-amber-300 animate-pulse'
-                            : 'opacity-0 group-hover:opacity-100 bg-amber-400/40 ring-1 ring-white/80'
-                        }`}
-                      />
-                      {/* Hover Tooltip */}
-                      <span className="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-3.5 left-1/2 -translate-x-1/2 px-1.5 py-0.5 rounded text-[9px] font-semibold bg-black/90 text-white shadow-md whitespace-nowrap pointer-events-none z-20">
-                        {pin.name}
-                      </span>
-                    </button>
-                  );
-                })}
+                  {/* Interactive Hotspots matching tightly-cropped map coordinates */}
+                  {[
+                    { name: 'Delhi', left: 31, top: 32 },
+                    { name: 'Jaipur', left: 24.5, top: 35.5 },
+                    { name: 'Mumbai', left: 17, top: 56 },
+                    { name: 'Pune', left: 20.5, top: 59 },
+                    { name: 'Hyderabad', left: 36.5, top: 59 },
+                    { name: 'Bengaluru', left: 31, top: 75 },
+                    { name: 'Kolkata', left: 63, top: 51 },
+                  ].map((pin) => {
+                    const isSelected = activeCity?.name.toLowerCase() === pin.name.toLowerCase();
+                    return (
+                      <button
+                        key={pin.name}
+                        type="button"
+                        onClick={() => {
+                          const found = ALL_LOCATIONS.find((l) => l.name === pin.name);
+                          if (found) handleCitySelect(found);
+                        }}
+                        style={{ left: `${pin.left}%`, top: `${pin.top}%` }}
+                        className="absolute -translate-x-1/2 -translate-y-1/2 w-5 h-5 rounded-full flex items-center justify-center group cursor-pointer z-10"
+                        title={pin.name}
+                        aria-label={`Select ${pin.name}`}
+                      >
+                        {/* Hover / selection pulse */}
+                        <span
+                          className={`w-3 h-3 rounded-full transition-all duration-200 ${
+                            isSelected
+                              ? 'bg-amber-400/50 ring-2 ring-amber-300 animate-pulse'
+                              : 'opacity-0 group-hover:opacity-100 bg-amber-400/40 ring-1 ring-white/80'
+                          }`}
+                        />
+                        {/* Hover Tooltip */}
+                        <span className="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-3.5 left-1/2 -translate-x-1/2 px-1.5 py-0.5 rounded text-[9px] font-semibold bg-black/90 text-white shadow-md whitespace-nowrap pointer-events-none z-20">
+                          {pin.name}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>
