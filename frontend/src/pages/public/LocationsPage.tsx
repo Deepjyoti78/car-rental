@@ -265,8 +265,8 @@ export const LocationsPage: React.FC = () => {
                 </button>
               </div>
 
-              {/* Tightly-fitted India Map (Snug boundaries, zero excess empty space) */}
-              <div className="relative w-full aspect-[610/725] mx-auto flex items-center justify-center mt-1 overflow-hidden">
+              {/* Tightly-fitted India Map (Full western Gujarat intact, zero excess empty space) */}
+              <div className="relative w-full aspect-[660/731] mx-auto flex items-center justify-center mt-1 overflow-hidden">
                 <img
                   src={isLight ? '/india-map-light.png' : '/india-map-dark.png'}
                   alt="Coverage Across India Map"
@@ -274,15 +274,15 @@ export const LocationsPage: React.FC = () => {
                   draggable={false}
                 />
 
-                {/* Interactive Hotspots matching tightly-cropped map coordinates */}
+                {/* Interactive Hotspots matching uncropped India map coordinates */}
                 {[
-                  { name: 'Delhi', left: 31, top: 32 },
-                  { name: 'Jaipur', left: 24.5, top: 35.5 },
-                  { name: 'Mumbai', left: 17, top: 56 },
-                  { name: 'Pune', left: 20.5, top: 59 },
-                  { name: 'Hyderabad', left: 36.5, top: 59 },
-                  { name: 'Bengaluru', left: 31, top: 75 },
-                  { name: 'Kolkata', left: 63, top: 51 },
+                  { name: 'Delhi', left: 33.5, top: 35 },
+                  { name: 'Jaipur', left: 28, top: 38 },
+                  { name: 'Mumbai', left: 21, top: 58 },
+                  { name: 'Pune', left: 23.5, top: 62 },
+                  { name: 'Hyderabad', left: 39, top: 62 },
+                  { name: 'Bengaluru', left: 34, top: 76 },
+                  { name: 'Kolkata', left: 66, top: 52 },
                 ].map((pin) => {
                   const isSelected = activeCity?.name.toLowerCase() === pin.name.toLowerCase();
                   return (
