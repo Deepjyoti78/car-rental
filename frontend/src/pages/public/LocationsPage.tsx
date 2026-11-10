@@ -232,149 +232,137 @@ export const LocationsPage: React.FC = () => {
 
         {/* =========================================================================
             2. MAIN SHOWROOM SECTION:
-            - Left: Coverage Across India Card with Geographically Authentic India Silhouette Map
-            - Right: Popular Locations Header & 3-Column City Cards Grid
+            - Left: Coverage Across India Card (Compact & Fitted, col-span-3)
+            - Right: Popular Locations Header & 3-Column City Cards Grid (col-span-9)
            ========================================================================= */}
-        <div className="space-y-3.5">
-          {/* Header Row for Popular Locations and Region Tabs */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
-            <h2
-              className={`text-lg sm:text-xl font-bold tracking-tight ${
-                isLight ? 'text-slate-900' : 'text-white'
-              }`}
-            >
-              Popular Locations
-            </h2>
-
-            {/* Region Filter Tabs */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-5 items-stretch">
+          {/* LEFT COLUMN (3 Cols): Coverage Across India with Map */}
+          <div className="lg:col-span-3 xl:col-span-3 flex flex-col">
             <div
-              className={`flex items-center gap-1 p-0.5 rounded-lg border ${
+              className={`rounded-xl border p-3.5 sm:p-4 shadow-xs flex-1 flex flex-col justify-between ${
                 isLight
-                  ? 'bg-[#ECE5DC]/70 border-stone-200/90'
-                  : 'bg-neutral-900/90 border-neutral-800'
+                  ? 'bg-[#FAF8F5] border-stone-200/80 text-slate-900'
+                  : 'bg-[#101115] border-neutral-800/80 text-white'
               }`}
             >
-              {(['All', 'North', 'West', 'South', 'East'] as const).map((region) => {
-                const isActive = selectedRegion === region;
-                return (
-                  <button
-                    key={region}
-                    type="button"
-                    onClick={() => setSelectedRegion(region)}
-                    className={`px-3 py-1 rounded-md text-xs font-medium transition-all cursor-pointer ${
-                      isActive
-                        ? isLight
-                          ? 'bg-[#1c1c1e] text-white font-semibold shadow-xs'
-                          : 'bg-white text-black font-semibold shadow-xs'
-                        : isLight
-                        ? 'text-stone-600 hover:text-black'
-                        : 'text-neutral-400 hover:text-white'
-                    }`}
-                  >
-                    {region}
-                  </button>
-                );
-              })}
+              {/* Header */}
+              <div className="flex items-start justify-between mb-2">
+                <div>
+                  <h3 className="font-bold text-sm sm:text-base tracking-tight">Coverage Across India</h3>
+                  <p className={`text-xs mt-0.5 font-medium ${isLight ? 'text-stone-500' : 'text-neutral-400'}`}>
+                    12+ Cities
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setSelectedRegion('All')}
+                  className={`text-xs font-semibold transition-colors flex items-center gap-1 cursor-pointer ${
+                    isLight ? 'text-stone-600 hover:text-black' : 'text-neutral-400 hover:text-white'
+                  }`}
+                >
+                  <span>View All</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+
+              {/* Tightly-fitted India Map (Zero side-line, minimal boundary spacing) */}
+              <div className="relative w-full aspect-[610/725] my-auto flex items-center justify-center overflow-hidden rounded-lg">
+                <img
+                  src={isLight ? '/india-map-light.png' : '/india-map-dark.png'}
+                  alt="Coverage Across India Map"
+                  className="w-full h-full object-contain select-none transition-all duration-300"
+                  draggable={false}
+                />
+
+                {/* Interactive Hotspots matching tightly-cropped map coordinates */}
+                {[
+                  { name: 'Delhi', left: 31, top: 32 },
+                  { name: 'Jaipur', left: 24.5, top: 35.5 },
+                  { name: 'Mumbai', left: 17, top: 56 },
+                  { name: 'Pune', left: 20.5, top: 59 },
+                  { name: 'Hyderabad', left: 36.5, top: 59 },
+                  { name: 'Bengaluru', left: 31, top: 75 },
+                  { name: 'Kolkata', left: 63, top: 51 },
+                ].map((pin) => {
+                  const isSelected = activeCity?.name.toLowerCase() === pin.name.toLowerCase();
+                  return (
+                    <button
+                      key={pin.name}
+                      type="button"
+                      onClick={() => {
+                        const found = ALL_LOCATIONS.find((l) => l.name === pin.name);
+                        if (found) handleCitySelect(found);
+                      }}
+                      style={{ left: `${pin.left}%`, top: `${pin.top}%` }}
+                      className="absolute -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full flex items-center justify-center group cursor-pointer z-10"
+                      title={pin.name}
+                      aria-label={`Select ${pin.name}`}
+                    >
+                      {/* Hover / selection pulse */}
+                      <span
+                        className={`w-3.5 h-3.5 rounded-full transition-all duration-200 ${
+                          isSelected
+                            ? 'bg-amber-400/50 ring-2 ring-amber-300 animate-pulse'
+                            : 'opacity-0 group-hover:opacity-100 bg-amber-400/40 ring-1 ring-white/80'
+                        }`}
+                      />
+                      {/* Hover Tooltip */}
+                      <span className="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-4 left-1/2 -translate-x-1/2 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-black/90 text-white shadow-md whitespace-nowrap pointer-events-none z-20">
+                        {pin.name}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
 
-          {/* Two-Column Grid: Map on Left (4 cols), Cards on Right (8 cols) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-5 items-stretch">
-            {/* LEFT COLUMN (4 Cols): Coverage Across India with Map */}
-            <div className="lg:col-span-4 xl:col-span-4">
-              <div
-                className={`rounded-xl border p-4.5 sm:p-5 shadow-xs h-full flex flex-col justify-between ${
-                  isLight
-                    ? 'bg-[#FAF8F5] border-stone-200/80 text-slate-900'
-                    : 'bg-[#101115] border-neutral-800/80 text-white'
+          {/* RIGHT COLUMN (9 Cols): Popular Locations Header + 3-Column City Cards Grid */}
+          <div className="lg:col-span-9 xl:col-span-9 flex flex-col justify-between">
+            {/* Header Row: Positioned directly above Delhi Card and Region Tabs on right */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mb-3">
+              <h2
+                className={`text-lg sm:text-xl font-bold tracking-tight ${
+                  isLight ? 'text-slate-900' : 'text-white'
                 }`}
               >
-                {/* Header */}
-                <div className="flex items-start justify-between">
-                  <div>
-                    <h3 className="font-bold text-sm sm:text-base tracking-tight">Coverage Across India</h3>
-                    <p className={`text-xs mt-0.5 font-medium ${isLight ? 'text-stone-500' : 'text-neutral-400'}`}>
-                      12+ Cities
-                    </p>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setSelectedRegion('All')}
-                    className={`text-xs font-semibold transition-colors flex items-center gap-1 cursor-pointer ${
-                      isLight ? 'text-stone-600 hover:text-black' : 'text-neutral-400 hover:text-white'
-                    }`}
-                  >
-                    <span>View All</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
+                Popular Locations
+              </h2>
 
-                {/* User's Custom India Map (Adaptive Light / Dark Mode) */}
-                <div className="relative w-full aspect-[3/4] max-w-[330px] sm:max-w-[370px] mx-auto my-auto flex items-center justify-center py-3 overflow-hidden rounded-xl">
-                  <img
-                    src={isLight ? '/india-map-light.png' : '/india-map-dark.png'}
-                    alt="Coverage Across India Map"
-                    className="w-full h-full object-contain select-none transition-all duration-300"
-                    draggable={false}
-                  />
-
-                  {/* Interactive Hotspots matching the map's luminous hubs */}
-                  {[
-                    { name: 'Delhi', left: 42, top: 32 },
-                    { name: 'Jaipur', left: 35, top: 40 },
-                    { name: 'Mumbai', left: 25, top: 59 },
-                    { name: 'Pune', left: 30, top: 64 },
-                    { name: 'Hyderabad', left: 47, top: 62 },
-                    { name: 'Bengaluru', left: 40, top: 78 },
-                    { name: 'Kolkata', left: 63, top: 51 },
-                  ].map((pin) => {
-                    const isSelected = activeCity?.name.toLowerCase() === pin.name.toLowerCase();
-                    return (
-                      <button
-                        key={pin.name}
-                        type="button"
-                        onClick={() => {
-                          const found = ALL_LOCATIONS.find((l) => l.name === pin.name);
-                          if (found) handleCitySelect(found);
-                        }}
-                        style={{ left: `${pin.left}%`, top: `${pin.top}%` }}
-                        className="absolute -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full flex items-center justify-center group cursor-pointer z-10"
-                        title={pin.name}
-                        aria-label={`Select ${pin.name}`}
-                      >
-                        {/* Hover / selection pulse */}
-                        <span
-                          className={`w-3.5 h-3.5 rounded-full transition-all duration-200 ${
-                            isSelected
-                              ? 'bg-amber-400/50 ring-2 ring-amber-300 animate-pulse'
-                              : 'opacity-0 group-hover:opacity-100 bg-amber-400/40 ring-1 ring-white/80'
-                          }`}
-                        />
-                        {/* Hover Tooltip */}
-                        <span className="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-4 left-1/2 -translate-x-1/2 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-black/90 text-white shadow-md whitespace-nowrap pointer-events-none z-20">
-                          {pin.name}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {/* Footer caption */}
-                <div
-                  className={`pt-3 border-t text-xs flex items-center justify-between ${
-                    isLight ? 'border-stone-100 text-stone-500' : 'border-neutral-850 text-neutral-400'
-                  }`}
-                >
-                  <span>Select any hub to view cars</span>
-                  <span className={`font-semibold ${isLight ? 'text-slate-800' : 'text-neutral-200'}`}>
-                    100% Yellow Plates
-                  </span>
-                </div>
+              {/* Region Filter Tabs */}
+              <div
+                className={`flex items-center gap-1 p-0.5 rounded-lg border ${
+                  isLight
+                    ? 'bg-[#ECE5DC]/70 border-stone-200/90'
+                    : 'bg-neutral-900/90 border-neutral-800'
+                }`}
+              >
+                {(['All', 'North', 'West', 'South', 'East'] as const).map((region) => {
+                  const isActive = selectedRegion === region;
+                  return (
+                    <button
+                      key={region}
+                      type="button"
+                      onClick={() => setSelectedRegion(region)}
+                      className={`px-3 py-1 rounded-md text-xs font-medium transition-all cursor-pointer ${
+                        isActive
+                          ? isLight
+                            ? 'bg-[#1c1c1e] text-white font-semibold shadow-xs'
+                            : 'bg-white text-black font-semibold shadow-xs'
+                          : isLight
+                          ? 'text-stone-600 hover:text-black'
+                          : 'text-neutral-400 hover:text-white'
+                      }`}
+                    >
+                      {region}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
-            {/* RIGHT COLUMN (8 Cols): 3-Column City Cards Grid */}
-            <div className="lg:col-span-8 xl:col-span-8">
+            {/* City Cards 3-Column Grid */}
+            <div className="flex-1 flex flex-col justify-center">
               {filteredLocations.length === 0 ? (
                 <div
                   className={`p-8 text-center rounded-xl border space-y-2.5 h-full flex flex-col items-center justify-center ${
