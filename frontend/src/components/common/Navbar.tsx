@@ -404,7 +404,7 @@ export const Navbar: React.FC = () => {
                 {/* Rent a Car button */}
                 <Link
                   to="/explore"
-                  className={`px-5 py-1.5 rounded-full text-xs font-medium transition-all shadow-sm ${
+                  className={`px-5 py-1.5 rounded-full text-xs font-medium transition-all shadow-sm flex items-center gap-1 ${
                     isHeaderTransparent
                       ? 'bg-white hover:bg-neutral-200 text-black'
                       : theme === 'light'
@@ -412,7 +412,8 @@ export const Navbar: React.FC = () => {
                       : 'bg-white hover:bg-neutral-200 text-black'
                   }`}
                 >
-                  Rent a Car
+                  <span>Rent a Car</span>
+                  <span className="text-xs">↗</span>
                 </Link>
               </div>
             )}

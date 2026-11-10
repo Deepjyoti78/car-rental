@@ -11,6 +11,7 @@ import {
   Heart,
   MapPin,
   ChevronDown,
+  ChevronUp,
   LayoutGrid,
   List,
   Check,
@@ -20,6 +21,8 @@ import {
   Fuel,
   SlidersHorizontal,
   X,
+  Users,
+  Sparkles,
 } from 'lucide-react';
 
 export const ExploreCarsPage: React.FC = () => {
@@ -41,7 +44,6 @@ export const ExploreCarsPage: React.FC = () => {
 
   // Result state (pre-warmed for 0ms instantaneous first paint)
   const [vehicles, setVehicles] = useState<Vehicle[]>(() => MOCK_FLEET);
-  const [loading, setLoading] = useState(false);
 
   // Wishlist state
   const [wishlist, setWishlist] = useState<Set<string>>(() => {
@@ -186,41 +188,41 @@ export const ExploreCarsPage: React.FC = () => {
   return (
     <div
       className={`min-h-screen transition-colors duration-200 ${
-        isLight ? 'bg-[#F4EFEA] text-slate-900' : 'bg-[#0a0b0d] text-white'
+        isLight ? 'bg-[#F8F6F1] text-slate-900' : 'bg-[#0a0b0d] text-white'
       }`}
     >
-      <div className="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+      <div className="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-7">
         {/* =========================================================================
             TWO-COLUMN MAIN SHOWROOM LAYOUT:
-            - LEFT COLUMN: FIXED "Filter by" SIDEBAR (Aligned with Available Cars)
-            - RIGHT COLUMN: HEADER + CATEGORY PILLS + SCROLLING CARDS GRID
+            - LEFT COLUMN: FIXED "Filter Cars" SIDEBAR (Aligned with Header Banner)
+            - RIGHT COLUMN: HERO BANNER + CATEGORY PILLS + TIGHT SCROLLING CARDS GRID
            ========================================================================= */}
-        <div className="flex flex-col lg:flex-row gap-6 lg:gap-7 items-start relative">
+        <div className="flex flex-col lg:flex-row gap-5 lg:gap-6 items-start relative">
           {/* =========================================================================
-              LEFT COLUMN: FIXED / STICKY "Filter by" SIDEBAR
+              LEFT COLUMN: FIXED / STICKY "Filter Cars" SIDEBAR
              ========================================================================= */}
           <aside
             className={`${
               mobileFilterOpen
-                ? 'fixed inset-0 z-50 bg-black/90 p-5 overflow-y-auto block'
+                ? 'fixed inset-0 z-50 bg-black/80 backdrop-blur-sm p-5 overflow-y-auto block'
                 : 'hidden'
             } lg:block lg:w-64 xl:w-72 shrink-0 lg:sticky lg:top-20 lg:self-start lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden z-20`}
           >
             <div
-              className={`rounded-2xl border p-5 space-y-6 shadow-xl ${
+              className={`rounded-2xl sm:rounded-3xl border p-5 space-y-5 shadow-xs ${
                 isLight
-                  ? 'bg-white border-stone-200/90 text-slate-900'
+                  ? 'bg-white border-stone-200/80 text-slate-900'
                   : 'bg-[#121316] border-neutral-800/80 text-white'
               }`}
             >
-              {/* Header: Filter by & Reset all */}
+              {/* Header: Filter Cars & Reset All */}
               <div
                 className={`flex items-center justify-between pb-3 border-b ${
                   isLight ? 'border-stone-100' : 'border-neutral-800'
                 }`}
               >
                 <div className="flex items-center gap-2">
-                  <h2 className="text-base font-bold tracking-tight">Filter by</h2>
+                  <h2 className="text-base font-bold tracking-tight">Filter Cars</h2>
                   {mobileFilterOpen && (
                     <button
                       type="button"
@@ -235,32 +237,32 @@ export const ExploreCarsPage: React.FC = () => {
                   type="button"
                   onClick={handleResetFilters}
                   className={`text-xs font-medium transition-colors cursor-pointer ${
-                    isLight ? 'text-slate-500 hover:text-black' : 'text-neutral-400 hover:text-white'
+                    isLight ? 'text-slate-400 hover:text-slate-800' : 'text-neutral-400 hover:text-white'
                   }`}
                 >
-                  Reset all
+                  Reset All
                 </button>
               </div>
 
               {/* 1. Price Range Section */}
               <div className="space-y-2">
-                <div className="flex items-center gap-2 text-xs font-semibold text-neutral-300">
+                <div className="flex items-center gap-2 text-xs font-semibold text-slate-800">
                   <div
                     className={`w-4 h-4 rounded-full border flex items-center justify-center ${
-                      isLight ? 'border-slate-300 bg-slate-100' : 'border-neutral-700 bg-neutral-800/60'
+                      isLight ? 'border-stone-300 bg-stone-100' : 'border-neutral-700 bg-neutral-800/60'
                     }`}
                   >
-                    <IndianRupee className="w-2.5 h-2.5 text-neutral-400" />
+                    <IndianRupee className="w-2.5 h-2.5 text-stone-600" />
                   </div>
                   <span className={isLight ? 'text-slate-800' : 'text-neutral-300'}>Price Range</span>
+                  <span className="text-[10px] text-slate-400 font-normal">/day</span>
                 </div>
 
-                <div className={`text-sm font-semibold ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                  ₹{minPrice.toLocaleString('en-IN')} - ₹{maxPrice.toLocaleString('en-IN')}{' '}
-                  <span className="text-xs text-neutral-400 font-normal">/day</span>
+                <div className={`text-base font-bold tracking-tight ${isLight ? 'text-slate-900' : 'text-white'}`}>
+                  ₹{minPrice.toLocaleString('en-IN')} - ₹{maxPrice.toLocaleString('en-IN')}
                 </div>
 
-                {/* Sleek Dual / Range Slider */}
+                {/* Sleek Tan / Caramel Accent Range Slider */}
                 <div className="pt-2">
                   <input
                     type="range"
@@ -270,10 +272,10 @@ export const ExploreCarsPage: React.FC = () => {
                     value={maxPrice}
                     onChange={(e) => setMaxPrice(Number(e.target.value))}
                     className={`w-full h-1.5 rounded-lg appearance-none cursor-pointer ${
-                      isLight ? 'bg-slate-200 accent-black' : 'bg-neutral-800 accent-[#fbf5eb]'
+                      isLight ? 'bg-[#E5D7C3] accent-[#1c1c1e]' : 'bg-neutral-800 accent-[#fbf5eb]'
                     }`}
                   />
-                  <div className="flex justify-between text-[11px] font-mono text-neutral-500 mt-1">
+                  <div className="flex justify-between text-[11px] font-mono text-slate-400 mt-1">
                     <span>₹1,000</span>
                     <span>₹20,000</span>
                   </div>
@@ -282,9 +284,12 @@ export const ExploreCarsPage: React.FC = () => {
 
               {/* 2. Vehicle Type Checkboxes */}
               <div className="space-y-2.5">
-                <div className="flex items-center gap-2 text-xs font-semibold text-neutral-300">
-                  <Car className="w-4 h-4 text-neutral-400" />
-                  <span className={isLight ? 'text-slate-800' : 'text-neutral-300'}>Vehicle Type</span>
+                <div className="flex items-center justify-between text-xs font-semibold text-slate-800">
+                  <div className="flex items-center gap-2">
+                    <Car className="w-4 h-4 text-slate-500" />
+                    <span className={isLight ? 'text-slate-800' : 'text-neutral-300'}>Vehicle Type</span>
+                  </div>
+                  <ChevronUp className="w-3.5 h-3.5 text-slate-400" />
                 </div>
                 <div className="space-y-1.5">
                   {[
@@ -305,10 +310,10 @@ export const ExploreCarsPage: React.FC = () => {
                             className={`w-4 h-4 rounded border transition-colors flex items-center justify-center ${
                               isChecked
                                 ? isLight
-                                  ? 'bg-black border-black text-white'
+                                  ? 'bg-[#1c1c1e] border-[#1c1c1e] text-white'
                                   : 'bg-[#fbf5eb] border-[#fbf5eb] text-neutral-900'
                                 : isLight
-                                ? 'border-slate-300 bg-white group-hover:border-slate-400'
+                                ? 'border-stone-300 bg-white group-hover:border-stone-400'
                                 : 'border-neutral-700 bg-neutral-900/90 group-hover:border-neutral-500'
                             }`}
                           >
@@ -328,7 +333,7 @@ export const ExploreCarsPage: React.FC = () => {
                             {item.label}
                           </span>
                         </div>
-                        <span className="text-neutral-500 font-mono text-xs">({item.count})</span>
+                        <span className="text-slate-400 font-mono text-xs">({item.count})</span>
                       </div>
                     );
                   })}
@@ -337,9 +342,12 @@ export const ExploreCarsPage: React.FC = () => {
 
               {/* 3. Transmission Checkboxes */}
               <div className="space-y-2.5">
-                <div className="flex items-center gap-2 text-xs font-semibold text-neutral-300">
-                  <Settings2 className="w-4 h-4 text-neutral-400" />
-                  <span className={isLight ? 'text-slate-800' : 'text-neutral-300'}>Transmission</span>
+                <div className="flex items-center justify-between text-xs font-semibold text-slate-800">
+                  <div className="flex items-center gap-2">
+                    <Settings2 className="w-4 h-4 text-slate-500" />
+                    <span className={isLight ? 'text-slate-800' : 'text-neutral-300'}>Transmission</span>
+                  </div>
+                  <ChevronUp className="w-3.5 h-3.5 text-slate-400" />
                 </div>
                 <div className="space-y-1.5">
                   {[
@@ -358,10 +366,10 @@ export const ExploreCarsPage: React.FC = () => {
                             className={`w-4 h-4 rounded border transition-colors flex items-center justify-center ${
                               isChecked
                                 ? isLight
-                                  ? 'bg-black border-black text-white'
+                                  ? 'bg-[#1c1c1e] border-[#1c1c1e] text-white'
                                   : 'bg-[#fbf5eb] border-[#fbf5eb] text-neutral-900'
                                 : isLight
-                                ? 'border-slate-300 bg-white group-hover:border-slate-400'
+                                ? 'border-stone-300 bg-white group-hover:border-stone-400'
                                 : 'border-neutral-700 bg-neutral-900/90 group-hover:border-neutral-500'
                             }`}
                           >
@@ -381,7 +389,7 @@ export const ExploreCarsPage: React.FC = () => {
                             {item.label}
                           </span>
                         </div>
-                        <span className="text-neutral-500 font-mono text-xs">({item.count})</span>
+                        <span className="text-slate-400 font-mono text-xs">({item.count})</span>
                       </div>
                     );
                   })}
@@ -390,9 +398,12 @@ export const ExploreCarsPage: React.FC = () => {
 
               {/* 4. Fuel Type Checkboxes */}
               <div className="space-y-2.5">
-                <div className="flex items-center gap-2 text-xs font-semibold text-neutral-300">
-                  <Fuel className="w-4 h-4 text-neutral-400" />
-                  <span className={isLight ? 'text-slate-800' : 'text-neutral-300'}>Fuel Type</span>
+                <div className="flex items-center justify-between text-xs font-semibold text-slate-800">
+                  <div className="flex items-center gap-2">
+                    <Fuel className="w-4 h-4 text-slate-500" />
+                    <span className={isLight ? 'text-slate-800' : 'text-neutral-300'}>Fuel Type</span>
+                  </div>
+                  <ChevronUp className="w-3.5 h-3.5 text-slate-400" />
                 </div>
                 <div className="space-y-1.5">
                   {[
@@ -412,10 +423,10 @@ export const ExploreCarsPage: React.FC = () => {
                             className={`w-4 h-4 rounded border transition-colors flex items-center justify-center ${
                               isChecked
                                 ? isLight
-                                  ? 'bg-black border-black text-white'
+                                  ? 'bg-[#1c1c1e] border-[#1c1c1e] text-white'
                                   : 'bg-[#fbf5eb] border-[#fbf5eb] text-neutral-900'
                                 : isLight
-                                ? 'border-slate-300 bg-white group-hover:border-slate-400'
+                                ? 'border-stone-300 bg-white group-hover:border-stone-400'
                                 : 'border-neutral-700 bg-neutral-900/90 group-hover:border-neutral-500'
                             }`}
                           >
@@ -435,7 +446,7 @@ export const ExploreCarsPage: React.FC = () => {
                             {item.label}
                           </span>
                         </div>
-                        <span className="text-neutral-500 font-mono text-xs">({item.count})</span>
+                        <span className="text-slate-400 font-mono text-xs">({item.count})</span>
                       </div>
                     );
                   })}
@@ -447,7 +458,7 @@ export const ExploreCarsPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setMobileFilterOpen(false)}
-                  className="w-full py-2.5 rounded-xl bg-[#fbf5eb] text-neutral-900 font-semibold text-xs mt-2 cursor-pointer"
+                  className="w-full py-2.5 rounded-xl bg-[#1c1c1e] text-white font-semibold text-xs mt-2 cursor-pointer"
                 >
                   Apply Filters ({filteredVehicles.length} Cars)
                 </button>
@@ -457,56 +468,81 @@ export const ExploreCarsPage: React.FC = () => {
 
           {/* =========================================================================
               RIGHT COLUMN:
-              1. "Available Cars" HEADER & SUBTITLE (Positioned right above the cards!)
+              1. HERO BANNER WITH SCENIC MOUNTAIN PANORAMA (Exact match to reference image)
               2. CATEGORY PILLS & SORT CONTROLS
-              3. SCROLLING CARDS GRID (4 columns matching reference image)
+              3. COMPACT SCROLLING CARDS GRID (Reduced empty space, tight padding)
              ========================================================================= */}
           <main className="flex-1 min-w-0">
-            {/* 1. Title Header Area (Moved here above cards, without 24/7 top-right row) */}
-            <div className="mb-5">
-              <span className="text-[11px] font-semibold tracking-wider text-[#d4af37] uppercase font-mono block mb-1">
-                PREMIUM RENTAL CARS
-              </span>
-              <h1
-                className={`text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight ${
-                  isLight ? 'text-slate-900' : 'text-white'
-                }`}
-              >
-                Available Cars
-              </h1>
-              <p className={`text-xs sm:text-sm mt-1 ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
-                Choose from our wide range of premium vehicles and hit the road.
-              </p>
+            {/* 1. Hero Scenic Banner (Available Cars + Panoramic Desert Mountain Landscape) */}
+            <div
+              className={`rounded-2xl sm:rounded-3xl border overflow-hidden relative mb-5 flex items-center justify-between min-h-[140px] px-6 sm:px-8 py-6 ${
+                isLight
+                  ? 'bg-gradient-to-r from-[#F0EAE1] via-[#EFE6DC] to-[#E3D9C9] border-stone-200/70'
+                  : 'bg-gradient-to-r from-[#17181c] via-[#1a1b20] to-[#22242b] border-neutral-800'
+              }`}
+            >
+              {/* Left Text Content */}
+              <div className="relative z-10 max-w-lg">
+                <span className="text-[11px] font-bold tracking-wider text-[#A27B48] uppercase font-mono block mb-1">
+                  PREMIUM RENTAL CARS
+                </span>
+                <h1
+                  className={`text-2xl sm:text-3xl lg:text-[2rem] font-extrabold tracking-tight leading-tight ${
+                    isLight ? 'text-slate-900' : 'text-white'
+                  }`}
+                >
+                  Available Cars
+                </h1>
+                <p className={`text-xs sm:text-sm mt-1 font-normal ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
+                  Choose from our wide range of premium vehicles and hit the road.
+                </p>
+              </div>
+
+              {/* Right Panoramic Mountain Backdrop */}
+              <div className="absolute right-0 top-0 bottom-0 w-3/5 pointer-events-none overflow-hidden hidden sm:block">
+                <img
+                  src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1200&auto=format&fit=crop&q=80"
+                  alt="Scenic mountain landscape"
+                  className="w-full h-full object-cover object-center"
+                  style={{
+                    maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 30%, black 75%)',
+                    WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 30%, black 75%)',
+                  }}
+                  loading="eager"
+                />
+              </div>
             </div>
 
             {/* 2. Category Filter Pills & Sort Controls Bar */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
-              {/* Category Filter Pills (All 16, SUV 5, Luxury 4, Sedan 4, Hatchback 3) */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+              {/* Category Filter Pills (All 16, SUV 5, Sedan 4, Hatchback 3, Luxury 4) */}
               <div className="flex items-center gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden py-1">
                 {[
-                  { label: 'All (16)', value: 'ALL' },
-                  { label: 'SUV (5)', value: 'SUV' },
-                  { label: 'Luxury (4)', value: 'LUXURY' },
-                  { label: 'Sedan (4)', value: 'SEDAN' },
-                  { label: 'Hatchback (3)', value: 'HATCHBACK' },
+                  { label: 'All (16)', value: 'ALL', icon: LayoutGrid },
+                  { label: 'SUV (5)', value: 'SUV', icon: Car },
+                  { label: 'Sedan (4)', value: 'SEDAN', icon: Car },
+                  { label: 'Hatchback (3)', value: 'HATCHBACK', icon: Car },
+                  { label: 'Luxury (4)', value: 'LUXURY', icon: Sparkles },
                 ].map((cat) => {
                   const isActive = selectedCategory === cat.value;
+                  const Icon = cat.icon;
                   return (
                     <button
                       key={cat.value}
                       type="button"
                       onClick={() => setSelectedCategory(cat.value)}
-                      className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap cursor-pointer ${
+                      className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${
                         isActive
                           ? isLight
-                            ? 'bg-black text-white font-semibold shadow-xs'
+                            ? 'bg-[#1c1c1e] text-white font-semibold shadow-xs'
                             : 'bg-[#fbf5eb] text-neutral-950 font-semibold shadow-sm'
                           : isLight
                           ? 'bg-white border border-stone-200 text-slate-700 hover:text-black hover:border-slate-400 shadow-xs'
                           : 'bg-neutral-900/80 border border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700'
                       }`}
                     >
-                      {cat.label}
+                      <Icon className="w-3.5 h-3.5" />
+                      <span>{cat.label}</span>
                     </button>
                   );
                 })}
@@ -531,9 +567,9 @@ export const ExploreCarsPage: React.FC = () => {
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    className={`appearance-none text-xs font-medium pl-3.5 pr-8 py-1.5 rounded-full cursor-pointer focus:outline-none transition-colors border ${
+                    className={`appearance-none text-xs font-medium pl-3.5 pr-8 py-1.5 rounded-full cursor-pointer focus:outline-none transition-colors border shadow-xs ${
                       isLight
-                        ? 'bg-white border-stone-200 text-slate-800 shadow-xs hover:border-slate-400'
+                        ? 'bg-white border-stone-200 text-slate-800 hover:border-slate-400'
                         : 'bg-neutral-900/80 border-neutral-800 text-neutral-300 hover:border-neutral-700'
                     }`}
                   >
@@ -550,13 +586,13 @@ export const ExploreCarsPage: React.FC = () => {
                       Sort: Highest Rated
                     </option>
                   </select>
-                  <ChevronDown className="w-3.5 h-3.5 text-neutral-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  <ChevronDown className="w-3.5 h-3.5 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                 </div>
 
                 {/* View Switcher Icons */}
                 <div
-                  className={`flex items-center p-0.5 rounded-full border ${
-                    isLight ? 'bg-white border-stone-200 shadow-xs' : 'bg-neutral-900/80 border-neutral-800'
+                  className={`flex items-center p-0.5 rounded-full border shadow-xs ${
+                    isLight ? 'bg-white border-stone-200' : 'bg-neutral-900/80 border-neutral-800'
                   }`}
                 >
                   <button
@@ -565,9 +601,9 @@ export const ExploreCarsPage: React.FC = () => {
                     className={`p-1.5 rounded-full transition-colors cursor-pointer ${
                       viewMode === 'grid'
                         ? isLight
-                          ? 'bg-slate-200 text-black'
+                          ? 'bg-[#1c1c1e] text-white'
                           : 'bg-neutral-800 text-white'
-                        : 'text-neutral-500 hover:text-neutral-300'
+                        : 'text-slate-400 hover:text-slate-700'
                     }`}
                     title="Grid View"
                   >
@@ -579,9 +615,9 @@ export const ExploreCarsPage: React.FC = () => {
                     className={`p-1.5 rounded-full transition-colors cursor-pointer ${
                       viewMode === 'list'
                         ? isLight
-                          ? 'bg-slate-200 text-black'
+                          ? 'bg-[#1c1c1e] text-white'
                           : 'bg-neutral-800 text-white'
-                        : 'text-neutral-500 hover:text-neutral-300'
+                        : 'text-slate-400 hover:text-slate-700'
                     }`}
                     title="List View"
                   >
@@ -591,7 +627,7 @@ export const ExploreCarsPage: React.FC = () => {
               </div>
             </div>
 
-            {/* 3. Scrolling Cards Grid */}
+            {/* 3. Compact Scrolling Cards Grid (Tight gaps & reduced margins around image) */}
             {filteredVehicles.length === 0 ? (
               <div
                 className={`p-12 text-center rounded-2xl border space-y-3 ${
@@ -600,15 +636,15 @@ export const ExploreCarsPage: React.FC = () => {
                     : 'bg-[#121316] border-neutral-800 text-white'
                 }`}
               >
-                <Car className="w-10 h-10 mx-auto text-neutral-500" />
+                <Car className="w-10 h-10 mx-auto text-neutral-400" />
                 <h3 className="text-base font-bold">No vehicles match your filters</h3>
-                <p className="text-xs text-neutral-400 max-w-sm mx-auto">
+                <p className="text-xs text-slate-500 max-w-sm mx-auto">
                   Try broadening your price range or unchecking specific transmission or fuel filters.
                 </p>
                 <button
                   type="button"
                   onClick={handleResetFilters}
-                  className="px-5 py-2 rounded-xl text-xs font-semibold bg-[#fbf5eb] text-neutral-900 hover:bg-white cursor-pointer"
+                  className="px-5 py-2 rounded-xl text-xs font-semibold bg-[#1c1c1e] text-white hover:bg-black cursor-pointer"
                 >
                   Reset All Filters
                 </button>
@@ -617,8 +653,8 @@ export const ExploreCarsPage: React.FC = () => {
               <div
                 className={
                   viewMode === 'grid'
-                    ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5'
-                    : 'space-y-4'
+                    ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-3.5'
+                    : 'space-y-3'
                 }
               >
                 {filteredVehicles.map((car) => {
@@ -634,17 +670,17 @@ export const ExploreCarsPage: React.FC = () => {
                   return (
                     <div
                       key={car.id}
-                      className={`rounded-2xl border p-3.5 transition-all duration-200 flex flex-col justify-between group relative ${
+                      className={`rounded-2xl border p-2 sm:p-2.5 transition-all duration-200 flex flex-col justify-between group relative shadow-xs hover:shadow-md ${
                         isLight
-                          ? 'border-stone-200/90 bg-white hover:border-stone-400 hover:shadow-lg'
-                          : 'border-neutral-800/80 bg-[#121316] hover:border-neutral-700 hover:shadow-2xl'
+                          ? 'border-stone-200/80 bg-white hover:border-stone-300'
+                          : 'border-neutral-800/80 bg-[#121316] hover:border-neutral-700'
                       }`}
                     >
                       <div>
-                        {/* 1. Vehicle Image Container with Badges */}
+                        {/* 1. Vehicle Image Container with Snug Margins */}
                         <div
-                          className={`aspect-[16/10] w-full rounded-xl overflow-hidden relative mb-3 border ${
-                            isLight ? 'bg-stone-100 border-stone-200' : 'bg-neutral-950 border-neutral-800/60'
+                          className={`aspect-[16/10] w-full rounded-xl overflow-hidden relative mb-2.5 border ${
+                            isLight ? 'bg-stone-100 border-stone-200/60' : 'bg-neutral-950 border-neutral-800/60'
                           }`}
                         >
                           <img
@@ -655,7 +691,13 @@ export const ExploreCarsPage: React.FC = () => {
                           />
 
                           {/* Category Badge top-left over image (e.g. Hatchback, Sedan, MPV, Luxury, SUV) */}
-                          <div className="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-md bg-black/65 backdrop-blur-md border border-white/10 text-white text-[10px] font-medium tracking-wide">
+                          <div
+                            className={`absolute top-2 left-2 px-2.5 py-0.5 rounded-md text-[10px] font-semibold tracking-wide shadow-xs ${
+                              isLight
+                                ? 'bg-white/95 text-slate-800 backdrop-blur-md border border-stone-200/60'
+                                : 'bg-black/65 backdrop-blur-md border border-white/10 text-white'
+                            }`}
+                          >
                             {badgeLabel}
                           </div>
 
@@ -663,102 +705,111 @@ export const ExploreCarsPage: React.FC = () => {
                           <button
                             type="button"
                             onClick={(e) => toggleWishlist(car.id, e)}
-                            className="absolute top-2.5 right-2.5 p-1.5 rounded-full bg-black/45 backdrop-blur-md border border-white/10 text-white hover:text-rose-400 transition-colors cursor-pointer"
+                            className={`absolute top-2 right-2 p-1.5 rounded-full transition-colors cursor-pointer shadow-xs ${
+                              isLight
+                                ? 'bg-white/85 backdrop-blur-md text-slate-700 hover:text-rose-500 border border-stone-200/60'
+                                : 'bg-black/45 backdrop-blur-md border border-white/10 text-white hover:text-rose-400'
+                            }`}
                             title="Save to wishlist"
                             aria-label="Save to wishlist"
                           >
                             <Heart
                               className={`w-3.5 h-3.5 transition-colors ${
-                                isLiked ? 'fill-rose-500 text-rose-500' : 'text-white'
+                                isLiked ? 'fill-rose-500 text-rose-500' : ''
                               }`}
                             />
                           </button>
                         </div>
 
                         {/* 2. Car Title */}
-                        <h3
-                          className={`font-bold text-sm truncate leading-tight transition-colors ${
-                            isLight ? 'text-slate-900 group-hover:text-black' : 'text-white group-hover:text-neutral-200'
-                          }`}
-                        >
-                          {car.brand} {car.model}
-                        </h3>
+                        <div className="px-1">
+                          <h3
+                            className={`font-bold text-sm truncate leading-tight transition-colors ${
+                              isLight ? 'text-slate-900 group-hover:text-black' : 'text-white group-hover:text-neutral-200'
+                            }`}
+                          >
+                            {car.brand} {car.model}
+                          </h3>
 
-                        {/* 3. Rating & Daily Price Row */}
-                        <div className="flex items-center justify-between mt-1.5">
-                          <div className="flex items-center gap-1 text-xs">
-                            <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                            <span className={`font-bold text-xs ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                              {car.rating ? car.rating.toFixed(1) : '4.7'}
-                            </span>
-                            <span className={`text-[11px] ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
-                              ({(car as any).totalReviews || (car as any).reviews?.length || 124} reviews)
-                            </span>
+                          {/* 3. Rating & Daily Price Row */}
+                          <div className="flex items-center justify-between mt-1.5">
+                            <div className="flex items-center gap-1 text-xs">
+                              <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                              <span className={`font-bold text-xs ${isLight ? 'text-slate-900' : 'text-white'}`}>
+                                {car.rating ? car.rating.toFixed(1) : '4.7'}
+                              </span>
+                              <span className={`text-[11px] ${isLight ? 'text-slate-400' : 'text-neutral-400'}`}>
+                                ({(car as any).totalReviews || (car as any).reviews?.length || 124} reviews)
+                              </span>
+                            </div>
+
+                            <div className="text-right">
+                              <span
+                                className={`font-bold text-sm sm:text-base tabular-nums ${
+                                  isLight ? 'text-slate-900 font-extrabold' : 'text-white'
+                                }`}
+                              >
+                                ₹{displayPrice.toLocaleString('en-IN')}
+                              </span>
+                              <span className={`text-[10px] ml-0.5 font-normal ${isLight ? 'text-slate-400' : 'text-neutral-400'}`}>
+                                /day
+                              </span>
+                            </div>
                           </div>
 
-                          <div className="text-right">
+                          {/* 4. Specs Chips Row (Automatic, Petrol, 5 Seater with icons) */}
+                          <div className="flex items-center gap-1.5 mt-2 flex-wrap">
                             <span
-                              className={`font-bold text-sm sm:text-base tabular-nums ${
-                                isLight ? 'text-slate-900 font-extrabold' : 'text-white'
+                              className={`px-2 py-0.5 rounded-md text-[10px] font-medium border flex items-center gap-1 ${
+                                isLight
+                                  ? 'bg-stone-100/90 border-stone-200/60 text-stone-600'
+                                  : 'bg-neutral-800/70 border-neutral-700/50 text-neutral-300'
                               }`}
                             >
-                              ₹{displayPrice.toLocaleString('en-IN')}
+                              <Settings2 className="w-2.5 h-2.5 opacity-70" />
+                              <span>{car.transmission === 'AUTOMATIC' ? 'Automatic' : 'Manual'}</span>
                             </span>
-                            <span className={`text-[11px] ml-0.5 font-normal ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
-                              /day
+                            <span
+                              className={`px-2 py-0.5 rounded-md text-[10px] font-medium capitalize border flex items-center gap-1 ${
+                                isLight
+                                  ? 'bg-stone-100/90 border-stone-200/60 text-stone-600'
+                                  : 'bg-neutral-800/70 border-neutral-700/50 text-neutral-300'
+                              }`}
+                            >
+                              <Fuel className="w-2.5 h-2.5 opacity-70" />
+                              <span>{car.fuelType.toLowerCase()}</span>
+                            </span>
+                            <span
+                              className={`px-2 py-0.5 rounded-md text-[10px] font-medium border flex items-center gap-1 ${
+                                isLight
+                                  ? 'bg-stone-100/90 border-stone-200/60 text-stone-600'
+                                  : 'bg-neutral-800/70 border-neutral-700/50 text-neutral-300'
+                              }`}
+                            >
+                              <Users className="w-2.5 h-2.5 opacity-70" />
+                              <span>{car.seatingCapacity} Seater</span>
                             </span>
                           </div>
-                        </div>
 
-                        {/* 4. Specs Chips Row (Automatic, Petrol, 5 Seater) */}
-                        <div className="flex items-center gap-1.5 mt-2.5 flex-wrap">
-                          <span
-                            className={`px-2 py-0.5 rounded-md text-[10px] font-medium border ${
-                              isLight
-                                ? 'bg-slate-100 border-slate-200 text-slate-700'
-                                : 'bg-neutral-800/70 border-neutral-700/50 text-neutral-300'
+                          {/* 5. Pickup Location Row */}
+                          <div
+                            className={`flex items-center gap-1 text-[11px] mt-1.5 truncate ${
+                              isLight ? 'text-slate-400' : 'text-neutral-400'
                             }`}
                           >
-                            {car.transmission === 'AUTOMATIC' ? 'Automatic' : 'Manual'}
-                          </span>
-                          <span
-                            className={`px-2 py-0.5 rounded-md text-[10px] font-medium capitalize border ${
-                              isLight
-                                ? 'bg-slate-100 border-slate-200 text-slate-700'
-                                : 'bg-neutral-800/70 border-neutral-700/50 text-neutral-300'
-                            }`}
-                          >
-                            {car.fuelType.toLowerCase()}
-                          </span>
-                          <span
-                            className={`px-2 py-0.5 rounded-md text-[10px] font-medium border ${
-                              isLight
-                                ? 'bg-slate-100 border-slate-200 text-slate-700'
-                                : 'bg-neutral-800/70 border-neutral-700/50 text-neutral-300'
-                            }`}
-                          >
-                            {car.seatingCapacity} Seater
-                          </span>
-                        </div>
-
-                        {/* 5. Pickup Location Row */}
-                        <div
-                          className={`flex items-center gap-1 text-xs mt-2 truncate ${
-                            isLight ? 'text-slate-500' : 'text-neutral-400'
-                          }`}
-                        >
-                          <MapPin className="w-3.5 h-3.5 text-neutral-400 shrink-0" />
-                          <span className="truncate">{car.city || 'New Delhi'}</span>
+                            <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                            <span className="truncate">{car.city || 'Delhi'}</span>
+                          </div>
                         </div>
                       </div>
 
-                      {/* 6. View Details Button (Cream / Beige matching reference image) */}
+                      {/* 6. View Details Button (Solid Dark Button matching reference image) */}
                       <button
                         type="button"
                         onClick={() => navigate(`/vehicles/${car.id}`)}
-                        className={`mt-3.5 w-full py-2.5 px-4 rounded-xl font-semibold text-xs flex items-center justify-center gap-1.5 transition-all shadow-sm active:scale-[0.99] cursor-pointer ${
+                        className={`mt-2.5 w-full py-2.5 px-4 rounded-xl font-semibold text-xs flex items-center justify-center gap-1.5 transition-all shadow-xs active:scale-[0.99] cursor-pointer ${
                           isLight
-                            ? 'bg-black text-white hover:bg-slate-900'
+                            ? 'bg-[#1c1c1e] text-white hover:bg-black'
                             : 'bg-[#fbf5eb] hover:bg-white text-neutral-900'
                         }`}
                       >
