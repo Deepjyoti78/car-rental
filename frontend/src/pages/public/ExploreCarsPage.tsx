@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { vehicleService, VehicleSearchParams } from '../../services/vehicleService';
+import { vehicleService } from '../../services/vehicleService';
 import { Vehicle } from '../../types';
 import { MOCK_FLEET } from '../../services/mockFleet';
 import { BookingCheckoutModal } from '../../components/booking/BookingCheckoutModal';
@@ -8,25 +8,21 @@ import { useThemeStore } from '../../store/themeStore';
 import {
   Car,
   Star,
-  Users,
-  Filter,
-  X,
-  RotateCcw,
   Heart,
   MapPin,
-  Calendar,
-  Zap,
-  Fuel,
-  Gauge,
-  ChevronDown,
-  ChevronUp,
-  ArrowUpDown,
-  Check,
+  Clock,
   ShieldCheck,
-  Navigation,
-  Sparkles,
-  ExternalLink,
+  Tag,
+  ChevronDown,
+  LayoutGrid,
+  List,
+  Check,
   ArrowRight,
+  IndianRupee,
+  Settings2,
+  Fuel,
+  SlidersHorizontal,
+  X,
 } from 'lucide-react';
 
 export const ExploreCarsPage: React.FC = () => {
@@ -35,46 +31,32 @@ export const ExploreCarsPage: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // Filters state initialized from URL
-  const [city, setCity] = useState(searchParams.get('city') || searchParams.get('search') || '');
-  const [startDate, setStartDate] = useState(searchParams.get('startDate') || '');
-  const [endDate, setEndDate] = useState(searchParams.get('endDate') || '');
-  const [rentalType, setRentalType] = useState<'Daily' | 'Weekly' | 'Monthly'>('Daily');
-  const [category, setCategory] = useState(searchParams.get('category') || '');
-  const [transmission, setTransmission] = useState(searchParams.get('transmission') || '');
-  const [fuelType, setFuelType] = useState(searchParams.get('fuelType') || '');
-  const [seatingCapacity, setSeatingCapacity] = useState(searchParams.get('seatingCapacity') || '');
-  const [brand, setBrand] = useState(searchParams.get('brand') || '');
-  const [maxPrice, setMaxPrice] = useState(searchParams.get('maxPrice') || '2500000'); // ₹25,000 in paise
-  const [sortBy, setSortBy] = useState(searchParams.get('sortBy') || 'popular_desc');
-  const [page, setPage] = useState(1);
-
-  // Available metadata
-  const [availableCities, setAvailableCities] = useState<any[]>([]);
-  const [availableBrands, setAvailableBrands] = useState<any[]>([]);
-  const [showAllBrands, setShowAllBrands] = useState(false);
-
-  // Result state (pre-warmed for 0ms instantaneous first paint)
-  const [vehicles, setVehicles] = useState<Vehicle[]>(() => MOCK_FLEET.slice(0, 12));
-  const [meta, setMeta] = useState<any>({ page: 1, limit: 12, total: MOCK_FLEET.length, totalPages: Math.ceil(MOCK_FLEET.length / 12) });
-  const [loading, setLoading] = useState(false);
+  // Primary filters
+  const [selectedCategory, setSelectedCategory] = useState<string>(searchParams.get('category') || 'ALL');
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+  const [selectedTransmissions, setSelectedTransmissions] = useState<string[]>([]);
+  const [selectedFuels, setSelectedFuels] = useState<string[]>([]);
+  const [minPrice, setMinPrice] = useState<number>(1000);
+  const [maxPrice, setMaxPrice] = useState<number>(20000);
+  const [sortBy, setSortBy] = useState<string>(searchParams.get('sortBy') || 'popular_desc');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
 
-  // Active selected vehicle for Right Inspector Panel
-  const [activeVehicle, setActiveVehicle] = useState<Vehicle | null>(() => MOCK_FLEET[0]);
-  const [showPreviewPanel, setShowPreviewPanel] = useState(true);
+  // Result state (pre-warmed for 0ms instantaneous first paint)
+  const [vehicles, setVehicles] = useState<Vehicle[]>(() => MOCK_FLEET);
+  const [loading, setLoading] = useState(false);
 
   // Wishlist state
   const [wishlist, setWishlist] = useState<Set<string>>(() => {
     try {
       const saved = localStorage.getItem('drivio_wishlist');
-      return saved ? new Set(JSON.parse(saved)) : new Set(['1', '3']);
+      return saved ? new Set(JSON.parse(saved)) : new Set(['b1c698df-9252-4ebc-8b26-b4cb24d8ea13']);
     } catch {
       return new Set();
     }
   });
 
-  // Booking Checkout Modal state
+  // Booking Modal
   const [bookingVehicle, setBookingVehicle] = useState<Vehicle | null>(null);
 
   const toggleWishlist = (id: string, e: React.MouseEvent) => {
@@ -90,64 +72,22 @@ export const ExploreCarsPage: React.FC = () => {
     });
   };
 
-  // Load cities & brands metadata once
-  useEffect(() => {
-    vehicleService.getCities().then(setAvailableCities).catch(() => {});
-    vehicleService.getBrands().then(setAvailableBrands).catch(() => {});
-  }, []);
-
-  // Sync state when URL params change
-  useEffect(() => {
-    setCity(searchParams.get('city') || searchParams.get('search') || '');
-    setStartDate(searchParams.get('startDate') || '');
-    setEndDate(searchParams.get('endDate') || '');
-    setCategory(searchParams.get('category') || '');
-    setTransmission(searchParams.get('transmission') || '');
-    setFuelType(searchParams.get('fuelType') || '');
-    setSeatingCapacity(searchParams.get('seatingCapacity') || '');
-    setBrand(searchParams.get('brand') || '');
-    if (searchParams.get('maxPrice')) setMaxPrice(searchParams.get('maxPrice')!);
-    if (searchParams.get('sortBy')) setSortBy(searchParams.get('sortBy')!);
-  }, [searchParams]);
-
-  // Perform search query whenever filters change
+  // Fetch or filter fleet
   useEffect(() => {
     let active = true;
     const fetchFleet = async () => {
-      // Only show full skeleton screen if no vehicles are currently rendered
-      if (vehicles.length === 0) {
-        setLoading(true);
-      }
       try {
-        const params: VehicleSearchParams = {
-          page,
-          limit: 12,
+        const res = await vehicleService.search({
+          limit: 50,
           sortBy,
-          ...(city && { city }),
-          ...(startDate && { startDate }),
-          ...(endDate && { endDate }),
-          ...(category && { category }),
-          ...(transmission && { transmission }),
-          ...(fuelType && { fuelType }),
-          ...(seatingCapacity && { seatingCapacity: Number(seatingCapacity) }),
-          ...(brand && { brand }),
-          ...(maxPrice && { maxPrice: Number(maxPrice) }),
-        };
-
-        const res = await vehicleService.search(params);
-        if (active) {
+          maxPrice: maxPrice * 100, // to paise
+          minPrice: minPrice * 100,
+        });
+        if (active && res && res.data && res.data.length > 0) {
           setVehicles(res.data);
-          setMeta(res.meta);
-          if (res.data.length > 0) {
-            setActiveVehicle((prev) => (prev && res.data.some((v) => v.id === prev.id) ? prev : res.data[0]));
-          } else {
-            setActiveVehicle(null);
-          }
         }
       } catch (err) {
         console.error('Failed to query fleet:', err);
-      } finally {
-        if (active) setLoading(false);
       }
     };
 
@@ -155,1203 +95,731 @@ export const ExploreCarsPage: React.FC = () => {
     return () => {
       active = false;
     };
-  }, [
-    city,
-    startDate,
-    endDate,
-    category,
-    transmission,
-    fuelType,
-    seatingCapacity,
-    brand,
-    maxPrice,
-    sortBy,
-    page,
-  ]);
+  }, [sortBy, minPrice, maxPrice]);
+
+  // Compute filtered cars based on checkboxes & category pills
+  const filteredVehicles = useMemo(() => {
+    return vehicles.filter((car) => {
+      // 1. Top category pill
+      if (selectedCategory && selectedCategory !== 'ALL') {
+        const catUpper = car.category.toUpperCase();
+        if (selectedCategory === 'SUV' && !(catUpper === 'SUV' || (car.model && car.model.toLowerCase().includes('ertiga')))) {
+          return false;
+        } else if (selectedCategory !== 'SUV' && catUpper !== selectedCategory) {
+          return false;
+        }
+      }
+
+      // 2. Vehicle Type checkboxes (SUV, Sedan, Hatchback, Luxury)
+      if (selectedTypes.length > 0) {
+        const carCat = car.category.toUpperCase();
+        const matchesType = selectedTypes.some((t) => {
+          if (t === 'SUV') {
+            return carCat === 'SUV' || car.model.toLowerCase().includes('ertiga');
+          }
+          return carCat === t;
+        });
+        if (!matchesType) return false;
+      }
+
+      // 3. Transmission checkboxes (Automatic, Manual)
+      if (selectedTransmissions.length > 0) {
+        if (!selectedTransmissions.includes(car.transmission.toUpperCase())) {
+          return false;
+        }
+      }
+
+      // 4. Fuel Type checkboxes (Petrol, Diesel, Electric)
+      if (selectedFuels.length > 0) {
+        if (!selectedFuels.includes(car.fuelType.toUpperCase())) {
+          return false;
+        }
+      }
+
+      // 5. Price Range (in Rupees)
+      const dailyRupees = Math.round(car.dailyRate / 100);
+      if (dailyRupees < minPrice || dailyRupees > maxPrice) {
+        return false;
+      }
+
+      return true;
+    });
+  }, [vehicles, selectedCategory, selectedTypes, selectedTransmissions, selectedFuels, minPrice, maxPrice]);
 
   const handleResetFilters = () => {
-    setCity('');
-    setStartDate('');
-    setEndDate('');
-    setRentalType('Daily');
-    setCategory('');
-    setTransmission('');
-    setFuelType('');
-    setSeatingCapacity('');
-    setBrand('');
-    setMaxPrice('2500000');
+    setSelectedCategory('ALL');
+    setSelectedTypes([]);
+    setSelectedTransmissions([]);
+    setSelectedFuels([]);
+    setMinPrice(1000);
+    setMaxPrice(20000);
     setSortBy('popular_desc');
-    setPage(1);
     setSearchParams({});
   };
 
-  const defaultBrands = [
-    'BMW',
-    'Mercedes-Benz',
-    'Porsche',
-    'Audi',
-    'Land Rover',
-    'Toyota',
-    'Mahindra',
-    'Tata',
-    'Hyundai',
-    'Kia',
-  ];
-
-  const brandOptions = availableBrands.length > 0 ? availableBrands.map((b) => b.brand) : defaultBrands;
-  const visibleBrands = showAllBrands ? brandOptions : brandOptions.slice(0, 6);
-
-  const categories = [
-    { label: 'SUV', value: 'SUV' },
-    { label: 'Sedan', value: 'SEDAN' },
-    { label: 'Luxury', value: 'LUXURY' },
-    { label: 'Electric', value: 'ELECTRIC' },
-    { label: 'Hatchback', value: 'HATCHBACK' },
-  ];
-
-  const activeFilterCount = [
-    city,
-    category,
-    transmission,
-    fuelType,
-    seatingCapacity,
-    brand,
-    maxPrice !== '2500000',
-  ].filter(Boolean).length;
-
-  const getDisplayPrice = (dailyRate: number) => {
-    if (rentalType === 'Weekly') {
-      return Math.round((dailyRate * 7 * 0.9) / 100);
-    } else if (rentalType === 'Monthly') {
-      return Math.round((dailyRate * 30 * 0.75) / 100);
-    }
-    return Math.round(dailyRate / 100);
+  const toggleVehicleType = (type: string) => {
+    setSelectedTypes((prev) =>
+      prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
+    );
   };
 
-  const getPriceSuffix = () => {
-    if (rentalType === 'Weekly') return '/week';
-    if (rentalType === 'Monthly') return '/month';
-    return '/day';
+  const toggleTransmission = (t: string) => {
+    setSelectedTransmissions((prev) =>
+      prev.includes(t) ? prev.filter((item) => item !== t) : [...prev, t]
+    );
+  };
+
+  const toggleFuel = (f: string) => {
+    setSelectedFuels((prev) =>
+      prev.includes(f) ? prev.filter((item) => item !== f) : [...prev, f]
+    );
+  };
+
+  // Helper to get formatted badge label (matching screenshot, e.g. Hatchback, Sedan, MPV, Luxury, SUV)
+  const getBadgeLabel = (car: Vehicle) => {
+    if (car.model.toLowerCase().includes('ertiga')) return 'MPV';
+    if (car.category === 'HATCHBACK') return 'Hatchback';
+    if (car.category === 'SEDAN') return 'Sedan';
+    if (car.category === 'LUXURY') return 'Luxury';
+    if (car.category === 'SUV') return 'SUV';
+    if (car.category === 'ELECTRIC') return 'Electric';
+    return car.category;
   };
 
   return (
     <div
-      className={`max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 min-h-screen transition-colors duration-200 ${
-        isLight ? 'bg-[#F4EFEA] text-slate-900' : 'bg-black text-white'
+      className={`min-h-screen transition-colors duration-200 ${
+        isLight ? 'bg-[#F4EFEA] text-slate-900' : 'bg-[#0a0b0d] text-white'
       }`}
     >
-      {/* 1. TOP HEADER & METRICS BAR (Matching Reference Image) */}
-      <div
-        className={`flex flex-col md:flex-row md:items-center justify-between pb-6 border-b gap-4 ${
-          isLight ? 'border-stone-200/80' : 'border-neutral-800'
-        }`}
-      >
-        {/* Left: Title & Count */}
-        <div>
-          <h1
-            className={`text-2xl sm:text-3xl font-extrabold tracking-tight ${
-              isLight ? 'text-slate-900' : 'text-white'
-            }`}
-          >
-            Available Cars
-          </h1>
-          <p
-            className={`text-xs sm:text-sm mt-1 font-normal ${
-              isLight ? 'text-slate-500' : 'text-neutral-400'
-            }`}
-          >
-            {meta.total || vehicles.length} vehicles available for rent
-            {city ? ` in ${city}` : ' across all verified hubs'}
-          </p>
-        </div>
-
-        {/* Right: Modern Trust Highlights & Sort Controls */}
-        <div className="flex flex-wrap items-center gap-3">
-          <div className="hidden sm:flex items-center gap-2 text-xs font-medium">
-            <span
-              className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border text-[11px] ${
-                isLight
-                  ? 'bg-emerald-50 text-emerald-800 border-emerald-200/60'
-                  : 'bg-emerald-950/30 text-emerald-400 border-emerald-800/40'
+      <div className="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        {/* =========================================================================
+            HEADER & TRUST HIGHLIGHTS BAR (Matching Reference Image)
+           ========================================================================= */}
+        <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-5">
+          {/* Left Title */}
+          <div>
+            <span className="text-[11px] font-semibold tracking-wider text-[#d4af37] uppercase font-mono block mb-1">
+              PREMIUM RENTAL CARS
+            </span>
+            <h1
+              className={`text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight ${
+                isLight ? 'text-slate-900' : 'text-white'
               }`}
             >
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-              <span>24h Escrow Return</span>
-            </span>
-
-            <span
-              className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border text-[11px] ${
-                isLight
-                  ? 'bg-amber-50 text-amber-800 border-amber-200/60'
-                  : 'bg-amber-950/30 text-amber-400 border-amber-800/40'
-              }`}
-            >
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-              <span>Inspected Yellow Plates</span>
-            </span>
+              Available Cars
+            </h1>
+            <p className={`text-xs sm:text-sm mt-1 ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
+              Choose from our wide range of premium vehicles and hit the road.
+            </p>
           </div>
 
-          {/* Quick Sort Dropdown */}
-          <div className="flex items-center gap-2 text-xs">
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className={`px-3 py-1.5 rounded-full border text-xs font-medium cursor-pointer transition-colors ${
-                isLight
-                  ? 'bg-white border-stone-200 text-slate-800 shadow-xs'
-                  : 'bg-[#0D0D0E] border-neutral-800 text-white hover:border-neutral-700'
-              }`}
-            >
-              <option value="popular_desc" className="bg-neutral-900 text-white">Sort: Most Popular</option>
-              <option value="price_asc" className="bg-neutral-900 text-white">Sort: Price (Low to High)</option>
-              <option value="price_desc" className="bg-neutral-900 text-white">Sort: Price (High to Low)</option>
-              <option value="rating_desc" className="bg-neutral-900 text-white">Sort: Highest Rated</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Filter & Sort Trigger Strip */}
-      <div
-        className={`md:hidden flex items-center justify-between py-3 border-b ${
-          isLight ? 'border-stone-200' : 'border-neutral-800'
-        }`}
-      >
-        <button
-          onClick={() => setMobileFilterOpen(!mobileFilterOpen)}
-          className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold border ${
-            isLight
-              ? 'bg-white border-stone-200 text-slate-800 shadow-xs'
-              : 'bg-[#0D0D0E] border-neutral-800 text-white'
-          }`}
-        >
-          <Filter className={`w-3.5 h-3.5 ${isLight ? 'text-black' : 'text-white'}`} />
-          <span>Filters {activeFilterCount > 0 && `(${activeFilterCount})`}</span>
-        </button>
-
-        <div className={`flex items-center gap-1.5 text-xs ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
-          <span className="font-mono text-[10px] uppercase">Sort:</span>
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            className={`border rounded-lg px-2 py-1 text-xs ${
-              isLight
-                ? 'bg-white border-stone-200 text-slate-800 shadow-xs'
-                : 'bg-[#0D0D0E] border-neutral-800 text-white'
-            }`}
-          >
-            <option value="popular_desc" className="bg-[#0D0D0E] text-white">Most Popular</option>
-            <option value="price_asc" className="bg-[#0D0D0E] text-white">Price: Low to High</option>
-            <option value="price_desc" className="bg-[#0D0D0E] text-white">Price: High to Low</option>
-            <option value="rating_desc" className="bg-[#0D0D0E] text-white">Highest Rated</option>
-          </select>
-        </div>
-      </div>
-
-      {/* 2. THREE-PANEL SHOWROOM LAYOUT (Matching Reference Image) */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-6 pt-6 items-start">
-        {/* PANEL 1: LEFT FILTER SIDEBAR */}
-        <div
-          className={`${
-            mobileFilterOpen
-              ? isLight
-                ? 'block fixed inset-0 z-50 bg-[#F4EFEA]/98 p-6 overflow-y-auto'
-                : 'block fixed inset-0 z-50 bg-black/95 p-6 overflow-y-auto'
-              : 'hidden'
-          } md:block md:col-span-3 space-y-5`}
-        >
-          <div
-            className={`rounded-2xl border p-5 space-y-5 shadow-sm ${
-              isLight
-                ? 'bg-white border-stone-200/80 text-slate-900'
-                : 'bg-[#0D0D0E] border-neutral-800 text-white'
-            }`}
-          >
-            {/* Header: Filter by & Reset all */}
+          {/* Right Trust Badges (Exact match to reference image) */}
+          <div className="flex flex-wrap items-center gap-2 self-start md:self-center">
             <div
-              className={`flex items-center justify-between pb-3 border-b ${
-                isLight ? 'border-stone-100' : 'border-neutral-800'
+              className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-medium ${
+                isLight
+                  ? 'bg-white border-stone-200/90 text-slate-800 shadow-xs'
+                  : 'bg-neutral-900/80 border-neutral-800 text-neutral-300'
               }`}
             >
-              <div className="flex items-center space-x-2">
-                <span className={`text-base font-bold ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                  Filter by
-                </span>
-                {activeFilterCount > 0 && (
-                  <span
-                    className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-bold ${
-                      isLight ? 'bg-black text-white' : 'bg-white text-black'
-                    }`}
-                  >
-                    {activeFilterCount}
-                  </span>
-                )}
-              </div>
-              <button
-                type="button"
-                onClick={handleResetFilters}
-                className={`text-xs font-semibold transition-colors cursor-pointer ${
-                  isLight ? 'text-slate-500 hover:text-black' : 'text-neutral-400 hover:text-white'
-                }`}
-              >
-                Reset all
-              </button>
+              <Clock className="w-3.5 h-3.5 text-neutral-400" />
+              <span>24/7 Pickup & Support</span>
             </div>
 
-            {/* 1. Rental Type Pill Switcher (Daily / Weekly / Monthly) */}
-            <div>
-              <label
-                className={`block text-xs font-semibold mb-2 ${
-                  isLight ? 'text-slate-800' : 'text-white/90'
-                }`}
-              >
-                Rental Type
-              </label>
-              <div
-                className={`grid grid-cols-3 gap-1 p-1 rounded-xl border ${
-                  isLight
-                    ? 'bg-slate-100 border-slate-200/70'
-                    : 'bg-black border-neutral-800'
-                }`}
-              >
-                {(['Daily', 'Weekly', 'Monthly'] as const).map((type) => (
-                  <button
-                    key={type}
-                    type="button"
-                    onClick={() => setRentalType(type)}
-                    className={`py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
-                      rentalType === type
-                        ? isLight
-                          ? 'bg-black text-white font-semibold shadow-xs'
-                          : 'bg-white text-black font-semibold shadow-sm'
-                        : isLight
-                        ? 'text-slate-600 hover:text-black'
-                        : 'text-neutral-400 hover:text-white'
-                    }`}
-                  >
-                    {type}
-                  </button>
-                ))}
-              </div>
+            <div
+              className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-medium ${
+                isLight
+                  ? 'bg-white border-stone-200/90 text-slate-800 shadow-xs'
+                  : 'bg-neutral-900/80 border-neutral-800 text-neutral-300'
+              }`}
+            >
+              <ShieldCheck className="w-3.5 h-3.5 text-neutral-400" />
+              <span>Verified Vehicles</span>
             </div>
 
-            {/* 2. Price Range Slider */}
-            <div>
-              <div className="flex items-center justify-between text-xs mb-1.5">
-                <label className={`font-semibold ${isLight ? 'text-slate-800' : 'text-white/90'}`}>
-                  Price Range
-                </label>
-                <span
-                  className={`text-[11px] font-mono font-semibold ${
-                    isLight ? 'text-slate-900' : 'text-white'
-                  }`}
-                >
-                  ₹1,500 - ₹{(Number(maxPrice) / 100).toLocaleString('en-IN')} /day
-                </span>
-              </div>
-              <input
-                type="range"
-                min="200000"
-                max="2500000"
-                step="50000"
-                value={maxPrice}
-                onChange={(e) => setMaxPrice(e.target.value)}
-                className={`w-full h-1.5 rounded-lg appearance-none cursor-pointer ${
-                  isLight ? 'bg-slate-200 accent-black' : 'bg-neutral-800 accent-white'
-                }`}
-              />
-              <div
-                className={`flex justify-between text-[10px] font-mono mt-1 ${
-                  isLight ? 'text-slate-400' : 'text-neutral-500'
-                }`}
-              >
-                <span>₹2,000</span>
-                <span>₹25,000+</span>
-              </div>
+            <div
+              className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-medium ${
+                isLight
+                  ? 'bg-white border-stone-200/90 text-slate-800 shadow-xs'
+                  : 'bg-neutral-900/80 border-neutral-800 text-neutral-300'
+              }`}
+            >
+              <Tag className="w-3.5 h-3.5 text-neutral-400" />
+              <span>Best Price Guarantee</span>
             </div>
+          </div>
+        </div>
 
-            {/* 3. Brand Selection */}
-            <div>
-              <label
-                className={`block text-xs font-semibold mb-2 ${
-                  isLight ? 'text-slate-800' : 'text-white/90'
-                }`}
-              >
-                Brand / Make
-              </label>
-              <div className="grid grid-cols-2 gap-2">
-                {visibleBrands.map((b) => {
-                  const isChecked = brand.toLowerCase() === b.toLowerCase();
-                  return (
-                    <button
-                      key={b}
-                      type="button"
-                      onClick={() => setBrand(isChecked ? '' : b)}
-                      className={`flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs transition-all cursor-pointer truncate ${
-                        isChecked
-                          ? isLight
-                            ? 'bg-black text-white font-medium shadow-xs border border-black'
-                            : 'bg-white text-black font-semibold shadow-sm border border-white'
-                          : isLight
-                          ? 'bg-slate-50 border border-slate-200/80 text-slate-700 hover:border-slate-300 hover:text-black'
-                          : 'bg-neutral-900/60 border border-neutral-800 text-neutral-300 hover:border-neutral-700 hover:text-white'
-                      }`}
-                    >
-                      <span className="truncate">{b}</span>
-                      {isChecked && (
-                        <Check
-                          className={`w-3 h-3 shrink-0 ml-1 ${
-                            isLight ? 'text-white' : 'text-black'
-                          }`}
-                        />
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-              {brandOptions.length > 6 && (
+        {/* =========================================================================
+            CATEGORY PILLS & SORT CONTROLS BAR (Matching Reference Image)
+           ========================================================================= */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+          {/* Category Filter Pills (All 16, SUV 5, Luxury 4, Sedan 4, Hatchback 3) */}
+          <div className="flex items-center gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden py-1">
+            {[
+              { label: 'All (16)', value: 'ALL' },
+              { label: 'SUV (5)', value: 'SUV' },
+              { label: 'Luxury (4)', value: 'LUXURY' },
+              { label: 'Sedan (4)', value: 'SEDAN' },
+              { label: 'Hatchback (3)', value: 'HATCHBACK' },
+            ].map((cat) => {
+              const isActive = selectedCategory === cat.value;
+              return (
                 <button
+                  key={cat.value}
                   type="button"
-                  onClick={() => setShowAllBrands(!showAllBrands)}
-                  className={`mt-2 text-[11px] font-medium transition-colors cursor-pointer flex items-center gap-1 ${
-                    isLight ? 'text-slate-600 hover:text-black' : 'text-neutral-400 hover:text-white'
+                  onClick={() => setSelectedCategory(cat.value)}
+                  className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap cursor-pointer ${
+                    isActive
+                      ? isLight
+                        ? 'bg-black text-white font-semibold shadow-xs'
+                        : 'bg-[#fbf5eb] text-neutral-950 font-semibold shadow-sm'
+                      : isLight
+                      ? 'bg-white border border-stone-200 text-slate-700 hover:text-black hover:border-slate-400 shadow-xs'
+                      : 'bg-neutral-900/80 border border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700'
                   }`}
                 >
-                  <span>{showAllBrands ? 'Show less' : 'Show more brands'}</span>
-                  {showAllBrands ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+                  {cat.label}
                 </button>
-              )}
-            </div>
-
-            {/* 4. Vehicle Type (Category) */}
-            <div>
-              <label
-                className={`block text-xs font-semibold mb-2 ${
-                  isLight ? 'text-slate-800' : 'text-white/90'
-                }`}
-              >
-                Vehicle Type
-              </label>
-              <div className="grid grid-cols-2 gap-2">
-                {categories.map((cat) => {
-                  const isChecked = category === cat.value;
-                  return (
-                    <button
-                      key={cat.value}
-                      type="button"
-                      onClick={() => setCategory(isChecked ? '' : cat.value)}
-                      className={`flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs transition-all cursor-pointer ${
-                        isChecked
-                          ? isLight
-                            ? 'bg-black text-white font-medium shadow-xs border border-black'
-                            : 'bg-white text-black font-semibold shadow-sm border border-white'
-                          : isLight
-                          ? 'bg-slate-50 border border-slate-200/80 text-slate-700 hover:border-slate-300 hover:text-black'
-                          : 'bg-neutral-900/60 border border-neutral-800 text-neutral-300 hover:border-neutral-700 hover:text-white'
-                      }`}
-                    >
-                      <span>{cat.label}</span>
-                      {isChecked && (
-                        <Check
-                          className={`w-3 h-3 shrink-0 ${isLight ? 'text-white' : 'text-black'}`}
-                        />
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* 5. Transmission */}
-            <div>
-              <label
-                className={`block text-xs font-semibold mb-2 ${
-                  isLight ? 'text-slate-800' : 'text-white/90'
-                }`}
-              >
-                Transmission
-              </label>
-              <div className="grid grid-cols-2 gap-2">
-                {['AUTOMATIC', 'MANUAL'].map((t) => {
-                  const isChecked = transmission === t;
-                  return (
-                    <button
-                      key={t}
-                      type="button"
-                      onClick={() => setTransmission(isChecked ? '' : t)}
-                      className={`flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs transition-all cursor-pointer capitalize ${
-                        isChecked
-                          ? isLight
-                            ? 'bg-black text-white font-medium shadow-xs border border-black'
-                            : 'bg-white text-black font-semibold shadow-sm border border-white'
-                          : isLight
-                          ? 'bg-slate-50 border border-slate-200/80 text-slate-700 hover:border-slate-300 hover:text-black'
-                          : 'bg-neutral-900/60 border border-neutral-800 text-neutral-300 hover:border-neutral-700 hover:text-white'
-                      }`}
-                    >
-                      <span>{t.toLowerCase()}</span>
-                      {isChecked && (
-                        <Check
-                          className={`w-3 h-3 shrink-0 ${isLight ? 'text-white' : 'text-black'}`}
-                        />
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* 6. Fuel Type */}
-            <div>
-              <label
-                className={`block text-xs font-semibold mb-2 ${
-                  isLight ? 'text-slate-800' : 'text-white/90'
-                }`}
-              >
-                Fuel Type
-              </label>
-              <div className="grid grid-cols-2 gap-2">
-                {['PETROL', 'DIESEL', 'ELECTRIC', 'HYBRID'].map((f) => {
-                  const isChecked = fuelType === f;
-                  return (
-                    <button
-                      key={f}
-                      type="button"
-                      onClick={() => setFuelType(isChecked ? '' : f)}
-                      className={`flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs transition-all cursor-pointer capitalize ${
-                        isChecked
-                          ? isLight
-                            ? 'bg-black text-white font-medium shadow-xs border border-black'
-                            : 'bg-white text-black font-semibold shadow-sm border border-white'
-                          : isLight
-                          ? 'bg-slate-50 border border-slate-200/80 text-slate-700 hover:border-slate-300 hover:text-black'
-                          : 'bg-neutral-900/60 border border-neutral-800 text-neutral-300 hover:border-neutral-700 hover:text-white'
-                      }`}
-                    >
-                      <span>{f.toLowerCase()}</span>
-                      {isChecked && (
-                        <Check
-                          className={`w-3 h-3 shrink-0 ${isLight ? 'text-white' : 'text-black'}`}
-                        />
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Mobile apply button */}
-            {mobileFilterOpen && (
-              <button
-                type="button"
-                onClick={() => setMobileFilterOpen(false)}
-                className={`w-full py-2.5 rounded-full text-xs font-bold uppercase mt-4 cursor-pointer ${
-                  isLight ? 'bg-black text-white' : 'bg-white text-black'
-                }`}
-              >
-                Apply Filters
-              </button>
-            )}
-          </div>
-        </div>
-
-        {/* PANEL 2: CENTER VEHICLE GRID */}
-        <div
-          className={`${
-            showPreviewPanel && activeVehicle
-              ? 'md:col-span-9 lg:col-span-5'
-              : 'md:col-span-9 lg:col-span-9'
-          } space-y-4`}
-        >
-          {/* Quick Category Filter Pills Bar */}
-          <div className="flex items-center justify-between gap-2 pb-1">
-            <div className="flex items-center gap-1.5 overflow-x-auto py-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-              {['ALL', 'SUV', 'LUXURY', 'SEDAN', 'ELECTRIC', 'HATCHBACK'].map((cat) => {
-                const isCatActive = cat === 'ALL' ? !category : category === cat;
-                return (
-                  <button
-                    key={cat}
-                    type="button"
-                    onClick={() => {
-                      setCategory(cat === 'ALL' ? '' : cat);
-                      setPage(1);
-                    }}
-                    className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-all cursor-pointer ${
-                      isCatActive
-                        ? isLight
-                          ? 'bg-black text-white shadow-xs font-semibold'
-                          : 'bg-white text-black shadow-sm font-semibold'
-                        : isLight
-                        ? 'bg-white border border-stone-200/80 text-slate-700 hover:text-black hover:border-slate-400 shadow-xs'
-                        : 'bg-[#0D0D0E] border border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700'
-                    }`}
-                  >
-                    {cat === 'ALL' ? 'All Fleet' : cat}
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Inspector Toggle Button if user closed it */}
-            {!showPreviewPanel && (
-              <button
-                type="button"
-                onClick={() => setShowPreviewPanel(true)}
-                className={`hidden lg:flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs transition-colors shrink-0 ${
-                  isLight
-                    ? 'bg-white border-stone-200 text-slate-800 shadow-xs hover:bg-slate-50'
-                    : 'bg-[#0D0D0E] border-neutral-800 text-neutral-300 hover:text-white'
-                }`}
-              >
-                <span>Inspector</span>
-              </button>
-            )}
+              );
+            })}
           </div>
 
-          {/* Subheader: Count & Sort */}
-          <div
-            className={`flex items-center justify-between text-xs px-1 pt-1 ${
-              isLight ? 'text-slate-500' : 'text-neutral-400'
-            }`}
-          >
-            <span
-              className={`font-mono text-[11px] uppercase tracking-wider ${
-                isLight ? 'text-slate-400' : 'text-neutral-500'
+          {/* Right Controls: Sort & View Switcher */}
+          <div className="flex items-center gap-2.5 shrink-0 self-end sm:self-auto">
+            {/* Mobile Filter Toggle Button */}
+            <button
+              type="button"
+              onClick={() => setMobileFilterOpen(!mobileFilterOpen)}
+              className={`lg:hidden flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-medium ${
+                isLight ? 'bg-white border-stone-200 text-slate-800' : 'bg-neutral-900 border-neutral-800 text-neutral-200'
               }`}
             >
-              Showing {vehicles.length} of {meta.total || vehicles.length} Vehicles
-            </span>
+              <SlidersHorizontal className="w-3.5 h-3.5" />
+              <span>Filters</span>
+            </button>
 
-            {/* Desktop Sort */}
-            <div
-              className={`hidden sm:flex items-center space-x-1.5 px-3 py-1.5 rounded-full border ${
-                isLight
-                  ? 'bg-white border-stone-200 shadow-xs text-slate-800'
-                  : 'bg-[#0D0D0E] border-neutral-800 text-white'
-              }`}
-            >
-              <ArrowUpDown className={`w-3.5 h-3.5 ${isLight ? 'text-slate-600' : 'text-neutral-400'}`} />
+            {/* Sort Pill Dropdown */}
+            <div className="relative">
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className={`bg-transparent font-medium text-xs focus:outline-none cursor-pointer ${
-                  isLight ? 'text-slate-800' : 'text-white'
+                className={`appearance-none text-xs font-medium pl-3.5 pr-8 py-1.5 rounded-full cursor-pointer focus:outline-none transition-colors border ${
+                  isLight
+                    ? 'bg-white border-stone-200 text-slate-800 shadow-xs hover:border-slate-400'
+                    : 'bg-neutral-900/80 border-neutral-800 text-neutral-300 hover:border-neutral-700'
                 }`}
               >
-                <option value="popular_desc" className={isLight ? 'bg-white text-slate-800' : 'bg-[#0D0D0E]'}>
-                  Most Popular
+                <option value="popular_desc" className={isLight ? 'bg-white text-slate-900' : 'bg-neutral-900 text-white'}>
+                  Sort: Most Popular
                 </option>
-                <option value="price_asc" className={isLight ? 'bg-white text-slate-800' : 'bg-[#0D0D0E]'}>
-                  Price: Low to High
+                <option value="price_asc" className={isLight ? 'bg-white text-slate-900' : 'bg-neutral-900 text-white'}>
+                  Sort: Price (Low to High)
                 </option>
-                <option value="price_desc" className={isLight ? 'bg-white text-slate-800' : 'bg-[#0D0D0E]'}>
-                  Price: High to Low
+                <option value="price_desc" className={isLight ? 'bg-white text-slate-900' : 'bg-neutral-900 text-white'}>
+                  Sort: Price (High to Low)
                 </option>
-                <option value="rating_desc" className={isLight ? 'bg-white text-slate-800' : 'bg-[#0D0D0E]'}>
-                  Highest Rated
+                <option value="rating_desc" className={isLight ? 'bg-white text-slate-900' : 'bg-neutral-900 text-white'}>
+                  Sort: Highest Rated
                 </option>
               </select>
+              <ChevronDown className="w-3.5 h-3.5 text-neutral-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
-          </div>
 
-          {/* Vehicle Cards Grid */}
-          {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {[1, 2, 3, 4, 5, 6].map((n) => (
-                <div
-                  key={n}
-                  className={`h-72 rounded-2xl border animate-pulse ${
-                    isLight ? 'bg-white border-stone-200/80 shadow-xs' : 'bg-[#0D0D0E] border-neutral-800'
-                  }`}
-                />
-              ))}
-            </div>
-          ) : vehicles.length === 0 ? (
+            {/* View Switcher Icons */}
             <div
-              className={`p-12 text-center rounded-2xl border space-y-3 ${
-                isLight ? 'bg-white border-stone-200 text-slate-900 shadow-xs' : 'bg-[#0D0D0E] border-neutral-800 text-white'
+              className={`flex items-center p-0.5 rounded-full border ${
+                isLight ? 'bg-white border-stone-200 shadow-xs' : 'bg-neutral-900/80 border-neutral-800'
               }`}
             >
-              <Car className={`w-10 h-10 mx-auto ${isLight ? 'text-slate-400' : 'text-neutral-500'}`} />
-              <h3 className={`text-base font-bold ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                No vehicles found
-              </h3>
-              <p className={`text-xs max-w-sm mx-auto ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
-                No vehicles matched your current filter selection. Try adjusting price, category, or city.
-              </p>
               <button
                 type="button"
-                onClick={handleResetFilters}
-                className={`px-5 py-2 rounded-full text-xs font-bold cursor-pointer ${
-                  isLight ? 'bg-black text-white' : 'bg-white text-black font-bold hover:bg-neutral-200'
+                onClick={() => setViewMode('grid')}
+                className={`p-1.5 rounded-full transition-colors cursor-pointer ${
+                  viewMode === 'grid'
+                    ? isLight
+                      ? 'bg-slate-200 text-black'
+                      : 'bg-neutral-800 text-white'
+                    : 'text-neutral-500 hover:text-neutral-300'
                 }`}
+                title="Grid View"
               >
-                Reset All Filters
+                <LayoutGrid className="w-3.5 h-3.5" />
               </button>
-            </div>
-          ) : (
-            <div
-              className={`grid grid-cols-1 sm:grid-cols-2 ${
-                !showPreviewPanel ? 'lg:grid-cols-3' : ''
-              } gap-4`}
-            >
-              {vehicles.map((car) => {
-                const isSelected = activeVehicle?.id === car.id;
-                const isLiked = wishlist.has(car.id);
-                const primaryImage =
-                  car.images?.find((img) => img.isPrimary)?.url ||
-                  car.images?.[0]?.url ||
-                  'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=600&auto=format&fit=crop&q=75';
-
-                return (
-                  <div
-                    key={car.id}
-                    onClick={() => navigate(`/vehicles/${car.id}`)}
-                    onMouseEnter={() => setActiveVehicle(car)}
-                    className={`rounded-2xl p-4 border transition-all duration-300 cursor-pointer relative flex flex-col justify-between group ${
-                      isSelected
-                        ? isLight
-                          ? 'border-black ring-2 ring-black/20 bg-white shadow-md'
-                          : 'border-white/30 ring-1 ring-white/20 bg-[#141416] shadow-xl'
-                        : isLight
-                        ? 'border-stone-200/80 bg-white hover:border-stone-400 hover:shadow-md'
-                        : 'border-neutral-800/80 bg-[#0D0D0E] hover:border-neutral-700 hover:bg-[#121214] hover:shadow-2xl'
-                    }`}
-                  >
-                    {/* Card Top: Car Title, Rating & Wishlist Heart */}
-                    <div>
-                      <div className="flex items-start justify-between">
-                        <div>
-                          <h3
-                            className={`font-semibold text-sm transition-colors leading-tight ${
-                              isLight
-                                ? 'text-slate-900 group-hover:text-black'
-                                : 'text-white group-hover:text-neutral-200'
-                            }`}
-                          >
-                            {car.brand} {car.model}
-                          </h3>
-                          <div
-                            className={`flex items-center space-x-1 text-xs mt-1 ${
-                              isLight ? 'text-slate-500' : 'text-neutral-400'
-                            }`}
-                          >
-                            <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-500" />
-                            <span className={`font-bold text-xs ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                              {car.rating ? car.rating.toFixed(1) : '4.9'}
-                            </span>
-                            <span className={`text-[10px] ${isLight ? 'text-slate-400' : 'text-neutral-500'}`}>
-                              ({(car as any).totalReviews || (car as any).reviews?.length || 124})
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Heart wishlist button */}
-                        <button
-                          type="button"
-                          onClick={(e) => toggleWishlist(car.id, e)}
-                          className={`p-1.5 rounded-full transition-colors cursor-pointer ${
-                            isLight ? 'hover:bg-slate-100' : 'hover:bg-white/10'
-                          }`}
-                          aria-label="Save to wishlist"
-                        >
-                          <Heart
-                            className={`w-4 h-4 transition-colors ${
-                              isLiked
-                                ? 'fill-rose-500 text-rose-500'
-                                : isLight
-                                ? 'text-slate-400 hover:text-slate-800'
-                                : 'text-neutral-400 hover:text-white'
-                            }`}
-                          />
-                        </button>
-                      </div>
-
-                      {/* Card Center: Wide Cinematic 16:10 Automotive Window */}
-                      <div
-                        className={`aspect-[16/10] w-full rounded-xl overflow-hidden relative my-2.5 border ${
-                          isLight
-                            ? 'bg-stone-100 border-stone-200/60'
-                            : 'bg-black border-neutral-800'
-                        }`}
-                      >
-                        <img
-                          src={primaryImage}
-                          alt={`${car.brand} ${car.model}`}
-                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
-                          loading="lazy"
-                          decoding="async"
-                        />
-                        <div
-                          className={`absolute inset-0 pointer-events-none ${
-                            isLight
-                              ? 'bg-gradient-to-t from-black/25 via-transparent to-transparent'
-                              : 'bg-gradient-to-t from-black/80 via-transparent to-transparent'
-                          }`}
-                        />
-                        <div
-                          className={`absolute top-2 left-2 px-2 py-0.5 rounded-md text-[10px] font-mono border backdrop-blur-sm transition-opacity duration-200 group-hover:opacity-0 ${
-                            isLight
-                              ? 'bg-white/90 border-stone-200 text-slate-800 shadow-xs'
-                              : 'bg-black/80 border-neutral-800 text-neutral-300'
-                          }`}
-                        >
-                          {car.category}
-                        </div>
-
-                        {/* REFINED SNEAK PEEK: Slides up as a graceful bottom sheet */}
-                        <div
-                          className={`absolute inset-x-0 bottom-0 p-3 pt-2.5 transition-all duration-300 transform translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 pointer-events-none backdrop-blur-md border-t rounded-b-xl ${
-                            isLight
-                              ? 'bg-white/95 text-slate-900 border-slate-200 shadow-lg'
-                              : 'bg-black/90 text-white border-neutral-700 shadow-2xl'
-                          }`}
-                        >
-                          {/* Sneak Peek Top: Specs & Mileage */}
-                          <div>
-                            <div className="flex items-center justify-between text-[10px] uppercase font-mono font-bold tracking-wider mb-1">
-                              <span className={isLight ? 'text-amber-700 font-extrabold' : 'text-amber-400 font-bold'}>
-                                {car.fuelType} • {car.transmission === 'AUTOMATIC' ? 'AUTO' : 'MANUAL'}
-                              </span>
-                              <span
-                                className={`px-1.5 py-0.5 rounded text-[9px] ${
-                                  isLight ? 'bg-slate-100 text-slate-700 font-medium' : 'bg-neutral-800 text-neutral-300'
-                                }`}
-                              >
-                                {car.mileagePolicy || 'Unlimited km'}
-                              </span>
-                            </div>
-
-                            <div className="flex items-center gap-1 text-[11px] font-medium truncate mt-0.5">
-                              <MapPin className={`w-3.5 h-3.5 shrink-0 ${isLight ? 'text-slate-600' : 'text-amber-400'}`} />
-                              <span className="truncate">{car.pickupAddress || `${car.city}, ${car.state}`}</span>
-                            </div>
-                          </div>
-
-                          {/* Sneak Peek Bottom: Deposit & Action */}
-                          <div
-                            className={`pt-1.5 mt-1 border-t flex items-center justify-between text-[10px] ${
-                              isLight ? 'border-slate-200' : 'border-neutral-800'
-                            }`}
-                          >
-                            <span className={isLight ? 'text-slate-500' : 'text-neutral-400'}>
-                              Deposit: <strong className={isLight ? 'text-slate-900' : 'text-white'}>₹{(car.securityDeposit / 100).toLocaleString('en-IN')}</strong>
-                            </span>
-                            <span
-                              className={`inline-flex items-center gap-1 font-bold text-[10px] ${
-                                isLight ? 'text-black' : 'text-amber-400'
-                              }`}
-                            >
-                              <span>View Details</span>
-                              <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Card Bottom: Specs & Daily Rate (Matching Reference Image) */}
-                    <div
-                      className={`pt-2 border-t flex items-center justify-between text-xs ${
-                        isLight ? 'border-stone-100' : 'border-neutral-800'
-                      }`}
-                    >
-                      {/* Left Specs */}
-                      <div
-                        className={`flex items-center space-x-2 text-[11px] ${
-                          isLight ? 'text-slate-500' : 'text-neutral-400'
-                        }`}
-                      >
-                        <span className="flex items-center gap-1">
-                          <Gauge className={`w-3.5 h-3.5 ${isLight ? 'text-slate-700' : 'text-neutral-300'}`} />
-                          <span>{car.transmission === 'AUTOMATIC' ? 'Auto' : 'Manual'}</span>
-                        </span>
-                        <span>•</span>
-                        <span className="flex items-center gap-1">
-                          <Users className="w-3.5 h-3.5 opacity-70" />
-                          <span>{car.seatingCapacity} seats</span>
-                        </span>
-                      </div>
-
-                      {/* Right Price */}
-                      <div className="text-right">
-                        <span
-                          className={`font-bold text-sm tabular-nums ${
-                            isLight ? 'text-slate-900 font-extrabold' : 'text-white'
-                          }`}
-                        >
-                          ₹{getDisplayPrice(car.dailyRate).toLocaleString('en-IN')}
-                        </span>
-                        <span
-                          className={`text-[10px] ml-0.5 font-normal ${
-                            isLight ? 'text-slate-400' : 'text-neutral-500'
-                          }`}
-                        >
-                          {getPriceSuffix()}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-
-          {/* Pagination Bar */}
-          {meta.totalPages > 1 && (
-            <div className="flex items-center justify-center gap-2 pt-6">
               <button
-                disabled={page <= 1}
-                onClick={() => setPage(page - 1)}
-                className={`px-3.5 py-1.5 rounded-full border text-xs font-semibold disabled:opacity-40 cursor-pointer ${
-                  isLight
-                    ? 'bg-white border-stone-200 text-slate-800 shadow-xs hover:bg-stone-50'
-                    : 'bg-[#0D0D0E] border-neutral-800 text-white hover:bg-neutral-800'
+                type="button"
+                onClick={() => setViewMode('list')}
+                className={`p-1.5 rounded-full transition-colors cursor-pointer ${
+                  viewMode === 'list'
+                    ? isLight
+                      ? 'bg-slate-200 text-black'
+                      : 'bg-neutral-800 text-white'
+                    : 'text-neutral-500 hover:text-neutral-300'
                 }`}
+                title="List View"
               >
-                Previous
+                <List className="w-3.5 h-3.5" />
               </button>
-              <span
-                className={`text-xs font-mono px-2 ${
-                  isLight ? 'text-slate-500' : 'text-neutral-400'
-                }`}
-              >
-                Page {page} of {meta.totalPages}
-              </span>
-              <button
-                disabled={page >= meta.totalPages}
-                onClick={() => setPage(page + 1)}
-                className={`px-3.5 py-1.5 rounded-full border text-xs font-semibold disabled:opacity-40 cursor-pointer ${
-                  isLight
-                    ? 'bg-white border-stone-200 text-slate-800 shadow-xs hover:bg-stone-50'
-                    : 'bg-[#0D0D0E] border-neutral-800 text-white hover:bg-neutral-800'
-                }`}
-              >
-                Next
-              </button>
-            </div>
-          )}
-        </div>
-
-        {/* PANEL 3: RIGHT SIDE VEHICLE PREVIEW / INSPECTOR PANEL (Matching Reference Image) */}
-        {showPreviewPanel && activeVehicle && (
-          <div className="hidden lg:block lg:col-span-4 sticky top-20">
-            <div
-              className={`rounded-2xl border p-5 space-y-4 shadow-xl ${
-                isLight
-                  ? 'bg-white border-stone-200/80 text-slate-900'
-                  : 'bg-[#0D0D0E] border-neutral-800 text-white'
-              }`}
-            >
-              {/* Top Controls: Close X & Quick Inspector Tag */}
-              <div className="flex items-center justify-between">
-                <button
-                  type="button"
-                  onClick={() => setShowPreviewPanel(false)}
-                  className={`w-7 h-7 rounded-full flex items-center justify-center transition-all cursor-pointer border ${
-                    isLight
-                      ? 'bg-slate-100 hover:bg-slate-200 text-slate-600 border-slate-200'
-                      : 'bg-neutral-900 border-neutral-700 hover:border-neutral-500 text-neutral-300 hover:text-white'
-                  }`}
-                  title="Close preview panel"
-                >
-                  <X className="w-3.5 h-3.5" />
-                </button>
-                <div className="flex items-center gap-1.5">
-                  <span
-                    className={`text-[10px] font-mono uppercase tracking-wider ${
-                      isLight ? 'text-slate-400' : 'text-neutral-400'
-                    }`}
-                  >
-                    Quick Inspector
-                  </span>
-                </div>
-              </div>
-
-              {/* Large Cinematic Hero Car Preview */}
-              <div
-                className={`aspect-[16/10] w-full rounded-xl border relative overflow-hidden group ${
-                  isLight
-                    ? 'bg-stone-100 border-stone-200'
-                    : 'bg-black border-neutral-800'
-                }`}
-              >
-                <img
-                  src={
-                    activeVehicle.images?.find((img) => img.isPrimary)?.url ||
-                    activeVehicle.images?.[0]?.url ||
-                    'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=600&auto=format&fit=crop&q=75'
-                  }
-                  alt={`${activeVehicle.brand} ${activeVehicle.model}`}
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
-                  decoding="async"
-                />
-                <div
-                  className={`absolute inset-0 pointer-events-none ${
-                    isLight
-                      ? 'bg-gradient-to-t from-black/25 via-transparent to-transparent'
-                      : 'bg-gradient-to-t from-black/80 via-transparent to-transparent'
-                  }`}
-                />
-                <span
-                  className={`absolute top-2.5 left-2.5 px-2 py-0.5 rounded-md border text-[10px] font-mono ${
-                    isLight
-                      ? 'bg-white/90 border-stone-200 text-slate-800 shadow-xs'
-                      : 'bg-black/80 border-neutral-800 text-white'
-                  }`}
-                >
-                  {activeVehicle.year} • {activeVehicle.category}
-                </span>
-              </div>
-
-              {/* Title, Status & Price Header */}
-              <div className="flex items-start justify-between pt-1">
-                <div>
-                  <h2
-                    className={`text-base font-bold leading-tight ${
-                      isLight ? 'text-slate-900' : 'text-white'
-                    }`}
-                  >
-                    {activeVehicle.brand} {activeVehicle.model}
-                  </h2>
-                  <div className="flex items-center space-x-2 mt-1">
-                    <span className="inline-flex items-center gap-1 text-[11px] text-emerald-400 font-medium">
-                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                      Available
-                    </span>
-                    <span className="opacity-30">•</span>
-                    <span
-                      className={`inline-flex items-center gap-1 text-xs font-semibold ${
-                        isLight ? 'text-slate-800' : 'text-white'
-                      }`}
-                    >
-                      <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-500" />
-                      {activeVehicle.rating ? activeVehicle.rating.toFixed(1) : '4.9'}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Price */}
-                <div className="text-right">
-                  <div
-                    className={`text-lg font-extrabold tabular-nums leading-none ${
-                      isLight ? 'text-slate-900' : 'text-white'
-                    }`}
-                  >
-                    ₹{getDisplayPrice(activeVehicle.dailyRate).toLocaleString('en-IN')}
-                  </div>
-                  <span
-                    className={`text-[10px] font-normal ${
-                      isLight ? 'text-slate-400' : 'text-neutral-400'
-                    }`}
-                  >
-                    {getPriceSuffix()}
-                  </span>
-                </div>
-              </div>
-
-              {/* Stylized Location Route Map Widget (Matching Reference Image) */}
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between text-xs">
-                  <span className={`font-semibold ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                    Pickup Location
-                  </span>
-                  <span
-                    className={`text-[10px] font-mono ${
-                      isLight ? 'text-slate-500' : 'text-neutral-400'
-                    }`}
-                  >
-                    Meet & Greet Hub
-                  </span>
-                </div>
-
-                <div
-                  className={`rounded-xl border p-2.5 relative overflow-hidden ${
-                    isLight ? 'bg-slate-50 border-slate-200' : 'bg-black border-neutral-800'
-                  }`}
-                >
-                  {/* SVG Street Grid & Route Line */}
-                  <div
-                    className={`relative h-20 w-full rounded-lg border flex items-center justify-center overflow-hidden ${
-                      isLight ? 'bg-[#EEF2F6] border-slate-200' : 'bg-[#0a0a0c] border-neutral-800'
-                    }`}
-                  >
-                    <svg className="absolute inset-0 w-full h-full opacity-45" xmlns="http://www.w3.org/2000/svg">
-                      <defs>
-                        <pattern id="grid-map-insp" width="20" height="20" patternUnits="userSpaceOnUse">
-                          <path
-                            d="M 20 0 L 0 0 0 20"
-                            fill="none"
-                            stroke={isLight ? '#CBD5E1' : '#262626'}
-                            strokeWidth="0.8"
-                          />
-                        </pattern>
-                      </defs>
-                      <rect width="100%" height="100%" fill="url(#grid-map-insp)" />
-                      <path
-                        d="M 30,50 L 110,50 L 110,25 L 240,25 L 240,45 L 320,45"
-                        fill="none"
-                        stroke={isLight ? '#000000' : '#FFFFFF'}
-                        strokeWidth="2"
-                        strokeDasharray="4 2"
-                      />
-                    </svg>
-
-                    {/* Start Pin */}
-                    <div
-                      className={`absolute left-4 top-9 flex items-center space-x-1 px-2 py-0.5 rounded-full border text-[9px] font-mono shadow-xs ${
-                        isLight
-                          ? 'bg-white border-slate-200 text-slate-800'
-                          : 'bg-neutral-900 border-neutral-700 text-white'
-                      }`}
-                    >
-                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                      <span>Hub</span>
-                    </div>
-
-                    {/* Car Marker on Route */}
-                    <div
-                      className={`absolute right-12 top-7 w-6 h-6 rounded-full flex items-center justify-center shadow-md animate-bounce ${
-                        isLight ? 'bg-black text-white' : 'bg-white text-black'
-                      }`}
-                    >
-                      <Car className="w-3.5 h-3.5" />
-                    </div>
-                  </div>
-
-                  <p
-                    className={`text-[11px] mt-2 flex items-center gap-1.5 truncate ${
-                      isLight ? 'text-slate-700' : 'text-neutral-300'
-                    }`}
-                  >
-                    <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                    <span className="truncate">
-                      {activeVehicle.pickupAddress || `${activeVehicle.city} Airport T3 Express Corridor`}
-                    </span>
-                  </p>
-                </div>
-              </div>
-
-              {/* Quick Specs Grid (2x2 Matching Reference Image) */}
-              <div className="grid grid-cols-2 gap-2 text-xs">
-                {/* Plate */}
-                <div
-                  className={`p-2.5 rounded-xl border ${
-                    isLight
-                      ? 'bg-slate-50 border-slate-200/80 text-slate-900'
-                      : 'bg-neutral-900/60 border-neutral-800 text-white'
-                  }`}
-                >
-                  <span
-                    className={`text-[10px] font-mono uppercase block ${
-                      isLight ? 'text-slate-400' : 'text-neutral-400'
-                    }`}
-                  >
-                    Reg. Plate
-                  </span>
-                  <span className="font-semibold text-xs mt-0.5 block truncate">
-                    {activeVehicle.registrationNumber || 'DL-01-AB-4521'}
-                  </span>
-                </div>
-
-                {/* Transmission */}
-                <div
-                  className={`p-2.5 rounded-xl border ${
-                    isLight
-                      ? 'bg-slate-50 border-slate-200/80 text-slate-900'
-                      : 'bg-neutral-900/60 border-neutral-800 text-white'
-                  }`}
-                >
-                  <span
-                    className={`text-[10px] font-mono uppercase block ${
-                      isLight ? 'text-slate-400' : 'text-neutral-400'
-                    }`}
-                  >
-                    Transmission
-                  </span>
-                  <span className="font-semibold text-xs mt-0.5 block capitalize truncate">
-                    {activeVehicle.transmission.toLowerCase()}
-                  </span>
-                </div>
-
-                {/* Fuel Type */}
-                <div
-                  className={`p-2.5 rounded-xl border ${
-                    isLight
-                      ? 'bg-slate-50 border-slate-200/80 text-slate-900'
-                      : 'bg-neutral-900/60 border-neutral-800 text-white'
-                  }`}
-                >
-                  <span
-                    className={`text-[10px] font-mono uppercase block ${
-                      isLight ? 'text-slate-400' : 'text-neutral-400'
-                    }`}
-                  >
-                    Fuel Type
-                  </span>
-                  <span className="font-semibold text-xs mt-0.5 block capitalize truncate">
-                    {activeVehicle.fuelType.toLowerCase()}
-                  </span>
-                </div>
-
-                {/* Mileage Policy */}
-                <div
-                  className={`p-2.5 rounded-xl border ${
-                    isLight
-                      ? 'bg-slate-50 border-slate-200/80 text-slate-900'
-                      : 'bg-neutral-900/60 border-neutral-800 text-white'
-                  }`}
-                >
-                  <span
-                    className={`text-[10px] font-mono uppercase block ${
-                      isLight ? 'text-slate-400' : 'text-neutral-400'
-                    }`}
-                  >
-                    Mileage
-                  </span>
-                  <span className="font-semibold text-xs mt-0.5 block truncate">
-                    {activeVehicle.mileagePolicy || '250 km / day'}
-                  </span>
-                </div>
-              </div>
-
-              {/* Action Buttons: View Details & Book Vehicle */}
-              <div className="grid grid-cols-2 gap-2.5 pt-1">
-                <button
-                  type="button"
-                  onClick={() => navigate(`/vehicles/${activeVehicle.id}`)}
-                  className={`w-full py-2.5 rounded-xl border text-xs font-semibold transition-all text-center cursor-pointer ${
-                    isLight
-                      ? 'bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-200/80'
-                      : 'bg-neutral-900 hover:bg-neutral-800 border-neutral-700 hover:border-neutral-500 text-white'
-                  }`}
-                >
-                  View Details
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setBookingVehicle(activeVehicle)}
-                  className={`w-full py-2.5 rounded-xl text-xs font-bold transition-all shadow-md active:scale-[0.98] cursor-pointer text-center ${
-                    isLight
-                      ? 'bg-black hover:bg-slate-900 text-white'
-                      : 'bg-white hover:bg-neutral-200 text-black'
-                  }`}
-                >
-                  Book Vehicle
-                </button>
-              </div>
             </div>
           </div>
-        )}
+        </div>
+
+        {/* =========================================================================
+            MAIN SECTION: FIXED FILTER SIDEBAR + SCROLLING CARDS GRID
+           ========================================================================= */}
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-7 items-start relative">
+          {/* =========================================================================
+              PANEL 1: LEFT FILTER BY SIDEBAR (FIXED / STICKY ON SCROLL)
+             ========================================================================= */}
+          <aside
+            className={`${
+              mobileFilterOpen
+                ? 'fixed inset-0 z-50 bg-black/90 p-5 overflow-y-auto block'
+                : 'hidden'
+            } lg:block lg:w-64 xl:w-72 shrink-0 lg:sticky lg:top-20 lg:self-start lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden z-20`}
+          >
+            <div
+              className={`rounded-2xl border p-5 space-y-6 shadow-xl ${
+                isLight
+                  ? 'bg-white border-stone-200/90 text-slate-900'
+                  : 'bg-[#121316] border-neutral-800/80 text-white'
+              }`}
+            >
+              {/* Header: Filter by & Reset all */}
+              <div
+                className={`flex items-center justify-between pb-3 border-b ${
+                  isLight ? 'border-stone-100' : 'border-neutral-800'
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <h2 className="text-base font-bold tracking-tight">Filter by</h2>
+                  {mobileFilterOpen && (
+                    <button
+                      type="button"
+                      onClick={() => setMobileFilterOpen(false)}
+                      className="lg:hidden p-1 rounded-full text-neutral-400 hover:text-white ml-2"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+                <button
+                  type="button"
+                  onClick={handleResetFilters}
+                  className={`text-xs font-medium transition-colors cursor-pointer ${
+                    isLight ? 'text-slate-500 hover:text-black' : 'text-neutral-400 hover:text-white'
+                  }`}
+                >
+                  Reset all
+                </button>
+              </div>
+
+              {/* 1. Price Range Section */}
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-xs font-semibold text-neutral-300">
+                  <div
+                    className={`w-4 h-4 rounded-full border flex items-center justify-center ${
+                      isLight ? 'border-slate-300 bg-slate-100' : 'border-neutral-700 bg-neutral-800/60'
+                    }`}
+                  >
+                    <IndianRupee className="w-2.5 h-2.5 text-neutral-400" />
+                  </div>
+                  <span className={isLight ? 'text-slate-800' : 'text-neutral-300'}>Price Range</span>
+                </div>
+
+                <div className={`text-sm font-semibold ${isLight ? 'text-slate-900' : 'text-white'}`}>
+                  ₹{minPrice.toLocaleString('en-IN')} - ₹{maxPrice.toLocaleString('en-IN')}{' '}
+                  <span className="text-xs text-neutral-400 font-normal">/day</span>
+                </div>
+
+                {/* Sleek Dual / Range Slider */}
+                <div className="pt-2">
+                  <input
+                    type="range"
+                    min="1000"
+                    max="20000"
+                    step="500"
+                    value={maxPrice}
+                    onChange={(e) => setMaxPrice(Number(e.target.value))}
+                    className={`w-full h-1.5 rounded-lg appearance-none cursor-pointer ${
+                      isLight ? 'bg-slate-200 accent-black' : 'bg-neutral-800 accent-[#fbf5eb]'
+                    }`}
+                  />
+                  <div className="flex justify-between text-[11px] font-mono text-neutral-500 mt-1">
+                    <span>₹1,000</span>
+                    <span>₹20,000</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 2. Vehicle Type Checkboxes */}
+              <div className="space-y-2.5">
+                <div className="flex items-center gap-2 text-xs font-semibold text-neutral-300">
+                  <Car className="w-4 h-4 text-neutral-400" />
+                  <span className={isLight ? 'text-slate-800' : 'text-neutral-300'}>Vehicle Type</span>
+                </div>
+                <div className="space-y-1.5">
+                  {[
+                    { label: 'SUV', count: 5, value: 'SUV' },
+                    { label: 'Sedan', count: 4, value: 'SEDAN' },
+                    { label: 'Hatchback', count: 3, value: 'HATCHBACK' },
+                    { label: 'Luxury', count: 4, value: 'LUXURY' },
+                  ].map((item) => {
+                    const isChecked = selectedTypes.includes(item.value);
+                    return (
+                      <div
+                        key={item.value}
+                        onClick={() => toggleVehicleType(item.value)}
+                        className="flex items-center justify-between py-1 cursor-pointer group text-xs select-none"
+                      >
+                        <div className="flex items-center gap-2.5">
+                          <div
+                            className={`w-4 h-4 rounded border transition-colors flex items-center justify-center ${
+                              isChecked
+                                ? isLight
+                                  ? 'bg-black border-black text-white'
+                                  : 'bg-[#fbf5eb] border-[#fbf5eb] text-neutral-900'
+                                : isLight
+                                ? 'border-slate-300 bg-white group-hover:border-slate-400'
+                                : 'border-neutral-700 bg-neutral-900/90 group-hover:border-neutral-500'
+                            }`}
+                          >
+                            {isChecked && <Check className="w-3 h-3 stroke-[3]" />}
+                          </div>
+                          <span
+                            className={`transition-colors ${
+                              isChecked
+                                ? isLight
+                                  ? 'text-black font-semibold'
+                                  : 'text-white font-medium'
+                                : isLight
+                                ? 'text-slate-700 group-hover:text-black'
+                                : 'text-neutral-300 group-hover:text-white'
+                            }`}
+                          >
+                            {item.label}
+                          </span>
+                        </div>
+                        <span className="text-neutral-500 font-mono text-xs">({item.count})</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* 3. Transmission Checkboxes */}
+              <div className="space-y-2.5">
+                <div className="flex items-center gap-2 text-xs font-semibold text-neutral-300">
+                  <Settings2 className="w-4 h-4 text-neutral-400" />
+                  <span className={isLight ? 'text-slate-800' : 'text-neutral-300'}>Transmission</span>
+                </div>
+                <div className="space-y-1.5">
+                  {[
+                    { label: 'Automatic', count: 12, value: 'AUTOMATIC' },
+                    { label: 'Manual', count: 4, value: 'MANUAL' },
+                  ].map((item) => {
+                    const isChecked = selectedTransmissions.includes(item.value);
+                    return (
+                      <div
+                        key={item.value}
+                        onClick={() => toggleTransmission(item.value)}
+                        className="flex items-center justify-between py-1 cursor-pointer group text-xs select-none"
+                      >
+                        <div className="flex items-center gap-2.5">
+                          <div
+                            className={`w-4 h-4 rounded border transition-colors flex items-center justify-center ${
+                              isChecked
+                                ? isLight
+                                  ? 'bg-black border-black text-white'
+                                  : 'bg-[#fbf5eb] border-[#fbf5eb] text-neutral-900'
+                                : isLight
+                                ? 'border-slate-300 bg-white group-hover:border-slate-400'
+                                : 'border-neutral-700 bg-neutral-900/90 group-hover:border-neutral-500'
+                            }`}
+                          >
+                            {isChecked && <Check className="w-3 h-3 stroke-[3]" />}
+                          </div>
+                          <span
+                            className={`transition-colors ${
+                              isChecked
+                                ? isLight
+                                  ? 'text-black font-semibold'
+                                  : 'text-white font-medium'
+                                : isLight
+                                ? 'text-slate-700 group-hover:text-black'
+                                : 'text-neutral-300 group-hover:text-white'
+                            }`}
+                          >
+                            {item.label}
+                          </span>
+                        </div>
+                        <span className="text-neutral-500 font-mono text-xs">({item.count})</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* 4. Fuel Type Checkboxes */}
+              <div className="space-y-2.5">
+                <div className="flex items-center gap-2 text-xs font-semibold text-neutral-300">
+                  <Fuel className="w-4 h-4 text-neutral-400" />
+                  <span className={isLight ? 'text-slate-800' : 'text-neutral-300'}>Fuel Type</span>
+                </div>
+                <div className="space-y-1.5">
+                  {[
+                    { label: 'Petrol', count: 10, value: 'PETROL' },
+                    { label: 'Diesel', count: 5, value: 'DIESEL' },
+                    { label: 'Electric', count: 1, value: 'ELECTRIC' },
+                  ].map((item) => {
+                    const isChecked = selectedFuels.includes(item.value);
+                    return (
+                      <div
+                        key={item.value}
+                        onClick={() => toggleFuel(item.value)}
+                        className="flex items-center justify-between py-1 cursor-pointer group text-xs select-none"
+                      >
+                        <div className="flex items-center gap-2.5">
+                          <div
+                            className={`w-4 h-4 rounded border transition-colors flex items-center justify-center ${
+                              isChecked
+                                ? isLight
+                                  ? 'bg-black border-black text-white'
+                                  : 'bg-[#fbf5eb] border-[#fbf5eb] text-neutral-900'
+                                : isLight
+                                ? 'border-slate-300 bg-white group-hover:border-slate-400'
+                                : 'border-neutral-700 bg-neutral-900/90 group-hover:border-neutral-500'
+                            }`}
+                          >
+                            {isChecked && <Check className="w-3 h-3 stroke-[3]" />}
+                          </div>
+                          <span
+                            className={`transition-colors ${
+                              isChecked
+                                ? isLight
+                                  ? 'text-black font-semibold'
+                                  : 'text-white font-medium'
+                                : isLight
+                                ? 'text-slate-700 group-hover:text-black'
+                                : 'text-neutral-300 group-hover:text-white'
+                            }`}
+                          >
+                            {item.label}
+                          </span>
+                        </div>
+                        <span className="text-neutral-500 font-mono text-xs">({item.count})</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Mobile Close / Apply Button */}
+              {mobileFilterOpen && (
+                <button
+                  type="button"
+                  onClick={() => setMobileFilterOpen(false)}
+                  className="w-full py-2.5 rounded-xl bg-[#fbf5eb] text-neutral-900 font-semibold text-xs mt-2"
+                >
+                  Apply Filters ({filteredVehicles.length} Cars)
+                </button>
+              )}
+            </div>
+          </aside>
+
+          {/* =========================================================================
+              PANEL 2: SCROLLING CARDS GRID (4 columns matching reference image)
+             ========================================================================= */}
+          <main className="flex-1 min-w-0">
+            {filteredVehicles.length === 0 ? (
+              <div
+                className={`p-12 text-center rounded-2xl border space-y-3 ${
+                  isLight
+                    ? 'bg-white border-stone-200 text-slate-900 shadow-xs'
+                    : 'bg-[#121316] border-neutral-800 text-white'
+                }`}
+              >
+                <Car className="w-10 h-10 mx-auto text-neutral-500" />
+                <h3 className="text-base font-bold">No vehicles match your filters</h3>
+                <p className="text-xs text-neutral-400 max-w-sm mx-auto">
+                  Try broadening your price range or unchecking specific transmission or fuel filters.
+                </p>
+                <button
+                  type="button"
+                  onClick={handleResetFilters}
+                  className="px-5 py-2 rounded-xl text-xs font-semibold bg-[#fbf5eb] text-neutral-900 hover:bg-white cursor-pointer"
+                >
+                  Reset All Filters
+                </button>
+              </div>
+            ) : (
+              <div
+                className={
+                  viewMode === 'grid'
+                    ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5'
+                    : 'space-y-4'
+                }
+              >
+                {filteredVehicles.map((car) => {
+                  const isLiked = wishlist.has(car.id);
+                  const primaryImage =
+                    car.images?.find((img) => img.isPrimary)?.url ||
+                    car.images?.[0]?.url ||
+                    'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=800&auto=format&fit=crop&q=80';
+
+                  const badgeLabel = getBadgeLabel(car);
+                  const displayPrice = Math.round(car.dailyRate / 100);
+
+                  return (
+                    <div
+                      key={car.id}
+                      className={`rounded-2xl border p-3.5 transition-all duration-200 flex flex-col justify-between group relative ${
+                        isLight
+                          ? 'border-stone-200/90 bg-white hover:border-stone-400 hover:shadow-lg'
+                          : 'border-neutral-800/80 bg-[#121316] hover:border-neutral-700 hover:shadow-2xl'
+                      }`}
+                    >
+                      <div>
+                        {/* 1. Vehicle Image Container with Badges */}
+                        <div
+                          className={`aspect-[16/10] w-full rounded-xl overflow-hidden relative mb-3 border ${
+                            isLight ? 'bg-stone-100 border-stone-200' : 'bg-neutral-950 border-neutral-800/60'
+                          }`}
+                        >
+                          <img
+                            src={primaryImage}
+                            alt={`${car.brand} ${car.model}`}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            loading="lazy"
+                          />
+
+                          {/* Category Badge top-left over image (e.g. Hatchback, Sedan, MPV, Luxury, SUV) */}
+                          <div className="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-md bg-black/65 backdrop-blur-md border border-white/10 text-white text-[10px] font-medium tracking-wide">
+                            {badgeLabel}
+                          </div>
+
+                          {/* Heart Wishlist button top-right over image */}
+                          <button
+                            type="button"
+                            onClick={(e) => toggleWishlist(car.id, e)}
+                            className="absolute top-2.5 right-2.5 p-1.5 rounded-full bg-black/45 backdrop-blur-md border border-white/10 text-white hover:text-rose-400 transition-colors cursor-pointer"
+                            title="Save to wishlist"
+                            aria-label="Save to wishlist"
+                          >
+                            <Heart
+                              className={`w-3.5 h-3.5 transition-colors ${
+                                isLiked ? 'fill-rose-500 text-rose-500' : 'text-white'
+                              }`}
+                            />
+                          </button>
+                        </div>
+
+                        {/* 2. Car Title */}
+                        <h3
+                          className={`font-bold text-sm truncate leading-tight transition-colors ${
+                            isLight ? 'text-slate-900 group-hover:text-black' : 'text-white group-hover:text-neutral-200'
+                          }`}
+                        >
+                          {car.brand} {car.model}
+                        </h3>
+
+                        {/* 3. Rating & Daily Price Row */}
+                        <div className="flex items-center justify-between mt-1.5">
+                          <div className="flex items-center gap-1 text-xs">
+                            <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                            <span className={`font-bold text-xs ${isLight ? 'text-slate-900' : 'text-white'}`}>
+                              {car.rating ? car.rating.toFixed(1) : '4.7'}
+                            </span>
+                            <span className={`text-[11px] ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
+                              ({(car as any).totalReviews || (car as any).reviews?.length || 124} reviews)
+                            </span>
+                          </div>
+
+                          <div className="text-right">
+                            <span
+                              className={`font-bold text-sm sm:text-base tabular-nums ${
+                                isLight ? 'text-slate-900 font-extrabold' : 'text-white'
+                              }`}
+                            >
+                              ₹{displayPrice.toLocaleString('en-IN')}
+                            </span>
+                            <span className={`text-[11px] ml-0.5 font-normal ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
+                              /day
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* 4. Specs Chips Row (Automatic, Petrol, 5 Seater) */}
+                        <div className="flex items-center gap-1.5 mt-2.5 flex-wrap">
+                          <span
+                            className={`px-2 py-0.5 rounded-md text-[10px] font-medium border ${
+                              isLight
+                                ? 'bg-slate-100 border-slate-200 text-slate-700'
+                                : 'bg-neutral-800/70 border-neutral-700/50 text-neutral-300'
+                            }`}
+                          >
+                            {car.transmission === 'AUTOMATIC' ? 'Automatic' : 'Manual'}
+                          </span>
+                          <span
+                            className={`px-2 py-0.5 rounded-md text-[10px] font-medium capitalize border ${
+                              isLight
+                                ? 'bg-slate-100 border-slate-200 text-slate-700'
+                                : 'bg-neutral-800/70 border-neutral-700/50 text-neutral-300'
+                            }`}
+                          >
+                            {car.fuelType.toLowerCase()}
+                          </span>
+                          <span
+                            className={`px-2 py-0.5 rounded-md text-[10px] font-medium border ${
+                              isLight
+                                ? 'bg-slate-100 border-slate-200 text-slate-700'
+                                : 'bg-neutral-800/70 border-neutral-700/50 text-neutral-300'
+                            }`}
+                          >
+                            {car.seatingCapacity} Seater
+                          </span>
+                        </div>
+
+                        {/* 5. Pickup Location Row */}
+                        <div
+                          className={`flex items-center gap-1 text-xs mt-2 truncate ${
+                            isLight ? 'text-slate-500' : 'text-neutral-400'
+                          }`}
+                        >
+                          <MapPin className="w-3.5 h-3.5 text-neutral-400 shrink-0" />
+                          <span className="truncate">{car.city || 'New Delhi'}</span>
+                        </div>
+                      </div>
+
+                      {/* 6. View Details Button (Cream / Beige matching reference image) */}
+                      <button
+                        type="button"
+                        onClick={() => navigate(`/vehicles/${car.id}`)}
+                        className={`mt-3.5 w-full py-2.5 px-4 rounded-xl font-semibold text-xs flex items-center justify-center gap-1.5 transition-all shadow-sm active:scale-[0.99] cursor-pointer ${
+                          isLight
+                            ? 'bg-black text-white hover:bg-slate-900'
+                            : 'bg-[#fbf5eb] hover:bg-white text-neutral-900'
+                        }`}
+                      >
+                        <span>View Details</span>
+                        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </main>
+        </div>
       </div>
 
-      {/* Booking Checkout Modal (Triggered by Book Vehicle button) */}
+      {/* Booking Checkout Modal (if initiated) */}
       {bookingVehicle && (
         <BookingCheckoutModal
           vehicle={bookingVehicle}
-          initialStartDate={startDate}
-          initialEndDate={endDate}
+          initialStartDate=""
+          initialEndDate=""
           onClose={() => setBookingVehicle(null)}
         />
       )}

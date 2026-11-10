@@ -116,19 +116,29 @@ export const Navbar: React.FC = () => {
 
           {/* Center Navigation Links */}
           <nav className="hidden md:flex items-center space-x-7 lg:space-x-9">
-            {navLinks.map((link) => (
-              <Link
-                key={link.label}
-                to={link.to}
-                className={`text-xs sm:text-[13px] font-normal tracking-wide transition-colors ${
-                  isHeaderTransparent || theme === 'dark'
-                    ? 'text-white/80 hover:text-white'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              const isActive =
+                (link.label === 'Cars' && (location.pathname === '/explore' || location.pathname === '/cars')) ||
+                (link.to !== '/explore' && location.pathname === link.to);
+
+              return (
+                <Link
+                  key={link.label}
+                  to={link.to}
+                  className={`text-xs sm:text-[13px] tracking-wide transition-colors relative py-1 ${
+                    isActive
+                      ? isHeaderTransparent || theme === 'dark'
+                        ? 'text-white font-medium after:content-[""] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-[#f5e6d3]'
+                        : 'text-slate-900 font-semibold after:content-[""] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-black'
+                      : isHeaderTransparent || theme === 'dark'
+                      ? 'text-white/70 hover:text-white'
+                      : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Right Action Buttons */}

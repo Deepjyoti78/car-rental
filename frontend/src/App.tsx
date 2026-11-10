@@ -55,7 +55,7 @@ export const App: React.FC = () => {
       <BrowserRouter>
         <ScrollToTop />
         <div
-          className={`min-h-screen flex flex-col transition-colors duration-200 w-full overflow-x-hidden ${
+          className={`min-h-screen flex flex-col transition-colors duration-200 w-full overflow-x-clip ${
             theme === 'light'
               ? 'bg-[#F4EFEA] text-[#111827] selection:bg-black selection:text-white'
               : 'bg-black text-white selection:bg-white selection:text-black'
@@ -67,6 +67,7 @@ export const App: React.FC = () => {
               {/* Public Routes */}
               <Route path="/" element={<LandingPage />} />
               <Route path="/explore" element={<ExploreCarsPage />} />
+              <Route path="/cars" element={<ExploreCarsPage />} />
               <Route path="/vehicles/:id" element={<VehicleDetailsPage />} />
               <Route path="/host" element={<HostLandingPage />} />
               <Route path="/how-it-works" element={<HowItWorksPage />} />
