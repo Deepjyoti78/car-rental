@@ -10,9 +10,6 @@ import {
   Star,
   Heart,
   MapPin,
-  Clock,
-  ShieldCheck,
-  Tag,
   ChevronDown,
   LayoutGrid,
   List,
@@ -194,183 +191,13 @@ export const ExploreCarsPage: React.FC = () => {
     >
       <div className="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* =========================================================================
-            HEADER & TRUST HIGHLIGHTS BAR (Matching Reference Image)
-           ========================================================================= */}
-        <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-5">
-          {/* Left Title */}
-          <div>
-            <span className="text-[11px] font-semibold tracking-wider text-[#d4af37] uppercase font-mono block mb-1">
-              PREMIUM RENTAL CARS
-            </span>
-            <h1
-              className={`text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight ${
-                isLight ? 'text-slate-900' : 'text-white'
-              }`}
-            >
-              Available Cars
-            </h1>
-            <p className={`text-xs sm:text-sm mt-1 ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
-              Choose from our wide range of premium vehicles and hit the road.
-            </p>
-          </div>
-
-          {/* Right Trust Badges (Exact match to reference image) */}
-          <div className="flex flex-wrap items-center gap-2 self-start md:self-center">
-            <div
-              className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-medium ${
-                isLight
-                  ? 'bg-white border-stone-200/90 text-slate-800 shadow-xs'
-                  : 'bg-neutral-900/80 border-neutral-800 text-neutral-300'
-              }`}
-            >
-              <Clock className="w-3.5 h-3.5 text-neutral-400" />
-              <span>24/7 Pickup & Support</span>
-            </div>
-
-            <div
-              className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-medium ${
-                isLight
-                  ? 'bg-white border-stone-200/90 text-slate-800 shadow-xs'
-                  : 'bg-neutral-900/80 border-neutral-800 text-neutral-300'
-              }`}
-            >
-              <ShieldCheck className="w-3.5 h-3.5 text-neutral-400" />
-              <span>Verified Vehicles</span>
-            </div>
-
-            <div
-              className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-medium ${
-                isLight
-                  ? 'bg-white border-stone-200/90 text-slate-800 shadow-xs'
-                  : 'bg-neutral-900/80 border-neutral-800 text-neutral-300'
-              }`}
-            >
-              <Tag className="w-3.5 h-3.5 text-neutral-400" />
-              <span>Best Price Guarantee</span>
-            </div>
-          </div>
-        </div>
-
-        {/* =========================================================================
-            CATEGORY PILLS & SORT CONTROLS BAR (Matching Reference Image)
-           ========================================================================= */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
-          {/* Category Filter Pills (All 16, SUV 5, Luxury 4, Sedan 4, Hatchback 3) */}
-          <div className="flex items-center gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden py-1">
-            {[
-              { label: 'All (16)', value: 'ALL' },
-              { label: 'SUV (5)', value: 'SUV' },
-              { label: 'Luxury (4)', value: 'LUXURY' },
-              { label: 'Sedan (4)', value: 'SEDAN' },
-              { label: 'Hatchback (3)', value: 'HATCHBACK' },
-            ].map((cat) => {
-              const isActive = selectedCategory === cat.value;
-              return (
-                <button
-                  key={cat.value}
-                  type="button"
-                  onClick={() => setSelectedCategory(cat.value)}
-                  className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap cursor-pointer ${
-                    isActive
-                      ? isLight
-                        ? 'bg-black text-white font-semibold shadow-xs'
-                        : 'bg-[#fbf5eb] text-neutral-950 font-semibold shadow-sm'
-                      : isLight
-                      ? 'bg-white border border-stone-200 text-slate-700 hover:text-black hover:border-slate-400 shadow-xs'
-                      : 'bg-neutral-900/80 border border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700'
-                  }`}
-                >
-                  {cat.label}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Right Controls: Sort & View Switcher */}
-          <div className="flex items-center gap-2.5 shrink-0 self-end sm:self-auto">
-            {/* Mobile Filter Toggle Button */}
-            <button
-              type="button"
-              onClick={() => setMobileFilterOpen(!mobileFilterOpen)}
-              className={`lg:hidden flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-medium ${
-                isLight ? 'bg-white border-stone-200 text-slate-800' : 'bg-neutral-900 border-neutral-800 text-neutral-200'
-              }`}
-            >
-              <SlidersHorizontal className="w-3.5 h-3.5" />
-              <span>Filters</span>
-            </button>
-
-            {/* Sort Pill Dropdown */}
-            <div className="relative">
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className={`appearance-none text-xs font-medium pl-3.5 pr-8 py-1.5 rounded-full cursor-pointer focus:outline-none transition-colors border ${
-                  isLight
-                    ? 'bg-white border-stone-200 text-slate-800 shadow-xs hover:border-slate-400'
-                    : 'bg-neutral-900/80 border-neutral-800 text-neutral-300 hover:border-neutral-700'
-                }`}
-              >
-                <option value="popular_desc" className={isLight ? 'bg-white text-slate-900' : 'bg-neutral-900 text-white'}>
-                  Sort: Most Popular
-                </option>
-                <option value="price_asc" className={isLight ? 'bg-white text-slate-900' : 'bg-neutral-900 text-white'}>
-                  Sort: Price (Low to High)
-                </option>
-                <option value="price_desc" className={isLight ? 'bg-white text-slate-900' : 'bg-neutral-900 text-white'}>
-                  Sort: Price (High to Low)
-                </option>
-                <option value="rating_desc" className={isLight ? 'bg-white text-slate-900' : 'bg-neutral-900 text-white'}>
-                  Sort: Highest Rated
-                </option>
-              </select>
-              <ChevronDown className="w-3.5 h-3.5 text-neutral-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-            </div>
-
-            {/* View Switcher Icons */}
-            <div
-              className={`flex items-center p-0.5 rounded-full border ${
-                isLight ? 'bg-white border-stone-200 shadow-xs' : 'bg-neutral-900/80 border-neutral-800'
-              }`}
-            >
-              <button
-                type="button"
-                onClick={() => setViewMode('grid')}
-                className={`p-1.5 rounded-full transition-colors cursor-pointer ${
-                  viewMode === 'grid'
-                    ? isLight
-                      ? 'bg-slate-200 text-black'
-                      : 'bg-neutral-800 text-white'
-                    : 'text-neutral-500 hover:text-neutral-300'
-                }`}
-                title="Grid View"
-              >
-                <LayoutGrid className="w-3.5 h-3.5" />
-              </button>
-              <button
-                type="button"
-                onClick={() => setViewMode('list')}
-                className={`p-1.5 rounded-full transition-colors cursor-pointer ${
-                  viewMode === 'list'
-                    ? isLight
-                      ? 'bg-slate-200 text-black'
-                      : 'bg-neutral-800 text-white'
-                    : 'text-neutral-500 hover:text-neutral-300'
-                }`}
-                title="List View"
-              >
-                <List className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* =========================================================================
-            MAIN SECTION: FIXED FILTER SIDEBAR + SCROLLING CARDS GRID
+            TWO-COLUMN MAIN SHOWROOM LAYOUT:
+            - LEFT COLUMN: FIXED "Filter by" SIDEBAR (Aligned with Available Cars)
+            - RIGHT COLUMN: HEADER + CATEGORY PILLS + SCROLLING CARDS GRID
            ========================================================================= */}
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-7 items-start relative">
           {/* =========================================================================
-              PANEL 1: LEFT FILTER BY SIDEBAR (FIXED / STICKY ON SCROLL)
+              LEFT COLUMN: FIXED / STICKY "Filter by" SIDEBAR
              ========================================================================= */}
           <aside
             className={`${
@@ -398,7 +225,7 @@ export const ExploreCarsPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setMobileFilterOpen(false)}
-                      className="lg:hidden p-1 rounded-full text-neutral-400 hover:text-white ml-2"
+                      className="lg:hidden p-1 rounded-full text-neutral-400 hover:text-white ml-2 cursor-pointer"
                     >
                       <X className="w-4 h-4" />
                     </button>
@@ -615,12 +442,12 @@ export const ExploreCarsPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Mobile Close / Apply Button */}
+              {/* Mobile Apply Button */}
               {mobileFilterOpen && (
                 <button
                   type="button"
                   onClick={() => setMobileFilterOpen(false)}
-                  className="w-full py-2.5 rounded-xl bg-[#fbf5eb] text-neutral-900 font-semibold text-xs mt-2"
+                  className="w-full py-2.5 rounded-xl bg-[#fbf5eb] text-neutral-900 font-semibold text-xs mt-2 cursor-pointer"
                 >
                   Apply Filters ({filteredVehicles.length} Cars)
                 </button>
@@ -629,9 +456,142 @@ export const ExploreCarsPage: React.FC = () => {
           </aside>
 
           {/* =========================================================================
-              PANEL 2: SCROLLING CARDS GRID (4 columns matching reference image)
+              RIGHT COLUMN:
+              1. "Available Cars" HEADER & SUBTITLE (Positioned right above the cards!)
+              2. CATEGORY PILLS & SORT CONTROLS
+              3. SCROLLING CARDS GRID (4 columns matching reference image)
              ========================================================================= */}
           <main className="flex-1 min-w-0">
+            {/* 1. Title Header Area (Moved here above cards, without 24/7 top-right row) */}
+            <div className="mb-5">
+              <span className="text-[11px] font-semibold tracking-wider text-[#d4af37] uppercase font-mono block mb-1">
+                PREMIUM RENTAL CARS
+              </span>
+              <h1
+                className={`text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight ${
+                  isLight ? 'text-slate-900' : 'text-white'
+                }`}
+              >
+                Available Cars
+              </h1>
+              <p className={`text-xs sm:text-sm mt-1 ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
+                Choose from our wide range of premium vehicles and hit the road.
+              </p>
+            </div>
+
+            {/* 2. Category Filter Pills & Sort Controls Bar */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+              {/* Category Filter Pills (All 16, SUV 5, Luxury 4, Sedan 4, Hatchback 3) */}
+              <div className="flex items-center gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden py-1">
+                {[
+                  { label: 'All (16)', value: 'ALL' },
+                  { label: 'SUV (5)', value: 'SUV' },
+                  { label: 'Luxury (4)', value: 'LUXURY' },
+                  { label: 'Sedan (4)', value: 'SEDAN' },
+                  { label: 'Hatchback (3)', value: 'HATCHBACK' },
+                ].map((cat) => {
+                  const isActive = selectedCategory === cat.value;
+                  return (
+                    <button
+                      key={cat.value}
+                      type="button"
+                      onClick={() => setSelectedCategory(cat.value)}
+                      className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap cursor-pointer ${
+                        isActive
+                          ? isLight
+                            ? 'bg-black text-white font-semibold shadow-xs'
+                            : 'bg-[#fbf5eb] text-neutral-950 font-semibold shadow-sm'
+                          : isLight
+                          ? 'bg-white border border-stone-200 text-slate-700 hover:text-black hover:border-slate-400 shadow-xs'
+                          : 'bg-neutral-900/80 border border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700'
+                      }`}
+                    >
+                      {cat.label}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Right Controls: Sort & View Switcher */}
+              <div className="flex items-center gap-2.5 shrink-0 self-end sm:self-auto">
+                {/* Mobile Filter Toggle Button */}
+                <button
+                  type="button"
+                  onClick={() => setMobileFilterOpen(!mobileFilterOpen)}
+                  className={`lg:hidden flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-medium cursor-pointer ${
+                    isLight ? 'bg-white border-stone-200 text-slate-800' : 'bg-neutral-900 border-neutral-800 text-neutral-200'
+                  }`}
+                >
+                  <SlidersHorizontal className="w-3.5 h-3.5" />
+                  <span>Filters</span>
+                </button>
+
+                {/* Sort Pill Dropdown */}
+                <div className="relative">
+                  <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                    className={`appearance-none text-xs font-medium pl-3.5 pr-8 py-1.5 rounded-full cursor-pointer focus:outline-none transition-colors border ${
+                      isLight
+                        ? 'bg-white border-stone-200 text-slate-800 shadow-xs hover:border-slate-400'
+                        : 'bg-neutral-900/80 border-neutral-800 text-neutral-300 hover:border-neutral-700'
+                    }`}
+                  >
+                    <option value="popular_desc" className={isLight ? 'bg-white text-slate-900' : 'bg-neutral-900 text-white'}>
+                      Sort: Most Popular
+                    </option>
+                    <option value="price_asc" className={isLight ? 'bg-white text-slate-900' : 'bg-neutral-900 text-white'}>
+                      Sort: Price (Low to High)
+                    </option>
+                    <option value="price_desc" className={isLight ? 'bg-white text-slate-900' : 'bg-neutral-900 text-white'}>
+                      Sort: Price (High to Low)
+                    </option>
+                    <option value="rating_desc" className={isLight ? 'bg-white text-slate-900' : 'bg-neutral-900 text-white'}>
+                      Sort: Highest Rated
+                    </option>
+                  </select>
+                  <ChevronDown className="w-3.5 h-3.5 text-neutral-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                </div>
+
+                {/* View Switcher Icons */}
+                <div
+                  className={`flex items-center p-0.5 rounded-full border ${
+                    isLight ? 'bg-white border-stone-200 shadow-xs' : 'bg-neutral-900/80 border-neutral-800'
+                  }`}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setViewMode('grid')}
+                    className={`p-1.5 rounded-full transition-colors cursor-pointer ${
+                      viewMode === 'grid'
+                        ? isLight
+                          ? 'bg-slate-200 text-black'
+                          : 'bg-neutral-800 text-white'
+                        : 'text-neutral-500 hover:text-neutral-300'
+                    }`}
+                    title="Grid View"
+                  >
+                    <LayoutGrid className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setViewMode('list')}
+                    className={`p-1.5 rounded-full transition-colors cursor-pointer ${
+                      viewMode === 'list'
+                        ? isLight
+                          ? 'bg-slate-200 text-black'
+                          : 'bg-neutral-800 text-white'
+                        : 'text-neutral-500 hover:text-neutral-300'
+                    }`}
+                    title="List View"
+                  >
+                    <List className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* 3. Scrolling Cards Grid */}
             {filteredVehicles.length === 0 ? (
               <div
                 className={`p-12 text-center rounded-2xl border space-y-3 ${
