@@ -158,7 +158,7 @@ export const LocationsPage: React.FC = () => {
             1. TOP HERO BANNER: Sleek & Expansive
            ========================================================================= */}
         <div
-          className={`rounded-2xl border overflow-hidden relative mb-5 sm:mb-6 min-h-[190px] sm:min-h-[210px] flex items-center justify-between px-6 sm:px-10 py-6 ${
+          className={`rounded-2xl border overflow-hidden relative mb-4 sm:mb-5 min-h-[160px] sm:min-h-[180px] flex items-center justify-between px-6 sm:px-8 py-4 sm:py-5 ${
             isLight
               ? 'bg-gradient-to-r from-[#F6F2EB] via-[#F3EEE5] to-[#EBE4D8] border-stone-200/80 shadow-xs'
               : 'bg-gradient-to-r from-[#15161a] via-[#1a1b20] to-[#202228] border-neutral-800'
@@ -170,7 +170,7 @@ export const LocationsPage: React.FC = () => {
               LOCATIONS
             </span>
             <h1
-              className={`text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight mt-1 mb-2 ${
+              className={`text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight mt-1 mb-1.5 ${
                 isLight ? 'text-slate-900' : 'text-white'
               }`}
             >
@@ -185,7 +185,7 @@ export const LocationsPage: React.FC = () => {
             </p>
 
             {/* Compact Pill Search Input */}
-            <form onSubmit={handleSearchSubmit} className="mt-4 max-w-sm sm:max-w-md w-full">
+            <form onSubmit={handleSearchSubmit} className="mt-3 max-w-sm sm:max-w-md w-full">
               <div
                 className={`rounded-full border py-1.5 pl-4 pr-1.5 flex items-center gap-2.5 shadow-xs transition-all ${
                   isLight
@@ -193,7 +193,7 @@ export const LocationsPage: React.FC = () => {
                     : 'bg-neutral-900 border-neutral-700 focus-within:border-neutral-500'
                 }`}
               >
-                <MapPin className="w-4 h-4 text-stone-500 shrink-0" />
+                <MapPin className="w-3.5 h-3.5 text-stone-500 shrink-0" />
                 <input
                   type="text"
                   placeholder="Search city or area"
@@ -205,11 +205,11 @@ export const LocationsPage: React.FC = () => {
                 />
                 <button
                   type="submit"
-                  className="w-8 h-8 rounded-full bg-[#1c1c1e] hover:bg-black text-white flex items-center justify-center shrink-0 transition-all shadow-xs cursor-pointer active:scale-95"
+                  className="w-7 h-7 rounded-full bg-[#1c1c1e] hover:bg-black text-white flex items-center justify-center shrink-0 transition-all shadow-xs cursor-pointer active:scale-95"
                   title="Search"
                   aria-label="Search"
                 >
-                  <Search className="w-3.5 h-3.5" />
+                  <Search className="w-3 h-3" />
                 </button>
               </div>
             </form>
@@ -232,41 +232,41 @@ export const LocationsPage: React.FC = () => {
 
         {/* =========================================================================
             2. MAIN SHOWROOM SECTION:
-            - Left: Coverage Across India Card (Compact & Fitted, col-span-3)
-            - Right: Popular Locations Header & 3-Column City Cards Grid (col-span-9)
+            - Left: Coverage Across India Card (Compact & Reduced Height)
+            - Right: Popular Locations Header & Compact 3-Column City Cards Grid
            ========================================================================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-5 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 lg:gap-4 items-stretch">
           {/* LEFT COLUMN (3 Cols): Coverage Across India with Map */}
           <div className="lg:col-span-3 xl:col-span-3 flex flex-col">
             <div
-              className={`rounded-xl border p-3.5 sm:p-4 shadow-xs flex-1 flex flex-col justify-between ${
+              className={`rounded-xl border p-3 sm:p-3.5 shadow-xs flex-1 flex flex-col justify-between ${
                 isLight
                   ? 'bg-[#FAF8F5] border-stone-200/80 text-slate-900'
                   : 'bg-[#101115] border-neutral-800/80 text-white'
               }`}
             >
               {/* Header */}
-              <div className="flex items-start justify-between mb-2">
+              <div className="flex items-start justify-between mb-1.5">
                 <div>
-                  <h3 className="font-bold text-sm sm:text-base tracking-tight">Coverage Across India</h3>
-                  <p className={`text-xs mt-0.5 font-medium ${isLight ? 'text-stone-500' : 'text-neutral-400'}`}>
+                  <h3 className="font-bold text-xs sm:text-sm tracking-tight">Coverage Across India</h3>
+                  <p className={`text-[11px] mt-0.5 font-medium ${isLight ? 'text-stone-500' : 'text-neutral-400'}`}>
                     12+ Cities
                   </p>
                 </div>
                 <button
                   type="button"
                   onClick={() => setSelectedRegion('All')}
-                  className={`text-xs font-semibold transition-colors flex items-center gap-1 cursor-pointer ${
+                  className={`text-[11px] font-semibold transition-colors flex items-center gap-1 cursor-pointer ${
                     isLight ? 'text-stone-600 hover:text-black' : 'text-neutral-400 hover:text-white'
                   }`}
                 >
                   <span>View All</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <ArrowRight className="w-3 h-3" />
                 </button>
               </div>
 
-              {/* Tightly-fitted India Map (Zero side-line, minimal boundary spacing) */}
-              <div className="relative w-full aspect-[610/725] my-auto flex items-center justify-center overflow-hidden rounded-lg">
+              {/* Tightly-fitted India Map (Reduced Height, Snug Boundaries) */}
+              <div className="relative w-full max-w-[260px] sm:max-w-[280px] max-h-[300px] aspect-[610/725] mx-auto my-auto flex items-center justify-center overflow-hidden rounded-lg">
                 <img
                   src={isLight ? '/india-map-light.png' : '/india-map-dark.png'}
                   alt="Coverage Across India Map"
@@ -294,20 +294,20 @@ export const LocationsPage: React.FC = () => {
                         if (found) handleCitySelect(found);
                       }}
                       style={{ left: `${pin.left}%`, top: `${pin.top}%` }}
-                      className="absolute -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full flex items-center justify-center group cursor-pointer z-10"
+                      className="absolute -translate-x-1/2 -translate-y-1/2 w-5 h-5 rounded-full flex items-center justify-center group cursor-pointer z-10"
                       title={pin.name}
                       aria-label={`Select ${pin.name}`}
                     >
                       {/* Hover / selection pulse */}
                       <span
-                        className={`w-3.5 h-3.5 rounded-full transition-all duration-200 ${
+                        className={`w-3 h-3 rounded-full transition-all duration-200 ${
                           isSelected
                             ? 'bg-amber-400/50 ring-2 ring-amber-300 animate-pulse'
                             : 'opacity-0 group-hover:opacity-100 bg-amber-400/40 ring-1 ring-white/80'
                         }`}
                       />
                       {/* Hover Tooltip */}
-                      <span className="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-4 left-1/2 -translate-x-1/2 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-black/90 text-white shadow-md whitespace-nowrap pointer-events-none z-20">
+                      <span className="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-3.5 left-1/2 -translate-x-1/2 px-1.5 py-0.5 rounded text-[9px] font-semibold bg-black/90 text-white shadow-md whitespace-nowrap pointer-events-none z-20">
                         {pin.name}
                       </span>
                     </button>
@@ -320,9 +320,9 @@ export const LocationsPage: React.FC = () => {
           {/* RIGHT COLUMN (9 Cols): Popular Locations Header + 3-Column City Cards Grid */}
           <div className="lg:col-span-9 xl:col-span-9 flex flex-col justify-between">
             {/* Header Row: Positioned directly above Delhi Card and Region Tabs on right */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mb-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2.5">
               <h2
-                className={`text-lg sm:text-xl font-bold tracking-tight ${
+                className={`text-base sm:text-lg font-bold tracking-tight ${
                   isLight ? 'text-slate-900' : 'text-white'
                 }`}
               >
@@ -344,7 +344,7 @@ export const LocationsPage: React.FC = () => {
                       key={region}
                       type="button"
                       onClick={() => setSelectedRegion(region)}
-                      className={`px-3 py-1 rounded-md text-xs font-medium transition-all cursor-pointer ${
+                      className={`px-2.5 py-0.5 rounded-md text-[11px] font-medium transition-all cursor-pointer ${
                         isActive
                           ? isLight
                             ? 'bg-[#1c1c1e] text-white font-semibold shadow-xs'
@@ -365,13 +365,13 @@ export const LocationsPage: React.FC = () => {
             <div className="flex-1 flex flex-col justify-center">
               {filteredLocations.length === 0 ? (
                 <div
-                  className={`p-8 text-center rounded-xl border space-y-2.5 h-full flex flex-col items-center justify-center ${
+                  className={`p-6 text-center rounded-xl border space-y-2 h-full flex flex-col items-center justify-center ${
                     isLight ? 'bg-white border-stone-200 text-slate-900' : 'bg-[#121316] border-neutral-800 text-white'
                   }`}
                 >
-                  <MapPin className="w-8 h-8 text-stone-400 mx-auto" />
-                  <h3 className="text-sm font-bold">No locations found</h3>
-                  <p className="text-xs text-stone-500 max-w-xs">
+                  <MapPin className="w-7 h-7 text-stone-400 mx-auto" />
+                  <h3 className="text-xs font-bold">No locations found</h3>
+                  <p className="text-[11px] text-stone-500 max-w-xs">
                     No hubs matched "{searchQuery}" in {selectedRegion}.
                   </p>
                   <button
@@ -380,26 +380,26 @@ export const LocationsPage: React.FC = () => {
                       setSearchQuery('');
                       setSelectedRegion('All');
                     }}
-                    className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#1c1c1e] text-white hover:bg-black cursor-pointer"
+                    className="px-3 py-1 rounded-lg text-xs font-semibold bg-[#1c1c1e] text-white hover:bg-black cursor-pointer"
                   >
                     Show All Locations
                   </button>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-3.5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2.5 sm:gap-3">
                   {filteredLocations.map((item) => (
                     <div
                       key={item.id}
                       onClick={() => handleCitySelect(item)}
-                      className={`rounded-xl border p-2.5 transition-all duration-200 cursor-pointer group flex flex-col justify-between shadow-xs hover:shadow-md ${
+                      className={`rounded-xl border p-2 transition-all duration-200 cursor-pointer group flex flex-col justify-between shadow-xs hover:shadow-md ${
                         isLight
                           ? 'border-stone-200/80 bg-white hover:border-stone-300'
                           : 'border-neutral-800/80 bg-[#121316] hover:border-neutral-700'
                       }`}
                     >
-                      {/* Photo aspect ratio */}
+                      {/* Photo aspect ratio: Compact 16/8.5 for sleek height */}
                       <div
-                        className={`aspect-[16/10] w-full rounded-lg overflow-hidden relative mb-2 border ${
+                        className={`aspect-[16/8.5] w-full rounded-lg overflow-hidden relative mb-1.5 border ${
                           isLight ? 'bg-stone-100 border-stone-200/60' : 'bg-neutral-950 border-neutral-800/60'
                         }`}
                       >
@@ -412,14 +412,14 @@ export const LocationsPage: React.FC = () => {
                       </div>
 
                       {/* City Name & Locations Count Footer */}
-                      <div className="flex items-center justify-between px-1.5 py-0.5">
+                      <div className="flex items-center justify-between px-1 py-0.5">
                         <div
-                          className={`flex items-center gap-1.5 font-bold text-xs sm:text-[13px] ${
+                          className={`flex items-center gap-1.5 font-bold text-xs ${
                             isLight ? 'text-slate-900' : 'text-white'
                           }`}
                         >
                           <MapPin
-                            className={`w-3.5 h-3.5 shrink-0 ${
+                            className={`w-3 h-3 shrink-0 ${
                               isLight ? 'text-stone-700' : 'text-stone-300'
                             }`}
                           />
@@ -427,14 +427,14 @@ export const LocationsPage: React.FC = () => {
                         </div>
 
                         <div
-                          className={`text-xs font-medium flex items-center gap-1 transition-colors ${
+                          className={`text-[11px] font-medium flex items-center gap-1 transition-colors ${
                             isLight
                               ? 'text-stone-500 group-hover:text-black'
                               : 'text-stone-400 group-hover:text-white'
                           }`}
                         >
                           <span>{item.locationsCount} Locations</span>
-                          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                          <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
                         </div>
                       </div>
                     </div>
