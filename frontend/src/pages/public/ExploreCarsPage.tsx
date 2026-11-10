@@ -670,7 +670,8 @@ export const ExploreCarsPage: React.FC = () => {
                   return (
                     <div
                       key={car.id}
-                      className={`rounded-2xl border p-2 sm:p-2.5 transition-all duration-200 flex flex-col justify-between group relative shadow-xs hover:shadow-md ${
+                      onClick={() => navigate(`/vehicles/${car.id}`)}
+                      className={`rounded-2xl border p-2 sm:p-2.5 transition-all duration-200 flex flex-col justify-between group relative shadow-xs hover:shadow-md cursor-pointer ${
                         isLight
                           ? 'border-stone-200/80 bg-white hover:border-stone-300'
                           : 'border-neutral-800/80 bg-[#121316] hover:border-neutral-700'
@@ -704,7 +705,10 @@ export const ExploreCarsPage: React.FC = () => {
                           {/* Heart Wishlist button top-right over image */}
                           <button
                             type="button"
-                            onClick={(e) => toggleWishlist(car.id, e)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              toggleWishlist(car.id, e);
+                            }}
                             className={`absolute top-2 right-2 p-1.5 rounded-full transition-colors cursor-pointer shadow-xs ${
                               isLight
                                 ? 'bg-white/85 backdrop-blur-md text-slate-700 hover:text-rose-500 border border-stone-200/60'
