@@ -300,7 +300,7 @@ export const VehicleDetailsPage: React.FC = () => {
         isLight ? 'bg-[#F8F6F1] text-slate-900' : 'bg-[#0a0b0d] text-white'
       }`}
     >
-      <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-6 space-y-5">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 py-4 sm:py-5 space-y-4">
         {/* =========================================================================
             1. BREADCRUMB & SAVE ACTION
            ========================================================================= */}
@@ -332,7 +332,7 @@ export const VehicleDetailsPage: React.FC = () => {
           <button
             type="button"
             onClick={handleToggleWishlist}
-            className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full border text-xs font-semibold transition-all cursor-pointer shadow-xs active:scale-95 ${
+            className={`flex items-center gap-1.5 px-3.5 py-1 rounded-full border text-xs font-semibold transition-all cursor-pointer shadow-xs active:scale-95 ${
               isLight
                 ? 'border-stone-300 bg-white text-slate-800 hover:border-stone-400'
                 : 'border-neutral-800 bg-[#121316] text-white hover:border-neutral-700'
@@ -356,12 +356,12 @@ export const VehicleDetailsPage: React.FC = () => {
             - Left: Main Gallery & Quick Specs Card
             - Right: Sticky Booking Calculator Card
            ========================================================================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-5 items-start">
           {/* LEFT COLUMN (8 cols): Hero Photo, Thumbnails, Title & Quick Info */}
-          <div className="lg:col-span-8 space-y-3.5">
-            {/* Main Hero Photo Container */}
+          <div className="lg:col-span-8 space-y-2.5">
+            {/* Main Hero Photo Container - Compact height to keep specs visible above the fold */}
             <div
-              className={`rounded-2xl border overflow-hidden relative aspect-[16/10] max-h-[500px] w-full shadow-xs ${
+              className={`rounded-2xl border overflow-hidden relative aspect-[16/9] sm:aspect-[1.95/1] max-h-[330px] sm:max-h-[350px] w-full shadow-xs ${
                 isLight ? 'border-stone-200/80 bg-stone-100' : 'border-neutral-800 bg-[#101114]'
               }`}
             >
@@ -372,7 +372,7 @@ export const VehicleDetailsPage: React.FC = () => {
               />
 
               {/* Category Badge top-left */}
-              <span className="absolute top-4 left-4 px-3 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider bg-black/75 backdrop-blur-md text-white border border-white/20 shadow-md">
+              <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-black/75 backdrop-blur-md text-white border border-white/20 shadow-md">
                 {vehicle.category}
               </span>
 
@@ -380,11 +380,11 @@ export const VehicleDetailsPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setFullscreenImageOpen(true)}
-                className="absolute top-4 right-4 w-8 h-8 rounded-lg bg-black/60 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-black/85 transition-all cursor-pointer shadow-md"
+                className="absolute top-3 right-3 w-7 h-7 rounded-lg bg-black/60 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-black/85 transition-all cursor-pointer shadow-md"
                 title="View Fullscreen"
                 aria-label="View Fullscreen"
               >
-                <Maximize2 className="w-3.5 h-3.5" />
+                <Maximize2 className="w-3 h-3" />
               </button>
 
               {/* Previous Arrow overlay */}
@@ -392,10 +392,10 @@ export const VehicleDetailsPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={prevImage}
-                  className="absolute left-3.5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all cursor-pointer active:scale-95 shadow-md"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all cursor-pointer active:scale-95 shadow-md"
                   aria-label="Previous Image"
                 >
-                  <ChevronLeft className="w-4 h-4" />
+                  <ChevronLeft className="w-3.5 h-3.5" />
                 </button>
               )}
 
@@ -404,22 +404,22 @@ export const VehicleDetailsPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={nextImage}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all cursor-pointer active:scale-95 shadow-md"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all cursor-pointer active:scale-95 shadow-md"
                   aria-label="Next Image"
                 >
-                  <ChevronRight className="w-4 h-4" />
+                  <ChevronRight className="w-3.5 h-3.5" />
                 </button>
               )}
 
               {/* Counter Badge bottom-right */}
-              <span className="absolute bottom-4 right-4 px-2.5 py-1 rounded-md text-xs font-mono font-medium bg-black/75 backdrop-blur-md text-white border border-white/20 shadow-md">
+              <span className="absolute bottom-3 right-3 px-2 py-0.5 rounded-md text-[10px] font-mono font-medium bg-black/75 backdrop-blur-md text-white border border-white/20 shadow-md">
                 {selectedImageIndex + 1} / {images.length}
               </span>
             </div>
 
             {/* Thumbnail Row */}
             {images.length > 1 && (
-              <div className="flex items-center gap-2.5 overflow-x-auto pb-1">
+              <div className="flex items-center gap-2 overflow-x-auto pb-0.5">
                 {images.map((img, idx) => {
                   const isActive = selectedImageIndex === idx;
                   return (
@@ -427,7 +427,7 @@ export const VehicleDetailsPage: React.FC = () => {
                       key={img.id || idx}
                       type="button"
                       onClick={() => setSelectedImageIndex(idx)}
-                      className={`relative w-20 sm:w-24 aspect-[16/10] rounded-xl overflow-hidden shrink-0 border-2 transition-all cursor-pointer shadow-xs ${
+                      className={`relative w-14 sm:w-16 h-9 sm:h-10 rounded-lg overflow-hidden shrink-0 border-2 transition-all cursor-pointer shadow-xs ${
                         isActive
                           ? isLight
                             ? 'border-black ring-2 ring-black/30 opacity-100'
@@ -446,14 +446,14 @@ export const VehicleDetailsPage: React.FC = () => {
 
             {/* Title & Technical Specs Card */}
             <div
-              className={`rounded-2xl border p-5 sm:p-6 space-y-4 shadow-xs ${
+              className={`rounded-2xl border p-3.5 sm:p-4 space-y-2.5 shadow-xs ${
                 isLight ? 'bg-white border-stone-200/80 text-slate-900' : 'bg-[#101114] border-neutral-800 text-white'
               }`}
             >
               {/* Header: Brand Year & Rating Pill */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
                 <span
-                  className={`text-[11px] font-mono uppercase tracking-widest font-semibold ${
+                  className={`text-[10px] font-mono uppercase tracking-widest font-semibold ${
                     isLight ? 'text-stone-500' : 'text-neutral-400'
                   }`}
                 >
@@ -461,13 +461,13 @@ export const VehicleDetailsPage: React.FC = () => {
                 </span>
 
                 <div
-                  className={`flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs font-bold shrink-0 self-start sm:self-auto ${
+                  className={`flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border text-[11px] font-bold shrink-0 self-start sm:self-auto ${
                     isLight
                       ? 'bg-stone-50 border-stone-200 text-slate-900'
                       : 'bg-black/60 border-neutral-800 text-white'
                   }`}
                 >
-                  <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+                  <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
                   <span>{vehicle.rating.toFixed(2)}</span>
                   <span className={`font-normal ${isLight ? 'text-stone-500' : 'text-neutral-400'}`}>
                     ({vehicle.totalTrips || 40} verified trips)
@@ -477,16 +477,16 @@ export const VehicleDetailsPage: React.FC = () => {
 
               {/* Vehicle Title */}
               <div>
-                <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+                <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">
                   {vehicle.brand} {vehicle.model}
                 </h1>
 
                 <p
-                  className={`text-xs flex items-center gap-1.5 mt-2 font-medium ${
+                  className={`text-[11px] flex items-center gap-1.5 mt-1 font-medium ${
                     isLight ? 'text-stone-600' : 'text-neutral-400'
                   }`}
                 >
-                  <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                  <MapPin className="w-3 h-3 text-amber-400 shrink-0" />
                   <span>
                     Pickup Hub: {vehicle.pickupAddress}, {vehicle.city}, {vehicle.state}
                   </span>
@@ -494,23 +494,23 @@ export const VehicleDetailsPage: React.FC = () => {
               </div>
 
               {/* 4 Specifications Pills Grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-2">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
                 {/* 1. Transmission */}
                 <div
-                  className={`p-3 rounded-xl border flex items-center gap-3 ${
+                  className={`p-2 sm:p-2.5 rounded-lg border flex items-center gap-2.5 ${
                     isLight ? 'bg-stone-50/80 border-stone-200/80' : 'bg-[#16171b] border-neutral-800/80'
                   }`}
                 >
-                  <Gauge className="w-4 h-4 text-amber-400 shrink-0" />
+                  <Gauge className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                   <div className="min-w-0">
                     <span
-                      className={`block text-[10px] font-mono uppercase tracking-wider ${
+                      className={`block text-[9px] font-mono uppercase tracking-wider ${
                         isLight ? 'text-stone-500' : 'text-neutral-400'
                       }`}
                     >
                       Transmission
                     </span>
-                    <span className="font-bold text-xs sm:text-[13px] capitalize truncate block">
+                    <span className="font-bold text-xs capitalize truncate block">
                       {vehicle.transmission.toLowerCase()}
                     </span>
                   </div>
@@ -518,20 +518,20 @@ export const VehicleDetailsPage: React.FC = () => {
 
                 {/* 2. Fuel System */}
                 <div
-                  className={`p-3 rounded-xl border flex items-center gap-3 ${
+                  className={`p-2 sm:p-2.5 rounded-lg border flex items-center gap-2.5 ${
                     isLight ? 'bg-stone-50/80 border-stone-200/80' : 'bg-[#16171b] border-neutral-800/80'
                   }`}
                 >
-                  <Fuel className="w-4 h-4 text-amber-400 shrink-0" />
+                  <Fuel className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                   <div className="min-w-0">
                     <span
-                      className={`block text-[10px] font-mono uppercase tracking-wider ${
+                      className={`block text-[9px] font-mono uppercase tracking-wider ${
                         isLight ? 'text-stone-500' : 'text-neutral-400'
                       }`}
                     >
                       Fuel System
                     </span>
-                    <span className="font-bold text-xs sm:text-[13px] capitalize truncate block">
+                    <span className="font-bold text-xs capitalize truncate block">
                       {vehicle.fuelType.toLowerCase()}
                     </span>
                   </div>
@@ -539,20 +539,20 @@ export const VehicleDetailsPage: React.FC = () => {
 
                 {/* 3. Capacity */}
                 <div
-                  className={`p-3 rounded-xl border flex items-center gap-3 ${
+                  className={`p-2 sm:p-2.5 rounded-lg border flex items-center gap-2.5 ${
                     isLight ? 'bg-stone-50/80 border-stone-200/80' : 'bg-[#16171b] border-neutral-800/80'
                   }`}
                 >
-                  <Users className="w-4 h-4 text-amber-400 shrink-0" />
+                  <Users className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                   <div className="min-w-0">
                     <span
-                      className={`block text-[10px] font-mono uppercase tracking-wider ${
+                      className={`block text-[9px] font-mono uppercase tracking-wider ${
                         isLight ? 'text-stone-500' : 'text-neutral-400'
                       }`}
                     >
                       Capacity
                     </span>
-                    <span className="font-bold text-xs sm:text-[13px] truncate block">
+                    <span className="font-bold text-xs truncate block">
                       {vehicle.seatingCapacity} Passengers
                     </span>
                   </div>
@@ -560,20 +560,20 @@ export const VehicleDetailsPage: React.FC = () => {
 
                 {/* 4. Mileage Policy */}
                 <div
-                  className={`p-3 rounded-xl border flex items-center gap-3 ${
+                  className={`p-2 sm:p-2.5 rounded-lg border flex items-center gap-2.5 ${
                     isLight ? 'bg-stone-50/80 border-stone-200/80' : 'bg-[#16171b] border-neutral-800/80'
                   }`}
                 >
-                  <Clock className="w-4 h-4 text-amber-400 shrink-0" />
+                  <Clock className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                   <div className="min-w-0">
                     <span
-                      className={`block text-[10px] font-mono uppercase tracking-wider ${
+                      className={`block text-[9px] font-mono uppercase tracking-wider ${
                         isLight ? 'text-stone-500' : 'text-neutral-400'
                       }`}
                     >
                       Mileage Policy
                     </span>
-                    <span className="font-bold text-xs sm:text-[13px] truncate block">
+                    <span className="font-bold text-xs truncate block">
                       {vehicle.mileagePolicy || 'Unlimited km'}
                     </span>
                   </div>
@@ -583,16 +583,16 @@ export const VehicleDetailsPage: React.FC = () => {
           </div>
 
           {/* RIGHT COLUMN (4 cols): Sticky Booking Calculator Card */}
-          <div className="lg:col-span-4 w-full min-w-0 lg:sticky lg:top-24">
+          <div className="lg:col-span-4 w-full min-w-0 lg:sticky lg:top-20">
             <div
-              className={`rounded-2xl border p-5 sm:p-6 space-y-4 shadow-xl ${
+              className={`rounded-2xl border p-4 sm:p-4.5 space-y-3 shadow-xl ${
                 isLight ? 'bg-white border-stone-200/80 text-slate-900' : 'bg-[#101114] border-neutral-800 text-white'
               }`}
             >
               {/* Price Header */}
-              <div className="flex items-baseline justify-between border-b pb-4 border-inherit">
+              <div className="flex items-baseline justify-between border-b pb-3 border-inherit">
                 <div className="flex items-baseline gap-1">
-                  <span className="text-2xl sm:text-3xl font-extrabold tracking-tight font-display">
+                  <span className="text-xl sm:text-2xl font-extrabold tracking-tight font-display">
                     {formatINR(vehicle.dailyRate)}
                   </span>
                   <span className={`text-xs ${isLight ? 'text-stone-500' : 'text-neutral-400'}`}>
@@ -601,7 +601,7 @@ export const VehicleDetailsPage: React.FC = () => {
                 </div>
 
                 <div
-                  className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold border ${
+                  className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold border ${
                     isLight
                       ? 'bg-amber-50 text-amber-900 border-amber-200'
                       : 'bg-neutral-900 text-amber-400 border-neutral-800'
@@ -613,17 +613,17 @@ export const VehicleDetailsPage: React.FC = () => {
               </div>
 
               {/* Date & Time Selectors */}
-              <div className="space-y-2.5">
+              <div className="space-y-2">
                 {/* Pickup Date & Time Selector */}
                 <div
-                  className={`p-3 rounded-xl border relative cursor-pointer group ${
+                  className={`p-2.5 rounded-lg border relative cursor-pointer group ${
                     isLight
                       ? 'bg-stone-50 border-stone-200 hover:border-stone-400'
                       : 'bg-[#15161a] border-neutral-800 hover:border-neutral-700'
                   }`}
                 >
                   <label
-                    className={`block text-[10px] font-mono uppercase tracking-wider mb-1 flex items-center gap-1.5 ${
+                    className={`block text-[9px] font-mono uppercase tracking-wider mb-0.5 flex items-center gap-1.5 ${
                       isLight ? 'text-stone-500' : 'text-neutral-400'
                     }`}
                   >
@@ -631,7 +631,7 @@ export const VehicleDetailsPage: React.FC = () => {
                     <span>Pickup Date & Time</span>
                   </label>
                   <div className="flex items-center justify-between">
-                    <span className="text-xs sm:text-[13px] font-semibold tabular-nums">
+                    <span className="text-xs font-semibold tabular-nums">
                       {formatDateTimeDisplay(startDate)}
                     </span>
                     <span className={`text-xs ${isLight ? 'text-stone-400' : 'text-neutral-500'}`}>
@@ -649,14 +649,14 @@ export const VehicleDetailsPage: React.FC = () => {
 
                 {/* Return Date & Time Selector */}
                 <div
-                  className={`p-3 rounded-xl border relative cursor-pointer group ${
+                  className={`p-2.5 rounded-lg border relative cursor-pointer group ${
                     isLight
                       ? 'bg-stone-50 border-stone-200 hover:border-stone-400'
                       : 'bg-[#15161a] border-neutral-800 hover:border-neutral-700'
                   }`}
                 >
                   <label
-                    className={`block text-[10px] font-mono uppercase tracking-wider mb-1 flex items-center gap-1.5 ${
+                    className={`block text-[9px] font-mono uppercase tracking-wider mb-0.5 flex items-center gap-1.5 ${
                       isLight ? 'text-stone-500' : 'text-neutral-400'
                     }`}
                   >
@@ -664,7 +664,7 @@ export const VehicleDetailsPage: React.FC = () => {
                     <span>Return Date & Time</span>
                   </label>
                   <div className="flex items-center justify-between">
-                    <span className="text-xs sm:text-[13px] font-semibold tabular-nums">
+                    <span className="text-xs font-semibold tabular-nums">
                       {formatDateTimeDisplay(endDate)}
                     </span>
                     <span className={`text-xs ${isLight ? 'text-stone-400' : 'text-neutral-500'}`}>
@@ -685,7 +685,7 @@ export const VehicleDetailsPage: React.FC = () => {
               {/* Availability Alert (if any) */}
               {availabilityMessage && (
                 <div
-                  className={`p-2.5 rounded-lg border text-xs ${
+                  className={`p-2 rounded-lg border text-xs ${
                     isLight
                       ? 'bg-amber-50 border-amber-200 text-amber-900'
                       : 'bg-amber-500/10 border-amber-500/30 text-amber-400'
@@ -697,8 +697,8 @@ export const VehicleDetailsPage: React.FC = () => {
 
               {/* Itemized Price Breakdown */}
               {calculatedPrice && (
-                <div className="space-y-2 text-xs pt-1">
-                  <div className="flex items-center justify-between">
+                <div className="space-y-1.5 text-xs pt-0.5">
+                  <div className="flex items-center justify-between py-0.5">
                     <span className={isLight ? 'text-stone-600' : 'text-neutral-400'}>
                       Base ({calculatedPrice.rentalDays}{' '}
                       {calculatedPrice.rentalDays === 1 ? 'day' : 'days'})
@@ -708,7 +708,7 @@ export const VehicleDetailsPage: React.FC = () => {
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between py-0.5">
                     <span className={isLight ? 'text-stone-600' : 'text-neutral-400'}>
                       GST (18% Statutory)
                     </span>
@@ -717,7 +717,7 @@ export const VehicleDetailsPage: React.FC = () => {
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between py-0.5">
                     <span className={isLight ? 'text-stone-600' : 'text-neutral-400'}>
                       Platform Fee
                     </span>
@@ -726,7 +726,7 @@ export const VehicleDetailsPage: React.FC = () => {
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-between text-amber-400 font-medium">
+                  <div className="flex items-center justify-between py-0.5 text-amber-400 font-medium">
                     <span>Security Deposit (Refundable)</span>
                     <span className="font-bold tabular-nums">
                       {formatINR(calculatedPrice.securityDeposit)}
@@ -735,12 +735,12 @@ export const VehicleDetailsPage: React.FC = () => {
 
                   {/* Total Payable Row */}
                   <div
-                    className={`pt-3 border-t flex items-center justify-between font-bold ${
+                    className={`pt-2.5 border-t flex items-center justify-between font-bold ${
                       isLight ? 'border-stone-200 text-slate-900' : 'border-neutral-800 text-white'
                     }`}
                   >
-                    <span className="text-sm">Total Payable</span>
-                    <span className="text-lg sm:text-xl font-extrabold tabular-nums">
+                    <span className="text-xs">Total Payable</span>
+                    <span className="text-base sm:text-lg font-extrabold tabular-nums">
                       {formatINR(calculatedPrice.totalAmount)}
                     </span>
                   </div>
@@ -752,29 +752,29 @@ export const VehicleDetailsPage: React.FC = () => {
                 type="button"
                 disabled={calculating || !!availabilityMessage}
                 onClick={() => setCheckoutModalOpen(true)}
-                className={`w-full py-3.5 px-6 rounded-full font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md active:scale-98 cursor-pointer disabled:opacity-50 ${
+                className={`w-full py-2.5 sm:py-3 px-5 rounded-full font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md active:scale-98 cursor-pointer disabled:opacity-50 ${
                   isLight
                     ? 'bg-[#1c1c1e] text-white hover:bg-black'
                     : 'bg-[#F5E6D3] hover:bg-[#faede0] text-black font-extrabold'
                 }`}
               >
                 <span>Reserve This Car Now</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-3.5 h-3.5" />
               </button>
 
               {/* Trust Subtext */}
               <div
-                className={`flex items-center justify-center gap-3 text-[11px] pt-1 font-medium ${
+                className={`flex items-center justify-center gap-3 text-[10px] pt-0.5 font-medium ${
                   isLight ? 'text-stone-500' : 'text-neutral-400'
                 }`}
               >
                 <div className="flex items-center gap-1">
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                  <ShieldCheck className="w-3 h-3 text-emerald-500 shrink-0" />
                   <span>Zero hidden fees</span>
                 </div>
                 <span>•</span>
                 <div className="flex items-center gap-1">
-                  <RotateCcw className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                  <RotateCcw className="w-3 h-3 text-amber-400 shrink-0" />
                   <span>24h Refundable Deposit</span>
                 </div>
               </div>
@@ -786,16 +786,16 @@ export const VehicleDetailsPage: React.FC = () => {
             3. VEHICLE OVERVIEW CARD (Full Width with Metallic Car Front Visual)
            ========================================================================= */}
         <div
-          className={`rounded-2xl border p-6 relative overflow-hidden flex items-center justify-between shadow-xs ${
+          className={`rounded-2xl border p-4 sm:p-5 relative overflow-hidden flex items-center justify-between shadow-xs ${
             isLight ? 'bg-white border-stone-200/80 text-slate-900' : 'bg-[#101114] border-neutral-800 text-white'
           }`}
         >
-          <div className="relative z-10 max-w-xl">
-            <h2 className="text-base sm:text-lg font-bold tracking-tight mb-2">
+          <div className="relative z-10 max-w-lg">
+            <h2 className="text-sm sm:text-base font-bold tracking-tight mb-1.5">
               Vehicle Overview
             </h2>
             <p
-              className={`text-xs sm:text-sm leading-relaxed ${
+              className={`text-xs sm:text-[13px] leading-relaxed ${
                 isLight ? 'text-stone-600' : 'text-neutral-400'
               }`}
             >
@@ -804,7 +804,7 @@ export const VehicleDetailsPage: React.FC = () => {
           </div>
 
           {/* Right subtle metallic car graphic with gradient mask */}
-          <div className="absolute right-0 top-0 bottom-0 w-[45%] pointer-events-none overflow-hidden hidden md:block">
+          <div className="absolute right-0 top-0 bottom-0 w-[40%] pointer-events-none overflow-hidden hidden md:block">
             <img
               src="https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&auto=format&fit=crop&q=80"
               alt="Vehicle Silhouette"
@@ -821,25 +821,25 @@ export const VehicleDetailsPage: React.FC = () => {
             4. KEY HIGHLIGHTS BAR
            ========================================================================= */}
         <div
-          className={`rounded-2xl border px-6 py-4 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 shadow-xs ${
+          className={`rounded-2xl border px-4 sm:px-5 py-3 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 shadow-xs ${
             isLight ? 'bg-white border-stone-200/80 text-slate-900' : 'bg-[#101114] border-neutral-800 text-white'
           }`}
         >
-          <h3 className="text-xs sm:text-sm font-bold tracking-tight shrink-0">
+          <h3 className="text-xs font-bold tracking-tight shrink-0">
             Key Highlights
           </h3>
 
-          <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-xs font-semibold">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+          <div className="flex flex-wrap items-center gap-3 sm:gap-6 text-xs font-semibold">
+            <div className="flex items-center gap-1.5">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
               <span>Level 2 ADAS</span>
             </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+            <div className="flex items-center gap-1.5">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
               <span>Panoramic Sunroof</span>
             </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+            <div className="flex items-center gap-1.5">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
               <span>Ventilated Front Seats</span>
             </div>
           </div>
@@ -848,108 +848,108 @@ export const VehicleDetailsPage: React.FC = () => {
         {/* =========================================================================
             5. TWO-COLUMN GRID: Features & Comfort + Policies & Protection
            ========================================================================= */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
           {/* LEFT: Features & Comfort (8 Tiles in 4x2 Grid) */}
           <div
-            className={`rounded-2xl border p-6 space-y-5 shadow-xs flex flex-col justify-between ${
+            className={`rounded-2xl border p-4 sm:p-5 space-y-3.5 shadow-xs flex flex-col justify-between ${
               isLight ? 'bg-white border-stone-200/80 text-slate-900' : 'bg-[#101114] border-neutral-800 text-white'
             }`}
           >
-            <h3 className="text-base font-bold tracking-tight">Features & Comfort</h3>
+            <h3 className="text-sm font-bold tracking-tight">Features & Comfort</h3>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
               {/* Tile 1 */}
               <div
-                className={`p-3 rounded-xl border text-center flex flex-col items-center justify-center gap-1.5 ${
+                className={`p-2 sm:p-2.5 rounded-lg border text-center flex flex-col items-center justify-center gap-1 ${
                   isLight ? 'bg-stone-50 border-stone-200/80' : 'bg-[#15161a] border-neutral-800/80'
                 }`}
               >
-                <Snowflake className="w-5 h-5 text-neutral-300" />
-                <span className="text-[11px] font-medium leading-tight">
-                  Dual Zone Climate Control
+                <Snowflake className="w-4 h-4 text-neutral-300" />
+                <span className="text-[10px] font-medium leading-tight">
+                  Dual Zone Climate
                 </span>
               </div>
 
               {/* Tile 2 */}
               <div
-                className={`p-3 rounded-xl border text-center flex flex-col items-center justify-center gap-1.5 ${
+                className={`p-2 sm:p-2.5 rounded-lg border text-center flex flex-col items-center justify-center gap-1 ${
                   isLight ? 'bg-stone-50 border-stone-200/80' : 'bg-[#15161a] border-neutral-800/80'
                 }`}
               >
-                <Users className="w-5 h-5 text-neutral-300" />
-                <span className="text-[11px] font-medium leading-tight">
+                <Users className="w-4 h-4 text-neutral-300" />
+                <span className="text-[10px] font-medium leading-tight">
                   Ventilated Seats
                 </span>
               </div>
 
               {/* Tile 3 */}
               <div
-                className={`p-3 rounded-xl border text-center flex flex-col items-center justify-center gap-1.5 ${
+                className={`p-2 sm:p-2.5 rounded-lg border text-center flex flex-col items-center justify-center gap-1 ${
                   isLight ? 'bg-stone-50 border-stone-200/80' : 'bg-[#15161a] border-neutral-800/80'
                 }`}
               >
-                <Sun className="w-5 h-5 text-neutral-300" />
-                <span className="text-[11px] font-medium leading-tight">
+                <Sun className="w-4 h-4 text-neutral-300" />
+                <span className="text-[10px] font-medium leading-tight">
                   Panoramic Sunroof
                 </span>
               </div>
 
               {/* Tile 4 */}
               <div
-                className={`p-3 rounded-xl border text-center flex flex-col items-center justify-center gap-1.5 ${
+                className={`p-2 sm:p-2.5 rounded-lg border text-center flex flex-col items-center justify-center gap-1 ${
                   isLight ? 'bg-stone-50 border-stone-200/80' : 'bg-[#15161a] border-neutral-800/80'
                 }`}
               >
-                <Camera className="w-5 h-5 text-neutral-300" />
-                <span className="text-[11px] font-medium leading-tight">
+                <Camera className="w-4 h-4 text-neutral-300" />
+                <span className="text-[10px] font-medium leading-tight">
                   360° Camera
                 </span>
               </div>
 
               {/* Tile 5 */}
               <div
-                className={`p-3 rounded-xl border text-center flex flex-col items-center justify-center gap-1.5 ${
+                className={`p-2 sm:p-2.5 rounded-lg border text-center flex flex-col items-center justify-center gap-1 ${
                   isLight ? 'bg-stone-50 border-stone-200/80' : 'bg-[#15161a] border-neutral-800/80'
                 }`}
               >
-                <ShieldCheck className="w-5 h-5 text-neutral-300" />
-                <span className="text-[11px] font-medium leading-tight">
+                <ShieldCheck className="w-4 h-4 text-neutral-300" />
+                <span className="text-[10px] font-medium leading-tight">
                   Level 2 ADAS
                 </span>
               </div>
 
               {/* Tile 6 */}
               <div
-                className={`p-3 rounded-xl border text-center flex flex-col items-center justify-center gap-1.5 ${
+                className={`p-2 sm:p-2.5 rounded-lg border text-center flex flex-col items-center justify-center gap-1 ${
                   isLight ? 'bg-stone-50 border-stone-200/80' : 'bg-[#15161a] border-neutral-800/80'
                 }`}
               >
-                <Tv className="w-5 h-5 text-neutral-300" />
-                <span className="text-[11px] font-medium leading-tight">
-                  10.25" Touch Infotainment
+                <Tv className="w-4 h-4 text-neutral-300" />
+                <span className="text-[10px] font-medium leading-tight">
+                  10.25" Infotainment
                 </span>
               </div>
 
               {/* Tile 7 */}
               <div
-                className={`p-3 rounded-xl border text-center flex flex-col items-center justify-center gap-1.5 ${
+                className={`p-2 sm:p-2.5 rounded-lg border text-center flex flex-col items-center justify-center gap-1 ${
                   isLight ? 'bg-stone-50 border-stone-200/80' : 'bg-[#15161a] border-neutral-800/80'
                 }`}
               >
-                <Volume2 className="w-5 h-5 text-neutral-300" />
-                <span className="text-[11px] font-medium leading-tight">
-                  Premium Sound System
+                <Volume2 className="w-4 h-4 text-neutral-300" />
+                <span className="text-[10px] font-medium leading-tight">
+                  Premium Audio
                 </span>
               </div>
 
               {/* Tile 8 */}
               <div
-                className={`p-3 rounded-xl border text-center flex flex-col items-center justify-center gap-1.5 ${
+                className={`p-2 sm:p-2.5 rounded-lg border text-center flex flex-col items-center justify-center gap-1 ${
                   isLight ? 'bg-stone-50 border-stone-200/80' : 'bg-[#15161a] border-neutral-800/80'
                 }`}
               >
-                <Zap className="w-5 h-5 text-neutral-300" />
-                <span className="text-[11px] font-medium leading-tight">
+                <Zap className="w-4 h-4 text-neutral-300" />
+                <span className="text-[10px] font-medium leading-tight">
                   Wireless Charging
                 </span>
               </div>
@@ -958,16 +958,16 @@ export const VehicleDetailsPage: React.FC = () => {
 
           {/* RIGHT: Policies & Protection */}
           <div
-            className={`rounded-2xl border p-6 space-y-5 shadow-xs flex flex-col justify-between ${
+            className={`rounded-2xl border p-4 sm:p-5 space-y-3.5 shadow-xs flex flex-col justify-between ${
               isLight ? 'bg-white border-stone-200/80 text-slate-900' : 'bg-[#101114] border-neutral-800 text-white'
             }`}
           >
-            <h3 className="text-base font-bold tracking-tight">Policies & Protection</h3>
+            <h3 className="text-sm font-bold tracking-tight">Policies & Protection</h3>
 
-            <div className="space-y-4">
+            <div className="space-y-3">
               {/* Policy 1 */}
-              <div className="flex items-start gap-3">
-                <ShieldCheck className="w-4.5 h-4.5 text-neutral-400 mt-0.5 shrink-0" />
+              <div className="flex items-start gap-2.5">
+                <ShieldCheck className="w-4 h-4 text-neutral-400 mt-0.5 shrink-0" />
                 <div>
                   <h4 className="font-bold text-xs">Security Deposit</h4>
                   <p
@@ -982,8 +982,8 @@ export const VehicleDetailsPage: React.FC = () => {
               </div>
 
               {/* Policy 2 */}
-              <div className="flex items-start gap-3">
-                <RotateCcw className="w-4.5 h-4.5 text-neutral-400 mt-0.5 shrink-0" />
+              <div className="flex items-start gap-2.5">
+                <RotateCcw className="w-4 h-4 text-neutral-400 mt-0.5 shrink-0" />
                 <div>
                   <h4 className="font-bold text-xs">Free Cancellation</h4>
                   <p
@@ -997,8 +997,8 @@ export const VehicleDetailsPage: React.FC = () => {
               </div>
 
               {/* Policy 3 */}
-              <div className="flex items-start gap-3">
-                <FileText className="w-4.5 h-4.5 text-neutral-400 mt-0.5 shrink-0" />
+              <div className="flex items-start gap-2.5">
+                <FileText className="w-4 h-4 text-neutral-400 mt-0.5 shrink-0" />
                 <div>
                   <h4 className="font-bold text-xs">Usage Terms</h4>
                   <p
@@ -1018,21 +1018,21 @@ export const VehicleDetailsPage: React.FC = () => {
             6. CUSTOMER REVIEWS (Full Width)
            ========================================================================= */}
         <div
-          className={`rounded-2xl border p-6 shadow-xs ${
+          className={`rounded-2xl border p-4 sm:p-5 shadow-xs ${
             isLight ? 'bg-white border-stone-200/80 text-slate-900' : 'bg-[#101114] border-neutral-800 text-white'
           }`}
         >
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
             {/* Left Rating Summary */}
-            <div className="md:col-span-4 space-y-1">
-              <h3 className="text-base font-bold tracking-tight">Customer Reviews (6)</h3>
+            <div className="md:col-span-4 space-y-0.5">
+              <h3 className="text-sm font-bold tracking-tight">Customer Reviews (6)</h3>
               <div className="flex items-center gap-2">
-                <Star className="w-6 h-6 text-amber-400 fill-amber-400" />
-                <span className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-                  4.82 <span className="text-base font-medium opacity-60">/ 5</span>
+                <Star className="w-5 h-5 text-amber-400 fill-amber-400" />
+                <span className="text-xl sm:text-2xl font-extrabold tracking-tight">
+                  4.82 <span className="text-sm font-medium opacity-60">/ 5</span>
                 </span>
               </div>
-              <p className={`text-xs ${isLight ? 'text-stone-500' : 'text-neutral-400'}`}>
+              <p className={`text-[11px] ${isLight ? 'text-stone-500' : 'text-neutral-400'}`}>
                 Based on 40 verified trips
               </p>
             </div>
@@ -1045,28 +1045,28 @@ export const VehicleDetailsPage: React.FC = () => {
             />
 
             {/* Right Review Quote Carousel */}
-            <div className="md:col-span-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-              <div className="space-y-3">
+            <div className="md:col-span-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <div className="space-y-2">
                 <p
-                  className={`text-xs sm:text-[13px] leading-relaxed italic ${
+                  className={`text-xs leading-relaxed italic ${
                     isLight ? 'text-stone-700' : 'text-neutral-300'
                   }`}
                 >
                   "{VERIFIED_REVIEWS[reviewIndex].comment}"
                 </p>
 
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-2">
                   <img
                     src={VERIFIED_REVIEWS[reviewIndex].avatar}
                     alt={VERIFIED_REVIEWS[reviewIndex].author}
-                    className="w-7 h-7 rounded-full object-cover border border-amber-400"
+                    className="w-6 h-6 rounded-full object-cover border border-amber-400"
                   />
                   <div>
                     <h4 className="text-xs font-bold leading-tight">
                       {VERIFIED_REVIEWS[reviewIndex].author}
                     </h4>
                     <p
-                      className={`text-[10px] font-mono ${
+                      className={`text-[9px] font-mono ${
                         isLight ? 'text-stone-500' : 'text-neutral-400'
                       }`}
                     >
@@ -1077,7 +1077,7 @@ export const VehicleDetailsPage: React.FC = () => {
               </div>
 
               {/* Navigation Arrows */}
-              <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
+              <div className="flex items-center gap-1.5 shrink-0 self-end sm:self-center">
                 <button
                   type="button"
                   onClick={() =>
@@ -1085,28 +1085,28 @@ export const VehicleDetailsPage: React.FC = () => {
                       (prev) => (prev - 1 + VERIFIED_REVIEWS.length) % VERIFIED_REVIEWS.length
                     )
                   }
-                  className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all cursor-pointer active:scale-95 ${
+                  className={`w-7 h-7 rounded-full border flex items-center justify-center transition-all cursor-pointer active:scale-95 ${
                     isLight
                       ? 'border-stone-300 bg-white hover:border-black text-slate-700'
                       : 'border-neutral-700 bg-neutral-900 hover:border-white text-white'
                   }`}
                   aria-label="Previous Review"
                 >
-                  <ChevronLeft className="w-4 h-4" />
+                  <ChevronLeft className="w-3.5 h-3.5" />
                 </button>
                 <button
                   type="button"
                   onClick={() =>
                     setReviewIndex((prev) => (prev + 1) % VERIFIED_REVIEWS.length)
                   }
-                  className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all cursor-pointer active:scale-95 ${
+                  className={`w-7 h-7 rounded-full border flex items-center justify-center transition-all cursor-pointer active:scale-95 ${
                     isLight
                       ? 'border-stone-300 bg-white hover:border-black text-slate-700'
                       : 'border-neutral-700 bg-neutral-900 hover:border-white text-white'
                   }`}
                   aria-label="Next Review"
                 >
-                  <ChevronRight className="w-4 h-4" />
+                  <ChevronRight className="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>
@@ -1116,9 +1116,9 @@ export const VehicleDetailsPage: React.FC = () => {
         {/* =========================================================================
             7. SIMILAR CARS YOU MIGHT LIKE
            ========================================================================= */}
-        <div className="space-y-3 pt-2">
+        <div className="space-y-2.5 pt-1">
           <div className="flex items-center justify-between">
-            <h3 className="text-base sm:text-lg font-bold tracking-tight">
+            <h3 className="text-sm sm:text-base font-bold tracking-tight">
               Similar Cars You Might Like
             </h3>
 
@@ -1134,7 +1134,7 @@ export const VehicleDetailsPage: React.FC = () => {
             </button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {similarCars.map((car) => (
               <div
                 key={car.id}
@@ -1142,14 +1142,14 @@ export const VehicleDetailsPage: React.FC = () => {
                   navigate(`/vehicles/${car.id}`);
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                className={`rounded-2xl border p-2.5 transition-all duration-200 cursor-pointer group flex flex-col justify-between shadow-xs hover:shadow-md ${
+                className={`rounded-xl border p-2 transition-all duration-200 cursor-pointer group flex flex-col justify-between shadow-xs hover:shadow-md ${
                   isLight
                     ? 'border-stone-200/80 bg-white hover:border-stone-300'
                     : 'border-neutral-800/80 bg-[#101114] hover:border-neutral-700'
                 }`}
               >
                 <div>
-                  <div className="aspect-[16/10] w-full rounded-xl overflow-hidden mb-2 border border-inherit">
+                  <div className="aspect-[16/10] w-full rounded-lg overflow-hidden mb-1.5 border border-inherit">
                     <img
                       src={car.image}
                       alt={`${car.brand} ${car.model}`}
@@ -1158,16 +1158,16 @@ export const VehicleDetailsPage: React.FC = () => {
                     />
                   </div>
 
-                  <h4 className="font-bold text-xs sm:text-[13px] px-1">
+                  <h4 className="font-bold text-xs px-0.5">
                     {car.brand} {car.model}
                   </h4>
                 </div>
 
-                <div className="flex items-center justify-between px-1 pt-2 mt-1">
-                  <span className="font-bold text-xs sm:text-[13px]">
+                <div className="flex items-center justify-between px-0.5 pt-1.5 mt-0.5">
+                  <span className="font-bold text-xs">
                     {formatINR(car.dailyRate)}{' '}
                     <span
-                      className={`text-[10px] font-normal ${
+                      className={`text-[9px] font-normal ${
                         isLight ? 'text-stone-500' : 'text-neutral-400'
                       }`}
                     >
@@ -1175,8 +1175,8 @@ export const VehicleDetailsPage: React.FC = () => {
                     </span>
                   </span>
 
-                  <div className="flex items-center gap-1 text-xs font-bold text-amber-400">
-                    <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                  <div className="flex items-center gap-1 text-[11px] font-bold text-amber-400">
+                    <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
                     <span>{car.rating.toFixed(2)}</span>
                   </div>
                 </div>

@@ -38,9 +38,77 @@ const queryClient = new QueryClient({
 const ScrollToTop: React.FC = () => {
   const { pathname } = useLocation();
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, [pathname]);
   return null;
+};
+
+const AnimatedAppRoutes: React.FC = () => {
+  const location = useLocation();
+
+  return (
+    <div key={location.pathname} className="animate-page-enter w-full">
+      <Routes location={location}>
+        {/* Public Routes */}
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/explore" element={<ExploreCarsPage />} />
+        <Route path="/cars" element={<ExploreCarsPage />} />
+        <Route path="/locations" element={<LocationsPage />} />
+        <Route path="/vehicles/:id" element={<VehicleDetailsPage />} />
+        <Route path="/host" element={<HostLandingPage />} />
+        <Route path="/how-it-works" element={<HowItWorksPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+
+        {/* Protected Customer Dashboard */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute allowedRoles={['CUSTOMER']}>
+              <CustomerDashboardPage />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Protected Vendor Portal */}
+        <Route
+          path="/vendor"
+          element={
+            <ProtectedRoute allowedRoles={['VENDOR']}>
+              <VendorDashboardPage />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Protected Administrator Console */}
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute allowedRoles={['ADMIN']}>
+              <AdminDashboardPage />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Shadcn UI Dashboard-01: Fleet Operations & Lifecycle Console */}
+        <Route
+          path="/admin/fleet-ops"
+          element={
+            <ProtectedRoute allowedRoles={['ADMIN']}>
+              <FleetOperationsDashboardPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/fleet-ops"
+          element={<FleetOperationsDashboardPage />}
+        />
+
+        {/* Fallback */}
+        <Route path="*" element={<LandingPage />} />
+      </Routes>
+    </div>
+  );
 };
 
 export const App: React.FC = () => {
@@ -64,65 +132,7 @@ export const App: React.FC = () => {
         >
           <Navbar />
           <main className="flex-1">
-            <Routes>
-              {/* Public Routes */}
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/explore" element={<ExploreCarsPage />} />
-              <Route path="/cars" element={<ExploreCarsPage />} />
-              <Route path="/locations" element={<LocationsPage />} />
-              <Route path="/vehicles/:id" element={<VehicleDetailsPage />} />
-              <Route path="/host" element={<HostLandingPage />} />
-              <Route path="/how-it-works" element={<HowItWorksPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/register" element={<RegisterPage />} />
-
-              {/* Protected Customer Dashboard */}
-              <Route
-                path="/dashboard"
-                element={
-                  <ProtectedRoute allowedRoles={['CUSTOMER']}>
-                    <CustomerDashboardPage />
-                  </ProtectedRoute>
-                }
-              />
-
-              {/* Protected Vendor Portal */}
-              <Route
-                path="/vendor"
-                element={
-                  <ProtectedRoute allowedRoles={['VENDOR']}>
-                    <VendorDashboardPage />
-                  </ProtectedRoute>
-                }
-              />
-
-              {/* Protected Administrator Console */}
-              <Route
-                path="/admin"
-                element={
-                  <ProtectedRoute allowedRoles={['ADMIN']}>
-                    <AdminDashboardPage />
-                  </ProtectedRoute>
-                }
-              />
-
-              {/* Shadcn UI Dashboard-01: Fleet Operations & Lifecycle Console */}
-              <Route
-                path="/admin/fleet-ops"
-                element={
-                  <ProtectedRoute allowedRoles={['ADMIN']}>
-                    <FleetOperationsDashboardPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/fleet-ops"
-                element={<FleetOperationsDashboardPage />}
-              />
-
-              {/* Fallback */}
-              <Route path="*" element={<LandingPage />} />
-            </Routes>
+            <AnimatedAppRoutes />
           </main>
           <Footer />
           <AuthModal />
