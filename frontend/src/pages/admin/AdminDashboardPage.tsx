@@ -23,6 +23,8 @@ import {
   Star,
   ArrowRight,
   ChevronRight,
+  ChevronLeft,
+  Crown,
   ShieldCheck,
   Percent,
   MessageSquare,
@@ -621,31 +623,42 @@ export const AdminDashboardPage: React.FC = () => {
         {/* Top Section: Brand, Search, Scrollable Menu */}
         <div className="flex flex-col min-h-0 flex-1 overflow-hidden space-y-3">
           {/* Brand Logo & Name */}
-          <Link
-            to="/"
-            title="Return to DriveLoop Public Marketplace"
-            className="flex items-center space-x-3 px-1 group cursor-pointer transition-transform hover:scale-[1.02] shrink-0"
-          >
-            <div
-              className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold shadow-xs transition-colors ${
-                isLight ? 'bg-black text-white group-hover:bg-slate-800' : 'bg-white text-black group-hover:bg-neutral-200'
-              }`}
+          <div className="flex items-center justify-between px-1 shrink-0">
+            <Link
+              to="/"
+              title="Return to DriveLoop Public Marketplace"
+              className="flex items-center space-x-3 group cursor-pointer transition-transform hover:scale-[1.02]"
             >
-              <Car className="w-5 h-5" strokeWidth={2.2} />
-            </div>
-            <div>
-              <h1 className="font-display text-base font-bold tracking-tight leading-none group-hover:text-white transition-colors">
-                DriveLux Rentals
-              </h1>
-              <p
-                className={`text-xs mt-0.5 font-medium ${
-                  isLight ? 'text-slate-400' : 'text-neutral-400'
+              <div
+                className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold shadow-xs transition-colors ${
+                  isLight ? 'bg-black text-white group-hover:bg-slate-800' : 'bg-white text-black group-hover:bg-neutral-200'
                 }`}
               >
-                Car Rental Management
-              </p>
-            </div>
-          </Link>
+                <Car className="w-5 h-5" strokeWidth={2.2} />
+              </div>
+              <div>
+                <h1 className="font-display text-base font-bold tracking-tight leading-none group-hover:text-white transition-colors">
+                  DriveLux Rentals
+                </h1>
+                <p
+                  className={`text-xs mt-0.5 font-medium ${
+                    isLight ? 'text-slate-400' : 'text-neutral-400'
+                  }`}
+                >
+                  Car Rental Management
+                </p>
+              </div>
+            </Link>
+            <button
+              type="button"
+              className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
+                isLight ? 'text-slate-400 hover:text-slate-700 hover:bg-slate-100' : 'text-neutral-500 hover:text-white hover:bg-neutral-800'
+              }`}
+              title="Collapse sidebar"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+          </div>
 
           {/* Global Search Input */}
           <div className="relative shrink-0">
@@ -658,85 +671,173 @@ export const AdminDashboardPage: React.FC = () => {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search..."
-              className={`w-full pl-9 pr-9 py-2 text-sm font-medium rounded-xl border focus:outline-none transition-all ${
+              placeholder="Search anything..."
+              className={`w-full pl-9 pr-14 py-2 text-xs font-medium rounded-xl border focus:outline-none transition-all ${
                 isLight
                   ? 'border-slate-200 bg-slate-50/70 text-slate-800 placeholder-slate-400 focus:bg-white focus:border-slate-400'
-                  : 'border-neutral-800 bg-black/60 text-white placeholder-neutral-500 focus:border-neutral-600'
+                  : 'border-neutral-800 bg-[#121316] text-white placeholder-neutral-500 focus:border-neutral-700'
               }`}
             />
             <span
-              className={`absolute right-2.5 top-2.5 text-[10px] font-mono px-1 rounded border ${
+              className={`absolute right-2.5 top-2 text-[10px] font-mono px-1.5 py-0.5 rounded border ${
                 isLight
                   ? 'border-slate-200 text-slate-400 bg-white'
-                  : 'border-neutral-800 text-neutral-500 bg-neutral-900'
+                  : 'border-neutral-800 text-neutral-400 bg-neutral-900'
               }`}
             >
-              ⌘K
+              Ctrl K
             </span>
           </div>
 
-          {/* Navigation Menu */}
-          <div className="flex-1 min-h-0 overflow-y-auto space-y-1.5 pr-0.5">
-            <span
-              className={`block text-xs font-mono uppercase tracking-wider px-3 mb-2 font-bold ${
-                isLight ? 'text-slate-400' : 'text-neutral-500'
-              }`}
-            >
-              Main Menu
-            </span>
+          {/* Navigation Menu (Grouped matching reference image) */}
+          <div className="flex-1 min-h-0 overflow-y-auto space-y-4 pr-0.5">
+            {/* OVERVIEW */}
+            <div>
+              <span
+                className={`block text-[11px] font-mono uppercase tracking-wider px-3 mb-1.5 font-bold ${
+                  isLight ? 'text-slate-400' : 'text-neutral-500'
+                }`}
+              >
+                Overview
+              </span>
+              <button
+                data-tab="dashboard"
+                aria-label="Tab Dashboard"
+                onClick={() => setActiveTab('dashboard')}
+                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-bold transition-all cursor-pointer ${
+                  activeTab === 'dashboard'
+                    ? isLight
+                      ? 'bg-black text-white shadow-xs'
+                      : 'bg-white text-black shadow-xs'
+                    : isLight
+                    ? 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                    : 'text-neutral-400 hover:bg-white/5 hover:text-white'
+                }`}
+              >
+                <div className="flex items-center space-x-3">
+                  <LayoutDashboard className={`w-4.5 h-4.5 ${activeTab === 'dashboard' ? (isLight ? 'text-white' : 'text-black') : 'opacity-70'}`} />
+                  <span>Dashboard</span>
+                </div>
+              </button>
+            </div>
 
-            {[
-              { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-              { id: 'reservations', label: 'Reservations', icon: CalendarCheck, count: bookings.length || 1285 },
-              { id: 'fleet', label: 'Fleet', icon: Car, count: vehicles.length || 250 },
-              { id: 'vendors', label: 'Customers', icon: Users, count: stats?.totalCustomers || 48 },
-              { id: 'payments', label: 'Payments', icon: CreditCard },
-              { id: 'locations', label: 'Locations', icon: MapPin },
-              { id: 'maintenance', label: 'Maintenance', icon: Wrench, count: 18 },
-              { id: 'commission', label: 'Analytics', icon: TrendingUp },
-              { id: 'settings', label: 'Settings', icon: Settings },
-            ].map((item) => {
-              const Icon = item.icon;
-              const isActive = activeTab === item.id;
-              return (
-                <button
-                  key={item.id}
-                  data-tab={item.id}
-                  aria-label={`Tab ${item.label}`}
-                  onClick={() => setActiveTab(item.id as any)}
-                  className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
-                    isActive
-                      ? isLight
-                        ? 'bg-slate-100 text-slate-900 shadow-xs'
-                        : 'bg-white/10 text-white shadow-xs'
-                      : isLight
-                      ? 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-                      : 'text-neutral-400 hover:bg-white/5 hover:text-white'
-                  }`}
-                >
-                  <div className="flex items-center space-x-3">
-                    <Icon className={`w-4.5 h-4.5 ${isActive ? (isLight ? 'text-slate-900' : 'text-white') : 'opacity-70'}`} />
-                    <span>{item.label}</span>
-                  </div>
-                  {item.count !== undefined && (
-                    <span
-                      className={`text-xs font-mono px-2 py-0.5 rounded-full ${
+            {/* OPERATIONS */}
+            <div>
+              <span
+                className={`block text-[11px] font-mono uppercase tracking-wider px-3 mb-1.5 font-bold ${
+                  isLight ? 'text-slate-400' : 'text-neutral-500'
+                }`}
+              >
+                Operations
+              </span>
+              <div className="space-y-1">
+                {[
+                  { id: 'reservations', label: 'Reservations', icon: CalendarCheck, count: '5' },
+                  { id: 'fleet', label: 'Fleet', icon: Car, count: '16' },
+                  { id: 'vendors', label: 'Customers', icon: Users, count: '2,450' },
+                  { id: 'payments', label: 'Payments', icon: CreditCard },
+                  { id: 'locations', label: 'Locations', icon: MapPin },
+                ].map((item) => {
+                  const Icon = item.icon;
+                  const isActive = activeTab === item.id;
+                  return (
+                    <button
+                      key={item.id}
+                      data-tab={item.id}
+                      aria-label={`Tab ${item.label}`}
+                      onClick={() => setActiveTab(item.id as any)}
+                      className={`w-full flex items-center justify-between px-3.5 py-2 rounded-xl text-sm font-medium transition-all cursor-pointer ${
                         isActive
                           ? isLight
-                            ? 'bg-white text-slate-900 border border-slate-200'
-                            : 'bg-black text-white border border-neutral-700'
+                            ? 'bg-black text-white shadow-xs font-bold'
+                            : 'bg-white text-black shadow-xs font-bold'
                           : isLight
-                          ? 'bg-slate-100 text-slate-500'
-                          : 'bg-neutral-900 text-neutral-400'
+                          ? 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                          : 'text-neutral-400 hover:bg-white/5 hover:text-white'
                       }`}
                     >
-                      {item.count}
-                    </span>
-                  )}
-                </button>
-              );
-            })}
+                      <div className="flex items-center space-x-3">
+                        <Icon className={`w-4.5 h-4.5 ${isActive ? (isLight ? 'text-white' : 'text-black') : 'opacity-70'}`} />
+                        <span>{item.label}</span>
+                      </div>
+                      {item.count !== undefined && (
+                        <span
+                          className={`text-xs font-mono px-2 py-0.5 rounded-md ${
+                            isActive
+                              ? isLight
+                                ? 'bg-slate-800 text-white'
+                                : 'bg-neutral-200 text-black'
+                              : isLight
+                              ? 'bg-slate-100 text-slate-500'
+                              : 'bg-neutral-900 text-neutral-400 border border-neutral-800'
+                          }`}
+                        >
+                          {item.count}
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* MANAGEMENT */}
+            <div>
+              <span
+                className={`block text-[11px] font-mono uppercase tracking-wider px-3 mb-1.5 font-bold ${
+                  isLight ? 'text-slate-400' : 'text-neutral-500'
+                }`}
+              >
+                Management
+              </span>
+              <div className="space-y-1">
+                {[
+                  { id: 'maintenance', label: 'Maintenance', icon: Wrench, count: '18' },
+                  { id: 'commission', label: 'Analytics', icon: TrendingUp },
+                  { id: 'settings', label: 'Settings', icon: Settings },
+                ].map((item) => {
+                  const Icon = item.icon;
+                  const isActive = activeTab === item.id;
+                  return (
+                    <button
+                      key={item.id}
+                      data-tab={item.id}
+                      aria-label={`Tab ${item.label}`}
+                      onClick={() => setActiveTab(item.id as any)}
+                      className={`w-full flex items-center justify-between px-3.5 py-2 rounded-xl text-sm font-medium transition-all cursor-pointer ${
+                        isActive
+                          ? isLight
+                            ? 'bg-black text-white shadow-xs font-bold'
+                            : 'bg-white text-black shadow-xs font-bold'
+                          : isLight
+                          ? 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                          : 'text-neutral-400 hover:bg-white/5 hover:text-white'
+                      }`}
+                    >
+                      <div className="flex items-center space-x-3">
+                        <Icon className={`w-4.5 h-4.5 ${isActive ? (isLight ? 'text-white' : 'text-black') : 'opacity-70'}`} />
+                        <span>{item.label}</span>
+                      </div>
+                      {item.count !== undefined && (
+                        <span
+                          className={`text-xs font-mono px-2 py-0.5 rounded-md ${
+                            isActive
+                              ? isLight
+                                ? 'bg-slate-800 text-white'
+                                : 'bg-neutral-200 text-black'
+                              : isLight
+                              ? 'bg-slate-100 text-slate-500'
+                              : 'bg-neutral-900 text-neutral-400 border border-neutral-800'
+                          }`}
+                        >
+                          {item.count}
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
 
@@ -747,23 +848,23 @@ export const AdminDashboardPage: React.FC = () => {
             className={`p-3 rounded-xl border relative overflow-hidden ${
               isLight
                 ? 'bg-slate-100 border-slate-200 text-slate-900'
-                : 'bg-neutral-900/70 border-neutral-800 text-white'
+                : 'bg-neutral-900/60 border-neutral-800 text-white'
             }`}
           >
             <div className="flex items-center justify-between mb-1">
-              <div className="flex items-center space-x-1.5 text-neutral-300">
-                <Sparkles className="w-4 h-4 text-neutral-300" />
+              <div className="flex items-center space-x-1.5 text-amber-400">
+                <Crown className="w-4 h-4 text-amber-400" />
                 <span className="text-xs font-bold tracking-tight text-white dark:text-neutral-200">Upgrade to Pro</span>
               </div>
               <button
                 onClick={() => showToast('Enterprise Pro tier features active on this instance.')}
-                className="inline-flex items-center space-x-0.5 text-xs font-bold text-neutral-300 hover:text-white cursor-pointer"
+                className="inline-flex items-center text-neutral-400 hover:text-white cursor-pointer"
+                title="Upgrade"
               >
-                <span>Upgrade</span>
-                <ArrowRight className="w-3 h-3" />
+                <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
-            <p className={`text-xs leading-normal ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
+            <p className={`text-[11px] leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
               Unlock advanced analytics, unlimited locations and priority support.
             </p>
           </div>
@@ -917,9 +1018,9 @@ export const AdminDashboardPage: React.FC = () => {
       {/* ============================================================== */}
       <main className="flex-1 h-full p-5 sm:p-6 lg:p-8 min-w-0 overflow-y-auto space-y-6">
           {/* Header Row: Title & Action Buttons */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h2 className="text-xl sm:text-2xl font-bold tracking-tight">
+              <h2 className={`text-2xl sm:text-[28px] font-extrabold tracking-tight ${isLight ? 'text-slate-900' : 'text-white'}`}>
                 {activeTab === 'dashboard'
                   ? 'Dashboard'
                   : activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
@@ -930,35 +1031,39 @@ export const AdminDashboardPage: React.FC = () => {
               {/* Fleet Ops (shadcn) Navigation */}
               <Link
                 to="/fleet-ops"
-                className="px-3.5 py-1.5 rounded-xl border text-xs font-semibold flex items-center space-x-1.5 transition-all cursor-pointer shadow-xs bg-neutral-900 text-white hover:bg-neutral-800 border-neutral-700"
+                className={`px-4 py-2 rounded-full border text-xs font-semibold flex items-center space-x-2 transition-all cursor-pointer shadow-xs ${
+                  isLight
+                    ? 'bg-white border-slate-200 text-slate-800 hover:bg-slate-100 hover:border-slate-300'
+                    : 'bg-[#141416] border-neutral-800 text-neutral-200 hover:border-neutral-700 hover:bg-neutral-800/80'
+                }`}
               >
-                <Layers className="w-3.5 h-3.5" />
+                <Layers className="w-3.5 h-3.5 opacity-80" />
                 <span>Fleet Ops Console</span>
               </Link>
 
               {/* Export Button */}
               <button
                 onClick={handleExportData}
-                className={`px-3.5 py-1.5 rounded-xl border text-xs font-semibold flex items-center space-x-1.5 transition-all cursor-pointer shadow-xs ${
+                className={`px-4 py-2 rounded-full border text-xs font-bold flex items-center space-x-2 transition-all cursor-pointer shadow-sm ${
                   isLight
                     ? 'bg-black text-white hover:bg-slate-800 border-black'
                     : 'bg-white text-black hover:bg-neutral-200 border-white'
                 }`}
               >
-                <Download className="w-3.5 h-3.5" />
+                <Download className="w-3.5 h-3.5" strokeWidth={2.2} />
                 <span>Export</span>
               </button>
 
               {/* Share Button */}
               <button
                 onClick={handleShareReport}
-                className={`px-3.5 py-1.5 rounded-xl border text-xs font-semibold flex items-center space-x-1.5 transition-all cursor-pointer shadow-xs ${
+                className={`px-4 py-2 rounded-full border text-xs font-semibold flex items-center space-x-2 transition-all cursor-pointer shadow-xs ${
                   isLight
-                    ? 'bg-white border-slate-200 text-slate-800 hover:bg-slate-50'
-                    : 'bg-[#18181A] border-neutral-800 text-white hover:border-neutral-700'
+                    ? 'bg-white border-slate-200 text-slate-800 hover:bg-slate-100 hover:border-slate-300'
+                    : 'bg-[#141416] border-neutral-800 text-neutral-200 hover:border-neutral-700 hover:bg-neutral-800/80'
                 }`}
               >
-                <Share2 className="w-3.5 h-3.5" />
+                <Share2 className="w-3.5 h-3.5 opacity-80" />
                 <span>Share</span>
               </button>
 
@@ -966,26 +1071,26 @@ export const AdminDashboardPage: React.FC = () => {
               <button
                 onClick={toggleTheme}
                 title={isLight ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
-                className={`p-2 rounded-xl border text-xs font-semibold transition-all cursor-pointer ${
+                className={`w-9 h-9 rounded-full border text-xs font-semibold flex items-center justify-center transition-all cursor-pointer shadow-xs ${
                   isLight
-                    ? 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
-                    : 'bg-[#18181A] border-neutral-800 text-white hover:border-neutral-700'
+                    ? 'bg-white border-slate-200 text-slate-700 hover:bg-slate-100 hover:border-slate-300'
+                    : 'bg-[#141416] border-neutral-800 text-neutral-300 hover:text-white hover:border-neutral-700'
                 }`}
               >
-                {isLight ? <Moon className="w-3.5 h-3.5" /> : <Sun className="w-3.5 h-3.5" />}
+                {isLight ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
               </button>
 
               {/* More Actions Dropdown */}
               <button
                 onClick={() => showToast('Refreshed live telemetry.')}
-                className={`p-2 rounded-xl border text-xs font-semibold transition-all cursor-pointer ${
+                className={`w-9 h-9 rounded-full border text-xs font-semibold flex items-center justify-center transition-all cursor-pointer shadow-xs ${
                   isLight
-                    ? 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
-                    : 'bg-[#18181A] border-neutral-800 text-white hover:border-neutral-700'
+                    ? 'bg-white border-slate-200 text-slate-700 hover:bg-slate-100 hover:border-slate-300'
+                    : 'bg-[#141416] border-neutral-800 text-neutral-300 hover:text-white hover:border-neutral-700'
                 }`}
                 title="Options"
               >
-                <MoreVertical className="w-3.5 h-3.5" />
+                <MoreVertical className="w-4 h-4" />
               </button>
             </div>
           </div>

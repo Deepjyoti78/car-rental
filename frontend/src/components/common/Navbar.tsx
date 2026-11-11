@@ -147,12 +147,12 @@ export const Navbar: React.FC = () => {
             <button
               type="button"
               onClick={toggleTheme}
-              className={`p-1.5 rounded-full transition-all cursor-pointer flex items-center justify-center ${
+              className={`w-9 h-9 rounded-full transition-all cursor-pointer flex items-center justify-center border shadow-xs ${
                 isHeaderTransparent
-                  ? 'text-white/80 hover:text-white hover:bg-white/10'
+                  ? 'text-white/80 hover:text-white bg-white/5 hover:bg-white/10 border-white/20'
                   : theme === 'light'
-                  ? 'text-slate-700 hover:text-slate-900 hover:bg-slate-100 border border-stone-200/80'
-                  : 'text-white/80 hover:text-white hover:bg-white/10 border border-white/10'
+                  ? 'text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-50 border-stone-200/80'
+                  : 'text-neutral-300 hover:text-white bg-[#141416] hover:bg-neutral-800 border-neutral-800'
               }`}
               title={theme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light (White) Mode'}
               aria-label="Toggle theme"
@@ -160,7 +160,7 @@ export const Navbar: React.FC = () => {
               {theme === 'light' ? (
                 <Moon className="w-4 h-4 text-slate-700" />
               ) : (
-                <Sun className="w-4 h-4 text-amber-400" />
+                <Sun className="w-4 h-4 text-neutral-300" />
               )}
             </button>
 
@@ -391,12 +391,12 @@ export const Navbar: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => openAuthModal('LOGIN')}
-                  className={`px-5 py-1.5 rounded-full text-xs font-normal transition-all backdrop-blur-sm cursor-pointer border ${
+                  className={`px-4.5 py-1.5 rounded-full text-xs font-semibold transition-all backdrop-blur-sm cursor-pointer border shadow-xs ${
                     isHeaderTransparent
-                      ? 'border-white/35 hover:border-white/70 text-white hover:bg-white/10'
+                      ? 'border-white/30 hover:border-white/60 text-white hover:bg-white/10'
                       : theme === 'light'
                       ? 'border-stone-300 hover:border-black text-slate-800 hover:bg-slate-100'
-                      : 'border-white/35 hover:border-white/70 text-white hover:bg-white/10'
+                      : 'bg-[#141416] border-neutral-800 hover:border-neutral-700 text-neutral-200 hover:text-white hover:bg-neutral-800/80'
                   }`}
                 >
                   Sign In
@@ -404,12 +404,12 @@ export const Navbar: React.FC = () => {
                 {/* Rent a Car button */}
                 <Link
                   to="/explore"
-                  className={`px-5 py-1.5 rounded-full text-xs font-medium transition-all shadow-sm flex items-center gap-1 ${
+                  className={`px-4.5 py-1.5 rounded-full text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 ${
                     isHeaderTransparent
-                      ? 'bg-white hover:bg-neutral-200 text-black'
+                      ? 'bg-white hover:bg-neutral-200 text-black border border-white'
                       : theme === 'light'
-                      ? 'bg-[#111827] hover:bg-black text-white'
-                      : 'bg-white hover:bg-neutral-200 text-black'
+                      ? 'bg-[#111827] hover:bg-black text-white border border-[#111827]'
+                      : 'bg-white hover:bg-neutral-200 text-black border border-white'
                   }`}
                 >
                   <span>Rent a Car</span>
