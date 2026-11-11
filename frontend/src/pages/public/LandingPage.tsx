@@ -21,6 +21,7 @@ import {
   Quote,
   Clock,
   Compass,
+  Headphones,
 } from 'lucide-react';
 
 export const LandingPage: React.FC = () => {
@@ -94,6 +95,24 @@ export const LandingPage: React.FC = () => {
       desc: 'Supple ride geometry, expansive rear legroom, and effortless 25+ km/l efficiency for scenic day drives and weekend trips.',
       lineup: 'Honda City Hybrid, Skoda Slavia, VW Virtus',
       image: 'https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=800&q=80',
+    },
+  ];
+
+  const mobileCuratedCollections = [
+    {
+      title: 'Weekend\nEscapes',
+      category: 'SUV',
+      image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80',
+    },
+    {
+      title: 'Long\nDrives',
+      category: 'SEDAN',
+      image: 'https://images.unsplash.com/photo-1506015391300-4802dc74de2e?w=800&q=80',
+    },
+    {
+      title: 'City\nExplorers',
+      category: 'HATCHBACK',
+      image: 'https://images.unsplash.com/photo-1448375240586-882707db888b?w=800&q=80',
     },
   ];
 
@@ -189,7 +208,7 @@ export const LandingPage: React.FC = () => {
       }`}
     >
       {/* 1. CINEMATIC HERO SECTION */}
-      <section className="relative h-[78vh] min-h-[540px] max-h-[660px] sm:min-h-screen sm:h-screen flex flex-col justify-between overflow-hidden">
+      <section className="relative h-[82vh] min-h-[580px] max-h-[720px] sm:min-h-screen sm:h-screen flex flex-col justify-between overflow-hidden">
         {/* Full-bleed Photography Background */}
         <div className="absolute inset-0 z-0">
           <img
@@ -201,7 +220,7 @@ export const LandingPage: React.FC = () => {
         </div>
 
         {/* Center Hero Content */}
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 w-full flex-1 flex flex-col justify-between pt-44 sm:pt-28 pb-4 sm:pb-8 text-center">
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 w-full flex-1 flex flex-col justify-between pt-20 sm:pt-28 pb-3 sm:pb-8 text-center">
           {/* Top Headline Block + Search Widget (Both positioned ABOVE the car!) */}
           <div className="flex flex-col items-center">
             {/* Frosted Subtle Badge (Desktop only) */}
@@ -210,16 +229,30 @@ export const LandingPage: React.FC = () => {
               <span>Verified Self-Drive Rental Marketplace</span>
             </div>
 
-            {/* Headline (moved slightly lower on mobile as requested) */}
-            <h1 className="text-2xl sm:text-5xl lg:text-[3.65rem] font-sans font-bold text-white tracking-tight leading-[1.25] max-w-[280px] sm:max-w-3xl mx-auto drop-shadow-lg">
+            {/* Mobile Sub-tagline: —— CAR RENTALS, REIMAGINED —— */}
+            <div className="sm:hidden flex items-center justify-center gap-2.5 mb-2.5">
+              <span className="w-8 h-[1px] bg-white/40" />
+              <span className="text-[#E5BA73] text-[9.5px] font-mono tracking-[0.25em] font-semibold uppercase">
+                Car Rentals, Reimagined
+              </span>
+              <span className="w-8 h-[1px] bg-white/40" />
+            </div>
+
+            {/* Headline */}
+            <h1 className="text-[1.75rem] sm:text-5xl lg:text-[3.65rem] font-sans font-bold text-white tracking-tight leading-[1.2] max-w-[340px] sm:max-w-3xl mx-auto drop-shadow-lg">
               Rediscover the Joy of <br className="inline" />
-              the Open Road.
+              the <span className="text-[#E5BA73] sm:text-white">Open Road.</span>
             </h1>
+
+            {/* Mobile Subtitle Paragraph */}
+            <p className="sm:hidden text-white/80 text-[11.5px] font-normal max-w-[310px] mx-auto mt-2 leading-relaxed">
+              Premium cars, flexible plans, and unforgettable journeys — all in one place.
+            </p>
 
             {/* MOBILE COMPACT FLOATING SEARCH PILL (Placed ABOVE the car!) */}
             <form
               onSubmit={handleBookingSearch}
-              className="sm:hidden w-full max-w-[365px] mx-auto mt-4 rounded-full bg-black/60 backdrop-blur-xl border border-white/20 p-1 pl-3.5 pr-1 flex items-center justify-between shadow-2xl transition-all hover:border-white/40"
+              className="sm:hidden w-full max-w-[365px] mx-auto mt-3.5 rounded-full bg-black/60 backdrop-blur-xl border border-white/20 p-1 pl-3.5 pr-1 flex items-center justify-between shadow-2xl transition-all hover:border-white/40"
             >
               {/* Field 1: Hub Selector */}
               <div className="relative flex items-center gap-1.5 cursor-pointer py-1">
@@ -350,6 +383,24 @@ export const LandingPage: React.FC = () => {
           <div className="flex-1" />
         </div>
 
+        {/* Mobile Bottom Trust Indicators (Under the car and road, exact match to Image 2) */}
+        <div className="sm:hidden relative z-10 pb-4 px-3 flex items-center justify-center gap-2.5 text-[11px] font-medium text-white/90">
+          <div className="flex items-center gap-1.5">
+            <Zap className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+            <span>Instant Booking</span>
+          </div>
+          <div className="w-[1px] h-3.5 bg-white/25 shrink-0" />
+          <div className="flex items-center gap-1.5">
+            <ShieldCheck className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+            <span>Verified Vehicles</span>
+          </div>
+          <div className="w-[1px] h-3.5 bg-white/25 shrink-0" />
+          <div className="flex items-center gap-1.5">
+            <Headphones className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+            <span>24×7 Support</span>
+          </div>
+        </div>
+
         {/* Bottom Trust Indicators (Desktop only) */}
         <div className="relative z-10 pb-8 hidden sm:flex flex-wrap items-center justify-center gap-4 sm:gap-10 text-xs text-white/90 font-medium tracking-wide">
           <div className="flex items-center gap-2">
@@ -370,9 +421,68 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* 2. CURATED TRAVEL COLLECTIONS */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-14">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-14">
+        {/* Mobile Curated Collections Header (Exact match to Image 2) */}
+        <div className="sm:hidden flex items-end justify-between mb-3.5">
+          <div>
+            <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-[#E5BA73] font-bold block mb-1">
+              CURATED COLLECTIONS
+            </span>
+            <h2 className="font-sans text-xl font-bold tracking-tight text-white leading-tight">
+              Handpicked for Every Journey
+            </h2>
+          </div>
+          <Link
+            to="/explore"
+            className="text-xs font-semibold text-white/90 hover:text-white flex items-center gap-1 shrink-0 pb-0.5"
+          >
+            <span>View All</span>
+            <ArrowRight className="w-3.5 h-3.5 text-white" />
+          </Link>
+        </div>
+
+        {/* Mobile 3-Card Carousel/Grid (Exact match to Image 2) */}
+        <div className="sm:hidden mb-2">
+          <div className="grid grid-cols-3 gap-2 sm:gap-2.5">
+            {mobileCuratedCollections.map((col, idx) => (
+              <div
+                key={idx}
+                onClick={() => navigate(`/explore?category=${col.category}`)}
+                className="group relative aspect-[4/4.8] rounded-2xl overflow-hidden cursor-pointer shadow-lg active:scale-95 transition-transform"
+              >
+                <img
+                  src={col.image}
+                  alt={col.title.replace('\n', ' ')}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent" />
+
+                {/* Content Overlay */}
+                <div className="absolute inset-0 p-2.5 flex flex-col justify-end">
+                  <div className="flex items-end justify-between">
+                    <span className="font-sans font-bold text-white text-[11px] sm:text-[12px] leading-tight whitespace-pre-line drop-shadow-md">
+                      {col.title}
+                    </span>
+                    <div className="w-5.5 h-5.5 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center text-white shrink-0 group-hover:bg-white group-hover:text-black transition-colors">
+                      <ArrowRight className="w-3 h-3 stroke-[2.5]" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Pagination Dots */}
+          <div className="flex items-center justify-center gap-1.5 mt-3.5">
+            <span className="w-2 h-2 rounded-full bg-amber-400" />
+            <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
+            <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
+          </div>
+        </div>
+
+        {/* Desktop Header */}
         <div
-          className={`flex flex-col sm:flex-row sm:items-end justify-between mb-4 sm:mb-8 pb-2 sm:pb-4 border-b-0 sm:border-b ${
+          className={`hidden sm:flex sm:flex-row sm:items-end justify-between mb-4 sm:mb-8 pb-2 sm:pb-4 border-b ${
             isLight ? 'border-stone-200/80' : 'border-neutral-800'
           }`}
         >
@@ -385,13 +495,12 @@ export const LandingPage: React.FC = () => {
                 isLight ? 'text-slate-900' : 'text-white'
               }`}
             >
-              Handpicked for Every <br className="sm:hidden inline" />
-              Journey
+              Handpicked for Every Journey
             </h2>
           </div>
           <Link
             to="/explore"
-            className={`hidden sm:flex text-xs font-semibold items-center space-x-1.5 mt-3 sm:mt-0 transition-colors group ${
+            className={`text-xs font-semibold items-center space-x-1.5 mt-3 sm:mt-0 transition-colors group ${
               isLight ? 'text-slate-600 hover:text-black' : 'text-neutral-400 hover:text-white'
             }`}
           >
@@ -400,7 +509,8 @@ export const LandingPage: React.FC = () => {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Desktop 4-Card Grid */}
+        <div className="hidden sm:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {curatedJourneys.map((cat) => (
             <div
               key={cat.id}
