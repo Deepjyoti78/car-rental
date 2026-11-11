@@ -17,12 +17,15 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { AnimatedCounter } from "@/components/common/AnimatedCounter"
 
 export function SectionCards() {
   const cards = [
     {
       title: "Total Active Fleet",
-      value: "250 Vehicles",
+      numericValue: 250,
+      suffix: " Vehicles",
+      decimals: 0,
       change: "+12.4% MoM",
       trend: "up",
       desc: "Commercial yellow-plate verified across 6 hubs",
@@ -32,7 +35,9 @@ export function SectionCards() {
     },
     {
       title: "Fleet Utilization",
-      value: "84.8%",
+      numericValue: 84.8,
+      suffix: "%",
+      decimals: 1,
       change: "+5.2% vs avg",
       trend: "up",
       desc: "138 cars on active reservation today",
@@ -42,7 +47,9 @@ export function SectionCards() {
     },
     {
       title: "Security Escrow Held",
-      value: "₹4,25,000",
+      numericValue: 425000,
+      prefix: "₹",
+      decimals: 0,
       change: "100% On-Time",
       trend: "up",
       desc: "Automated 24h refund compliance guarantee",
@@ -52,7 +59,9 @@ export function SectionCards() {
     },
     {
       title: "Scheduled Maintenance",
-      value: "18 Vehicles",
+      numericValue: 18,
+      suffix: " Vehicles",
+      decimals: 0,
       change: "4 Routine today",
       trend: "neutral",
       desc: "Periodic safety, brake pad, and FASTag checks",
@@ -79,7 +88,13 @@ export function SectionCards() {
             <CardContent className="space-y-1.5">
               <div className="flex items-baseline justify-between">
                 <span className="text-2xl font-bold tracking-tight">
-                  {card.value}
+                  <AnimatedCounter
+                    value={card.numericValue}
+                    prefix={card.prefix || ''}
+                    suffix={card.suffix || ''}
+                    decimals={card.decimals || 0}
+                    duration={1300}
+                  />
                 </span>
                 <Badge variant={card.badgeVariant} className="text-[10px] px-1.5 py-0">
                   {card.badge}

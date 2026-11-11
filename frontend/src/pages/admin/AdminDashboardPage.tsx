@@ -6,6 +6,7 @@ import { adminService } from '../../services/adminService';
 import { Booking, Refund, SupportTicket, Vehicle, Vendor } from '../../types';
 import { formatINR, formatDate, formatDateTime, getStatusBadgeClass } from '../../utils/format';
 import { ChartAreaInteractive } from '../../components/chart-area-interactive';
+import { AnimatedCounter } from '../../components/common/AnimatedCounter';
 import {
   LayoutDashboard,
   CalendarCheck,
@@ -732,9 +733,9 @@ export const AdminDashboardPage: React.FC = () => {
               </span>
               <div className="space-y-0.5">
                 {[
-                  { id: 'reservations', label: 'Reservations', icon: CalendarCheck, count: '5' },
-                  { id: 'fleet', label: 'Fleet', icon: Car, count: '16' },
-                  { id: 'vendors', label: 'Customers', icon: Users, count: '2,450' },
+                  { id: 'reservations', label: 'Reservations', icon: CalendarCheck, count: 5 },
+                  { id: 'fleet', label: 'Fleet', icon: Car, count: 16 },
+                  { id: 'vendors', label: 'Customers', icon: Users, count: 2450 },
                   { id: 'payments', label: 'Payments', icon: CreditCard },
                   { id: 'locations', label: 'Locations', icon: MapPin },
                 ].map((item) => {
@@ -772,7 +773,7 @@ export const AdminDashboardPage: React.FC = () => {
                               : 'bg-neutral-900 text-neutral-400 border border-neutral-800'
                           }`}
                         >
-                          {item.count}
+                          <AnimatedCounter value={item.count} duration={1000} delay={150} />
                         </span>
                       )}
                     </button>
@@ -792,7 +793,7 @@ export const AdminDashboardPage: React.FC = () => {
               </span>
               <div className="space-y-0.5">
                 {[
-                  { id: 'maintenance', label: 'Maintenance', icon: Wrench, count: '18' },
+                  { id: 'maintenance', label: 'Maintenance', icon: Wrench, count: 18 },
                   { id: 'commission', label: 'Analytics', icon: TrendingUp },
                   { id: 'settings', label: 'Settings', icon: Settings },
                 ].map((item) => {
@@ -830,7 +831,7 @@ export const AdminDashboardPage: React.FC = () => {
                               : 'bg-neutral-900 text-neutral-400 border border-neutral-800'
                           }`}
                         >
-                          {item.count}
+                          <AnimatedCounter value={item.count} duration={1000} delay={150} />
                         </span>
                       )}
                     </button>
@@ -1125,13 +1126,18 @@ export const AdminDashboardPage: React.FC = () => {
                       </div>
                     </div>
                     <span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                      <span>↑</span> +12.4%
+                      <span>↑</span> +<AnimatedCounter value={12.4} decimals={1} suffix="%" duration={1200} triggerKey={activeTab} />
                     </span>
                   </div>
 
                   <div className="mt-4 mb-1">
                     <p className={`text-2xl sm:text-[28px] font-extrabold tracking-tight ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                      ${((stats?.grossBookingValue || 12845000) / 100).toLocaleString('en-US', { maximumFractionDigits: 0 })}
+                      <AnimatedCounter
+                        value={(stats?.grossBookingValue || 12845000) / 100}
+                        prefix="$"
+                        duration={1400}
+                        triggerKey={activeTab}
+                      />
                     </p>
                   </div>
 
@@ -1182,13 +1188,18 @@ export const AdminDashboardPage: React.FC = () => {
                       </div>
                     </div>
                     <span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                      <span>↑</span> +8.7%
+                      <span>↑</span> +<AnimatedCounter value={8.7} decimals={1} suffix="%" duration={1200} delay={70} triggerKey={activeTab} />
                     </span>
                   </div>
 
                   <div className="mt-4 mb-1">
                     <p className={`text-2xl sm:text-[28px] font-extrabold tracking-tight ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                      {stats?.totalBookings ? Math.min(stats.totalBookings, 364) : 364}
+                      <AnimatedCounter
+                        value={stats?.totalBookings ? Math.min(stats.totalBookings, 364) : 364}
+                        duration={1350}
+                        delay={70}
+                        triggerKey={activeTab}
+                      />
                     </p>
                   </div>
 
@@ -1238,13 +1249,18 @@ export const AdminDashboardPage: React.FC = () => {
                       </div>
                     </div>
                     <span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                      <span>↑</span> +5.3%
+                      <span>↑</span> +<AnimatedCounter value={5.3} decimals={1} suffix="%" duration={1200} delay={140} triggerKey={activeTab} />
                     </span>
                   </div>
 
                   <div className="mt-4 mb-1">
                     <p className={`text-2xl sm:text-[28px] font-extrabold tracking-tight ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                      {stats?.activeVehicles || 112}
+                      <AnimatedCounter
+                        value={stats?.activeVehicles || 112}
+                        duration={1300}
+                        delay={140}
+                        triggerKey={activeTab}
+                      />
                     </p>
                   </div>
 
@@ -1294,13 +1310,18 @@ export const AdminDashboardPage: React.FC = () => {
                       </div>
                     </div>
                     <span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                      <span>↑</span> +2.1%
+                      <span>↑</span> +<AnimatedCounter value={2.1} decimals={1} suffix="%" duration={1200} delay={210} triggerKey={activeTab} />
                     </span>
                   </div>
 
                   <div className="mt-4 mb-1">
                     <p className={`text-2xl sm:text-[28px] font-extrabold tracking-tight ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                      18
+                      <AnimatedCounter
+                        value={18}
+                        duration={1250}
+                        delay={210}
+                        triggerKey={activeTab}
+                      />
                     </p>
                   </div>
 
@@ -1493,25 +1514,33 @@ export const AdminDashboardPage: React.FC = () => {
                         <span className="flex items-center gap-2 text-neutral-400">
                           <span className="text-sm">☁</span> Total Fleet
                         </span>
-                        <span className="font-bold text-white tabular-nums">250</span>
+                        <span className="font-bold text-white tabular-nums">
+                          <AnimatedCounter value={250} delay={100} duration={1200} triggerKey={activeTab} />
+                        </span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="flex items-center gap-2 text-neutral-400">
                           <CheckCircle2 className="w-3.5 h-3.5 text-neutral-400" /> Available
                         </span>
-                        <span className="font-bold text-white tabular-nums">112</span>
+                        <span className="font-bold text-white tabular-nums">
+                          <AnimatedCounter value={112} delay={160} duration={1200} triggerKey={activeTab} />
+                        </span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="flex items-center gap-2 text-neutral-400">
                           <Clock className="w-3.5 h-3.5 text-neutral-400" /> Rented Out
                         </span>
-                        <span className="font-bold text-white tabular-nums">120</span>
+                        <span className="font-bold text-white tabular-nums">
+                          <AnimatedCounter value={120} delay={220} duration={1200} triggerKey={activeTab} />
+                        </span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="flex items-center gap-2 text-neutral-400">
                           <Wrench className="w-3.5 h-3.5 text-neutral-400" /> Maintenance
                         </span>
-                        <span className="font-bold text-white tabular-nums">18</span>
+                        <span className="font-bold text-white tabular-nums">
+                          <AnimatedCounter value={18} delay={280} duration={1200} triggerKey={activeTab} />
+                        </span>
                       </div>
                     </div>
 
@@ -1742,7 +1771,14 @@ export const AdminDashboardPage: React.FC = () => {
                     <span className={isLight ? 'text-slate-500' : 'text-neutral-400'}>Gross Rental Volume</span>
                     <DollarSign className="w-4 h-4 text-emerald-500" />
                   </div>
-                  <p className="text-2xl font-bold tracking-tight">{formatINR(stats?.totalRevenue || 128450)}</p>
+                  <p className="text-2xl font-bold tracking-tight">
+                    <AnimatedCounter
+                      value={stats?.totalRevenue || 128450}
+                      formatter={(v) => formatINR(v)}
+                      duration={1300}
+                      triggerKey={activeTab}
+                    />
+                  </p>
                   <p className="text-[11px] text-emerald-500 font-semibold mt-1">↑ 14.2% settlement velocity</p>
                 </div>
 
@@ -1755,7 +1791,15 @@ export const AdminDashboardPage: React.FC = () => {
                     <span className={isLight ? 'text-slate-500' : 'text-neutral-400'}>Active Escrow Deposits</span>
                     <ShieldCheck className="w-4 h-4 text-amber-500" />
                   </div>
-                  <p className="text-2xl font-bold tracking-tight">{formatINR(42500)}</p>
+                  <p className="text-2xl font-bold tracking-tight">
+                    <AnimatedCounter
+                      value={42500}
+                      formatter={(v) => formatINR(v)}
+                      duration={1300}
+                      delay={80}
+                      triggerKey={activeTab}
+                    />
+                  </p>
                   <p className="text-[11px] text-amber-500 font-semibold mt-1">Held in 24h refundable escrow</p>
                 </div>
 
@@ -1768,7 +1812,15 @@ export const AdminDashboardPage: React.FC = () => {
                     <span className={isLight ? 'text-slate-500' : 'text-neutral-400'}>Refunded to Renters</span>
                     <RefreshCw className="w-4 h-4 text-neutral-400" />
                   </div>
-                  <p className="text-2xl font-bold tracking-tight">{formatINR(18900)}</p>
+                  <p className="text-2xl font-bold tracking-tight">
+                    <AnimatedCounter
+                      value={18900}
+                      formatter={(v) => formatINR(v)}
+                      duration={1300}
+                      delay={160}
+                      triggerKey={activeTab}
+                    />
+                  </p>
                   <p className="text-[11px] text-neutral-400 font-medium mt-1">100% 24h deposit compliance</p>
                 </div>
 

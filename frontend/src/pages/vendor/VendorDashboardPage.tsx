@@ -3,6 +3,7 @@ import { useAuthStore } from '../../store/authStore';
 import { vendorService } from '../../services/vendorService';
 import { Vehicle, Booking, Payout } from '../../types';
 import { formatINR, formatDate, formatDateTime, getStatusBadgeClass } from '../../utils/format';
+import { AnimatedCounter } from '../../components/common/AnimatedCounter';
 import {
   Car,
   TrendingUp,
@@ -268,7 +269,7 @@ export const VendorDashboardPage: React.FC = () => {
             Total Fleet
           </span>
           <p className="text-xl font-bold font-display text-[#ffffff] tabular-nums">
-            {stats?.totalVehicles ?? 0}
+            <AnimatedCounter value={stats?.totalVehicles ?? 0} duration={1200} triggerKey={activeTab} />
           </p>
           <span className="text-[10px] font-mono text-[#f59e0b] font-semibold">
             {stats?.activeVehicles ?? 0} Active
@@ -280,7 +281,7 @@ export const VendorDashboardPage: React.FC = () => {
             Total Trips
           </span>
           <p className="text-xl font-bold font-display text-[#ffffff] tabular-nums">
-            {stats?.totalBookings ?? 0}
+            <AnimatedCounter value={stats?.totalBookings ?? 0} delay={60} duration={1200} triggerKey={activeTab} />
           </p>
           <span className="text-[10px] font-mono text-[#f59e0b] font-semibold">
             {stats?.activeRentals ?? 0} Currently Out
@@ -292,7 +293,7 @@ export const VendorDashboardPage: React.FC = () => {
             Fleet Utilization
           </span>
           <p className="text-xl font-bold font-display text-[#ffffff] tabular-nums">
-            {stats?.utilizationRate ?? 0}%
+            <AnimatedCounter value={stats?.utilizationRate ?? 0} suffix="%" delay={120} duration={1200} triggerKey={activeTab} />
           </p>
           <span className="text-[10px] font-mono text-[#a3a3a3]">Active/Total</span>
         </div>
@@ -302,7 +303,7 @@ export const VendorDashboardPage: React.FC = () => {
             Gross GMV
           </span>
           <p className="text-xl font-bold font-display text-[#ffffff] tabular-nums">
-            {formatINR(stats?.grossRevenue ?? 0)}
+            <AnimatedCounter value={stats?.grossRevenue ?? 0} formatter={(v) => formatINR(v)} delay={180} duration={1200} triggerKey={activeTab} />
           </p>
           <span className="text-[10px] font-mono text-[#a3a3a3]">Before fee</span>
         </div>
@@ -312,7 +313,7 @@ export const VendorDashboardPage: React.FC = () => {
             Net Host Earnings
           </span>
           <p className="text-xl font-bold font-display text-[#f59e0b] tabular-nums">
-            {formatINR(stats?.netEarnings ?? 0)}
+            <AnimatedCounter value={stats?.netEarnings ?? 0} formatter={(v) => formatINR(v)} delay={240} duration={1200} triggerKey={activeTab} />
           </p>
           <span className="text-[10px] font-mono text-[#a3a3a3]">90% net payout</span>
         </div>
@@ -322,7 +323,7 @@ export const VendorDashboardPage: React.FC = () => {
             Available Payout
           </span>
           <p className="text-xl font-bold font-display text-[#f59e0b] tabular-nums">
-            {formatINR(stats?.availableBalance ?? 0)}
+            <AnimatedCounter value={stats?.availableBalance ?? 0} formatter={(v) => formatINR(v)} delay={300} duration={1200} triggerKey={activeTab} />
           </p>
           <button
             onClick={() => setPayoutModalOpen(true)}
