@@ -366,7 +366,7 @@ export const VehicleDetailsPage: React.FC = () => {
           <div className="lg:col-span-8 space-y-4">
             {/* Main Hero Photo Container */}
             <div
-              className={`rounded-2xl border overflow-hidden relative aspect-[16/10] sm:aspect-[1.8/1] w-full shadow-lg ${
+              className={`rounded-2xl border overflow-hidden relative aspect-[16/9] sm:aspect-[2.1/1] max-h-[320px] sm:max-h-[350px] w-full shadow-md ${
                 isLight ? 'border-stone-200 bg-stone-100' : 'border-neutral-800 bg-[#101114]'
               }`}
             >
@@ -424,7 +424,7 @@ export const VehicleDetailsPage: React.FC = () => {
 
             {/* Thumbnail Row */}
             {images.length > 1 && (
-              <div className="flex items-center gap-2.5 overflow-x-auto pb-1 scrollbar-none">
+              <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
                 {images.map((img, idx) => {
                   const isActive = selectedImageIndex === idx;
                   return (
@@ -432,7 +432,7 @@ export const VehicleDetailsPage: React.FC = () => {
                       key={img.id || idx}
                       type="button"
                       onClick={() => setSelectedImageIndex(idx)}
-                      className={`relative w-18 sm:w-20 h-12 sm:h-13 rounded-xl overflow-hidden shrink-0 border transition-all cursor-pointer shadow-xs ${
+                      className={`relative w-14 sm:w-16 h-9 sm:h-10 rounded-lg overflow-hidden shrink-0 border transition-all cursor-pointer shadow-xs ${
                         isActive
                           ? isLight
                             ? 'border-2 border-black ring-2 ring-black/25 opacity-100'
@@ -541,7 +541,7 @@ export const VehicleDetailsPage: React.FC = () => {
                   activeContentTab === 'overview'
                     ? isLight
                       ? 'text-slate-950 border-b-2 border-slate-950 -mb-[1px]'
-                      : 'text-white border-b-2 border-white -mb-[1px]'
+                      : 'text-white border-b-2 border-amber-400 -mb-[1px]'
                     : isLight
                     ? 'text-stone-500 hover:text-black'
                     : 'text-neutral-400 hover:text-white'
@@ -558,7 +558,7 @@ export const VehicleDetailsPage: React.FC = () => {
                   activeContentTab === 'features'
                     ? isLight
                       ? 'text-slate-950 border-b-2 border-slate-950 -mb-[1px]'
-                      : 'text-white border-b-2 border-white -mb-[1px]'
+                      : 'text-white border-b-2 border-amber-400 -mb-[1px]'
                     : isLight
                     ? 'text-stone-500 hover:text-black'
                     : 'text-neutral-400 hover:text-white'
@@ -575,7 +575,7 @@ export const VehicleDetailsPage: React.FC = () => {
                   activeContentTab === 'policies'
                     ? isLight
                       ? 'text-slate-950 border-b-2 border-slate-950 -mb-[1px]'
-                      : 'text-white border-b-2 border-white -mb-[1px]'
+                      : 'text-white border-b-2 border-amber-400 -mb-[1px]'
                     : isLight
                     ? 'text-stone-500 hover:text-black'
                     : 'text-neutral-400 hover:text-white'
@@ -592,7 +592,7 @@ export const VehicleDetailsPage: React.FC = () => {
                   activeContentTab === 'reviews'
                     ? isLight
                       ? 'text-slate-950 border-b-2 border-slate-950 -mb-[1px]'
-                      : 'text-white border-b-2 border-white -mb-[1px]'
+                      : 'text-white border-b-2 border-amber-400 -mb-[1px]'
                     : isLight
                     ? 'text-stone-500 hover:text-black'
                     : 'text-neutral-400 hover:text-white'
@@ -1013,7 +1013,7 @@ export const VehicleDetailsPage: React.FC = () => {
           {/* RIGHT COLUMN (4 cols): Sticky Booking Calculator Card */}
           <div className="lg:col-span-4 w-full min-w-0 lg:sticky lg:top-20">
             <div
-              className={`rounded-3xl border p-6 sm:p-7 space-y-4 shadow-2xl ${
+              className={`rounded-2xl border p-4 sm:p-5 space-y-3 shadow-xl ${
                 isLight
                   ? 'bg-white border-stone-200 text-slate-900'
                   : 'bg-[#121316] border-neutral-800 text-white'
@@ -1021,17 +1021,17 @@ export const VehicleDetailsPage: React.FC = () => {
             >
               {/* Price Header */}
               <div className="flex items-center justify-between">
-                <div className="flex items-baseline gap-1">
-                  <span className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+                <div className="flex items-baseline">
+                  <span className="text-xl sm:text-2xl font-sans font-extrabold tracking-tight">
                     {formatINR(vehicle.dailyRate)}
                   </span>
-                  <span className={`text-xs ${isLight ? 'text-stone-500' : 'text-neutral-400'}`}>
+                  <span className={`text-xs ml-1 font-medium ${isLight ? 'text-stone-500' : 'text-neutral-400'}`}>
                     /day
                   </span>
                 </div>
 
                 <div
-                  className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border ${
+                  className={`flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold border ${
                     isLight
                       ? 'bg-amber-50 text-amber-900 border-amber-200'
                       : 'bg-amber-400/10 text-amber-300 border-amber-400/30'
@@ -1043,17 +1043,17 @@ export const VehicleDetailsPage: React.FC = () => {
               </div>
 
               {/* Date & Time Selectors */}
-              <div className="space-y-2.5">
+              <div className="space-y-2">
                 {/* Pickup Date & Time Selector */}
                 <div
-                  className={`p-3.5 rounded-2xl border relative cursor-pointer group transition-colors ${
+                  className={`p-2.5 sm:p-3 rounded-xl border relative cursor-pointer group transition-colors ${
                     isLight
                       ? 'bg-stone-50 border-stone-200 hover:border-stone-400'
                       : 'bg-[#17181c] border-neutral-800/80 hover:border-neutral-700'
                   }`}
                 >
                   <label
-                    className={`block text-[10px] font-mono uppercase tracking-wider mb-1 flex items-center gap-1.5 font-semibold ${
+                    className={`block text-[10px] font-mono uppercase tracking-wider mb-0.5 flex items-center gap-1.5 font-semibold ${
                       isLight ? 'text-stone-500' : 'text-neutral-400'
                     }`}
                   >
@@ -1077,14 +1077,14 @@ export const VehicleDetailsPage: React.FC = () => {
 
                 {/* Return Date & Time Selector */}
                 <div
-                  className={`p-3.5 rounded-2xl border relative cursor-pointer group transition-colors ${
+                  className={`p-2.5 sm:p-3 rounded-xl border relative cursor-pointer group transition-colors ${
                     isLight
                       ? 'bg-stone-50 border-stone-200 hover:border-stone-400'
                       : 'bg-[#17181c] border-neutral-800/80 hover:border-neutral-700'
                   }`}
                 >
                   <label
-                    className={`block text-[10px] font-mono uppercase tracking-wider mb-1 flex items-center gap-1.5 font-semibold ${
+                    className={`block text-[10px] font-mono uppercase tracking-wider mb-0.5 flex items-center gap-1.5 font-semibold ${
                       isLight ? 'text-stone-500' : 'text-neutral-400'
                     }`}
                   >
@@ -1111,7 +1111,7 @@ export const VehicleDetailsPage: React.FC = () => {
               {/* Availability Alert (if any) */}
               {availabilityMessage && (
                 <div
-                  className={`p-2.5 rounded-xl border text-xs ${
+                  className={`p-2 rounded-lg border text-xs ${
                     isLight
                       ? 'bg-amber-50 border-amber-200 text-amber-900'
                       : 'bg-amber-500/10 border-amber-500/30 text-amber-400'
@@ -1123,13 +1123,13 @@ export const VehicleDetailsPage: React.FC = () => {
 
               {/* Itemized Price Breakdown */}
               {calculatedPrice && (
-                <div className="space-y-2 text-xs sm:text-sm pt-1">
+                <div className="space-y-1.5 text-xs pt-0.5">
                   <div className="flex items-center justify-between py-0.5">
                     <span className={isLight ? 'text-stone-600' : 'text-neutral-400'}>
                       Base ({calculatedPrice.rentalDays}{' '}
                       {calculatedPrice.rentalDays === 1 ? 'day' : 'days'})
                     </span>
-                    <span className="font-semibold tabular-nums">
+                    <span className="font-sans font-bold tabular-nums">
                       {formatINR(calculatedPrice.baseAmount)}
                     </span>
                   </div>
@@ -1138,7 +1138,7 @@ export const VehicleDetailsPage: React.FC = () => {
                     <span className={isLight ? 'text-stone-600' : 'text-neutral-400'}>
                       GST (18% Statutory)
                     </span>
-                    <span className="font-semibold tabular-nums">
+                    <span className="font-sans font-bold tabular-nums">
                       {formatINR(calculatedPrice.taxesAmount)}
                     </span>
                   </div>
@@ -1147,26 +1147,26 @@ export const VehicleDetailsPage: React.FC = () => {
                     <span className={isLight ? 'text-stone-600' : 'text-neutral-400'}>
                       Platform Fee
                     </span>
-                    <span className="font-semibold tabular-nums">
+                    <span className="font-sans font-bold tabular-nums">
                       {formatINR(calculatedPrice.platformFee)}
                     </span>
                   </div>
 
                   <div className="flex items-center justify-between py-0.5 text-amber-400 font-medium">
                     <span>Security Deposit (Refundable)</span>
-                    <span className="font-bold tabular-nums">
+                    <span className="font-sans font-bold tabular-nums">
                       {formatINR(calculatedPrice.securityDeposit)}
                     </span>
                   </div>
 
                   {/* Total Payable Row */}
                   <div
-                    className={`pt-3 border-t flex items-center justify-between ${
+                    className={`pt-2.5 border-t flex items-center justify-between ${
                       isLight ? 'border-stone-200 text-slate-900' : 'border-neutral-800 text-white'
                     }`}
                   >
                     <span className="text-sm font-bold">Total Payable</span>
-                    <span className="text-2xl sm:text-3xl font-extrabold tabular-nums">
+                    <span className="text-xl sm:text-2xl font-sans font-extrabold tabular-nums">
                       {formatINR(calculatedPrice.totalAmount)}
                     </span>
                   </div>
@@ -1178,7 +1178,7 @@ export const VehicleDetailsPage: React.FC = () => {
                 type="button"
                 disabled={calculating || !!availabilityMessage}
                 onClick={() => setCheckoutModalOpen(true)}
-                className={`w-full py-3.5 px-6 rounded-full font-extrabold text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-lg active:scale-98 cursor-pointer disabled:opacity-50 ${
+                className={`w-full py-3 px-5 rounded-full font-extrabold text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md active:scale-98 cursor-pointer disabled:opacity-50 ${
                   isLight
                     ? 'bg-[#1c1c1e] text-white hover:bg-black'
                     : 'bg-[#F5E6D3] hover:bg-[#ebd5bd] text-black'
@@ -1190,7 +1190,7 @@ export const VehicleDetailsPage: React.FC = () => {
 
               {/* Trust Subtext Badge Box */}
               <div
-                className={`rounded-2xl border p-2.5 flex items-center justify-around text-xs font-semibold mt-2 ${
+                className={`rounded-xl border p-2 flex items-center justify-around text-[11px] font-semibold mt-1 ${
                   isLight
                     ? 'bg-stone-50 border-stone-200 text-stone-700'
                     : 'bg-[#17181c] border-neutral-800/80 text-neutral-300'
