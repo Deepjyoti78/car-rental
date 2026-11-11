@@ -208,19 +208,19 @@ export const LandingPage: React.FC = () => {
       }`}
     >
       {/* 1. CINEMATIC HERO SECTION */}
-      <section className="relative h-[510px] min-h-[480px] max-h-[530px] sm:min-h-screen sm:h-screen flex flex-col justify-between overflow-hidden">
+      <section className="relative h-[480px] min-h-[460px] max-h-[500px] sm:min-h-screen sm:h-screen flex flex-col justify-between overflow-hidden">
         {/* Full-bleed Photography Background */}
         <div className="absolute inset-0 z-0">
           <img
             src="/hero-bg.png"
             alt="Scenic roadtrip landscape"
-            className="w-full h-full object-cover object-[29%_44%] sm:object-[center_60%]"
+            className="w-full h-full object-cover object-[29%_37%] sm:object-[center_60%]"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/10 to-black pointer-events-none" />
         </div>
 
         {/* Center Hero Content */}
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 w-full flex-1 flex flex-col justify-between pt-24 sm:pt-28 pb-3 sm:pb-8 text-center">
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 w-full flex-1 flex flex-col justify-between pt-20 sm:pt-28 pb-3 sm:pb-8 text-center">
           {/* Top Headline Block + Search Widget (Both positioned ABOVE the car!) */}
           <div className="flex flex-col items-center">
             {/* Frosted Subtle Badge (Desktop only) */}
@@ -229,30 +229,16 @@ export const LandingPage: React.FC = () => {
               <span>Verified Self-Drive Rental Marketplace</span>
             </div>
 
-            {/* Mobile Sub-tagline: —— CAR RENTALS, REIMAGINED —— */}
-            <div className="sm:hidden flex items-center justify-center gap-2.5 mb-2.5">
-              <span className="w-8 h-[1px] bg-white/40" />
-              <span className="text-[#E5BA73] text-[9.5px] font-mono tracking-[0.25em] font-semibold uppercase">
-                Car Rentals, Reimagined
-              </span>
-              <span className="w-8 h-[1px] bg-white/40" />
-            </div>
-
             {/* Headline */}
             <h1 className="text-[1.75rem] sm:text-5xl lg:text-[3.65rem] font-sans font-bold text-white tracking-tight leading-[1.2] max-w-[340px] sm:max-w-3xl mx-auto drop-shadow-lg">
               Rediscover the Joy of <br className="inline" />
               the <span className="text-[#E5BA73] sm:text-white">Open Road.</span>
             </h1>
 
-            {/* Mobile Subtitle Paragraph */}
-            <p className="sm:hidden text-white/80 text-[11.5px] font-normal max-w-[310px] mx-auto mt-2 leading-relaxed">
-              Premium cars, flexible plans, and unforgettable journeys — all in one place.
-            </p>
-
             {/* MOBILE COMPACT FLOATING SEARCH PILL (Placed ABOVE the car!) */}
             <form
               onSubmit={handleBookingSearch}
-              className="sm:hidden w-full max-w-[365px] mx-auto mt-5 rounded-full bg-black/60 backdrop-blur-xl border border-white/20 p-1 pl-3.5 pr-1 flex items-center justify-between shadow-2xl transition-all hover:border-white/40"
+              className="sm:hidden w-full max-w-[365px] mx-auto mt-4 rounded-full bg-black/60 backdrop-blur-xl border border-white/20 p-1 pl-3.5 pr-1 flex items-center justify-between shadow-2xl transition-all hover:border-white/40"
             >
               {/* Field 1: Hub Selector */}
               <div className="relative flex items-center gap-1.5 cursor-pointer py-1">
@@ -403,7 +389,7 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* 2. CURATED TRAVEL COLLECTIONS */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2 sm:mt-0 pt-0 sm:pt-14">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 sm:mt-0 pt-0 sm:pt-14">
         {/* Mobile Curated Collections Header (Exact match to Image 2) */}
         <div className="sm:hidden flex items-end justify-between mb-3.5">
           <div>
