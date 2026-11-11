@@ -507,7 +507,7 @@ export const AdminDashboardPage: React.FC = () => {
             bookingCode: 'DRV-2026-T3LA',
             status: 'CONFIRMED',
             startDate: new Date('2026-06-16T10:00:00Z'),
-            totalAmount: 320,
+            totalAmount: 376,
             customer: {
               firstName: 'James',
               lastName: 'Carter',
@@ -708,7 +708,7 @@ export const AdminDashboardPage: React.FC = () => {
                   activeTab === 'dashboard'
                     ? isLight
                       ? 'bg-black text-white shadow-xs'
-                      : 'bg-white text-black shadow-xs'
+                      : 'bg-[#F5E6D3] text-black shadow-xs font-bold'
                     : isLight
                     ? 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
                     : 'text-neutral-400 hover:bg-white/5 hover:text-white'
@@ -1100,92 +1100,231 @@ export const AdminDashboardPage: React.FC = () => {
           {/* ========================================================== */}
           {activeTab === 'dashboard' && (
             <div className="space-y-6">
-              {/* TOP 4 STAT CARDS WITH SPARKLINES */}
+              {/* TOP 4 STAT CARDS WITH CURVED AREA SPARKLINE SPLINES */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {/* 1. Total Revenue */}
                 <div
-                  className={`p-4 rounded-2xl border transition-all duration-200 shadow-xs space-y-3 ${
-                    isLight ? 'bg-white border-slate-200/80 hover:border-slate-300' : 'bg-[#0A0A0B] border-neutral-800 hover:border-neutral-700'
+                  className={`p-5 rounded-2xl border transition-all duration-200 shadow-xs relative overflow-hidden flex flex-col justify-between ${
+                    isLight ? 'bg-white border-slate-200/80 hover:border-slate-300' : 'bg-[#0E0F12] border-neutral-800/80 hover:border-neutral-700'
                   }`}
                 >
-                  <div className="flex items-center space-x-2 text-xs font-medium opacity-80">
-                    <DollarSign className="w-4 h-4 text-white" />
-                    <span>Total Revenue</span>
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm shadow-xs ${
+                        isLight ? 'bg-amber-100/70 text-amber-900 border border-amber-200' : 'bg-[#2A241A] text-[#F5E6D3] border border-[#423826]'
+                      }`}>
+                        <DollarSign className="w-4.5 h-4.5" />
+                      </div>
+                      <div>
+                        <h3 className={`text-xs font-semibold tracking-tight ${isLight ? 'text-slate-900' : 'text-white'}`}>
+                          Total Revenue
+                        </h3>
+                        <p className={`text-[11px] font-normal ${isLight ? 'text-slate-400' : 'text-neutral-400'}`}>
+                          vs last month
+                        </p>
+                      </div>
+                    </div>
+                    <span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                      <span>↑</span> +12.4%
+                    </span>
                   </div>
-                  <div className="space-y-1">
-                    <p className="text-2xl font-bold tracking-tight">
+
+                  <div className="mt-4 mb-1">
+                    <p className={`text-2xl sm:text-[28px] font-extrabold tracking-tight ${isLight ? 'text-slate-900' : 'text-white'}`}>
                       ${((stats?.grossBookingValue || 12845000) / 100).toLocaleString('en-US', { maximumFractionDigits: 0 })}
                     </p>
-                    <div className="flex items-center space-x-1.5 text-[11px] font-semibold text-neutral-300">
-                      <span>↑ 12.4%</span>
-                      <span className={isLight ? 'text-slate-400' : 'text-neutral-500'}>vs last month</span>
-                    </div>
                   </div>
-                  {renderSparkline([20, 35, 45, 30, 50, 65, 40, 60, 75, 55, 70, 85, 60, 80, 95, 70, 88, 100], isLight ? 'bg-slate-700' : 'bg-white/80')}
+
+                  <div className="w-full h-12 -mx-1 -mb-3 pt-1">
+                    <svg viewBox="0 0 240 50" className="w-full h-full overflow-visible" preserveAspectRatio="none">
+                      <defs>
+                        <linearGradient id="revenueGrad" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor="#E5BA73" stopOpacity={0.45} />
+                          <stop offset="60%" stopColor="#E5BA73" stopOpacity={0.12} />
+                          <stop offset="100%" stopColor="#E5BA73" stopOpacity={0.0} />
+                        </linearGradient>
+                      </defs>
+                      <path
+                        d="M 0 38 C 30 42, 60 22, 95 30 C 130 38, 160 14, 195 20 C 215 24, 230 18, 240 16 L 240 50 L 0 50 Z"
+                        fill="url(#revenueGrad)"
+                      />
+                      <path
+                        d="M 0 38 C 30 42, 60 22, 95 30 C 130 38, 160 14, 195 20 C 215 24, 230 18, 240 16"
+                        fill="none"
+                        stroke="#E5BA73"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </div>
                 </div>
 
                 {/* 2. Active Rentals */}
                 <div
-                  className={`p-4 rounded-2xl border transition-all duration-200 shadow-xs space-y-3 ${
-                    isLight ? 'bg-white border-slate-200/80 hover:border-slate-300' : 'bg-[#0A0A0B] border-neutral-800 hover:border-neutral-700'
+                  className={`p-5 rounded-2xl border transition-all duration-200 shadow-xs relative overflow-hidden flex flex-col justify-between ${
+                    isLight ? 'bg-white border-slate-200/80 hover:border-slate-300' : 'bg-[#0E0F12] border-neutral-800/80 hover:border-neutral-700'
                   }`}
                 >
-                  <div className="flex items-center space-x-2 text-xs font-medium opacity-80">
-                    <CalendarCheck className="w-4 h-4 text-white" />
-                    <span>Active Rentals</span>
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm shadow-xs ${
+                        isLight ? 'bg-slate-100 text-slate-800 border border-slate-200' : 'bg-[#1C1D22] text-neutral-300 border border-neutral-800'
+                      }`}>
+                        <CalendarCheck className="w-4.5 h-4.5" />
+                      </div>
+                      <div>
+                        <h3 className={`text-xs font-semibold tracking-tight ${isLight ? 'text-slate-900' : 'text-white'}`}>
+                          Active Rentals
+                        </h3>
+                        <p className={`text-[11px] font-normal ${isLight ? 'text-slate-400' : 'text-neutral-400'}`}>
+                          vs last month
+                        </p>
+                      </div>
+                    </div>
+                    <span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                      <span>↑</span> +8.7%
+                    </span>
                   </div>
-                  <div className="space-y-1">
-                    <p className="text-2xl font-bold tracking-tight">
+
+                  <div className="mt-4 mb-1">
+                    <p className={`text-2xl sm:text-[28px] font-extrabold tracking-tight ${isLight ? 'text-slate-900' : 'text-white'}`}>
                       {stats?.totalBookings ? Math.min(stats.totalBookings, 364) : 364}
                     </p>
-                    <div className="flex items-center space-x-1.5 text-[11px] font-semibold text-neutral-300">
-                      <span>↑ 8.7%</span>
-                      <span className={isLight ? 'text-slate-400' : 'text-neutral-500'}>vs last month</span>
-                    </div>
                   </div>
-                  {renderSparkline([30, 45, 40, 60, 55, 70, 65, 80, 75, 90, 85, 70, 80, 95, 85, 90, 100, 95], isLight ? 'bg-slate-700' : 'bg-neutral-300')}
+
+                  <div className="w-full h-12 -mx-1 -mb-3 pt-1">
+                    <svg viewBox="0 0 240 50" className="w-full h-full overflow-visible" preserveAspectRatio="none">
+                      <defs>
+                        <linearGradient id="activeGrad" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor={isLight ? '#475569' : '#FFFFFF'} stopOpacity={isLight ? 0.35 : 0.22} />
+                          <stop offset="100%" stopColor={isLight ? '#475569' : '#FFFFFF'} stopOpacity={0.0} />
+                        </linearGradient>
+                      </defs>
+                      <path
+                        d="M 0 42 C 35 44, 65 30, 100 34 C 135 38, 165 18, 195 24 C 215 28, 230 16, 240 20 L 240 50 L 0 50 Z"
+                        fill="url(#activeGrad)"
+                      />
+                      <path
+                        d="M 0 42 C 35 44, 65 30, 100 34 C 135 38, 165 18, 195 24 C 215 28, 230 16, 240 20"
+                        fill="none"
+                        stroke={isLight ? '#475569' : '#FFFFFF'}
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </div>
                 </div>
 
                 {/* 3. Available Cars */}
                 <div
-                  className={`p-4 rounded-2xl border transition-all duration-200 shadow-xs space-y-3 ${
-                    isLight ? 'bg-white border-slate-200/80 hover:border-slate-300' : 'bg-[#0A0A0B] border-neutral-800 hover:border-neutral-700'
+                  className={`p-5 rounded-2xl border transition-all duration-200 shadow-xs relative overflow-hidden flex flex-col justify-between ${
+                    isLight ? 'bg-white border-slate-200/80 hover:border-slate-300' : 'bg-[#0E0F12] border-neutral-800/80 hover:border-neutral-700'
                   }`}
                 >
-                  <div className="flex items-center space-x-2 text-xs font-medium opacity-80">
-                    <Car className="w-4 h-4 text-white" />
-                    <span>Available Cars</span>
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm shadow-xs ${
+                        isLight ? 'bg-slate-100 text-slate-800 border border-slate-200' : 'bg-[#1C1D22] text-neutral-300 border border-neutral-800'
+                      }`}>
+                        <Car className="w-4.5 h-4.5" />
+                      </div>
+                      <div>
+                        <h3 className={`text-xs font-semibold tracking-tight ${isLight ? 'text-slate-900' : 'text-white'}`}>
+                          Available Cars
+                        </h3>
+                        <p className={`text-[11px] font-normal ${isLight ? 'text-slate-400' : 'text-neutral-400'}`}>
+                          vs last month
+                        </p>
+                      </div>
+                    </div>
+                    <span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                      <span>↑</span> +5.3%
+                    </span>
                   </div>
-                  <div className="space-y-1">
-                    <p className="text-2xl font-bold tracking-tight">
+
+                  <div className="mt-4 mb-1">
+                    <p className={`text-2xl sm:text-[28px] font-extrabold tracking-tight ${isLight ? 'text-slate-900' : 'text-white'}`}>
                       {stats?.activeVehicles || 112}
                     </p>
-                    <div className="flex items-center space-x-1.5 text-[11px] font-semibold text-neutral-300">
-                      <span>↑ 5.3%</span>
-                      <span className={isLight ? 'text-slate-400' : 'text-neutral-500'}>vs last month</span>
-                    </div>
                   </div>
-                  {renderSparkline([40, 50, 60, 55, 65, 75, 70, 80, 85, 75, 85, 90, 80, 85, 95, 90, 95, 100], isLight ? 'bg-slate-700' : 'bg-neutral-400')}
+
+                  <div className="w-full h-12 -mx-1 -mb-3 pt-1">
+                    <svg viewBox="0 0 240 50" className="w-full h-full overflow-visible" preserveAspectRatio="none">
+                      <defs>
+                        <linearGradient id="availableGrad" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor={isLight ? '#475569' : '#FFFFFF'} stopOpacity={isLight ? 0.35 : 0.22} />
+                          <stop offset="100%" stopColor={isLight ? '#475569' : '#FFFFFF'} stopOpacity={0.0} />
+                        </linearGradient>
+                      </defs>
+                      <path
+                        d="M 0 38 C 30 40, 65 24, 105 30 C 145 36, 175 14, 205 18 C 220 20, 230 15, 240 17 L 240 50 L 0 50 Z"
+                        fill="url(#availableGrad)"
+                      />
+                      <path
+                        d="M 0 38 C 30 40, 65 24, 105 30 C 145 36, 175 14, 205 18 C 220 20, 230 15, 240 17"
+                        fill="none"
+                        stroke={isLight ? '#475569' : '#FFFFFF'}
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </div>
                 </div>
 
                 {/* 4. Cars in Maintenance */}
                 <div
-                  className={`p-4 rounded-2xl border transition-all duration-200 shadow-xs space-y-3 ${
-                    isLight ? 'bg-white border-slate-200/80 hover:border-slate-300' : 'bg-[#0A0A0B] border-neutral-800 hover:border-neutral-700'
+                  className={`p-5 rounded-2xl border transition-all duration-200 shadow-xs relative overflow-hidden flex flex-col justify-between ${
+                    isLight ? 'bg-white border-slate-200/80 hover:border-slate-300' : 'bg-[#0E0F12] border-neutral-800/80 hover:border-neutral-700'
                   }`}
                 >
-                  <div className="flex items-center space-x-2 text-xs font-medium opacity-80">
-                    <Wrench className="w-4 h-4 text-white" />
-                    <span>Cars in Maintenance</span>
-                  </div>
-                  <div className="space-y-1">
-                    <p className="text-2xl font-bold tracking-tight">18</p>
-                    <div className="flex items-center space-x-1.5 text-[11px] font-semibold text-neutral-300">
-                      <span>↑ 2.1%</span>
-                      <span className={isLight ? 'text-slate-400' : 'text-neutral-500'}>vs last month</span>
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm shadow-xs ${
+                        isLight ? 'bg-slate-100 text-slate-800 border border-slate-200' : 'bg-[#1C1D22] text-neutral-300 border border-neutral-800'
+                      }`}>
+                        <Wrench className="w-4.5 h-4.5" />
+                      </div>
+                      <div>
+                        <h3 className={`text-xs font-semibold tracking-tight ${isLight ? 'text-slate-900' : 'text-white'}`}>
+                          Cars in Maintenance
+                        </h3>
+                        <p className={`text-[11px] font-normal ${isLight ? 'text-slate-400' : 'text-neutral-400'}`}>
+                          vs last month
+                        </p>
+                      </div>
                     </div>
+                    <span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                      <span>↑</span> +2.1%
+                    </span>
                   </div>
-                  {renderSparkline([60, 45, 55, 40, 50, 35, 45, 30, 40, 25, 35, 20, 30, 25, 20, 15, 25, 18], isLight ? 'bg-slate-700' : 'bg-neutral-500')}
+
+                  <div className="mt-4 mb-1">
+                    <p className={`text-2xl sm:text-[28px] font-extrabold tracking-tight ${isLight ? 'text-slate-900' : 'text-white'}`}>
+                      18
+                    </p>
+                  </div>
+
+                  <div className="w-full h-12 -mx-1 -mb-3 pt-1">
+                    <svg viewBox="0 0 240 50" className="w-full h-full overflow-visible" preserveAspectRatio="none">
+                      <defs>
+                        <linearGradient id="maintenanceGrad" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor={isLight ? '#475569' : '#FFFFFF'} stopOpacity={isLight ? 0.35 : 0.22} />
+                          <stop offset="100%" stopColor={isLight ? '#475569' : '#FFFFFF'} stopOpacity={0.0} />
+                        </linearGradient>
+                      </defs>
+                      <path
+                        d="M 0 42 C 35 40, 70 20, 105 28 C 140 36, 175 14, 205 22 C 220 26, 235 18, 240 22 L 240 50 L 0 50 Z"
+                        fill="url(#maintenanceGrad)"
+                      />
+                      <path
+                        d="M 0 42 C 35 40, 70 20, 105 28 C 140 36, 175 14, 205 22 C 220 26, 235 18, 240 22"
+                        fill="none"
+                        stroke={isLight ? '#475569' : '#FFFFFF'}
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </div>
                 </div>
               </div>
 
@@ -1201,12 +1340,12 @@ export const AdminDashboardPage: React.FC = () => {
                   {/* Card 2: Recent Reservations Table */}
                   <div
                     className={`p-5 sm:p-6 rounded-2xl border shadow-xs space-y-4 ${
-                      isLight ? 'bg-white border-slate-200/80' : 'bg-[#0A0A0B] border-neutral-800'
+                      isLight ? 'bg-white border-slate-200/80' : 'bg-[#0E0F12] border-neutral-800/80'
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2 text-xs font-bold">
-                        <CalendarCheck className="w-4 h-4 opacity-70 text-neutral-400" />
+                      <div className="flex items-center space-x-2 text-xs font-bold text-white">
+                        <CalendarCheck className="w-4 h-4 text-neutral-300" />
                         <span>Recent Reservations</span>
                       </div>
                       <button
@@ -1216,7 +1355,7 @@ export const AdminDashboardPage: React.FC = () => {
                         }`}
                       >
                         <span>View all</span>
-                        <ChevronRight className="w-3.5 h-3.5" />
+                        <ArrowRight className="w-3.5 h-3.5" />
                       </button>
                     </div>
 
@@ -1226,7 +1365,7 @@ export const AdminDashboardPage: React.FC = () => {
                         <thead>
                           <tr
                             className={`border-b text-[10px] font-mono uppercase tracking-wider ${
-                              isLight ? 'border-slate-100 text-slate-400' : 'border-neutral-800 text-neutral-500'
+                              isLight ? 'border-slate-100 text-slate-400' : 'border-neutral-800/80 text-neutral-500'
                             }`}
                           >
                             <th className="pb-3 font-medium">Customer</th>
@@ -1234,7 +1373,6 @@ export const AdminDashboardPage: React.FC = () => {
                             <th className="pb-3 font-medium">Pickup Date</th>
                             <th className="pb-3 font-medium">Status</th>
                             <th className="pb-3 font-medium text-right">Amount</th>
-                            <th className="pb-3 font-medium"></th>
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100 dark:divide-neutral-800/60">
@@ -1251,18 +1389,9 @@ export const AdminDashboardPage: React.FC = () => {
                                     alt="Customer"
                                     className="w-7 h-7 rounded-full object-cover shrink-0 border border-slate-200 dark:border-neutral-700"
                                   />
-                                  <div className="min-w-0">
-                                    <p className="font-bold truncate text-xs">
-                                      {res.customer?.firstName} {res.customer?.lastName}
-                                    </p>
-                                    <p
-                                      className={`text-[10px] truncate ${
-                                        isLight ? 'text-slate-400' : 'text-neutral-400'
-                                      }`}
-                                    >
-                                      {res.customer?.email}
-                                    </p>
-                                  </div>
+                                  <span className="font-bold text-xs text-white">
+                                    {res.customer?.firstName} {res.customer?.lastName}
+                                  </span>
                                 </div>
                               </td>
 
@@ -1272,66 +1401,33 @@ export const AdminDashboardPage: React.FC = () => {
                                   <img
                                     src={getVehicleImage(res.vehicle?.images)}
                                     alt="Car"
-                                    className="w-10 h-7 rounded-md object-cover shrink-0 border border-slate-200 dark:border-neutral-700 bg-neutral-900"
+                                    className="w-8 h-6 rounded object-cover shrink-0 border border-slate-200 dark:border-neutral-800 bg-neutral-900"
                                   />
-                                  <div>
-                                    <p className="font-bold text-xs truncate">
-                                      {res.vehicle?.brand} {res.vehicle?.model}
-                                    </p>
-                                    <p
-                                      className={`text-[10px] font-medium ${
-                                        isLight ? 'text-slate-400' : 'text-neutral-400'
-                                      }`}
-                                    >
-                                      {res.vehicle?.category || 'Standard'}
-                                    </p>
-                                  </div>
+                                  <span className="font-semibold text-xs text-white">
+                                    {res.vehicle?.brand} {res.vehicle?.model}
+                                  </span>
                                 </div>
                               </td>
 
                               {/* Pickup Date */}
-                              <td className="py-3.5 pr-3 text-xs">
-                                <p className="font-semibold">
-                                  {new Date(res.startDate).toLocaleDateString('en-US', {
-                                    month: 'short',
-                                    day: 'numeric',
-                                    year: 'numeric',
-                                  })}
-                                </p>
-                                <p
-                                  className={`text-[10px] ${
-                                    isLight ? 'text-slate-400' : 'text-neutral-400'
-                                  }`}
-                                >
-                                  10:00 AM
-                                </p>
+                              <td className="py-3.5 pr-3 text-xs text-neutral-300 font-medium">
+                                {new Date(res.startDate).toLocaleDateString('en-US', {
+                                  month: 'short',
+                                  day: 'numeric',
+                                  year: 'numeric',
+                                })}
                               </td>
 
                               {/* Status Badge */}
                               <td className="py-3.5 pr-3">
-                                <span
-                                  className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-semibold tracking-wide ${
-                                    res.status === 'CONFIRMED'
-                                      ? isLight ? 'bg-slate-100 text-slate-800 border border-slate-300' : 'bg-white/10 text-white border border-white/20'
-                                      : res.status === 'PENDING'
-                                      ? isLight ? 'bg-slate-50 text-slate-600 border border-slate-200' : 'bg-neutral-800 text-neutral-300 border border-neutral-700'
-                                      : res.status === 'COMPLETED'
-                                      ? isLight ? 'bg-slate-900 text-white font-bold' : 'bg-white text-black font-bold'
-                                      : isLight ? 'bg-slate-100 text-slate-400 line-through' : 'bg-neutral-900 text-neutral-500 border border-neutral-800 line-through'
-                                  }`}
-                                >
-                                  {(res.status || 'CONFIRMED').charAt(0).toUpperCase() + (res.status || 'CONFIRMED').slice(1).toLowerCase()}
+                                <span className="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide bg-neutral-900 border border-neutral-700 text-neutral-200">
+                                  {(res.status || 'Confirmed').charAt(0).toUpperCase() + (res.status || 'Confirmed').slice(1).toLowerCase()}
                                 </span>
                               </td>
 
                               {/* Amount */}
-                              <td className="py-3.5 pr-2 text-right font-bold tabular-nums text-xs">
-                                ${typeof res.totalAmount === 'number' && res.totalAmount > 1000 ? Math.round(res.totalAmount / 85) : res.totalAmount}.00
-                              </td>
-
-                              {/* Chevron */}
-                              <td className="py-3.5 text-right">
-                                <ChevronRight className="w-4 h-4 opacity-40 hover:opacity-100 cursor-pointer inline" />
+                              <td className="py-3.5 text-right font-bold tabular-nums text-xs text-white">
+                                ${typeof res.totalAmount === 'number' && res.totalAmount > 1000 ? Math.round(res.totalAmount / 85) : res.totalAmount}.00 <span className="opacity-40 text-neutral-400">›</span>
                               </td>
                             </tr>
                           ))}
@@ -1342,71 +1438,77 @@ export const AdminDashboardPage: React.FC = () => {
                 </div>
 
                 {/* -------------------------------------------------------- */}
-                {/* RIGHT COLUMN: FEATURED VEHICLE + FLEET PERFORMANCE (4 cols) */}
+                {/* RIGHT COLUMN: FEATURED VEHICLE (4 cols) */}
                 {/* -------------------------------------------------------- */}
                 <div className="lg:col-span-4 space-y-6">
-                  {/* Card 1: Featured Vehicle */}
+                  {/* Featured Vehicle Card */}
                   <div
                     className={`p-5 rounded-2xl border shadow-xs space-y-4 ${
-                      isLight ? 'bg-white border-slate-200/80' : 'bg-[#0A0A0B] border-neutral-800'
+                      isLight ? 'bg-white border-slate-200/80' : 'bg-[#0E0F12] border-neutral-800/80'
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <div className={`flex items-center space-x-1.5 text-xs font-bold ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                        <Star className={`w-3.5 h-3.5 ${isLight ? 'fill-slate-900 text-slate-900' : 'fill-white text-white'}`} />
-                        <span className={isLight ? 'text-slate-900' : 'text-white'}>Featured Vehicle</span>
+                      <div className={`flex items-center space-x-1.5 text-xs font-bold ${isLight ? 'text-slate-900' : 'text-neutral-200'}`}>
+                        <Star className="w-3.5 h-3.5 fill-white text-white" />
+                        <span>Featured Vehicle</span>
                       </div>
-                      <MoreVertical className="w-3.5 h-3.5 opacity-40 cursor-pointer" />
+                      <MoreVertical className="w-4 h-4 text-neutral-400 cursor-pointer" />
                     </div>
 
                     <div>
-                      <h4 className="font-bold text-base tracking-tight">BMW X5 xDrive40i</h4>
-                      <p className={`text-xs ${isLight ? 'text-slate-400' : 'text-neutral-400'}`}>
+                      <h4 className="font-bold text-base tracking-tight text-white">BMW X5 xDrive40i</h4>
+                      <p className={`text-xs mt-0.5 ${isLight ? 'text-slate-400' : 'text-neutral-400'}`}>
                         Luxury SUV
                       </p>
                     </div>
 
                     {/* High-res Vehicle Cutout / Photo */}
-                    <div className="relative aspect-[16/10] rounded-xl overflow-hidden bg-gradient-to-b from-transparent to-black/10 flex items-center justify-center p-2">
+                    <div className="relative aspect-[16/10] rounded-xl overflow-hidden bg-gradient-to-b from-transparent to-black/10 flex items-center justify-center">
                       <img
                         src="https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80"
                         alt="BMW X5 Luxury SUV"
-                        className="w-full h-full object-cover rounded-lg shadow-sm"
+                        className="w-full h-full object-cover rounded-xl shadow-sm"
                       />
                     </div>
 
                     {/* Specs Pills */}
-                    <div className="flex items-center justify-between text-[11px] font-medium text-neutral-400 pb-2 border-b border-slate-100 dark:border-neutral-800">
+                    <div className="flex items-center justify-between text-[11px] font-medium text-neutral-300 py-1">
                       <span className="flex items-center gap-1">
-                        <Users className="w-3 h-3 text-neutral-400" /> 5 Seats
+                        <Users className="w-3.5 h-3.5 text-neutral-400" /> 5 Seats
                       </span>
-                      <span>Automatic</span>
-                      <span>Premium</span>
-                      <span>4WD</span>
+                      <span className="flex items-center gap-1">
+                        <span>⚙</span> Automatic
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <span>◇</span> Premium
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <span>⛭</span> 4WD
+                      </span>
                     </div>
 
                     {/* Stats List */}
-                    <div className="space-y-2 text-xs font-medium">
+                    <div className="space-y-2.5 text-xs font-medium pt-2 border-t border-neutral-800/80">
                       <div className="flex justify-between items-center">
-                        <span className="flex items-center gap-1.5 opacity-80">
-                          <Car className="w-3.5 h-3.5 text-neutral-400" /> Total Fleet
+                        <span className="flex items-center gap-2 text-neutral-400">
+                          <span className="text-sm">☁</span> Total Fleet
                         </span>
-                        <span className="font-bold tabular-nums">250</span>
+                        <span className="font-bold text-white tabular-nums">250</span>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="flex items-center gap-1.5 opacity-80">
+                        <span className="flex items-center gap-2 text-neutral-400">
                           <CheckCircle2 className="w-3.5 h-3.5 text-neutral-400" /> Available
                         </span>
-                        <span className="font-bold tabular-nums">112</span>
+                        <span className="font-bold text-white tabular-nums">112</span>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="flex items-center gap-1.5 opacity-80">
+                        <span className="flex items-center gap-2 text-neutral-400">
                           <Clock className="w-3.5 h-3.5 text-neutral-400" /> Rented Out
                         </span>
-                        <span className="font-bold tabular-nums">120</span>
+                        <span className="font-bold text-white tabular-nums">120</span>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="flex items-center gap-1.5 opacity-80">
+                        <span className="flex items-center gap-2 text-neutral-400">
                           <Wrench className="w-3.5 h-3.5 text-neutral-400" /> Maintenance
                         </span>
                         <span className="font-bold text-white tabular-nums">18</span>
@@ -1416,79 +1518,10 @@ export const AdminDashboardPage: React.FC = () => {
                     {/* CTA Button */}
                     <button
                       onClick={() => setActiveTab('fleet')}
-                      className={`w-full py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center space-x-1.5 cursor-pointer shadow-xs ${
-                        isLight
-                          ? 'bg-black text-white hover:bg-slate-800'
-                          : 'bg-white text-black hover:bg-neutral-200'
-                      }`}
+                      className="w-full py-2.5 mt-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center space-x-2 cursor-pointer shadow-xs bg-[#F5E6D3] hover:bg-[#ebd5bd] text-black"
                     >
-                      <Car className="w-3.5 h-3.5" />
+                      <RefreshCw className="w-3.5 h-3.5" />
                       <span>View Fleet</span>
-                    </button>
-                  </div>
-
-                  {/* Card 2: Fleet Performance */}
-                  <div
-                    className={`p-5 rounded-2xl border shadow-xs space-y-4 ${
-                      isLight ? 'bg-white border-slate-200/80' : 'bg-[#0A0A0B] border-neutral-800'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-1.5 text-xs font-bold">
-                        <TrendingUp className="w-3.5 h-3.5 text-neutral-400" />
-                        <span>Fleet Performance</span>
-                      </div>
-                      <span className={`text-[11px] font-semibold ${isLight ? 'text-slate-400' : 'text-neutral-400'}`}>
-                        This Month ▾
-                      </span>
-                    </div>
-
-                    <div>
-                      <p className="text-2xl font-bold tracking-tight">$128,450</p>
-                      <p className="text-[11px] font-semibold text-neutral-300 mt-0.5">
-                        ↑ 12.4% <span className={isLight ? 'text-slate-400' : 'text-neutral-500'}>vs last month</span>
-                      </p>
-                    </div>
-
-                    {/* Segmented Progress Bar */}
-                    <div className="h-3.5 w-full rounded-full overflow-hidden flex bg-slate-100 dark:bg-neutral-800/80 p-0.5 border border-neutral-800">
-                      <div style={{ width: '25%' }} className="bg-white h-full rounded-l-full" title="Economy: 25%" />
-                      <div style={{ width: '22%' }} className="bg-neutral-300 h-full" title="Compact: 22%" />
-                      <div style={{ width: '32%' }} className="bg-neutral-400 h-full" title="SUV: 32%" />
-                      <div style={{ width: '15%' }} className="bg-neutral-600 h-full" title="Luxury: 15%" />
-                      <div style={{ width: '6%' }} className="bg-neutral-800 h-full rounded-r-full" title="Vans: 6%" />
-                    </div>
-
-                    {/* Categories Breakdown List */}
-                    <div className="space-y-2 text-xs font-medium pt-1">
-                      {[
-                        { label: 'Economy', color: 'bg-white', amount: '$32,450', percent: '25%' },
-                        { label: 'Compact', color: 'bg-neutral-300', amount: '$28,300', percent: '22%' },
-                        { label: 'SUV', color: 'bg-neutral-400', amount: '$41,200', percent: '32%' },
-                        { label: 'Luxury', color: 'bg-neutral-600', amount: '$19,600', percent: '15%' },
-                        { label: 'Vans', color: 'bg-neutral-800', amount: '$6,900', percent: '6%' },
-                      ].map((item) => (
-                        <div key={item.label} className="flex items-center justify-between">
-                          <div className="flex items-center space-x-2">
-                            <span className={`w-2.5 h-2.5 rounded-full ${item.color}`} />
-                            <span className="opacity-80">{item.label}</span>
-                          </div>
-                          <div className="flex items-center space-x-3 tabular-nums">
-                            <span className="font-bold">{item.amount}</span>
-                            <span className={`text-[10px] w-7 text-right ${isLight ? 'text-slate-400' : 'text-neutral-400'}`}>
-                              {item.percent}
-                            </span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-
-                    <button
-                      onClick={() => showToast('Full financial analytics report generated.')}
-                      className="w-full text-center text-xs font-bold text-neutral-300 hover:text-white pt-2 inline-flex items-center justify-center gap-1 cursor-pointer"
-                    >
-                      <span>View full report</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
                     </button>
                   </div>
                 </div>

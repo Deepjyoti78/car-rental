@@ -1,7 +1,8 @@
 "use client"
 
 import * as React from "react"
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
+import { Users } from "lucide-react"
 
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
@@ -146,44 +147,55 @@ export function ChartAreaInteractive({
     }
   }, [isMobile])
 
-  const filteredData = chartData.filter((item) => {
-    const date = new Date(item.date)
-    const referenceDate = new Date("2024-06-30")
-    let daysToSubtract = 90
-    if (timeRange === "30d") {
-      daysToSubtract = 30
-    } else if (timeRange === "7d") {
-      daysToSubtract = 7
-    }
-    const startDate = new Date(referenceDate)
-    startDate.setDate(startDate.getDate() - daysToSubtract)
-    return date >= startDate
-  })
+  const filteredData = chartData
+    .filter((item) => {
+      const date = new Date(item.date)
+      const referenceDate = new Date("2024-06-30")
+      let daysToSubtract = 90
+      if (timeRange === "30d") {
+        daysToSubtract = 30
+      } else if (timeRange === "7d") {
+        daysToSubtract = 7
+      }
+      const startDate = new Date(referenceDate)
+      startDate.setDate(startDate.getDate() - daysToSubtract)
+      return date >= startDate
+    })
+    .map((item) => ({
+      date: item.date,
+      desktop: Math.round(item.desktop * 2.2),
+      mobile: Math.round(item.mobile * 2.1),
+    }))
 
   return (
-    <Card className={`border border-neutral-800 bg-[#0A0A0B] text-white shadow-xs rounded-2xl ${className}`}>
-      <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between space-y-2 sm:space-y-0 pb-3 px-5 sm:px-6 pt-5 sm:pt-6">
-        <div>
-          <CardTitle className="text-base sm:text-lg font-bold text-white tracking-tight">
-            {title}
-          </CardTitle>
-          <CardDescription className="text-xs text-neutral-400 mt-0.5">
-            {timeRange === "7d"
-              ? "Total for the last 7 days"
-              : timeRange === "30d"
-              ? "Total for the last 30 days"
-              : "Total for the last 3 months"}
-          </CardDescription>
+    <Card className={`border border-neutral-800 bg-[#0E0F12] text-white shadow-xs rounded-2xl ${className}`}>
+      <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between space-y-3 sm:space-y-0 pb-3 px-5 sm:px-6 pt-5 sm:pt-6">
+        <div className="flex items-center space-x-3">
+          <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-neutral-900 border border-neutral-800 text-neutral-300">
+            <Users className="w-4 h-4" />
+          </div>
+          <div>
+            <CardTitle className="text-base sm:text-lg font-bold text-white tracking-tight">
+              {title}
+            </CardTitle>
+            <CardDescription className="text-xs text-neutral-400 mt-0.5">
+              {timeRange === "7d"
+                ? "Total for the last 7 days"
+                : timeRange === "30d"
+                ? "Total for the last 30 days"
+                : "Total for the last 3 months"}
+            </CardDescription>
+          </div>
         </div>
 
         <div className="flex items-center">
-          <div className="inline-flex items-center rounded-lg border border-neutral-800 bg-neutral-900/80 p-0.5">
+          <div className="inline-flex items-center rounded-full border border-neutral-800 bg-[#121316] p-1">
             <button
               type="button"
               onClick={() => setTimeRange("90d")}
-              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all cursor-pointer ${
+              className={`px-3.5 py-1 text-xs font-semibold rounded-full transition-all cursor-pointer ${
                 timeRange === "90d"
-                  ? "bg-neutral-700/90 text-white shadow-xs"
+                  ? "bg-[#F5E6D3] text-black shadow-xs"
                   : "text-neutral-400 hover:text-white"
               }`}
             >
@@ -192,9 +204,9 @@ export function ChartAreaInteractive({
             <button
               type="button"
               onClick={() => setTimeRange("30d")}
-              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all cursor-pointer ${
+              className={`px-3.5 py-1 text-xs font-semibold rounded-full transition-all cursor-pointer ${
                 timeRange === "30d"
-                  ? "bg-neutral-700/90 text-white shadow-xs"
+                  ? "bg-[#F5E6D3] text-black shadow-xs"
                   : "text-neutral-400 hover:text-white"
               }`}
             >
@@ -203,9 +215,9 @@ export function ChartAreaInteractive({
             <button
               type="button"
               onClick={() => setTimeRange("7d")}
-              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all cursor-pointer ${
+              className={`px-3.5 py-1 text-xs font-semibold rounded-full transition-all cursor-pointer ${
                 timeRange === "7d"
-                  ? "bg-neutral-700/90 text-white shadow-xs"
+                  ? "bg-[#F5E6D3] text-black shadow-xs"
                   : "text-neutral-400 hover:text-white"
               }`}
             >
@@ -220,14 +232,14 @@ export function ChartAreaInteractive({
           config={chartConfig}
           className="aspect-auto h-[250px] w-full"
         >
-          <AreaChart data={filteredData}>
+          <AreaChart data={filteredData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
             <defs>
               {/* Upper Wave Monochromatic White Gradient */}
               <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
                 <stop
                   offset="5%"
                   stopColor="#ffffff"
-                  stopOpacity={0.28}
+                  stopOpacity={0.25}
                 />
                 <stop
                   offset="95%"
@@ -235,29 +247,42 @@ export function ChartAreaInteractive({
                   stopOpacity={0.0}
                 />
               </linearGradient>
-              {/* Lower Wave Monochromatic Gray Gradient */}
+              {/* Lower Wave Golden Amber Glow Gradient */}
               <linearGradient id="fillMobile" x1="0" y1="0" x2="0" y2="1">
                 <stop
                   offset="5%"
-                  stopColor="#a1a1aa"
-                  stopOpacity={0.18}
+                  stopColor="#E5BA73"
+                  stopOpacity={0.35}
                 />
                 <stop
                   offset="95%"
-                  stopColor="#000000"
+                  stopColor="#E5BA73"
                   stopOpacity={0.0}
                 />
               </linearGradient>
             </defs>
 
-            <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.06)" />
+            <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.06)" strokeDasharray="3 3" />
+
+            <YAxis
+              tickLine={false}
+              axisLine={false}
+              tick={{ fill: "#71717a", fontSize: 11 }}
+              tickFormatter={(value) => {
+                if (value >= 1000) return `${(value / 1000).toFixed(1)}K`
+                return value
+              }}
+              domain={[0, 2500]}
+              ticks={[0, 500, 1000, 1500, 2000, 2500]}
+              width={42}
+            />
 
             <XAxis
               dataKey="date"
               tickLine={false}
               axisLine={false}
               tickMargin={10}
-              minTickGap={30}
+              minTickGap={25}
               tick={{ fill: "#71717a", fontSize: 11 }}
               tickFormatter={(value) => {
                 const date = new Date(value)
@@ -289,8 +314,8 @@ export function ChartAreaInteractive({
               dataKey="mobile"
               type="natural"
               fill="url(#fillMobile)"
-              stroke="#a1a1aa"
-              strokeWidth={1.5}
+              stroke="#E5BA73"
+              strokeWidth={1.8}
               stackId="a"
             />
             <Area
