@@ -201,7 +201,7 @@ export const LandingPage: React.FC = () => {
         </div>
 
         {/* Center Hero Content */}
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 w-full flex-1 flex flex-col justify-between pt-24 sm:pt-28 pb-4 sm:pb-8 text-center">
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 w-full flex-1 flex flex-col justify-between pt-44 sm:pt-28 pb-4 sm:pb-8 text-center">
           {/* Top Headline Block + Search Widget (Both positioned ABOVE the car!) */}
           <div className="flex flex-col items-center">
             {/* Frosted Subtle Badge (Desktop only) */}
