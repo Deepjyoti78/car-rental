@@ -691,11 +691,11 @@ export const AdminDashboardPage: React.FC = () => {
           </div>
 
           {/* Navigation Menu (Grouped matching reference image) */}
-          <div className="flex-1 min-h-0 overflow-y-auto space-y-2.5 pr-0.5">
+          <div className="flex-1 min-h-0 overflow-y-auto space-y-4 pr-0.5">
             {/* OVERVIEW */}
             <div>
               <span
-                className={`block text-[10px] font-mono uppercase tracking-wider px-3 mb-1 font-bold ${
+                className={`block text-[11px] font-mono uppercase tracking-wider px-3 mb-1.5 font-semibold ${
                   isLight ? 'text-slate-400' : 'text-neutral-500'
                 }`}
               >
@@ -705,7 +705,7 @@ export const AdminDashboardPage: React.FC = () => {
                 data-tab="dashboard"
                 aria-label="Tab Dashboard"
                 onClick={() => setActiveTab('dashboard')}
-                className={`w-full flex items-center justify-between px-3 py-1.5 rounded-xl text-xs sm:text-[13px] font-medium transition-all cursor-pointer ${
+                className={`w-full flex items-center justify-between px-3.5 py-2 rounded-xl text-[13px] font-medium transition-all cursor-pointer ${
                   activeTab === 'dashboard'
                     ? isLight
                       ? 'bg-black text-white shadow-xs font-bold'
@@ -716,7 +716,7 @@ export const AdminDashboardPage: React.FC = () => {
                 }`}
               >
                 <div className="flex items-center space-x-2.5">
-                  <LayoutDashboard className={`w-4 h-4 ${activeTab === 'dashboard' ? (isLight ? 'text-white' : 'text-black') : 'opacity-70'}`} />
+                  <LayoutDashboard className={`w-4.5 h-4.5 ${activeTab === 'dashboard' ? (isLight ? 'text-white' : 'text-black') : 'opacity-70'}`} />
                   <span className={activeTab === 'dashboard' ? 'font-bold' : ''}>Dashboard</span>
                 </div>
               </button>
@@ -725,13 +725,13 @@ export const AdminDashboardPage: React.FC = () => {
             {/* OPERATIONS */}
             <div>
               <span
-                className={`block text-[10px] font-mono uppercase tracking-wider px-3 mb-1 font-bold ${
+                className={`block text-[11px] font-mono uppercase tracking-wider px-3 mb-1.5 font-semibold ${
                   isLight ? 'text-slate-400' : 'text-neutral-500'
                 }`}
               >
                 Operations
               </span>
-              <div className="space-y-0.5">
+              <div className="space-y-1">
                 {[
                   { id: 'reservations', label: 'Reservations', icon: CalendarCheck, count: 5 },
                   { id: 'fleet', label: 'Fleet', icon: Car, count: 16 },
@@ -747,7 +747,7 @@ export const AdminDashboardPage: React.FC = () => {
                       data-tab={item.id}
                       aria-label={`Tab ${item.label}`}
                       onClick={() => setActiveTab(item.id as any)}
-                      className={`w-full flex items-center justify-between px-3 py-1.5 rounded-xl text-xs sm:text-[13px] font-medium transition-all cursor-pointer ${
+                      className={`w-full flex items-center justify-between px-3.5 py-2 rounded-xl text-[13px] font-medium transition-all cursor-pointer ${
                         isActive
                           ? isLight
                             ? 'bg-black text-white shadow-xs font-bold'
@@ -758,12 +758,12 @@ export const AdminDashboardPage: React.FC = () => {
                       }`}
                     >
                       <div className="flex items-center space-x-2.5">
-                        <Icon className={`w-4 h-4 ${isActive ? (isLight ? 'text-white' : 'text-black') : 'opacity-70'}`} />
+                        <Icon className={`w-4.5 h-4.5 ${isActive ? (isLight ? 'text-white' : 'text-black') : 'opacity-70'}`} />
                         <span className={isActive ? 'font-bold' : ''}>{item.label}</span>
                       </div>
                       {item.count !== undefined && (
                         <span
-                          className={`text-[10px] font-mono px-1.5 py-0.5 rounded-md ${
+                          className={`text-[10px] font-mono px-2 py-0.5 rounded-md ${
                             isActive
                               ? isLight
                                 ? 'bg-slate-800 text-white'
@@ -785,13 +785,13 @@ export const AdminDashboardPage: React.FC = () => {
             {/* MANAGEMENT */}
             <div>
               <span
-                className={`block text-[10px] font-mono uppercase tracking-wider px-3 mb-1 font-bold ${
+                className={`block text-[11px] font-mono uppercase tracking-wider px-3 mb-1.5 font-semibold ${
                   isLight ? 'text-slate-400' : 'text-neutral-500'
                 }`}
               >
                 Management
               </span>
-              <div className="space-y-0.5">
+              <div className="space-y-1">
                 {[
                   { id: 'maintenance', label: 'Maintenance', icon: Wrench, count: 18 },
                   { id: 'commission', label: 'Analytics', icon: TrendingUp },
@@ -805,7 +805,7 @@ export const AdminDashboardPage: React.FC = () => {
                       data-tab={item.id}
                       aria-label={`Tab ${item.label}`}
                       onClick={() => setActiveTab(item.id as any)}
-                      className={`w-full flex items-center justify-between px-3 py-1.5 rounded-xl text-xs sm:text-[13px] font-medium transition-all cursor-pointer ${
+                      className={`w-full flex items-center justify-between px-3.5 py-2 rounded-xl text-[13px] font-medium transition-all cursor-pointer ${
                         isActive
                           ? isLight
                             ? 'bg-black text-white shadow-xs font-bold'
@@ -816,12 +816,12 @@ export const AdminDashboardPage: React.FC = () => {
                       }`}
                     >
                       <div className="flex items-center space-x-2.5">
-                        <Icon className={`w-4 h-4 ${isActive ? (isLight ? 'text-white' : 'text-black') : 'opacity-70'}`} />
+                        <Icon className={`w-4.5 h-4.5 ${isActive ? (isLight ? 'text-white' : 'text-black') : 'opacity-70'}`} />
                         <span className={isActive ? 'font-bold' : ''}>{item.label}</span>
                       </div>
                       {item.count !== undefined && (
                         <span
-                          className={`text-[10px] font-mono px-1.5 py-0.5 rounded-md ${
+                          className={`text-[10px] font-mono px-2 py-0.5 rounded-md ${
                             isActive
                               ? isLight
                                 ? 'bg-slate-800 text-white'
