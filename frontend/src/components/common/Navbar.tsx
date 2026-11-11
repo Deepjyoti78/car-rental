@@ -241,44 +241,7 @@ export const Navbar: React.FC = () => {
                   )}
                 </div>
 
-                {/* Role-Specific Portal Button */}
-                {user.role === 'ADMIN' && (
-                  <Link
-                    to="/admin"
-                    className={`px-3.5 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 shadow-xs border ${
-                      theme === 'light'
-                        ? 'bg-slate-100 border-slate-200 text-slate-800 hover:bg-slate-200'
-                        : 'bg-[#0D0D0E] border-neutral-800 text-white hover:border-neutral-700'
-                    }`}
-                  >
-                    <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
-                    Admin
-                  </Link>
-                )}
 
-                {user.role === 'VENDOR' && (
-                  <Link
-                    to="/vendor"
-                    className="px-3.5 py-1.5 rounded-full bg-neutral-900 text-white text-xs font-semibold hover:bg-neutral-800 transition-colors flex items-center gap-1.5 shadow-subtle border border-neutral-700"
-                  >
-                    <LayoutDashboard className="w-3.5 h-3.5 text-amber-400" />
-                    Fleet
-                  </Link>
-                )}
-
-                {user.role === 'CUSTOMER' && (
-                  <Link
-                    to="/dashboard"
-                    className={`px-3.5 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 shadow-xs border ${
-                      theme === 'light'
-                        ? 'bg-slate-100 border-slate-200 text-slate-800 hover:bg-slate-200'
-                        : 'bg-[#0D0D0E] border-neutral-800 text-white hover:border-neutral-700'
-                    }`}
-                  >
-                    <CalendarCheck className="w-3.5 h-3.5 text-amber-400" />
-                    Bookings
-                  </Link>
-                )}
 
                 {/* Profile Pill Dropdown */}
                 <div className="relative">

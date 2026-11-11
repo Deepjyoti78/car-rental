@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { vehicleService } from '../../services/vehicleService';
 import { bookingService } from '../../services/bookingService';
 import { Vehicle } from '../../types';
@@ -19,6 +19,7 @@ import {
   Heart,
   ChevronRight,
   ChevronLeft,
+  ChevronDown,
   ArrowRight,
   Maximize2,
   RotateCcw,
@@ -33,6 +34,9 @@ import {
   Quote,
   X,
   Sparkles,
+  Share2,
+  Home,
+  LayoutGrid,
 } from 'lucide-react';
 import { miscService } from '../../services/miscService';
 import { useAuthStore } from '../../store/authStore';
@@ -94,6 +98,19 @@ export const VehicleDetailsPage: React.FC = () => {
 
   // Wishlist
   const [isWishlisted, setIsWishlisted] = useState(false);
+  const [activeContentTab, setActiveContentTab] = useState<'overview' | 'features' | 'policies' | 'reviews'>('overview');
+
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: `${vehicle?.brand} ${vehicle?.model} on DriveLoop`,
+        url: window.location.href,
+      }).catch(() => {});
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      alert('Link copied to clipboard!');
+    }
+  };
 
   useEffect(() => {
     if (!id) return;
@@ -300,69 +317,57 @@ export const VehicleDetailsPage: React.FC = () => {
         isLight ? 'bg-[#F8F6F1] text-slate-900' : 'bg-[#0a0b0d] text-white'
       }`}
     >
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 py-4 sm:py-5 space-y-4">
+      <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-6 space-y-6">
         {/* =========================================================================
-            1. BREADCRUMB & SAVE ACTION
+            1. BREADCRUMB
            ========================================================================= */}
-        <div className="flex items-center justify-between text-xs">
-          <div className="flex items-center gap-1.5 text-neutral-400">
-            <span
-              onClick={() => navigate('/explore')}
-              className={`font-medium hover:underline cursor-pointer transition-colors ${
-                isLight ? 'text-stone-600 hover:text-black' : 'text-neutral-400 hover:text-white'
-              }`}
-            >
-              Fleet
-            </span>
-            <span className={isLight ? 'text-stone-400' : 'text-neutral-600'}>›</span>
-            <span
-              onClick={() => navigate(`/explore?city=${encodeURIComponent(vehicle.city)}`)}
-              className={`font-medium hover:underline cursor-pointer transition-colors ${
-                isLight ? 'text-stone-600 hover:text-black' : 'text-neutral-400 hover:text-white'
-              }`}
-            >
-              {vehicle.city || 'Noida'}
-            </span>
-            <span className={isLight ? 'text-stone-400' : 'text-neutral-600'}>›</span>
-            <span className={`font-semibold ${isLight ? 'text-slate-900' : 'text-white'}`}>
-              {vehicle.brand} {vehicle.model}
-            </span>
-          </div>
-
+        <div className="flex items-center gap-2 text-xs text-neutral-400">
           <button
             type="button"
-            onClick={handleToggleWishlist}
-            className={`flex items-center gap-1.5 px-3.5 py-1 rounded-full border text-xs font-semibold transition-all cursor-pointer shadow-xs active:scale-95 ${
-              isLight
-                ? 'border-stone-300 bg-white text-slate-800 hover:border-stone-400'
-                : 'border-neutral-800 bg-[#121316] text-white hover:border-neutral-700'
+            onClick={() => navigate('/')}
+            className={`hover:text-white transition-colors cursor-pointer flex items-center ${
+              isLight ? 'text-stone-500 hover:text-black' : 'text-neutral-400 hover:text-white'
+            }`}
+            title="Home"
+          >
+            <Home className="w-3.5 h-3.5" />
+          </button>
+          <span className={isLight ? 'text-stone-400' : 'text-neutral-600'}>›</span>
+          <span
+            onClick={() => navigate('/explore')}
+            className={`font-medium hover:underline cursor-pointer transition-colors ${
+              isLight ? 'text-stone-600 hover:text-black' : 'text-neutral-400 hover:text-white'
             }`}
           >
-            <Heart
-              className={`w-3.5 h-3.5 transition-colors ${
-                isWishlisted
-                  ? 'fill-rose-500 text-rose-500'
-                  : isLight
-                  ? 'text-stone-500'
-                  : 'text-neutral-300'
-              }`}
-            />
-            <span>{isWishlisted ? 'Saved' : 'Save'}</span>
-          </button>
+            Fleet
+          </span>
+          <span className={isLight ? 'text-stone-400' : 'text-neutral-600'}>›</span>
+          <span
+            onClick={() => navigate(`/explore?city=${encodeURIComponent(vehicle.city)}`)}
+            className={`font-medium hover:underline cursor-pointer transition-colors ${
+              isLight ? 'text-stone-600 hover:text-black' : 'text-neutral-400 hover:text-white'
+            }`}
+          >
+            {vehicle.city || 'Delhi'}
+          </span>
+          <span className={isLight ? 'text-stone-400' : 'text-neutral-600'}>›</span>
+          <span className={`font-semibold ${isLight ? 'text-slate-900' : 'text-white'}`}>
+            {vehicle.brand} {vehicle.model}
+          </span>
         </div>
 
         {/* =========================================================================
-            2. TOP SHOWCASE: TWO-COLUMN LAYOUT
-            - Left: Main Gallery & Quick Specs Card
-            - Right: Sticky Booking Calculator Card
+            2. TWO-COLUMN MAIN SHOWCASE
+            - Left (8 cols): Hero Photo, Thumbnails, Action Bar, Title/Hub, Tabs & Content
+            - Right (4 cols): Sticky Booking Calculator Card
            ========================================================================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-5 items-start">
-          {/* LEFT COLUMN (8 cols): Hero Photo, Thumbnails, Title & Quick Info */}
-          <div className="lg:col-span-8 space-y-2.5">
-            {/* Main Hero Photo Container - Compact height to keep specs visible above the fold */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+          {/* LEFT COLUMN (8 cols) */}
+          <div className="lg:col-span-8 space-y-4">
+            {/* Main Hero Photo Container */}
             <div
-              className={`rounded-2xl border overflow-hidden relative aspect-[16/9] sm:aspect-[1.95/1] max-h-[330px] sm:max-h-[350px] w-full shadow-xs ${
-                isLight ? 'border-stone-200/80 bg-stone-100' : 'border-neutral-800 bg-[#101114]'
+              className={`rounded-2xl border overflow-hidden relative aspect-[16/10] sm:aspect-[1.8/1] w-full shadow-lg ${
+                isLight ? 'border-stone-200 bg-stone-100' : 'border-neutral-800 bg-[#101114]'
               }`}
             >
               <img
@@ -372,7 +377,7 @@ export const VehicleDetailsPage: React.FC = () => {
               />
 
               {/* Category Badge top-left */}
-              <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-black/75 backdrop-blur-md text-white border border-white/20 shadow-md">
+              <span className="absolute top-4 left-4 px-3.5 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-black/60 backdrop-blur-md text-white border border-white/15 shadow-md">
                 {vehicle.category}
               </span>
 
@@ -380,11 +385,11 @@ export const VehicleDetailsPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setFullscreenImageOpen(true)}
-                className="absolute top-3 right-3 w-7 h-7 rounded-lg bg-black/60 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-black/85 transition-all cursor-pointer shadow-md"
+                className="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-white flex items-center justify-center hover:bg-black/80 transition-all cursor-pointer shadow-md"
                 title="View Fullscreen"
                 aria-label="View Fullscreen"
               >
-                <Maximize2 className="w-3 h-3" />
+                <Maximize2 className="w-3.5 h-3.5" />
               </button>
 
               {/* Previous Arrow overlay */}
@@ -392,10 +397,10 @@ export const VehicleDetailsPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={prevImage}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all cursor-pointer active:scale-95 shadow-md"
+                  className="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 hover:bg-black/85 backdrop-blur-md border border-white/15 text-white flex items-center justify-center transition-all cursor-pointer active:scale-95 shadow-md"
                   aria-label="Previous Image"
                 >
-                  <ChevronLeft className="w-3.5 h-3.5" />
+                  <ChevronLeft className="w-4 h-4" />
                 </button>
               )}
 
@@ -404,22 +409,22 @@ export const VehicleDetailsPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={nextImage}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all cursor-pointer active:scale-95 shadow-md"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 hover:bg-black/85 backdrop-blur-md border border-white/15 text-white flex items-center justify-center transition-all cursor-pointer active:scale-95 shadow-md"
                   aria-label="Next Image"
                 >
-                  <ChevronRight className="w-3.5 h-3.5" />
+                  <ChevronRight className="w-4 h-4" />
                 </button>
               )}
 
               {/* Counter Badge bottom-right */}
-              <span className="absolute bottom-3 right-3 px-2 py-0.5 rounded-md text-[10px] font-mono font-medium bg-black/75 backdrop-blur-md text-white border border-white/20 shadow-md">
+              <span className="absolute bottom-4 right-4 px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold bg-black/60 backdrop-blur-md text-white border border-white/15 shadow-md">
                 {selectedImageIndex + 1} / {images.length}
               </span>
             </div>
 
             {/* Thumbnail Row */}
             {images.length > 1 && (
-              <div className="flex items-center gap-2 overflow-x-auto pb-0.5">
+              <div className="flex items-center gap-2.5 overflow-x-auto pb-1 scrollbar-none">
                 {images.map((img, idx) => {
                   const isActive = selectedImageIndex === idx;
                   return (
@@ -427,11 +432,11 @@ export const VehicleDetailsPage: React.FC = () => {
                       key={img.id || idx}
                       type="button"
                       onClick={() => setSelectedImageIndex(idx)}
-                      className={`relative w-14 sm:w-16 h-9 sm:h-10 rounded-lg overflow-hidden shrink-0 border-2 transition-all cursor-pointer shadow-xs ${
+                      className={`relative w-18 sm:w-20 h-12 sm:h-13 rounded-xl overflow-hidden shrink-0 border transition-all cursor-pointer shadow-xs ${
                         isActive
                           ? isLight
-                            ? 'border-black ring-2 ring-black/30 opacity-100'
-                            : 'border-amber-400 ring-2 ring-amber-400/40 opacity-100'
+                            ? 'border-2 border-black ring-2 ring-black/25 opacity-100'
+                            : 'border-2 border-amber-400 ring-2 ring-amber-400/40 opacity-100'
                           : isLight
                           ? 'border-stone-200 opacity-60 hover:opacity-100'
                           : 'border-neutral-800 opacity-60 hover:opacity-100'
@@ -444,155 +449,580 @@ export const VehicleDetailsPage: React.FC = () => {
               </div>
             )}
 
-            {/* Title & Technical Specs Card */}
-            <div
-              className={`rounded-2xl border p-3.5 sm:p-4 space-y-2.5 shadow-xs ${
-                isLight ? 'bg-white border-stone-200/80 text-slate-900' : 'bg-[#101114] border-neutral-800 text-white'
-              }`}
-            >
-              {/* Header: Brand Year & Rating Pill */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
-                <span
-                  className={`text-[10px] font-mono uppercase tracking-widest font-semibold ${
-                    isLight ? 'text-stone-500' : 'text-neutral-400'
-                  }`}
-                >
-                  {vehicle.brand} • YEAR {vehicle.year}
+            {/* Action Row: Rating Pill on Left, Save & Share on Right */}
+            <div className="flex items-center justify-between pt-1">
+              <div
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border text-xs font-bold shadow-xs ${
+                  isLight
+                    ? 'bg-stone-50 border-stone-200 text-slate-900'
+                    : 'bg-[#121316] border-neutral-800 text-white'
+                }`}
+              >
+                <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+                <span>{vehicle.rating.toFixed(2)}</span>
+                <span className={`font-normal ${isLight ? 'text-stone-500' : 'text-neutral-400'}`}>
+                  ({vehicle.totalTrips || 20} verified trips)
                 </span>
+              </div>
 
-                <div
-                  className={`flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border text-[11px] font-bold shrink-0 self-start sm:self-auto ${
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleToggleWishlist}
+                  className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full border text-xs font-semibold transition-all cursor-pointer shadow-xs active:scale-95 ${
                     isLight
-                      ? 'bg-stone-50 border-stone-200 text-slate-900'
-                      : 'bg-black/60 border-neutral-800 text-white'
+                      ? 'border-stone-300 bg-white text-slate-800 hover:border-stone-400'
+                      : 'border-neutral-800 bg-[#121316] hover:bg-[#18191e] text-white'
                   }`}
                 >
-                  <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
-                  <span>{vehicle.rating.toFixed(2)}</span>
-                  <span className={`font-normal ${isLight ? 'text-stone-500' : 'text-neutral-400'}`}>
-                    ({vehicle.totalTrips || 40} verified trips)
-                  </span>
-                </div>
-              </div>
+                  <Heart
+                    className={`w-3.5 h-3.5 transition-colors ${
+                      isWishlisted
+                        ? 'fill-rose-500 text-rose-500'
+                        : isLight
+                        ? 'text-stone-500'
+                        : 'text-neutral-300'
+                    }`}
+                  />
+                  <span>{isWishlisted ? 'Saved' : 'Save'}</span>
+                </button>
 
-              {/* Vehicle Title */}
-              <div>
-                <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">
-                  {vehicle.brand} {vehicle.model}
-                </h1>
-
-                <p
-                  className={`text-[11px] flex items-center gap-1.5 mt-1 font-medium ${
-                    isLight ? 'text-stone-600' : 'text-neutral-400'
+                <button
+                  type="button"
+                  onClick={handleShare}
+                  className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full border text-xs font-semibold transition-all cursor-pointer shadow-xs active:scale-95 ${
+                    isLight
+                      ? 'border-stone-300 bg-white text-slate-800 hover:border-stone-400'
+                      : 'border-neutral-800 bg-[#121316] hover:bg-[#18191e] text-white'
                   }`}
                 >
-                  <MapPin className="w-3 h-3 text-amber-400 shrink-0" />
-                  <span>
-                    Pickup Hub: {vehicle.pickupAddress}, {vehicle.city}, {vehicle.state}
-                  </span>
-                </p>
-              </div>
-
-              {/* 4 Specifications Pills Grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
-                {/* 1. Transmission */}
-                <div
-                  className={`p-2 sm:p-2.5 rounded-lg border flex items-center gap-2.5 ${
-                    isLight ? 'bg-stone-50/80 border-stone-200/80' : 'bg-[#16171b] border-neutral-800/80'
-                  }`}
-                >
-                  <Gauge className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                  <div className="min-w-0">
-                    <span
-                      className={`block text-[9px] font-mono uppercase tracking-wider ${
-                        isLight ? 'text-stone-500' : 'text-neutral-400'
-                      }`}
-                    >
-                      Transmission
-                    </span>
-                    <span className="font-bold text-xs capitalize truncate block">
-                      {vehicle.transmission.toLowerCase()}
-                    </span>
-                  </div>
-                </div>
-
-                {/* 2. Fuel System */}
-                <div
-                  className={`p-2 sm:p-2.5 rounded-lg border flex items-center gap-2.5 ${
-                    isLight ? 'bg-stone-50/80 border-stone-200/80' : 'bg-[#16171b] border-neutral-800/80'
-                  }`}
-                >
-                  <Fuel className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                  <div className="min-w-0">
-                    <span
-                      className={`block text-[9px] font-mono uppercase tracking-wider ${
-                        isLight ? 'text-stone-500' : 'text-neutral-400'
-                      }`}
-                    >
-                      Fuel System
-                    </span>
-                    <span className="font-bold text-xs capitalize truncate block">
-                      {vehicle.fuelType.toLowerCase()}
-                    </span>
-                  </div>
-                </div>
-
-                {/* 3. Capacity */}
-                <div
-                  className={`p-2 sm:p-2.5 rounded-lg border flex items-center gap-2.5 ${
-                    isLight ? 'bg-stone-50/80 border-stone-200/80' : 'bg-[#16171b] border-neutral-800/80'
-                  }`}
-                >
-                  <Users className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                  <div className="min-w-0">
-                    <span
-                      className={`block text-[9px] font-mono uppercase tracking-wider ${
-                        isLight ? 'text-stone-500' : 'text-neutral-400'
-                      }`}
-                    >
-                      Capacity
-                    </span>
-                    <span className="font-bold text-xs truncate block">
-                      {vehicle.seatingCapacity} Passengers
-                    </span>
-                  </div>
-                </div>
-
-                {/* 4. Mileage Policy */}
-                <div
-                  className={`p-2 sm:p-2.5 rounded-lg border flex items-center gap-2.5 ${
-                    isLight ? 'bg-stone-50/80 border-stone-200/80' : 'bg-[#16171b] border-neutral-800/80'
-                  }`}
-                >
-                  <Clock className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                  <div className="min-w-0">
-                    <span
-                      className={`block text-[9px] font-mono uppercase tracking-wider ${
-                        isLight ? 'text-stone-500' : 'text-neutral-400'
-                      }`}
-                    >
-                      Mileage Policy
-                    </span>
-                    <span className="font-bold text-xs truncate block">
-                      {vehicle.mileagePolicy || 'Unlimited km'}
-                    </span>
-                  </div>
-                </div>
+                  <Share2 className={`w-3.5 h-3.5 ${isLight ? 'text-stone-500' : 'text-neutral-300'}`} />
+                  <span>Share</span>
+                </button>
               </div>
             </div>
+
+            {/* Vehicle Title & Location Details (Clean Typography directly on page) */}
+            <div className="pt-2 space-y-1">
+              <span
+                className={`text-[11px] font-mono uppercase tracking-widest font-semibold ${
+                  isLight ? 'text-stone-500' : 'text-neutral-400'
+                }`}
+              >
+                {vehicle.brand} • YEAR {vehicle.year}
+              </span>
+
+              <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+                {vehicle.brand} {vehicle.model}
+              </h1>
+
+              <p
+                className={`text-xs flex items-center gap-1.5 pt-0.5 font-medium ${
+                  isLight ? 'text-stone-600' : 'text-neutral-300'
+                }`}
+              >
+                <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                <span>
+                  Pickup Hub: {vehicle.pickupAddress}, {vehicle.city}
+                </span>
+              </p>
+            </div>
+
+            {/* Tab Navigation Underline Bar */}
+            <div
+              className={`flex items-center gap-8 border-b pt-4 ${
+                isLight ? 'border-stone-200' : 'border-neutral-800'
+              }`}
+            >
+              <button
+                type="button"
+                onClick={() => setActiveContentTab('overview')}
+                className={`flex items-center gap-2 pb-3 text-sm font-semibold transition-colors cursor-pointer ${
+                  activeContentTab === 'overview'
+                    ? isLight
+                      ? 'text-slate-950 border-b-2 border-slate-950 -mb-[1px]'
+                      : 'text-white border-b-2 border-white -mb-[1px]'
+                    : isLight
+                    ? 'text-stone-500 hover:text-black'
+                    : 'text-neutral-400 hover:text-white'
+                }`}
+              >
+                <LayoutGrid className="w-4 h-4" />
+                <span>Overview</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActiveContentTab('features')}
+                className={`flex items-center gap-2 pb-3 text-sm font-semibold transition-colors cursor-pointer ${
+                  activeContentTab === 'features'
+                    ? isLight
+                      ? 'text-slate-950 border-b-2 border-slate-950 -mb-[1px]'
+                      : 'text-white border-b-2 border-white -mb-[1px]'
+                    : isLight
+                    ? 'text-stone-500 hover:text-black'
+                    : 'text-neutral-400 hover:text-white'
+                }`}
+              >
+                <Sparkles className="w-4 h-4" />
+                <span>Features</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActiveContentTab('policies')}
+                className={`flex items-center gap-2 pb-3 text-sm font-semibold transition-colors cursor-pointer ${
+                  activeContentTab === 'policies'
+                    ? isLight
+                      ? 'text-slate-950 border-b-2 border-slate-950 -mb-[1px]'
+                      : 'text-white border-b-2 border-white -mb-[1px]'
+                    : isLight
+                    ? 'text-stone-500 hover:text-black'
+                    : 'text-neutral-400 hover:text-white'
+                }`}
+              >
+                <FileText className="w-4 h-4" />
+                <span>Policies</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActiveContentTab('reviews')}
+                className={`flex items-center gap-2 pb-3 text-sm font-semibold transition-colors cursor-pointer ${
+                  activeContentTab === 'reviews'
+                    ? isLight
+                      ? 'text-slate-950 border-b-2 border-slate-950 -mb-[1px]'
+                      : 'text-white border-b-2 border-white -mb-[1px]'
+                    : isLight
+                    ? 'text-stone-500 hover:text-black'
+                    : 'text-neutral-400 hover:text-white'
+                }`}
+              >
+                <Star className="w-4 h-4" />
+                <span>Reviews</span>
+              </button>
+            </div>
+
+            {/* TAB CONTENTS */}
+            {activeContentTab === 'overview' && (
+              <div className="space-y-4 pt-1">
+                {/* Vehicle Overview Card with Interior Photo */}
+                <div
+                  className={`rounded-2xl border p-5 sm:p-6 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm ${
+                    isLight
+                      ? 'bg-white border-stone-200 text-slate-900'
+                      : 'bg-[#121316] border-neutral-800 text-white'
+                  }`}
+                >
+                  <div className="flex-1 space-y-2">
+                    <h2 className="text-base sm:text-lg font-bold tracking-tight">
+                      Vehicle Overview
+                    </h2>
+                    <p
+                      className={`text-xs sm:text-sm leading-relaxed ${
+                        isLight ? 'text-stone-600' : 'text-neutral-300'
+                      }`}
+                    >
+                      {vehicle.description}
+                    </p>
+                  </div>
+
+                  <div
+                    className={`w-full md:w-80 h-44 rounded-xl overflow-hidden shrink-0 border shadow-md ${
+                      isLight ? 'border-stone-200 bg-stone-100' : 'border-neutral-800 bg-neutral-900'
+                    }`}
+                  >
+                    <img
+                      src="https://images.unsplash.com/photo-1747254780213-b1022ad74f29?w=800&auto=format&fit=crop&q=80"
+                      alt="Vehicle Executive Leather Interior"
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                </div>
+
+                {/* Key Highlights Bar */}
+                <div
+                  className={`rounded-2xl border px-5 py-3.5 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 shadow-xs ${
+                    isLight
+                      ? 'bg-white border-stone-200 text-slate-900'
+                      : 'bg-[#121316] border-neutral-800 text-white'
+                  }`}
+                >
+                  <h3 className="text-xs font-bold tracking-tight shrink-0">
+                    Key Highlights
+                  </h3>
+
+                  <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-xs font-semibold">
+                    <div className="flex items-center gap-1.5">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                      <span>Level 2 ADAS</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                      <span>Panoramic Sunroof</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                      <span>Ventilated Front Seats</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Technical Specifications Grid */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                  <div
+                    className={`p-3 rounded-xl border flex items-center gap-2.5 ${
+                      isLight ? 'bg-white border-stone-200' : 'bg-[#121316] border-neutral-800'
+                    }`}
+                  >
+                    <Gauge className="w-4 h-4 text-amber-400 shrink-0" />
+                    <div className="min-w-0">
+                      <span
+                        className={`block text-[9px] font-mono uppercase tracking-wider ${
+                          isLight ? 'text-stone-500' : 'text-neutral-400'
+                        }`}
+                      >
+                        Transmission
+                      </span>
+                      <span className="font-bold text-xs capitalize truncate block">
+                        {vehicle.transmission.toLowerCase()}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div
+                    className={`p-3 rounded-xl border flex items-center gap-2.5 ${
+                      isLight ? 'bg-white border-stone-200' : 'bg-[#121316] border-neutral-800'
+                    }`}
+                  >
+                    <Fuel className="w-4 h-4 text-amber-400 shrink-0" />
+                    <div className="min-w-0">
+                      <span
+                        className={`block text-[9px] font-mono uppercase tracking-wider ${
+                          isLight ? 'text-stone-500' : 'text-neutral-400'
+                        }`}
+                      >
+                        Fuel System
+                      </span>
+                      <span className="font-bold text-xs capitalize truncate block">
+                        {vehicle.fuelType.toLowerCase()}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div
+                    className={`p-3 rounded-xl border flex items-center gap-2.5 ${
+                      isLight ? 'bg-white border-stone-200' : 'bg-[#121316] border-neutral-800'
+                    }`}
+                  >
+                    <Users className="w-4 h-4 text-amber-400 shrink-0" />
+                    <div className="min-w-0">
+                      <span
+                        className={`block text-[9px] font-mono uppercase tracking-wider ${
+                          isLight ? 'text-stone-500' : 'text-neutral-400'
+                        }`}
+                      >
+                        Capacity
+                      </span>
+                      <span className="font-bold text-xs truncate block">
+                        {vehicle.seatingCapacity} Passengers
+                      </span>
+                    </div>
+                  </div>
+
+                  <div
+                    className={`p-3 rounded-xl border flex items-center gap-2.5 ${
+                      isLight ? 'bg-white border-stone-200' : 'bg-[#121316] border-neutral-800'
+                    }`}
+                  >
+                    <Clock className="w-4 h-4 text-amber-400 shrink-0" />
+                    <div className="min-w-0">
+                      <span
+                        className={`block text-[9px] font-mono uppercase tracking-wider ${
+                          isLight ? 'text-stone-500' : 'text-neutral-400'
+                        }`}
+                      >
+                        Mileage Policy
+                      </span>
+                      <span className="font-bold text-xs truncate block">
+                        {vehicle.mileagePolicy || 'Unlimited km'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeContentTab === 'features' && (
+              <div
+                className={`rounded-2xl border p-5 sm:p-6 space-y-4 shadow-xs ${
+                  isLight
+                    ? 'bg-white border-stone-200 text-slate-900'
+                    : 'bg-[#121316] border-neutral-800 text-white'
+                }`}
+              >
+                <h3 className="text-sm font-bold tracking-tight">Features & Comfort</h3>
+
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                  <div
+                    className={`p-3 rounded-xl border text-center flex flex-col items-center justify-center gap-1.5 ${
+                      isLight ? 'bg-stone-50 border-stone-200' : 'bg-[#17181c] border-neutral-800'
+                    }`}
+                  >
+                    <Snowflake className="w-4 h-4 text-neutral-300" />
+                    <span className="text-[11px] font-medium leading-tight">
+                      Dual Zone Climate
+                    </span>
+                  </div>
+
+                  <div
+                    className={`p-3 rounded-xl border text-center flex flex-col items-center justify-center gap-1.5 ${
+                      isLight ? 'bg-stone-50 border-stone-200' : 'bg-[#17181c] border-neutral-800'
+                    }`}
+                  >
+                    <Users className="w-4 h-4 text-neutral-300" />
+                    <span className="text-[11px] font-medium leading-tight">
+                      Ventilated Seats
+                    </span>
+                  </div>
+
+                  <div
+                    className={`p-3 rounded-xl border text-center flex flex-col items-center justify-center gap-1.5 ${
+                      isLight ? 'bg-stone-50 border-stone-200' : 'bg-[#17181c] border-neutral-800'
+                    }`}
+                  >
+                    <Sun className="w-4 h-4 text-neutral-300" />
+                    <span className="text-[11px] font-medium leading-tight">
+                      Panoramic Sunroof
+                    </span>
+                  </div>
+
+                  <div
+                    className={`p-3 rounded-xl border text-center flex flex-col items-center justify-center gap-1.5 ${
+                      isLight ? 'bg-stone-50 border-stone-200' : 'bg-[#17181c] border-neutral-800'
+                    }`}
+                  >
+                    <Camera className="w-4 h-4 text-neutral-300" />
+                    <span className="text-[11px] font-medium leading-tight">
+                      360° Camera
+                    </span>
+                  </div>
+
+                  <div
+                    className={`p-3 rounded-xl border text-center flex flex-col items-center justify-center gap-1.5 ${
+                      isLight ? 'bg-stone-50 border-stone-200' : 'bg-[#17181c] border-neutral-800'
+                    }`}
+                  >
+                    <ShieldCheck className="w-4 h-4 text-neutral-300" />
+                    <span className="text-[11px] font-medium leading-tight">
+                      Level 2 ADAS
+                    </span>
+                  </div>
+
+                  <div
+                    className={`p-3 rounded-xl border text-center flex flex-col items-center justify-center gap-1.5 ${
+                      isLight ? 'bg-stone-50 border-stone-200' : 'bg-[#17181c] border-neutral-800'
+                    }`}
+                  >
+                    <Tv className="w-4 h-4 text-neutral-300" />
+                    <span className="text-[11px] font-medium leading-tight">
+                      12.3" MBUX Cockpit
+                    </span>
+                  </div>
+
+                  <div
+                    className={`p-3 rounded-xl border text-center flex flex-col items-center justify-center gap-1.5 ${
+                      isLight ? 'bg-stone-50 border-stone-200' : 'bg-[#17181c] border-neutral-800'
+                    }`}
+                  >
+                    <Volume2 className="w-4 h-4 text-neutral-300" />
+                    <span className="text-[11px] font-medium leading-tight">
+                      Burmester Audio
+                    </span>
+                  </div>
+
+                  <div
+                    className={`p-3 rounded-xl border text-center flex flex-col items-center justify-center gap-1.5 ${
+                      isLight ? 'bg-stone-50 border-stone-200' : 'bg-[#17181c] border-neutral-800'
+                    }`}
+                  >
+                    <Zap className="w-4 h-4 text-neutral-300" />
+                    <span className="text-[11px] font-medium leading-tight">
+                      Wireless Charging
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeContentTab === 'policies' && (
+              <div
+                className={`rounded-2xl border p-5 sm:p-6 space-y-4 shadow-xs ${
+                  isLight
+                    ? 'bg-white border-stone-200 text-slate-900'
+                    : 'bg-[#121316] border-neutral-800 text-white'
+                }`}
+              >
+                <h3 className="text-sm font-bold tracking-tight">Policies & Protection</h3>
+
+                <div className="space-y-3.5">
+                  <div className="flex items-start gap-3">
+                    <ShieldCheck className="w-4 h-4 text-neutral-400 mt-0.5 shrink-0" />
+                    <div>
+                      <h4 className="font-bold text-xs">Security Deposit</h4>
+                      <p
+                        className={`text-xs leading-relaxed mt-0.5 ${
+                          isLight ? 'text-stone-600' : 'text-neutral-400'
+                        }`}
+                      >
+                        A refundable safety deposit of {formatINR(vehicle.securityDeposit)} is collected
+                        prior to the rental and refunded within 24 hours of safe vehicle return.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <RotateCcw className="w-4 h-4 text-neutral-400 mt-0.5 shrink-0" />
+                    <div>
+                      <h4 className="font-bold text-xs">Free Cancellation</h4>
+                      <p
+                        className={`text-xs leading-relaxed mt-0.5 ${
+                          isLight ? 'text-stone-600' : 'text-neutral-400'
+                        }`}
+                      >
+                        Full refund for cancellations up to 24 hours prior to trip pickup.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <FileText className="w-4 h-4 text-neutral-400 mt-0.5 shrink-0" />
+                    <div>
+                      <h4 className="font-bold text-xs">Usage Terms</h4>
+                      <p
+                        className={`text-xs leading-relaxed mt-0.5 ${
+                          isLight ? 'text-stone-600' : 'text-neutral-400'
+                        }`}
+                      >
+                        For personal use only. FASTag tolls and fuel are billed at actuals upon vehicle return.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeContentTab === 'reviews' && (
+              <div
+                className={`rounded-2xl border p-5 sm:p-6 shadow-xs ${
+                  isLight
+                    ? 'bg-white border-stone-200 text-slate-900'
+                    : 'bg-[#121316] border-neutral-800 text-white'
+                }`}
+              >
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
+                  <div className="md:col-span-4 space-y-1">
+                    <h3 className="text-sm font-bold tracking-tight">Verified Reviews</h3>
+                    <div className="flex items-center gap-2">
+                      <Star className="w-5 h-5 text-amber-400 fill-amber-400" />
+                      <span className="text-xl sm:text-2xl font-extrabold tracking-tight">
+                        {vehicle.rating.toFixed(2)}{' '}
+                        <span className="text-sm font-medium opacity-60">/ 5</span>
+                      </span>
+                    </div>
+                    <p className={`text-xs ${isLight ? 'text-stone-500' : 'text-neutral-400'}`}>
+                      Based on {vehicle.totalTrips || 20} verified trips
+                    </p>
+                  </div>
+
+                  <div
+                    className={`hidden md:block w-px self-stretch ${
+                      isLight ? 'bg-stone-200' : 'bg-neutral-800'
+                    }`}
+                  />
+
+                  <div className="md:col-span-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                    <div className="space-y-2">
+                      <p
+                        className={`text-xs leading-relaxed italic ${
+                          isLight ? 'text-stone-700' : 'text-neutral-300'
+                        }`}
+                      >
+                        "{VERIFIED_REVIEWS[reviewIndex].comment}"
+                      </p>
+
+                      <div className="flex items-center gap-2">
+                        <img
+                          src={VERIFIED_REVIEWS[reviewIndex].avatar}
+                          alt={VERIFIED_REVIEWS[reviewIndex].author}
+                          className="w-6 h-6 rounded-full object-cover border border-amber-400"
+                        />
+                        <div>
+                          <h4 className="text-xs font-bold leading-tight">
+                            {VERIFIED_REVIEWS[reviewIndex].author}
+                          </h4>
+                          <p
+                            className={`text-[10px] font-mono ${
+                              isLight ? 'text-stone-500' : 'text-neutral-400'
+                            }`}
+                          >
+                            {VERIFIED_REVIEWS[reviewIndex].tripTag}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-1.5 shrink-0 self-end sm:self-center">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setReviewIndex(
+                            (prev) => (prev - 1 + VERIFIED_REVIEWS.length) % VERIFIED_REVIEWS.length
+                          )
+                        }
+                        className={`w-7 h-7 rounded-full border flex items-center justify-center transition-all cursor-pointer active:scale-95 ${
+                          isLight
+                            ? 'border-stone-300 bg-white hover:border-black text-slate-700'
+                            : 'border-neutral-700 bg-neutral-900 hover:border-white text-white'
+                        }`}
+                        aria-label="Previous Review"
+                      >
+                        <ChevronLeft className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setReviewIndex((prev) => (prev + 1) % VERIFIED_REVIEWS.length)
+                        }
+                        className={`w-7 h-7 rounded-full border flex items-center justify-center transition-all cursor-pointer active:scale-95 ${
+                          isLight
+                            ? 'border-stone-300 bg-white hover:border-black text-slate-700'
+                            : 'border-neutral-700 bg-neutral-900 hover:border-white text-white'
+                        }`}
+                        aria-label="Next Review"
+                      >
+                        <ChevronRight className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* RIGHT COLUMN (4 cols): Sticky Booking Calculator Card */}
           <div className="lg:col-span-4 w-full min-w-0 lg:sticky lg:top-20">
             <div
-              className={`rounded-2xl border p-4 sm:p-4.5 space-y-3 shadow-xl ${
-                isLight ? 'bg-white border-stone-200/80 text-slate-900' : 'bg-[#101114] border-neutral-800 text-white'
+              className={`rounded-3xl border p-6 sm:p-7 space-y-4 shadow-2xl ${
+                isLight
+                  ? 'bg-white border-stone-200 text-slate-900'
+                  : 'bg-[#121316] border-neutral-800 text-white'
               }`}
             >
               {/* Price Header */}
-              <div className="flex items-baseline justify-between border-b pb-3 border-inherit">
+              <div className="flex items-center justify-between">
                 <div className="flex items-baseline gap-1">
-                  <span className="text-xl sm:text-2xl font-extrabold tracking-tight font-display">
+                  <span className="text-2xl sm:text-3xl font-extrabold tracking-tight">
                     {formatINR(vehicle.dailyRate)}
                   </span>
                   <span className={`text-xs ${isLight ? 'text-stone-500' : 'text-neutral-400'}`}>
@@ -601,42 +1031,40 @@ export const VehicleDetailsPage: React.FC = () => {
                 </div>
 
                 <div
-                  className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold border ${
+                  className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border ${
                     isLight
                       ? 'bg-amber-50 text-amber-900 border-amber-200'
-                      : 'bg-neutral-900 text-amber-400 border-neutral-800'
+                      : 'bg-amber-400/10 text-amber-300 border-amber-400/30'
                   }`}
                 >
-                  <Sparkles className="w-3 h-3 text-amber-400 fill-amber-400" />
+                  <Zap className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
                   <span>Instant Confirmation</span>
                 </div>
               </div>
 
               {/* Date & Time Selectors */}
-              <div className="space-y-2">
+              <div className="space-y-2.5">
                 {/* Pickup Date & Time Selector */}
                 <div
-                  className={`p-2.5 rounded-lg border relative cursor-pointer group ${
+                  className={`p-3.5 rounded-2xl border relative cursor-pointer group transition-colors ${
                     isLight
                       ? 'bg-stone-50 border-stone-200 hover:border-stone-400'
-                      : 'bg-[#15161a] border-neutral-800 hover:border-neutral-700'
+                      : 'bg-[#17181c] border-neutral-800/80 hover:border-neutral-700'
                   }`}
                 >
                   <label
-                    className={`block text-[9px] font-mono uppercase tracking-wider mb-0.5 flex items-center gap-1.5 ${
+                    className={`block text-[10px] font-mono uppercase tracking-wider mb-1 flex items-center gap-1.5 font-semibold ${
                       isLight ? 'text-stone-500' : 'text-neutral-400'
                     }`}
                   >
-                    <Calendar className="w-3 h-3 text-amber-400" />
+                    <Calendar className="w-3.5 h-3.5 text-neutral-400" />
                     <span>Pickup Date & Time</span>
                   </label>
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-semibold tabular-nums">
+                    <span className="text-xs sm:text-sm font-semibold tabular-nums">
                       {formatDateTimeDisplay(startDate)}
                     </span>
-                    <span className={`text-xs ${isLight ? 'text-stone-400' : 'text-neutral-500'}`}>
-                      ˅
-                    </span>
+                    <ChevronDown className="w-4 h-4 text-neutral-500 group-hover:text-neutral-300 transition-colors" />
                   </div>
                   {/* Transparent overlay for native picker accessibility */}
                   <input
@@ -649,27 +1077,25 @@ export const VehicleDetailsPage: React.FC = () => {
 
                 {/* Return Date & Time Selector */}
                 <div
-                  className={`p-2.5 rounded-lg border relative cursor-pointer group ${
+                  className={`p-3.5 rounded-2xl border relative cursor-pointer group transition-colors ${
                     isLight
                       ? 'bg-stone-50 border-stone-200 hover:border-stone-400'
-                      : 'bg-[#15161a] border-neutral-800 hover:border-neutral-700'
+                      : 'bg-[#17181c] border-neutral-800/80 hover:border-neutral-700'
                   }`}
                 >
                   <label
-                    className={`block text-[9px] font-mono uppercase tracking-wider mb-0.5 flex items-center gap-1.5 ${
+                    className={`block text-[10px] font-mono uppercase tracking-wider mb-1 flex items-center gap-1.5 font-semibold ${
                       isLight ? 'text-stone-500' : 'text-neutral-400'
                     }`}
                   >
-                    <Calendar className="w-3 h-3 text-amber-400" />
+                    <Calendar className="w-3.5 h-3.5 text-neutral-400" />
                     <span>Return Date & Time</span>
                   </label>
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-semibold tabular-nums">
+                    <span className="text-xs sm:text-sm font-semibold tabular-nums">
                       {formatDateTimeDisplay(endDate)}
                     </span>
-                    <span className={`text-xs ${isLight ? 'text-stone-400' : 'text-neutral-500'}`}>
-                      ˅
-                    </span>
+                    <ChevronDown className="w-4 h-4 text-neutral-500 group-hover:text-neutral-300 transition-colors" />
                   </div>
                   {/* Transparent overlay for native picker accessibility */}
                   <input
@@ -685,7 +1111,7 @@ export const VehicleDetailsPage: React.FC = () => {
               {/* Availability Alert (if any) */}
               {availabilityMessage && (
                 <div
-                  className={`p-2 rounded-lg border text-xs ${
+                  className={`p-2.5 rounded-xl border text-xs ${
                     isLight
                       ? 'bg-amber-50 border-amber-200 text-amber-900'
                       : 'bg-amber-500/10 border-amber-500/30 text-amber-400'
@@ -697,7 +1123,7 @@ export const VehicleDetailsPage: React.FC = () => {
 
               {/* Itemized Price Breakdown */}
               {calculatedPrice && (
-                <div className="space-y-1.5 text-xs pt-0.5">
+                <div className="space-y-2 text-xs sm:text-sm pt-1">
                   <div className="flex items-center justify-between py-0.5">
                     <span className={isLight ? 'text-stone-600' : 'text-neutral-400'}>
                       Base ({calculatedPrice.rentalDays}{' '}
@@ -735,12 +1161,12 @@ export const VehicleDetailsPage: React.FC = () => {
 
                   {/* Total Payable Row */}
                   <div
-                    className={`pt-2.5 border-t flex items-center justify-between font-bold ${
+                    className={`pt-3 border-t flex items-center justify-between ${
                       isLight ? 'border-stone-200 text-slate-900' : 'border-neutral-800 text-white'
                     }`}
                   >
-                    <span className="text-xs">Total Payable</span>
-                    <span className="text-base sm:text-lg font-extrabold tabular-nums">
+                    <span className="text-sm font-bold">Total Payable</span>
+                    <span className="text-2xl sm:text-3xl font-extrabold tabular-nums">
                       {formatINR(calculatedPrice.totalAmount)}
                     </span>
                   </div>
@@ -752,362 +1178,33 @@ export const VehicleDetailsPage: React.FC = () => {
                 type="button"
                 disabled={calculating || !!availabilityMessage}
                 onClick={() => setCheckoutModalOpen(true)}
-                className={`w-full py-2.5 sm:py-3 px-5 rounded-full font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md active:scale-98 cursor-pointer disabled:opacity-50 ${
+                className={`w-full py-3.5 px-6 rounded-full font-extrabold text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-lg active:scale-98 cursor-pointer disabled:opacity-50 ${
                   isLight
                     ? 'bg-[#1c1c1e] text-white hover:bg-black'
-                    : 'bg-[#F5E6D3] hover:bg-[#faede0] text-black font-extrabold'
+                    : 'bg-[#F5E6D3] hover:bg-[#ebd5bd] text-black'
                 }`}
               >
                 <span>Reserve This Car Now</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <ArrowRight className="w-4 h-4 stroke-[2.5]" />
               </button>
 
-              {/* Trust Subtext */}
+              {/* Trust Subtext Badge Box */}
               <div
-                className={`flex items-center justify-center gap-3 text-[10px] pt-0.5 font-medium ${
-                  isLight ? 'text-stone-500' : 'text-neutral-400'
+                className={`rounded-2xl border p-2.5 flex items-center justify-around text-xs font-semibold mt-2 ${
+                  isLight
+                    ? 'bg-stone-50 border-stone-200 text-stone-700'
+                    : 'bg-[#17181c] border-neutral-800/80 text-neutral-300'
                 }`}
               >
-                <div className="flex items-center gap-1">
-                  <ShieldCheck className="w-3 h-3 text-emerald-500 shrink-0" />
+                <div className="flex items-center gap-1.5">
+                  <ShieldCheck className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                   <span>Zero hidden fees</span>
                 </div>
-                <span>•</span>
-                <div className="flex items-center gap-1">
-                  <RotateCcw className="w-3 h-3 text-amber-400 shrink-0" />
+                <span className={isLight ? 'text-stone-400' : 'text-neutral-600'}>•</span>
+                <div className="flex items-center gap-1.5">
+                  <RotateCcw className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                   <span>24h Refundable Deposit</span>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* =========================================================================
-            3. VEHICLE OVERVIEW CARD (Full Width with Metallic Car Front Visual)
-           ========================================================================= */}
-        <div
-          className={`rounded-2xl border p-4 sm:p-5 relative overflow-hidden flex items-center justify-between shadow-xs ${
-            isLight ? 'bg-white border-stone-200/80 text-slate-900' : 'bg-[#101114] border-neutral-800 text-white'
-          }`}
-        >
-          <div className="relative z-10 max-w-lg">
-            <h2 className="text-sm sm:text-base font-bold tracking-tight mb-1.5">
-              Vehicle Overview
-            </h2>
-            <p
-              className={`text-xs sm:text-[13px] leading-relaxed ${
-                isLight ? 'text-stone-600' : 'text-neutral-400'
-              }`}
-            >
-              {vehicle.description}
-            </p>
-          </div>
-
-          {/* Right subtle metallic car graphic with gradient mask */}
-          <div className="absolute right-0 top-0 bottom-0 w-[40%] pointer-events-none overflow-hidden hidden md:block">
-            <img
-              src="https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&auto=format&fit=crop&q=80"
-              alt="Vehicle Silhouette"
-              className="w-full h-full object-cover object-right"
-              style={{
-                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 30%, black 70%)',
-                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 30%, black 70%)',
-              }}
-            />
-          </div>
-        </div>
-
-        {/* =========================================================================
-            4. KEY HIGHLIGHTS BAR
-           ========================================================================= */}
-        <div
-          className={`rounded-2xl border px-4 sm:px-5 py-3 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 shadow-xs ${
-            isLight ? 'bg-white border-stone-200/80 text-slate-900' : 'bg-[#101114] border-neutral-800 text-white'
-          }`}
-        >
-          <h3 className="text-xs font-bold tracking-tight shrink-0">
-            Key Highlights
-          </h3>
-
-          <div className="flex flex-wrap items-center gap-3 sm:gap-6 text-xs font-semibold">
-            <div className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
-              <span>Level 2 ADAS</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
-              <span>Panoramic Sunroof</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
-              <span>Ventilated Front Seats</span>
-            </div>
-          </div>
-        </div>
-
-        {/* =========================================================================
-            5. TWO-COLUMN GRID: Features & Comfort + Policies & Protection
-           ========================================================================= */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
-          {/* LEFT: Features & Comfort (8 Tiles in 4x2 Grid) */}
-          <div
-            className={`rounded-2xl border p-4 sm:p-5 space-y-3.5 shadow-xs flex flex-col justify-between ${
-              isLight ? 'bg-white border-stone-200/80 text-slate-900' : 'bg-[#101114] border-neutral-800 text-white'
-            }`}
-          >
-            <h3 className="text-sm font-bold tracking-tight">Features & Comfort</h3>
-
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-              {/* Tile 1 */}
-              <div
-                className={`p-2 sm:p-2.5 rounded-lg border text-center flex flex-col items-center justify-center gap-1 ${
-                  isLight ? 'bg-stone-50 border-stone-200/80' : 'bg-[#15161a] border-neutral-800/80'
-                }`}
-              >
-                <Snowflake className="w-4 h-4 text-neutral-300" />
-                <span className="text-[10px] font-medium leading-tight">
-                  Dual Zone Climate
-                </span>
-              </div>
-
-              {/* Tile 2 */}
-              <div
-                className={`p-2 sm:p-2.5 rounded-lg border text-center flex flex-col items-center justify-center gap-1 ${
-                  isLight ? 'bg-stone-50 border-stone-200/80' : 'bg-[#15161a] border-neutral-800/80'
-                }`}
-              >
-                <Users className="w-4 h-4 text-neutral-300" />
-                <span className="text-[10px] font-medium leading-tight">
-                  Ventilated Seats
-                </span>
-              </div>
-
-              {/* Tile 3 */}
-              <div
-                className={`p-2 sm:p-2.5 rounded-lg border text-center flex flex-col items-center justify-center gap-1 ${
-                  isLight ? 'bg-stone-50 border-stone-200/80' : 'bg-[#15161a] border-neutral-800/80'
-                }`}
-              >
-                <Sun className="w-4 h-4 text-neutral-300" />
-                <span className="text-[10px] font-medium leading-tight">
-                  Panoramic Sunroof
-                </span>
-              </div>
-
-              {/* Tile 4 */}
-              <div
-                className={`p-2 sm:p-2.5 rounded-lg border text-center flex flex-col items-center justify-center gap-1 ${
-                  isLight ? 'bg-stone-50 border-stone-200/80' : 'bg-[#15161a] border-neutral-800/80'
-                }`}
-              >
-                <Camera className="w-4 h-4 text-neutral-300" />
-                <span className="text-[10px] font-medium leading-tight">
-                  360° Camera
-                </span>
-              </div>
-
-              {/* Tile 5 */}
-              <div
-                className={`p-2 sm:p-2.5 rounded-lg border text-center flex flex-col items-center justify-center gap-1 ${
-                  isLight ? 'bg-stone-50 border-stone-200/80' : 'bg-[#15161a] border-neutral-800/80'
-                }`}
-              >
-                <ShieldCheck className="w-4 h-4 text-neutral-300" />
-                <span className="text-[10px] font-medium leading-tight">
-                  Level 2 ADAS
-                </span>
-              </div>
-
-              {/* Tile 6 */}
-              <div
-                className={`p-2 sm:p-2.5 rounded-lg border text-center flex flex-col items-center justify-center gap-1 ${
-                  isLight ? 'bg-stone-50 border-stone-200/80' : 'bg-[#15161a] border-neutral-800/80'
-                }`}
-              >
-                <Tv className="w-4 h-4 text-neutral-300" />
-                <span className="text-[10px] font-medium leading-tight">
-                  10.25" Infotainment
-                </span>
-              </div>
-
-              {/* Tile 7 */}
-              <div
-                className={`p-2 sm:p-2.5 rounded-lg border text-center flex flex-col items-center justify-center gap-1 ${
-                  isLight ? 'bg-stone-50 border-stone-200/80' : 'bg-[#15161a] border-neutral-800/80'
-                }`}
-              >
-                <Volume2 className="w-4 h-4 text-neutral-300" />
-                <span className="text-[10px] font-medium leading-tight">
-                  Premium Audio
-                </span>
-              </div>
-
-              {/* Tile 8 */}
-              <div
-                className={`p-2 sm:p-2.5 rounded-lg border text-center flex flex-col items-center justify-center gap-1 ${
-                  isLight ? 'bg-stone-50 border-stone-200/80' : 'bg-[#15161a] border-neutral-800/80'
-                }`}
-              >
-                <Zap className="w-4 h-4 text-neutral-300" />
-                <span className="text-[10px] font-medium leading-tight">
-                  Wireless Charging
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* RIGHT: Policies & Protection */}
-          <div
-            className={`rounded-2xl border p-4 sm:p-5 space-y-3.5 shadow-xs flex flex-col justify-between ${
-              isLight ? 'bg-white border-stone-200/80 text-slate-900' : 'bg-[#101114] border-neutral-800 text-white'
-            }`}
-          >
-            <h3 className="text-sm font-bold tracking-tight">Policies & Protection</h3>
-
-            <div className="space-y-3">
-              {/* Policy 1 */}
-              <div className="flex items-start gap-2.5">
-                <ShieldCheck className="w-4 h-4 text-neutral-400 mt-0.5 shrink-0" />
-                <div>
-                  <h4 className="font-bold text-xs">Security Deposit</h4>
-                  <p
-                    className={`text-[11px] leading-relaxed mt-0.5 ${
-                      isLight ? 'text-stone-600' : 'text-neutral-400'
-                    }`}
-                  >
-                    A refundable safety deposit of {formatINR(vehicle.securityDeposit)} is collected
-                    prior to the rental and refunded within 24 hours of safe vehicle return.
-                  </p>
-                </div>
-              </div>
-
-              {/* Policy 2 */}
-              <div className="flex items-start gap-2.5">
-                <RotateCcw className="w-4 h-4 text-neutral-400 mt-0.5 shrink-0" />
-                <div>
-                  <h4 className="font-bold text-xs">Free Cancellation</h4>
-                  <p
-                    className={`text-[11px] leading-relaxed mt-0.5 ${
-                      isLight ? 'text-stone-600' : 'text-neutral-400'
-                    }`}
-                  >
-                    Full refund for cancellations up to 24h before pickup.
-                  </p>
-                </div>
-              </div>
-
-              {/* Policy 3 */}
-              <div className="flex items-start gap-2.5">
-                <FileText className="w-4 h-4 text-neutral-400 mt-0.5 shrink-0" />
-                <div>
-                  <h4 className="font-bold text-xs">Usage Terms</h4>
-                  <p
-                    className={`text-[11px] leading-relaxed mt-0.5 ${
-                      isLight ? 'text-stone-600' : 'text-neutral-400'
-                    }`}
-                  >
-                    For personal use only. FASTag, Expressway tolls and fuel to be billed at actuals upon vehicle return.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* =========================================================================
-            6. CUSTOMER REVIEWS (Full Width)
-           ========================================================================= */}
-        <div
-          className={`rounded-2xl border p-4 sm:p-5 shadow-xs ${
-            isLight ? 'bg-white border-stone-200/80 text-slate-900' : 'bg-[#101114] border-neutral-800 text-white'
-          }`}
-        >
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
-            {/* Left Rating Summary */}
-            <div className="md:col-span-4 space-y-0.5">
-              <h3 className="text-sm font-bold tracking-tight">Customer Reviews (6)</h3>
-              <div className="flex items-center gap-2">
-                <Star className="w-5 h-5 text-amber-400 fill-amber-400" />
-                <span className="text-xl sm:text-2xl font-extrabold tracking-tight">
-                  4.82 <span className="text-sm font-medium opacity-60">/ 5</span>
-                </span>
-              </div>
-              <p className={`text-[11px] ${isLight ? 'text-stone-500' : 'text-neutral-400'}`}>
-                Based on 40 verified trips
-              </p>
-            </div>
-
-            {/* Vertical Divider */}
-            <div
-              className={`hidden md:block w-px self-stretch ${
-                isLight ? 'bg-stone-200' : 'bg-neutral-800'
-              }`}
-            />
-
-            {/* Right Review Quote Carousel */}
-            <div className="md:col-span-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-              <div className="space-y-2">
-                <p
-                  className={`text-xs leading-relaxed italic ${
-                    isLight ? 'text-stone-700' : 'text-neutral-300'
-                  }`}
-                >
-                  "{VERIFIED_REVIEWS[reviewIndex].comment}"
-                </p>
-
-                <div className="flex items-center gap-2">
-                  <img
-                    src={VERIFIED_REVIEWS[reviewIndex].avatar}
-                    alt={VERIFIED_REVIEWS[reviewIndex].author}
-                    className="w-6 h-6 rounded-full object-cover border border-amber-400"
-                  />
-                  <div>
-                    <h4 className="text-xs font-bold leading-tight">
-                      {VERIFIED_REVIEWS[reviewIndex].author}
-                    </h4>
-                    <p
-                      className={`text-[9px] font-mono ${
-                        isLight ? 'text-stone-500' : 'text-neutral-400'
-                      }`}
-                    >
-                      {VERIFIED_REVIEWS[reviewIndex].tripTag}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Navigation Arrows */}
-              <div className="flex items-center gap-1.5 shrink-0 self-end sm:self-center">
-                <button
-                  type="button"
-                  onClick={() =>
-                    setReviewIndex(
-                      (prev) => (prev - 1 + VERIFIED_REVIEWS.length) % VERIFIED_REVIEWS.length
-                    )
-                  }
-                  className={`w-7 h-7 rounded-full border flex items-center justify-center transition-all cursor-pointer active:scale-95 ${
-                    isLight
-                      ? 'border-stone-300 bg-white hover:border-black text-slate-700'
-                      : 'border-neutral-700 bg-neutral-900 hover:border-white text-white'
-                  }`}
-                  aria-label="Previous Review"
-                >
-                  <ChevronLeft className="w-3.5 h-3.5" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() =>
-                    setReviewIndex((prev) => (prev + 1) % VERIFIED_REVIEWS.length)
-                  }
-                  className={`w-7 h-7 rounded-full border flex items-center justify-center transition-all cursor-pointer active:scale-95 ${
-                    isLight
-                      ? 'border-stone-300 bg-white hover:border-black text-slate-700'
-                      : 'border-neutral-700 bg-neutral-900 hover:border-white text-white'
-                  }`}
-                  aria-label="Next Review"
-                >
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </button>
               </div>
             </div>
           </div>
