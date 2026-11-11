@@ -5,9 +5,6 @@ import {
   MapPin,
   Search,
   ArrowRight,
-  Car,
-  Calendar,
-  RotateCcw,
 } from 'lucide-react';
 
 interface LocationItem {
@@ -441,78 +438,6 @@ export const LocationsPage: React.FC = () => {
                   ))}
                 </div>
               )}
-            </div>
-          </div>
-        </div>
-
-        {/* =========================================================================
-            3. BOTTOM VALUE PROPS BAR: Expansive & Refined
-           ========================================================================= */}
-        <div
-          className={`rounded-xl border p-4 sm:p-5 mt-5 sm:mt-6 ${
-            isLight
-              ? 'bg-[#F1ECE4] border-stone-200/80 text-slate-900'
-              : 'bg-[#15161a] border-neutral-800 text-white'
-          }`}
-        >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-4 items-center">
-            {/* Value Prop 1: Wide Coverage */}
-            <div className="flex items-center gap-3.5 px-2">
-              <div
-                className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 border ${
-                  isLight ? 'bg-white border-stone-300/80 text-slate-900' : 'bg-neutral-800 border-neutral-700 text-white'
-                }`}
-              >
-                <Car className="w-4.5 h-4.5" />
-              </div>
-              <div>
-                <h4 className="font-bold text-xs sm:text-[13px] tracking-tight">Wide Coverage</h4>
-                <p className={`text-[11px] sm:text-xs mt-0.5 ${isLight ? 'text-stone-600' : 'text-neutral-400'}`}>
-                  Cars available across major Indian cities
-                </p>
-              </div>
-            </div>
-
-            {/* Value Prop 2: Flexible Pickups */}
-            <div
-              className={`flex items-center gap-3.5 px-2 md:border-l ${
-                isLight ? 'md:border-stone-300/80' : 'md:border-neutral-800'
-              }`}
-            >
-              <div
-                className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 border ${
-                  isLight ? 'bg-white border-stone-300/80 text-slate-900' : 'bg-neutral-800 border-neutral-700 text-white'
-                }`}
-              >
-                <Calendar className="w-4.5 h-4.5" />
-              </div>
-              <div>
-                <h4 className="font-bold text-xs sm:text-[13px] tracking-tight">Flexible Pickups</h4>
-                <p className={`text-[11px] sm:text-xs mt-0.5 ${isLight ? 'text-stone-600' : 'text-neutral-400'}`}>
-                  Choose from multiple pickup points
-                </p>
-              </div>
-            </div>
-
-            {/* Value Prop 3: Easy Returns */}
-            <div
-              className={`flex items-center gap-3.5 px-2 md:border-l ${
-                isLight ? 'md:border-stone-300/80' : 'md:border-neutral-800'
-              }`}
-            >
-              <div
-                className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 border ${
-                  isLight ? 'bg-white border-stone-300/80 text-slate-900' : 'bg-neutral-800 border-neutral-700 text-white'
-                }`}
-              >
-                <RotateCcw className="w-4.5 h-4.5" />
-              </div>
-              <div>
-                <h4 className="font-bold text-xs sm:text-[13px] tracking-tight">Easy Returns</h4>
-                <p className={`text-[11px] sm:text-xs mt-0.5 ${isLight ? 'text-stone-600' : 'text-neutral-400'}`}>
-                  Drop off at a location that suits you
-                </p>
-              </div>
             </div>
           </div>
         </div>
