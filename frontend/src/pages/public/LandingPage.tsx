@@ -189,47 +189,53 @@ export const LandingPage: React.FC = () => {
       }`}
     >
       {/* 1. CINEMATIC HERO SECTION */}
-      <section className="relative min-h-[640px] sm:min-h-screen lg:h-screen flex flex-col justify-between overflow-hidden">
+      <section className="relative h-[72vh] min-h-[510px] max-h-[600px] sm:min-h-screen sm:h-screen flex flex-col justify-between overflow-hidden">
         {/* Full-bleed Photography Background */}
         <div className="absolute inset-0 z-0">
           <img
             src="/hero-bg.png"
             alt="Scenic roadtrip landscape"
-            className="w-full h-full object-cover object-[center_60%]"
+            className="w-full h-full object-cover object-[center_55%] sm:object-[center_60%]"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/80 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/10 to-black pointer-events-none" />
         </div>
 
         {/* Center Hero Content */}
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 w-full flex-1 flex flex-col items-center justify-center pt-8 sm:pt-10 pb-4 text-center -mt-28 sm:-mt-48 lg:-mt-64">
-          {/* Frosted Subtle Badge */}
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white text-[11px] sm:text-xs font-medium mb-3 sm:mb-4 shadow-sm">
-            <Sparkles className="w-3 h-3 text-amber-400" />
-            <span>Verified Self-Drive Rental Marketplace</span>
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 w-full flex-1 flex flex-col justify-between pt-16 sm:pt-28 pb-4 sm:pb-8 text-center">
+          {/* Top Headline Block */}
+          <div>
+            {/* Frosted Subtle Badge (Desktop only) */}
+            <div className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white text-[11px] sm:text-xs font-medium mb-3 sm:mb-4 shadow-sm">
+              <Sparkles className="w-3 h-3 text-amber-400" />
+              <span>Verified Self-Drive Rental Marketplace</span>
+            </div>
+
+            {/* Headline */}
+            <h1 className="text-2xl sm:text-5xl lg:text-[3.65rem] font-sans font-bold text-white tracking-tight leading-[1.25] max-w-[280px] sm:max-w-3xl mx-auto drop-shadow-lg">
+              Rediscover the Joy of <br className="inline" />
+              the Open Road.
+            </h1>
           </div>
 
-          {/* Headline */}
-          <h1 className="text-3xl sm:text-5xl lg:text-[3.65rem] font-display font-bold text-white tracking-tight leading-[1.16] max-w-3xl mx-auto drop-shadow-lg">
-            Rediscover the Joy of <br className="hidden sm:inline" />
-            the Open Road.
-          </h1>
-
-          {/* MODERN HUMAN BOOKING WIDGET */}
-          <form
-            onSubmit={handleBookingSearch}
-            className="mt-10 sm:mt-14 lg:mt-16 w-full max-w-lg sm:max-w-xl lg:max-w-[38rem] rounded-2xl sm:rounded-full bg-black/65 backdrop-blur-2xl border border-white/25 shadow-2xl p-1 sm:p-1.5 sm:pl-3 flex flex-col sm:flex-row items-center gap-1 sm:gap-1.5 transition-all hover:border-white/40"
-          >
-            {/* Field 1: Hub / City */}
-            <div className="w-full sm:flex-1 flex items-center gap-1.5 px-2.5 py-1 sm:py-0 text-left border-b sm:border-b-0 sm:border-r border-white/15">
-              <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-              <div className="flex-1 min-w-0">
-                <label className="block text-[9px] font-mono uppercase tracking-wider text-neutral-400 leading-tight">
-                  Pick-up Hub
-                </label>
+          {/* Bottom Search Bar Block */}
+          <div className="w-full flex flex-col items-center">
+            {/* MOBILE COMPACT FLOATING SEARCH PILL (Exact match to mobile reference image) */}
+            <form
+              onSubmit={handleBookingSearch}
+              className="sm:hidden w-full max-w-[365px] mx-auto rounded-full bg-black/60 backdrop-blur-xl border border-white/20 p-1 pl-3.5 pr-1 flex items-center justify-between shadow-2xl transition-all hover:border-white/40"
+            >
+              {/* Field 1: Hub Selector */}
+              <div className="relative flex items-center gap-1.5 cursor-pointer py-1">
+                <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                <span className="text-[11.5px] font-semibold text-white whitespace-nowrap">
+                  {selectedCity ? (selectedCity === 'Delhi' ? 'Delhi' : selectedCity) : 'All Hubs'}
+                </span>
+                <ChevronDown className="w-3 h-3 text-neutral-400 shrink-0" />
                 <select
                   value={selectedCity}
                   onChange={(e) => setSelectedCity(e.target.value)}
-                  className="w-full bg-transparent text-[11px] font-semibold text-white focus:outline-none cursor-pointer py-0.5"
+                  className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+                  aria-label="Select Pickup Hub"
                 >
                   <option value="" className="bg-neutral-900 text-white">All Hubs</option>
                   <option value="Delhi" className="bg-neutral-900 text-white">Delhi NCR (Airport T3)</option>
@@ -239,19 +245,22 @@ export const LandingPage: React.FC = () => {
                   <option value="Chandigarh" className="bg-neutral-900 text-white">Chandigarh (City Centre)</option>
                 </select>
               </div>
-            </div>
 
-            {/* Field 2: Vehicle Class */}
-            <div className="w-full sm:flex-1 flex items-center gap-1.5 px-2.5 py-1 sm:py-0 text-left border-b sm:border-b-0 sm:border-r border-white/15">
-              <Car className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-              <div className="flex-1 min-w-0">
-                <label className="block text-[9px] font-mono uppercase tracking-wider text-neutral-400 leading-tight">
-                  Vehicle Class
-                </label>
+              {/* Divider */}
+              <div className="w-[1px] h-4 bg-white/20 mx-1 shrink-0" />
+
+              {/* Field 2: Vehicle Class Selector */}
+              <div className="relative flex items-center gap-1.5 cursor-pointer py-1">
+                <Car className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                <span className="text-[11.5px] font-semibold text-white whitespace-nowrap">
+                  {selectedCategory && selectedCategory !== 'ALL' ? selectedCategory : 'All Classes'}
+                </span>
+                <ChevronDown className="w-3 h-3 text-neutral-400 shrink-0" />
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="w-full bg-transparent text-[11px] font-semibold text-white focus:outline-none cursor-pointer py-0.5"
+                  className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+                  aria-label="Select Vehicle Class"
                 >
                   <option value="" className="bg-neutral-900 text-white">All Classes</option>
                   <option value="SUV" className="bg-neutral-900 text-white">SUVs & 4x4s</option>
@@ -261,29 +270,88 @@ export const LandingPage: React.FC = () => {
                   <option value="HATCHBACK" className="bg-neutral-900 text-white">City Hatchbacks</option>
                 </select>
               </div>
-            </div>
 
-            {/* Field 3: Rental Type */}
-            <div className="w-full sm:w-auto px-2 py-0.5 text-left hidden md:block">
-              <div className="flex items-center gap-1.5 text-[11px] text-neutral-300 font-medium">
-                <Clock className="w-3 h-3 text-emerald-400" />
-                <span>Instant Confirmation</span>
-              </div>
-            </div>
+              {/* Submit Button */}
+              <button
+                type="submit"
+                className="px-3.5 py-1.5 rounded-full bg-white hover:bg-neutral-100 text-black font-bold text-[11px] flex items-center gap-1 shrink-0 shadow-md active:scale-95 cursor-pointer transition-transform"
+              >
+                <span>Explore Fleet</span>
+                <ArrowRight className="w-3 h-3 text-black stroke-[2.5]" />
+              </button>
+            </form>
 
-            {/* Search Submit Action */}
-            <button
-              type="submit"
-              className="w-full sm:w-auto px-4 py-2 rounded-xl sm:rounded-full bg-white hover:bg-neutral-200 text-black font-bold text-[10px] sm:text-[11px] uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 shadow-md active:scale-95 cursor-pointer shrink-0"
+            {/* DESKTOP SEARCH WIDGET */}
+            <form
+              onSubmit={handleBookingSearch}
+              className="hidden sm:flex mt-10 sm:mt-14 lg:mt-16 w-full max-w-lg sm:max-w-xl lg:max-w-[38rem] rounded-2xl sm:rounded-full bg-black/65 backdrop-blur-2xl border border-white/25 shadow-2xl p-1 sm:p-1.5 sm:pl-3 flex-col sm:flex-row items-center gap-1 sm:gap-1.5 transition-all hover:border-white/40"
             >
-              <span>Explore Fleet</span>
-              <ArrowRight className="w-3.5 h-3.5 text-black" />
-            </button>
-          </form>
+              {/* Field 1: Hub / City */}
+              <div className="w-full sm:flex-1 flex items-center gap-1.5 px-2.5 py-1 sm:py-0 text-left border-b sm:border-b-0 sm:border-r border-white/15">
+                <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <label className="block text-[9px] font-mono uppercase tracking-wider text-neutral-400 leading-tight">
+                    Pick-up Hub
+                  </label>
+                  <select
+                    value={selectedCity}
+                    onChange={(e) => setSelectedCity(e.target.value)}
+                    className="w-full bg-transparent text-[11px] font-semibold text-white focus:outline-none cursor-pointer py-0.5"
+                  >
+                    <option value="" className="bg-neutral-900 text-white">All Hubs</option>
+                    <option value="Delhi" className="bg-neutral-900 text-white">Delhi NCR (Airport T3)</option>
+                    <option value="Gurgaon" className="bg-neutral-900 text-white">Gurgaon (Cyber Hub)</option>
+                    <option value="Noida" className="bg-neutral-900 text-white">Noida (Sector 18)</option>
+                    <option value="Jaipur" className="bg-neutral-900 text-white">Jaipur (Airport)</option>
+                    <option value="Chandigarh" className="bg-neutral-900 text-white">Chandigarh (City Centre)</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Field 2: Vehicle Class */}
+              <div className="w-full sm:flex-1 flex items-center gap-1.5 px-2.5 py-1 sm:py-0 text-left border-b sm:border-b-0 sm:border-r border-white/15">
+                <Car className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <label className="block text-[9px] font-mono uppercase tracking-wider text-neutral-400 leading-tight">
+                    Vehicle Class
+                  </label>
+                  <select
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    className="w-full bg-transparent text-[11px] font-semibold text-white focus:outline-none cursor-pointer py-0.5"
+                  >
+                    <option value="" className="bg-neutral-900 text-white">All Classes</option>
+                    <option value="SUV" className="bg-neutral-900 text-white">SUVs & 4x4s</option>
+                    <option value="LUXURY" className="bg-neutral-900 text-white">Executive & Luxury</option>
+                    <option value="SEDAN" className="bg-neutral-900 text-white">Touring Sedans</option>
+                    <option value="ELECTRIC" className="bg-neutral-900 text-white">Electric Vehicles</option>
+                    <option value="HATCHBACK" className="bg-neutral-900 text-white">City Hatchbacks</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Field 3: Rental Type */}
+              <div className="w-full sm:w-auto px-2 py-0.5 text-left hidden md:block">
+                <div className="flex items-center gap-1.5 text-[11px] text-neutral-300 font-medium">
+                  <Clock className="w-3 h-3 text-emerald-400" />
+                  <span>Instant Confirmation</span>
+                </div>
+              </div>
+
+              {/* Search Submit Action */}
+              <button
+                type="submit"
+                className="w-full sm:w-auto px-4 py-2 rounded-xl sm:rounded-full bg-white hover:bg-neutral-200 text-black font-bold text-[10px] sm:text-[11px] uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 shadow-md active:scale-95 cursor-pointer shrink-0"
+              >
+                <span>Explore Fleet</span>
+                <ArrowRight className="w-3.5 h-3.5 text-black" />
+              </button>
+            </form>
+          </div>
         </div>
 
-        {/* Bottom Trust Indicators */}
-        <div className="relative z-10 pb-8 flex flex-wrap items-center justify-center gap-4 sm:gap-10 text-xs text-white/90 font-medium tracking-wide">
+        {/* Bottom Trust Indicators (Desktop only) */}
+        <div className="relative z-10 pb-8 hidden sm:flex flex-wrap items-center justify-center gap-4 sm:gap-10 text-xs text-white/90 font-medium tracking-wide">
           <div className="flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-emerald-400" />
             <span>3-Minute Digital Handover</span>
@@ -302,27 +370,28 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* 2. CURATED TRAVEL COLLECTIONS */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-14">
         <div
-          className={`flex flex-col sm:flex-row sm:items-end justify-between mb-8 pb-4 border-b ${
+          className={`flex flex-col sm:flex-row sm:items-end justify-between mb-4 sm:mb-8 pb-2 sm:pb-4 border-b-0 sm:border-b ${
             isLight ? 'border-stone-200/80' : 'border-neutral-800'
           }`}
         >
           <div>
-            <span className="text-[11px] font-mono uppercase tracking-widest text-amber-500 font-semibold">
+            <span className="text-[11px] font-mono uppercase tracking-widest text-amber-500 font-semibold block mb-1">
               Curated Collections
             </span>
             <h2
-              className={`font-display text-2xl sm:text-3xl font-bold mt-1 ${
+              className={`font-sans text-2xl sm:text-3xl font-bold mt-1 tracking-tight leading-tight ${
                 isLight ? 'text-slate-900' : 'text-white'
               }`}
             >
-              Handpicked for Every Journey
+              Handpicked for Every <br className="sm:hidden inline" />
+              Journey
             </h2>
           </div>
           <Link
             to="/explore"
-            className={`text-xs font-semibold flex items-center space-x-1.5 mt-2 sm:mt-0 transition-colors group ${
+            className={`hidden sm:flex text-xs font-semibold items-center space-x-1.5 mt-3 sm:mt-0 transition-colors group ${
               isLight ? 'text-slate-600 hover:text-black' : 'text-neutral-400 hover:text-white'
             }`}
           >
