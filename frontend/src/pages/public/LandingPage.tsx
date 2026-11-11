@@ -189,40 +189,37 @@ export const LandingPage: React.FC = () => {
       }`}
     >
       {/* 1. CINEMATIC HERO SECTION */}
-      <section className="relative h-[72vh] min-h-[510px] max-h-[600px] sm:min-h-screen sm:h-screen flex flex-col justify-between overflow-hidden">
+      <section className="relative h-[78vh] min-h-[540px] max-h-[660px] sm:min-h-screen sm:h-screen flex flex-col justify-between overflow-hidden">
         {/* Full-bleed Photography Background */}
         <div className="absolute inset-0 z-0">
           <img
             src="/hero-bg.png"
             alt="Scenic roadtrip landscape"
-            className="w-full h-full object-cover object-[center_55%] sm:object-[center_60%]"
+            className="w-full h-full object-cover object-[27%_55%] sm:object-[center_60%]"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/10 to-black pointer-events-none" />
         </div>
 
         {/* Center Hero Content */}
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 w-full flex-1 flex flex-col justify-between pt-16 sm:pt-28 pb-4 sm:pb-8 text-center">
-          {/* Top Headline Block */}
-          <div>
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 w-full flex-1 flex flex-col justify-between pt-24 sm:pt-28 pb-4 sm:pb-8 text-center">
+          {/* Top Headline Block + Search Widget (Both positioned ABOVE the car!) */}
+          <div className="flex flex-col items-center">
             {/* Frosted Subtle Badge (Desktop only) */}
             <div className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white text-[11px] sm:text-xs font-medium mb-3 sm:mb-4 shadow-sm">
               <Sparkles className="w-3 h-3 text-amber-400" />
               <span>Verified Self-Drive Rental Marketplace</span>
             </div>
 
-            {/* Headline */}
+            {/* Headline (moved slightly lower on mobile as requested) */}
             <h1 className="text-2xl sm:text-5xl lg:text-[3.65rem] font-sans font-bold text-white tracking-tight leading-[1.25] max-w-[280px] sm:max-w-3xl mx-auto drop-shadow-lg">
               Rediscover the Joy of <br className="inline" />
               the Open Road.
             </h1>
-          </div>
 
-          {/* Bottom Search Bar Block */}
-          <div className="w-full flex flex-col items-center">
-            {/* MOBILE COMPACT FLOATING SEARCH PILL (Exact match to mobile reference image) */}
+            {/* MOBILE COMPACT FLOATING SEARCH PILL (Placed ABOVE the car!) */}
             <form
               onSubmit={handleBookingSearch}
-              className="sm:hidden w-full max-w-[365px] mx-auto rounded-full bg-black/60 backdrop-blur-xl border border-white/20 p-1 pl-3.5 pr-1 flex items-center justify-between shadow-2xl transition-all hover:border-white/40"
+              className="sm:hidden w-full max-w-[365px] mx-auto mt-4 rounded-full bg-black/60 backdrop-blur-xl border border-white/20 p-1 pl-3.5 pr-1 flex items-center justify-between shadow-2xl transition-all hover:border-white/40"
             >
               {/* Field 1: Hub Selector */}
               <div className="relative flex items-center gap-1.5 cursor-pointer py-1">
@@ -238,11 +235,11 @@ export const LandingPage: React.FC = () => {
                   aria-label="Select Pickup Hub"
                 >
                   <option value="" className="bg-neutral-900 text-white">All Hubs</option>
-                  <option value="Delhi" className="bg-neutral-900 text-white">Delhi NCR (Airport T3)</option>
-                  <option value="Gurgaon" className="bg-neutral-900 text-white">Gurgaon (Cyber Hub)</option>
-                  <option value="Noida" className="bg-neutral-900 text-white">Noida (Sector 18)</option>
-                  <option value="Jaipur" className="bg-neutral-900 text-white">Jaipur (Airport)</option>
-                  <option value="Chandigarh" className="bg-neutral-900 text-white">Chandigarh (City Centre)</option>
+                  <option value="Delhi">Delhi NCR (Airport T3)</option>
+                  <option value="Gurgaon">Gurgaon (Cyber Hub)</option>
+                  <option value="Noida">Noida (Sector 18)</option>
+                  <option value="Jaipur">Jaipur (Airport)</option>
+                  <option value="Chandigarh">Chandigarh (City Centre)</option>
                 </select>
               </div>
 
@@ -263,11 +260,11 @@ export const LandingPage: React.FC = () => {
                   aria-label="Select Vehicle Class"
                 >
                   <option value="" className="bg-neutral-900 text-white">All Classes</option>
-                  <option value="SUV" className="bg-neutral-900 text-white">SUVs & 4x4s</option>
-                  <option value="LUXURY" className="bg-neutral-900 text-white">Executive & Luxury</option>
-                  <option value="SEDAN" className="bg-neutral-900 text-white">Touring Sedans</option>
-                  <option value="ELECTRIC" className="bg-neutral-900 text-white">Electric Vehicles</option>
-                  <option value="HATCHBACK" className="bg-neutral-900 text-white">City Hatchbacks</option>
+                  <option value="SUV">SUVs & 4x4s</option>
+                  <option value="LUXURY">Executive & Luxury</option>
+                  <option value="SEDAN">Touring Sedans</option>
+                  <option value="ELECTRIC">Electric Vehicles</option>
+                  <option value="HATCHBACK">City Hatchbacks</option>
                 </select>
               </div>
 
@@ -281,10 +278,10 @@ export const LandingPage: React.FC = () => {
               </button>
             </form>
 
-            {/* DESKTOP SEARCH WIDGET */}
+            {/* DESKTOP SEARCH WIDGET (Placed ABOVE the car!) */}
             <form
               onSubmit={handleBookingSearch}
-              className="hidden sm:flex mt-10 sm:mt-14 lg:mt-16 w-full max-w-lg sm:max-w-xl lg:max-w-[38rem] rounded-2xl sm:rounded-full bg-black/65 backdrop-blur-2xl border border-white/25 shadow-2xl p-1 sm:p-1.5 sm:pl-3 flex-col sm:flex-row items-center gap-1 sm:gap-1.5 transition-all hover:border-white/40"
+              className="hidden sm:flex mt-8 sm:mt-10 lg:mt-12 w-full max-w-lg sm:max-w-xl lg:max-w-[38rem] rounded-2xl sm:rounded-full bg-black/65 backdrop-blur-2xl border border-white/25 shadow-2xl p-1 sm:p-1.5 sm:pl-3 flex-col sm:flex-row items-center gap-1 sm:gap-1.5 transition-all hover:border-white/40"
             >
               {/* Field 1: Hub / City */}
               <div className="w-full sm:flex-1 flex items-center gap-1.5 px-2.5 py-1 sm:py-0 text-left border-b sm:border-b-0 sm:border-r border-white/15">
@@ -348,6 +345,9 @@ export const LandingPage: React.FC = () => {
               </button>
             </form>
           </div>
+
+          {/* Spacer to keep middle car showcase open and clear */}
+          <div className="flex-1" />
         </div>
 
         {/* Bottom Trust Indicators (Desktop only) */}
