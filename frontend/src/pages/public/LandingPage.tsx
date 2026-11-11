@@ -208,19 +208,19 @@ export const LandingPage: React.FC = () => {
       }`}
     >
       {/* 1. CINEMATIC HERO SECTION */}
-      <section className="relative h-[82vh] min-h-[580px] max-h-[720px] sm:min-h-screen sm:h-screen flex flex-col justify-between overflow-hidden">
+      <section className="relative h-[65vh] min-h-[560px] max-h-[640px] sm:min-h-screen sm:h-screen flex flex-col justify-between overflow-hidden">
         {/* Full-bleed Photography Background */}
         <div className="absolute inset-0 z-0">
           <img
             src="/hero-bg.png"
             alt="Scenic roadtrip landscape"
-            className="w-full h-full object-cover object-[27%_55%] sm:object-[center_60%]"
+            className="w-full h-full object-cover object-[31%_50%] scale-[0.80] origin-[31%_55%] sm:scale-100 sm:origin-center sm:object-[center_60%]"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/10 to-black pointer-events-none" />
         </div>
 
         {/* Center Hero Content */}
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 w-full flex-1 flex flex-col justify-between pt-20 sm:pt-28 pb-3 sm:pb-8 text-center">
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 w-full flex-1 flex flex-col justify-between pt-28 sm:pt-28 pb-3 sm:pb-8 text-center">
           {/* Top Headline Block + Search Widget (Both positioned ABOVE the car!) */}
           <div className="flex flex-col items-center">
             {/* Frosted Subtle Badge (Desktop only) */}
@@ -252,7 +252,7 @@ export const LandingPage: React.FC = () => {
             {/* MOBILE COMPACT FLOATING SEARCH PILL (Placed ABOVE the car!) */}
             <form
               onSubmit={handleBookingSearch}
-              className="sm:hidden w-full max-w-[365px] mx-auto mt-3.5 rounded-full bg-black/60 backdrop-blur-xl border border-white/20 p-1 pl-3.5 pr-1 flex items-center justify-between shadow-2xl transition-all hover:border-white/40"
+              className="sm:hidden w-full max-w-[365px] mx-auto mt-7 rounded-full bg-black/60 backdrop-blur-xl border border-white/20 p-1 pl-3.5 pr-1 flex items-center justify-between shadow-2xl transition-all hover:border-white/40"
             >
               {/* Field 1: Hub Selector */}
               <div className="relative flex items-center gap-1.5 cursor-pointer py-1">
@@ -383,24 +383,6 @@ export const LandingPage: React.FC = () => {
           <div className="flex-1" />
         </div>
 
-        {/* Mobile Bottom Trust Indicators (Under the car and road, exact match to Image 2) */}
-        <div className="sm:hidden relative z-10 pb-4 px-3 flex items-center justify-center gap-2.5 text-[11px] font-medium text-white/90">
-          <div className="flex items-center gap-1.5">
-            <Zap className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-            <span>Instant Booking</span>
-          </div>
-          <div className="w-[1px] h-3.5 bg-white/25 shrink-0" />
-          <div className="flex items-center gap-1.5">
-            <ShieldCheck className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-            <span>Verified Vehicles</span>
-          </div>
-          <div className="w-[1px] h-3.5 bg-white/25 shrink-0" />
-          <div className="flex items-center gap-1.5">
-            <Headphones className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-            <span>24×7 Support</span>
-          </div>
-        </div>
-
         {/* Bottom Trust Indicators (Desktop only) */}
         <div className="relative z-10 pb-8 hidden sm:flex flex-wrap items-center justify-center gap-4 sm:gap-10 text-xs text-white/90 font-medium tracking-wide">
           <div className="flex items-center gap-2">
@@ -421,7 +403,7 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* 2. CURATED TRAVEL COLLECTIONS */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-14">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 sm:pt-14">
         {/* Mobile Curated Collections Header (Exact match to Image 2) */}
         <div className="sm:hidden flex items-end justify-between mb-3.5">
           <div>
