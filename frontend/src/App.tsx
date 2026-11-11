@@ -9,6 +9,7 @@ import { Navbar } from './components/common/Navbar';
 import { Footer } from './components/common/Footer';
 import { ProtectedRoute } from './components/common/ProtectedRoute';
 import { AuthModal } from './components/auth/AuthModal';
+import { ScrollRevealManager } from './components/common/ScrollRevealManager';
 
 // Public Pages
 import { LandingPage } from './pages/public/LandingPage';
@@ -123,6 +124,7 @@ export const App: React.FC = () => {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <ScrollToTop />
+        <ScrollRevealManager />
         <div
           className={`min-h-screen flex flex-col transition-colors duration-200 w-full overflow-x-clip ${
             theme === 'light'

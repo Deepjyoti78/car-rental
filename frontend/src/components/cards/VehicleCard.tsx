@@ -67,7 +67,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
   return (
     <article
       onClick={handleCardClick}
-      className={`group cursor-pointer rounded-2xl border overflow-hidden transition-all duration-300 flex flex-col justify-between ${
+      className={`group cursor-pointer rounded-2xl border overflow-hidden transition-all duration-300 flex flex-col justify-between reveal-on-scroll ${
         isLight
           ? 'bg-white border-stone-200/80 shadow-xs hover:border-stone-400 hover:shadow-lg text-slate-900'
           : 'bg-[#0D0D0E] border-neutral-800/80 hover:border-neutral-700 hover:bg-[#121214] hover:shadow-2xl text-white'
